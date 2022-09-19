@@ -1,0 +1,257 @@
+﻿@using Newtonsoft.Json;
+@model IKullaniciErisimBilgileri
+@{
+    ViewBag.Title = "Erişim Yetkileri";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    IKullanici kullanici = (IKullanici)ViewBag.KullaniciBilgisi;
+    List<IErisimKodlari> erisimKodlari = (List<IErisimKodlari>)ViewBag.ErisimKodlari;
+}
+
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+@*<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">*@
+<link rel="stylesheet" href="~/dist/vendors/datatable/css/dataTables.bootstrap4.min.css" />
+<link rel="stylesheet" href="~/dist/vendors/datatable/buttons/css/buttons.bootstrap4.min.css" />
+
+<div class="row">
+    <div class="col-12  align-self-center">
+        <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+            <div class="w-sm-100 mr-auto"><h4 class="mb-0">Erişim Yetkileri</h4><p><a href="@Url.Action("Index","BirimPersonelleri")">Birim Personelleri Modülü</a></p></div>
+            <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+                <li class="breadcrumb-item"><a href="#">Erişim Yetkileri</a></li>
+                <li class="breadcrumb-item active">Anasayfa</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 mt-3">
+        <div class="card">
+            <div class="card-header  justify-content-between align-items-center">
+                <div class="row">
+                    <div class="col-md-9">
+                        <h5 class="card-title">@kullanici.Ad @kullanici.Soyad - Yetkiler</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="exampleYetki" class="display table dataTable table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>İşlem</th>
+                                <th>Yetki</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var e in erisimKodlari)
+                            {
+                                <tr>
+                                    <td>
+                                        @e.ID
+                                    </td>
+                                    <td>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input btnSwitch" type="checkbox" role="switch" id="@e.ID">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <label class="form-check-label" for="flexSwitchCheckDefault">@e.ErisimKodu</label>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        var list = @Html.Raw(JsonConvert.SerializeObject(ViewBag.Kontrol));
+        for (var i = 0; i < list.length; i++) {
+            $("#" + list[i]).prop('checked', true);
+        }
+    });
+    $('.btnSwitch').on("change", function () {
+
+        var id = $(this).attr("id");
+        var kullaniciId = parseInt(@kullanici.ID);
+        var durum = ($(this).is(':checked')) ? '1' : '0';
+
+        if (durum == 1) {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("KullaniciYetkiKaydet", "BirimPersonelleri")',
+                data: { id: id, kullaniciId: kullaniciId },
+                success: function (data) {
+                    $("#" + id).prop('checked', true);
+                },
+                error: function () {
+                    alert('Yetkilendirme sırasında hata oluştu. Lütfen tekrar deneyiniz.');
+                }
+            })
+        }
+        else if (durum == 0) {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("KullaniciYetkiSil", "BirimPersonelleri")',
+                data: { id: id, kullaniciId: kullaniciId },
+                success: function (data) {
+                    $("#" + id).prop('checked', false);
+                },
+                error: function () {
+                    alert('Yetki silme işlemi sırasında hata oluştu. Lütfen tekrar deneyiniz.');
+                }
+            })
+        }
+    });
+</script>
+<style>
+    .form-check {
+        display: block;
+        min-height: 1.5rem;
+        padding-left: 1.5em;
+        margin-bottom: .125rem
+    }
+
+        .form-check .form-check-input {
+            float: left;
+            margin-left: -1.5em
+        }
+
+    .form-check-input {
+        width: 1em;
+        height: 1em;
+        margin-top: .25em;
+        vertical-align: top;
+        background-color: #fff;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        border: 1px solid rgba(0,0,0,.25);
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        -webkit-print-color-adjust: exact;
+    }
+
+        .form-check-input[type=checkbox] {
+            border-radius: .25em
+        }
+
+        .form-check-input[type=radio] {
+            border-radius: 50%
+        }
+
+        .form-check-input:active {
+            filter: brightness(90%)
+        }
+
+        .form-check-input:focus {
+            border-color: #86b7fe;
+            outline: 0;
+            box-shadow: 0 0 0 .25rem rgba(13,110,253,.25)
+        }
+
+        .form-check-input:checked {
+            background-color: #0d6efd;
+            border-color: #0d6efd
+        }
+
+            .form-check-input:checked[type=checkbox] {
+                background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e")
+            }
+
+            .form-check-input:checked[type=radio] {
+                background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='%23fff'/%3e%3c/svg%3e")
+            }
+
+        .form-check-input[type=checkbox]:indeterminate {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10h8'/%3e%3c/svg%3e")
+        }
+
+        .form-check-input:disabled {
+            pointer-events: none;
+            filter: none;
+            opacity: .5
+        }
+
+            .form-check-input:disabled ~ .form-check-label, .form-check-input[disabled] ~ .form-check-label {
+                opacity: .5
+            }
+
+    .form-switch {
+        padding-left: 2.5em
+    }
+
+        .form-switch .form-check-input {
+            width: 2em;
+            margin-left: -2.5em;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%280, 0, 0, 0.25%29'/%3e%3c/svg%3e");
+            background-position: left center;
+            border-radius: 2em;
+            transition: background-position .15s ease-in-out
+        }
+
+    {
+        .form-switch .form-check-input
+
+    {
+        transition: none
+    }
+
+    }
+
+    .form-switch .form-check-input:focus {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%2386b7fe'/%3e%3c/svg%3e")
+    }
+
+    .form-switch .form-check-input:checked {
+        background-position: right center;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e")
+    }
+
+    .form-check-inline {
+        display: inline-block;
+        margin-right: 1rem
+    }
+
+    .btn-check {
+        position: absolute;
+        clip: rect(0,0,0,0);
+        pointer-events: none
+    }
+
+        .btn-check:disabled + .btn, .btn-check[disabled] + .btn {
+            pointer-events: none;
+            filter: none;
+            opacity: .65
+        }
+</style>
+
+<script src="~/dist/vendors/jquery/jquery-3.3.1.min.js"></script>
+<script src="~/dist/vendors/jquery-ui/jquery-ui.min.js"></script>
+<script src="~/dist/vendors/moment/moment.js"></script>
+<script src="~/dist/vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/dist/vendors/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="~/dist/js/app.js"></script>
+<script src="~/dist/vendors/datatable/js/jquery.dataTables.min.js"></script>
+<script src="~/dist/vendors/datatable/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/dist/vendors/datatable/jszip/jszip.min.js"></script>
+<script src="~/dist/vendors/datatable/pdfmake/pdfmake.min.js"></script>
+<script src="~/dist/vendors/datatable/pdfmake/vfs_fonts.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/dataTables.buttons.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.colVis.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.flash.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.html5.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.print.min.js"></script>
+<script src="~/Content/DataTablesScript.js"></script>

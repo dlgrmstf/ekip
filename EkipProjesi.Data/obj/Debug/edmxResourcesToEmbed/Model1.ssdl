@@ -1,0 +1,2366 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EkipProjeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AcilServisVakaBilgileri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="KurumKodu" Type="int" Nullable="false" />
+    <Property Name="HastaTCKimlikNo" Type="nvarchar" MaxLength="11" Nullable="false" />
+    <Property Name="HastaEkipNo" Type="nvarchar" MaxLength="50" />
+    <Property Name="HastaAdi" Type="nvarchar" MaxLength="100" />
+    <Property Name="HastaSoyadi" Type="nvarchar" MaxLength="100" />
+    <Property Name="BasvuruTarihi" Type="datetime" />
+    <Property Name="HekimAdi" Type="nvarchar" MaxLength="200" />
+    <Property Name="TaburculukTarihi" Type="datetime" />
+    <Property Name="GerceklestirilenIslemler" Type="nvarchar" MaxLength="500" />
+    <Property Name="TaburculukNotlari" Type="nvarchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="AcilServisVakaTanilari">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AcilServisVakaID" Type="int" Nullable="false" />
+    <Property Name="TaniKoduID" Type="int" />
+  </EntityType>
+  <EntityType Name="AnketCevaplari">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SoruID" Type="bigint" Nullable="false" />
+    <Property Name="CevapAdi" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="Puan" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AnketGruplari">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="GrupAdi" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="AnketID" Type="bigint" Nullable="false" />
+    <Property Name="Aciklama" Type="nvarchar(max)" />
+    <Property Name="Sira" Type="int" Nullable="false" />
+    <Property Name="Status" Type="bit" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="KayitTarihi" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AnketKullaniciCevap">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AnketSoruID" Type="bigint" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="Tarih" Type="datetime" Nullable="false" />
+    <Property Name="CevapID" Type="bigint" Nullable="false" />
+    <Property Name="Cevap" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AnketKullanicilari">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AnketID" Type="bigint" Nullable="false" />
+    <Property Name="PersonelID" Type="int" Nullable="false" />
+    <Property Name="Tarih" Type="datetime" Nullable="false" />
+    <Property Name="TamamlandiMi" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Anketler">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IsletmeID" Type="int" Nullable="false" />
+    <Property Name="AnketTipID" Type="int" Nullable="false" />
+    <Property Name="Baslik" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="Aciklama" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="BaslangicTarihi" Type="datetime" Nullable="false" />
+    <Property Name="BitisTarihi" Type="datetime" Nullable="false" />
+    <Property Name="KayitTarihi" Type="datetime" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="Status" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AnketSoruBankasi">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Soru" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="SoruKodu" Type="nchar" MaxLength="10" />
+    <Property Name="Aciklama" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="KayitTarihi" Type="datetime" Nullable="false" />
+    <Property Name="Status" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AnketSorulari">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="GrupID" Type="bigint" Nullable="false" />
+    <Property Name="AnketID" Type="bigint" Nullable="false" />
+    <Property Name="SoruID" Type="bigint" Nullable="false" />
+    <Property Name="ZorunluMu" Type="bit" Nullable="false" />
+    <Property Name="SoruTipi" Type="int" Nullable="false" />
+    <Property Name="Agirlik" Type="float" Nullable="false" />
+    <Property Name="CevapSayisi" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AnketTipleri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TipAdi" Type="nvarchar" MaxLength="350" Nullable="false" />
+    <Property Name="Aciklama" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Status" Type="bit" Nullable="false" />
+    <Property Name="KayitTarihi" Type="datetime" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ArindirmaBasvuruBilgileri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HastaEkipNo" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="KurumKodu" Type="int" Nullable="false" />
+    <Property Name="KayitTarihi" Type="datetime" Nullable="false" />
+    <Property Name="HastaProtokolNo" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="BeyanAdresi" Type="nvarchar" MaxLength="200" />
+    <Property Name="BeyanTelefonu" Type="nvarchar" MaxLength="50" />
+    <Property Name="PoliklinikMuayeneTarihSaati" Type="datetime" />
+    <Property Name="PoliklinikTuruID" Type="int" />
+    <Property Name="MuayeneyiGerceklestirenHekim" Type="nvarchar" MaxLength="150" />
+    <Property Name="MuayeneyiGerceklestirenHekimTuru" Type="nvarchar" MaxLength="50" />
+    <Property Name="MaddeBilgisi" Type="nvarchar(max)" />
+    <Property Name="EslikEdenHastalikOykusu" Type="nvarchar(max)" />
+    <Property Name="PsikiyatrikHastalikOykusuAciklama" Type="nvarchar(max)" />
+    <Property Name="PsikiyatrikHastalikOykusu" Type="bit" />
+    <Property Name="KullanmaktaOlduguDigerIlacBilgisi" Type="nvarchar(max)" />
+    <Property Name="SonBasvurudanSonraAlkolMaddeKullanimiOlmusMu" Type="nchar" MaxLength="10" />
+    <Property Name="SonBasvurudanSonraOnerilenIlaclariDuzenliKullanmisMi" Type="nchar" MaxLength="10" />
+    <Property Name="YoksunlukBulgusu" Type="bit" />
+    <Property Name="IntoksikasyonBulgusu" Type="bit" />
+    <Property Name="IdrarToksikolojiBulgusu" Type="bit" />
+    <Property Name="KararID" Type="int" />
+    <Property Name="LogTarihi" Type="datetime" />
+    <Property Name="GuncellemeTarihi" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ArindirmaBasvuruKararlari">
+    <Key>
+      <PropertyRef Name="KararID" />
+    </Key>
+    <Property Name="KararID" Type="int" Nullable="false" />
+    <Property Name="Karar" Type="nvarchar" MaxLength="500" />
+    <Property Name="Aciklama" Type="nvarchar" MaxLength="1000" />
+  </EntityType>
+  <EntityType Name="ArindirmaHizmetBilgileri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="KurumKodu" Type="int" Nullable="false" />
+    <Property Name="KayitTarihi" Type="datetime" Nullable="false" />
+    <Property Name="AktifAmatemPoliklinikSayisi" Type="int" />
+    <Property Name="AktifCematemPoliklinikSayisi" Type="int" />
+    <Property Name="AmatemYeniBasvuruSayisi" Type="int" />
+    <Property Name="CematemYeniBasvuruSayisi" Type="int" />
+    <Property Name="AmatemTakipBasvurusuSayisi" Type="int" />
+    <Property Name="CematemTakipBasvurusuSayisi" Type="int" />
+    <Property Name="AktifAmatemYatakSayisi" Type="int" />
+    <Property Name="AktifCematemYatakSayisi" Type="int" />
+    <Property Name="AmatemBosYatakSayisi" Type="int" />
+    <Property Name="AmatemDoluYatakSayisi" Type="int" />
+    <Property Name="CematemBosYatakSayisi" Type="int" />
+    <Property Name="CematemDoluYatakSayisi" Type="int" />
+    <Property Name="LogTarihi" Type="datetime" />
+    <Property Name="GuncellemeTarihi" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ArindirmaPersonelBilgileri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="KurumKodu" Type="int" Nullable="false" />
+    <Property Name="KayitTarihi" Type="datetime" Nullable="false" />
+    <Property Name="TumUzmanHekimSayisi" Type="int" />
+    <Property Name="TumAsistanHekimSayisi" Type="int" />
+    <Property Name="TumPratisyenHekimSayisi" Type="int" />
+    <Property Name="HastaneAktifPsikiyatriUzmaniSayisi" Type="int" />
+    <Property Name="HastaneAktifCocukPsikiyatriUzmaniSayisi" Type="int" />
+    <Property Name="HastaneAktifPsikiyatriAsistaniSayisi" Type="int" />
+    <Property Name="HastaneAktifCocukPsikiyatriAsistaniSayisi" Type="int" />
+    <Property Name="HastaneAktifPsikologSayisi" Type="int" />
+    <Property Name="HastaneAktifHemsireSayisi" Type="int" />
+    <Property Name="AmatemAktifPsikiyatriUzmaniSayisi" Type="int" />
+    <Property Name="CematemAktifCocukPsikiyatriUzmaniSayisi" Type="int" />
+    <Property Name="AmatemAktifPsikiyatriAsistaniSayisi" Type="int" />
+    <Property Name="CematemAktifCocukPsikiyatriAsistaniSayisi" Type="int" />
+    <Property Name="AmatemAktifPsikologSayisi" Type="int" />
+    <Property Name="CematemAktifPsikologSayisi" Type="int" />
+    <Property Name="AmatemAktifHemsireSayisi" Type="int" />
+    <Property Name="CematemAktifHemsireSayisi" Type="int" />
+    <Property Name="MaddeBagimliligiEgitimiAlmisTumHekimSayisi" Type="int" />
+    <Property Name="MaddeBagimliligiEgitimiAlmisPsikiyatriUzmaniSayisi" Type="int" />
+    <Property Name="MaddeBagimliligiEgitimiAlmisCocukPsikiyatriUzmaniSayisi" Type="int" />
+    <Property Name="MaddeBagimliligiEgitimiAlmisPsikologSayisi" Type="int" />
+    <Property Name="MaddeBagimliligiEgitimiAlmisHemsireSayisi" Type="int" />
+    <Property Name="LogTarihi" Type="datetime" />
+    <Property Name="GuncellemeTarihi" Type="datetime" />
+  </EntityType>
+  <EntityType Name="BasvuruBilgileriLabSonuc">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="KurumKodu" Type="nchar" MaxLength="10" />
+    <Property Name="LabNumuneAlimTarihi" Type="datetime" />
+    <Property Name="LabNumuneSonucTarihi" Type="datetime" />
+    <Property Name="MaddeBulgusu" Type="bit" />
+  </EntityType>
+  <EntityType Name="ErisimKodlari">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ErisimKodu" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Events">
+    <Key>
+      <PropertyRef Name="EventID" />
+    </Key>
+    <Property Name="EventID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Subject" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="500" />
+    <Property Name="Start" Type="datetime" Nullable="false" />
+    <Property Name="End" Type="datetime" />
+    <Property Name="ThemeColor" Type="nchar" MaxLength="10" />
+    <Property Name="IsFullDay" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ExcelYuklemeleri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="int" />
+    <Property Name="Tarih" Type="datetime" />
+    <Property Name="ExcelTuru" Type="int" />
+    <Property Name="SatirSayisi" Type="int" />
+    <Property Name="Durum" Type="int" />
+    <Property Name="SessionID" Type="nvarchar" MaxLength="150" />
+    <Property Name="HataliSatirSayisi" Type="int" />
+    <Property Name="ExcelID" Type="nvarchar" MaxLength="150" />
+  </EntityType>
+  <EntityType Name="Faaliyetler">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FaaliyetAdi" Type="nvarchar" MaxLength="100" />
+    <Property Name="FaaliyetKonusu" Type="nvarchar" MaxLength="100" />
+    <Property Name="FaaliyetTuru" Type="nvarchar" MaxLength="50" />
+    <Property Name="FaaliyetTarihi" Type="datetime" />
+    <Property Name="GerceklestigiYer" Type="nvarchar" MaxLength="100" />
+    <Property Name="GerceklestirenKurum" Type="nvarchar" MaxLength="100" />
+    <Property Name="GerceklestirenKisi" Type="nvarchar" MaxLength="100" />
+    <Property Name="UlasilanKisiSayisi" Type="int" />
+    <Property Name="FaaliyetRaporu" Type="nvarchar(max)" />
+    <Property Name="KayitTarihi" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FizikselHastalikOykuleri">
+    <Key>
+      <PropertyRef Name="HastalikOykusuID" />
+    </Key>
+    <Property Name="HastalikOykusuID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HastaEkipNo" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="KurumKodu" Type="int" Nullable="false" />
+    <Property Name="HastaProtokolNo" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Yok" Type="bit" />
+    <Property Name="DM" Type="bit" />
+    <Property Name="Hipertansiyon" Type="bit" />
+    <Property Name="Astim" Type="bit" />
+    <Property Name="Epilepsi" Type="bit" />
+    <Property Name="HIV" Type="bit" />
+    <Property Name="BobrekYetmezligi" Type="bit" />
+    <Property Name="Siroz" Type="bit" />
+    <Property Name="Hepatit" Type="bit" />
+    <Property Name="HepatitAciklama" Type="nvarchar" MaxLength="300" />
+    <Property Name="KalpHastaligi" Type="bit" />
+    <Property Name="KalpHastaligiAciklama" Type="nvarchar" MaxLength="300" />
+    <Property Name="IlacAlerjisi" Type="bit" />
+    <Property Name="IlacAlerjisiAciklama" Type="nvarchar" MaxLength="300" />
+    <Property Name="Diger" Type="bit" />
+    <Property Name="DigerAciklama" Type="nvarchar" MaxLength="300" />
+    <Property Name="LogTarihi" Type="datetime" />
+  </EntityType>
+  <EntityType Name="HastaBagimlilikSiddetiFormlari">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HastaID" Type="int" Nullable="false" />
+    <Property Name="HastaNo" Type="nvarchar" MaxLength="50" />
+    <Property Name="Ulke" Type="int" />
+    <Property Name="Merkez" Type="int" />
+    <Property Name="Program" Type="int" />
+    <Property Name="Modalite" Type="int" />
+    <Property Name="ModaliteAciklama" Type="nvarchar" MaxLength="100" />
+    <Property Name="G3Soru" Type="int" />
+    <Property Name="BasvuruTarihi" Type="date" />
+    <Property Name="GorusmeTarihi" Type="date" />
+    <Property Name="BaslamaSaati" Type="time" Precision="7" />
+    <Property Name="BitisSaati" Type="time" Precision="7" />
+    <Property Name="Sinif" Type="int" />
+    <Property Name="IletisimSekli" Type="int" />
+    <Property Name="Cinsiyet" Type="int" />
+    <Property Name="G11Soru" Type="nchar" MaxLength="10" />
+    <Property Name="G14Yil" Type="int" />
+    <Property Name="G14Ay" Type="int" />
+    <Property Name="DogumTarihi" Type="date" />
+    <Property Name="Yas" Type="int" />
+    <Property Name="G19Soru" Type="int" />
+    <Property Name="G19Aciklama" Type="nvarchar" MaxLength="100" />
+    <Property Name="G20Soru" Type="nvarchar" MaxLength="10" />
+    <Property Name="SevkKaynagi" Type="nvarchar" MaxLength="500" />
+    <Property Name="GenelBilgiKaynagi" Type="nvarchar" MaxLength="500" />
+    <Property Name="GenelBilgiKaynagiDiger" Type="nvarchar" MaxLength="500" />
+    <Property Name="M1Soru" Type="int" />
+    <Property Name="M3Soru" Type="int" />
+    <Property Name="M3SoruAciklama" Type="nvarchar" MaxLength="200" />
+    <Property Name="M4Soru" Type="int" />
+    <Property Name="M5Soru" Type="int" />
+    <Property Name="M5SoruAciklama" Type="nvarchar" MaxLength="200" />
+    <Property Name="M6Soru" Type="int" />
+    <Property Name="M7Soru" Type="int" />
+    <Property Name="M8Soru" Type="int" />
+    <Property Name="M8SoruAciklama" Type="nvarchar" MaxLength="200" />
+    <Property Name="M10Soru" Type="int" />
+    <Property Name="M11Soru" Type="int" />
+    <Property Name="M12Soru" Type="int" />
+    <Property Name="M12aSoru" Type="int" />
+    <Property Name="M12bSoru" Type="int" />
+    <Property Name="M13Soru" Type="int" />
+    <Property Name="M13aSoru" Type="int" />
+    <Property Name="M13bSoru" Type="int" />
+    <Property Name="M14Soru" Type="int" />
+    <Property Name="M14aSoru" Type="int" />
+    <Property Name="M14bSoru" Type="int" />
+    <Property Name="TibbiDurumNotlar" Type="nvarchar" MaxLength="500" />
+    <Property Name="E1Yil" Type="int" />
+    <Property Name="E1Ay" Type="int" />
+    <Property Name="TamamlanmisEgitimSuresiDuzey" Type="int" />
+    <Property Name="E1aSoruAciklama" Type="nvarchar" MaxLength="200" />
+    <Property Name="E2Soru" Type="int" />
+    <Property Name="E4aSoru" Type="int" />
+    <Property Name="E6SoruYil" Type="int" />
+    <Property Name="E6SoruAy" Type="int" />
+    <Property Name="E7Soru" Type="int" />
+    <Property Name="E9Soru" Type="int" />
+    <Property Name="E10Soru" Type="int" />
+    <Property Name="E11Soru" Type="int" />
+    <Property Name="IsIstihdamNotlar" Type="nvarchar" MaxLength="500" />
+    <Property Name="E12Soru" Type="int" />
+    <Property Name="E13Soru" Type="int" />
+    <Property Name="E14Soru" Type="int" />
+    <Property Name="E15Soru" Type="int" />
+    <Property Name="E16Soru" Type="int" />
+    <Property Name="E17Soru" Type="int" />
+    <Property Name="E18Soru" Type="int" />
+    <Property Name="E19Soru" Type="nchar" MaxLength="10" />
+    <Property Name="E20Soru" Type="int" />
+    <Property Name="E21Soru" Type="int" />
+    <Property Name="E23Soru" Type="int" />
+    <Property Name="E24Soru" Type="int" />
+    <Property Name="KonuEdilenParaBirimi" Type="nvarchar" MaxLength="50" />
+    <Property Name="IstihdamNotlari" Type="nvarchar" MaxLength="500" />
+    <Property Name="D1Soru" Type="nvarchar" MaxLength="50" />
+    <Property Name="D1Yil" Type="int" />
+    <Property Name="D1Yol" Type="int" />
+    <Property Name="D2Soru" Type="nvarchar" MaxLength="50" />
+    <Property Name="D2Yil" Type="int" />
+    <Property Name="D2Yol" Type="int" />
+    <Property Name="D3Soru" Type="nvarchar" MaxLength="50" />
+    <Property Name="D3Yil" Type="int" />
+    <Property Name="D3Yol" Type="int" />
+    <Property Name="D4Soru" Type="nvarchar" MaxLength="50" />
+    <Property Name="D4Yil" Type="int" />
+    <Property Name="D4Yol" Type="int" />
+    <Property Name="D5Soru" Type="nvarchar" MaxLength="50" />
+    <Property Name="D5Yil" Type="int" />
+    <Property Name="D5Yol" Type="int" />
+    <Property Name="D6Soru" Type="nvarchar" MaxLength="50" />
+    <Property Name="D6Yil" Type="int" />
+    <Property Name="D6Yol" Type="int" />
+    <Property Name="D7Soru" Type="nvarchar" MaxLength="50" />
+    <Property Name="D7Yil" Type="int" />
+    <Property Name="D7Yol" Type="int" />
+    <Property Name="D8Soru" Type="nvarchar" MaxLength="50" />
+    <Property Name="D8Yil" Type="int" />
+    <Property Name="D8Yol" Type="int" />
+    <Property Name="D9Soru" Type="nvarchar" MaxLength="50" />
+    <Property Name="D9Yil" Type="int" />
+    <Property Name="D9Yol" Type="int" />
+    <Property Name="D10Soru" Type="nvarchar" MaxLength="50" />
+    <Property Name="D10Yil" Type="int" />
+    <Property Name="D10Yol" Type="int" />
+    <Property Name="D11Soru" Type="nvarchar" MaxLength="50" />
+    <Property Name="D11Yil" Type="int" />
+    <Property Name="D11Yol" Type="int" />
+    <Property Name="D12Soru" Type="nvarchar" MaxLength="50" />
+    <Property Name="D12Yil" Type="int" />
+    <Property Name="D12Yol" Type="int" />
+    <Property Name="D13Soru" Type="nvarchar" MaxLength="50" />
+    <Property Name="D13Yil" Type="int" />
+    <Property Name="D13Yol" Type="int" />
+    <Property Name="D14aSoru" Type="nchar" MaxLength="10" />
+    <Property Name="D14bSoru" Type="nchar" MaxLength="10" />
+    <Property Name="D15Soru" Type="int" />
+    <Property Name="D16Soru" Type="nvarchar" MaxLength="50" />
+    <Property Name="D17Soru" Type="int" />
+    <Property Name="AlkolMaddeNotu" Type="nvarchar" MaxLength="500" />
+    <Property Name="AlkolMaddeNotuD5" Type="nvarchar" MaxLength="500" />
+    <Property Name="D38Soru" Type="int" />
+    <Property Name="D38aSoru" Type="nchar" MaxLength="10" />
+    <Property Name="D19aSoru" Type="int" />
+    <Property Name="D21aSoru" Type="nchar" MaxLength="10" />
+    <Property Name="D23Soru" Type="int" />
+    <Property Name="D24Soru" Type="int" />
+    <Property Name="D25Soru" Type="int" />
+    <Property Name="D26Soru" Type="int" />
+    <Property Name="D26SoruAciklama" Type="nvarchar" MaxLength="100" />
+    <Property Name="D28Soru" Type="int" />
+    <Property Name="D30Soru" Type="int" />
+    <Property Name="D27Soru" Type="int" />
+    <Property Name="D27SoruAciklama" Type="nchar" MaxLength="10" />
+    <Property Name="D29Soru" Type="int" />
+    <Property Name="D31Soru" Type="int" />
+    <Property Name="D34Soru" Type="int" />
+    <Property Name="D35Soru" Type="int" />
+    <Property Name="D36Soru" Type="int" />
+    <Property Name="D37Soru" Type="nvarchar" MaxLength="50" />
+    <Property Name="D37SoruYil" Type="int" />
+    <Property Name="D37SoruYol" Type="int" />
+    <Property Name="D39Soru" Type="int" />
+    <Property Name="D39a" Type="int" />
+    <Property Name="D39b" Type="int" />
+    <Property Name="D39c" Type="int" />
+    <Property Name="D39d" Type="int" />
+    <Property Name="D39e" Type="int" />
+    <Property Name="AlkolMaddeNotlari" Type="nvarchar" MaxLength="500" />
+    <Property Name="L1Soru" Type="int" />
+    <Property Name="L2Soru" Type="int" />
+    <Property Name="L3Soru" Type="int" />
+    <Property Name="L4Soru" Type="int" />
+    <Property Name="L5Soru" Type="int" />
+    <Property Name="L6Soru" Type="int" />
+    <Property Name="L7Soru" Type="int" />
+    <Property Name="L8Soru" Type="int" />
+    <Property Name="L9Soru" Type="int" />
+    <Property Name="L10Soru" Type="int" />
+    <Property Name="L11Soru" Type="int" />
+    <Property Name="L12Soru" Type="int" />
+    <Property Name="L13Soru" Type="int" />
+    <Property Name="L14Soru" Type="int" />
+    <Property Name="L15Soru" Type="int" />
+    <Property Name="L16Soru" Type="nvarchar" MaxLength="100" />
+    <Property Name="L17Soru" Type="nchar" MaxLength="10" />
+    <Property Name="L18Soru" Type="int" />
+    <Property Name="L19Soru" Type="int" />
+    <Property Name="L20Soru" Type="int" />
+    <Property Name="L21Soru" Type="int" />
+    <Property Name="L24Soru" Type="int" />
+    <Property Name="L25Soru" Type="nvarchar" MaxLength="50" />
+    <Property Name="L26Soru" Type="int" />
+    <Property Name="L27Soru" Type="int" />
+    <Property Name="L28Soru" Type="int" />
+    <Property Name="L29Soru" Type="int" />
+    <Property Name="L31Soru" Type="int" />
+    <Property Name="L32Soru" Type="int" />
+    <Property Name="HukikiNotlar" Type="nvarchar" MaxLength="500" />
+    <Property Name="HukikiNotlarDevami" Type="nvarchar" MaxLength="500" />
+    <Property Name="F1Soru" Type="int" />
+    <Property Name="F1SoruAciklama" Type="nvarchar" MaxLength="100" />
+    <Property Name="F3Soru" Type="int" />
+    <Property Name="F4Soru" Type="int" />
+    <Property Name="F6Soru" Type="int" />
+    <Property Name="F4aSoru" Type="int" />
+    <Property Name="F7Soru" Type="int" />
+    <Property Name="F8Soru" Type="int" />
+    <Property Name="F9Soru" Type="int" />
+    <Property Name="F10Soru" Type="int" />
+    <Property Name="F11aSoru" Type="nchar" MaxLength="10" />
+    <Property Name="F18Soru" Type="int" />
+    <Property Name="F18SoruYasam" Type="int" />
+    <Property Name="F19Soru" Type="int" />
+    <Property Name="F19SoruYasam" Type="int" />
+    <Property Name="F20Soru" Type="int" />
+    <Property Name="F20SoruYasam" Type="int" />
+    <Property Name="F21Soru" Type="int" />
+    <Property Name="F21SoruYasam" Type="int" />
+    <Property Name="F22Soru" Type="int" />
+    <Property Name="F22SoruYasam" Type="int" />
+    <Property Name="F23Soru" Type="int" />
+    <Property Name="F23SoruYasam" Type="int" />
+    <Property Name="F23SoruAciklama" Type="nvarchar" MaxLength="50" />
+    <Property Name="F24Soru" Type="int" />
+    <Property Name="F24SoruYasam" Type="int" />
+    <Property Name="F25Soru" Type="int" />
+    <Property Name="F25SoruYasam" Type="int" />
+    <Property Name="F26Soru" Type="int" />
+    <Property Name="F26SoruYasam" Type="int" />
+    <Property Name="AileSosyalDurumNotlar" Type="nvarchar" MaxLength="500" />
+    <Property Name="F28Soru" Type="int" />
+    <Property Name="F28SoruYasam" Type="int" />
+    <Property Name="F29Soru" Type="int" />
+    <Property Name="F29SoruYasam" Type="int" />
+    <Property Name="F30Soru" Type="int" />
+    <Property Name="F32Soru" Type="int" />
+    <Property Name="F34Soru" Type="int" />
+    <Property Name="F31Soru" Type="int" />
+    <Property Name="F33Soru" Type="int" />
+    <Property Name="F35Soru" Type="int" />
+    <Property Name="F37Soru" Type="int" />
+    <Property Name="F38Soru" Type="int" />
+    <Property Name="F39Soru1" Type="int" />
+    <Property Name="F39Soru2" Type="int" />
+    <Property Name="F39aSoru1" Type="int" />
+    <Property Name="F39aSoru2" Type="int" />
+    <Property Name="AileSosyalDurumNotlarDevami" Type="nvarchar" MaxLength="500" />
+    <Property Name="P1Soru" Type="int" />
+    <Property Name="P2Soru" Type="int" />
+    <Property Name="P3Soru" Type="int" />
+    <Property Name="P4Soru" Type="int" />
+    <Property Name="P4SoruYasam" Type="int" />
+    <Property Name="P5Soru" Type="int" />
+    <Property Name="P5SoruYasam" Type="int" />
+    <Property Name="P6Soru" Type="int" />
+    <Property Name="P6SoruYasam" Type="int" />
+    <Property Name="P7Soru" Type="int" />
+    <Property Name="P7SoruYasam" Type="int" />
+    <Property Name="P8Soru" Type="int" />
+    <Property Name="P8SoruYasam" Type="int" />
+    <Property Name="P9Soru" Type="int" />
+    <Property Name="P9SoruYasam" Type="int" />
+    <Property Name="P10Soru" Type="int" />
+    <Property Name="P10SoruYasam" Type="int" />
+    <Property Name="P11Soru" Type="int" />
+    <Property Name="P11SoruYasam" Type="int" />
+    <Property Name="P12Soru" Type="int" />
+    <Property Name="P13Soru" Type="int" />
+    <Property Name="P14Soru" Type="int" />
+    <Property Name="P22Soru" Type="int" />
+    <Property Name="P23Soru" Type="int" />
+    <Property Name="PsikiyatrikNotlar" Type="nvarchar" MaxLength="500" />
+    <Property Name="G12SonNokta" Type="int" />
+    <Property Name="G50TedaviKodu" Type="int" />
+    <Property Name="G50TedaviAciklama" Type="nvarchar" MaxLength="100" />
+    <Property Name="GenelYorumlar" Type="nvarchar" MaxLength="500" />
+    <Property Name="KaydedenKullaniciID" Type="int" />
+    <Property Name="KayitTarihi" Type="datetime" />
+  </EntityType>
+  <EntityType Name="HastaBaharFormlari">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HastaID" Type="int" Nullable="false" />
+    <Property Name="CalismaDurumu" Type="int" />
+    <Property Name="EkonomikDurumu" Type="int" />
+    <Property Name="YasadigiIl" Type="nvarchar" MaxLength="50" />
+    <Property Name="YasadigiIlce" Type="nvarchar" MaxLength="50" />
+    <Property Name="GorusmeninYapildigiMerkez" Type="int" />
+    <Property Name="Adres" Type="nvarchar" MaxLength="300" />
+    <Property Name="Telefon" Type="nvarchar" MaxLength="50" />
+    <Property Name="YakinAdiSoyadi" Type="nvarchar" MaxLength="200" />
+    <Property Name="YakinTelefonu" Type="nvarchar" MaxLength="50" />
+    <Property Name="GelisSekli" Type="int" />
+    <Property Name="TedaviBasvuruNedeni" Type="int" />
+    <Property Name="SonTedaviBasvuruNedeni" Type="nvarchar" MaxLength="500" />
+    <Property Name="S1TutunUrunleri" Type="int" />
+    <Property Name="S1AlkolluIcecekler" Type="int" />
+    <Property Name="S1Esrar" Type="int" />
+    <Property Name="S1Kokain" Type="int" />
+    <Property Name="S1AmfctaminTipiUyaricilar" Type="int" />
+    <Property Name="S1Inhalanlar" Type="int" />
+    <Property Name="S1Sakinlestiriciler" Type="int" />
+    <Property Name="S1Halüsinojenler" Type="int" />
+    <Property Name="S1Opioidler" Type="int" />
+    <Property Name="S1Diger" Type="int" />
+    <Property Name="S1DigerAciklama" Type="nvarchar" MaxLength="500" />
+    <Property Name="S2TutunUrunleri" Type="int" />
+    <Property Name="S2AlkolluIcecekler" Type="int" />
+    <Property Name="S2Esrar" Type="int" />
+    <Property Name="S2Kokain" Type="int" />
+    <Property Name="S2AmfctaminTipiUyaricilar" Type="int" />
+    <Property Name="S2Inhalanlar" Type="int" />
+    <Property Name="S2Sakinlestiriciler" Type="int" />
+    <Property Name="S2Halüsinojenler" Type="int" />
+    <Property Name="S2Opioidler" Type="int" />
+    <Property Name="S2Diger" Type="int" />
+    <Property Name="S2DigerAciklama" Type="nvarchar" MaxLength="500" />
+    <Property Name="S3TutunUrunleri" Type="int" />
+    <Property Name="S3AlkolluIcecekler" Type="int" />
+    <Property Name="S3Esrar" Type="int" />
+    <Property Name="S3Kokain" Type="int" />
+    <Property Name="S3AmfctaminTipiUyaricilar" Type="int" />
+    <Property Name="S3Inhalanlar" Type="int" />
+    <Property Name="S3Sakinlestiriciler" Type="int" />
+    <Property Name="S3Halüsinojenler" Type="int" />
+    <Property Name="S3Opioidler" Type="int" />
+    <Property Name="S3Diger" Type="int" />
+    <Property Name="S3DigerAciklama" Type="nvarchar" MaxLength="500" />
+    <Property Name="S4TutunUrunleri" Type="int" />
+    <Property Name="S4AlkolluIcecekler" Type="int" />
+    <Property Name="S4Esrar" Type="int" />
+    <Property Name="S4Kokain" Type="int" />
+    <Property Name="S4AmfctaminTipiUyaricilar" Type="int" />
+    <Property Name="S4Inhalanlar" Type="int" />
+    <Property Name="S4Sakinlestiriciler" Type="int" />
+    <Property Name="S4Halüsinojenler" Type="int" />
+    <Property Name="S4Opioidler" Type="int" />
+    <Property Name="S4Diger" Type="int" />
+    <Property Name="S4DigerAciklama" Type="nvarchar" MaxLength="500" />
+    <Property Name="S5TutunUrunleri" Type="int" />
+    <Property Name="S5AlkolluIcecekler" Type="int" />
+    <Property Name="S5Esrar" Type="int" />
+    <Property Name="S5Kokain" Type="int" />
+    <Property Name="S5AmfctaminTipiUyaricilar" Type="int" />
+    <Property Name="S5Inhalanlar" Type="int" />
+    <Property Name="S5Sakinlestiriciler" Type="int" />
+    <Property Name="S5Halüsinojenler" Type="int" />
+    <Property Name="S5Opioidler" Type="int" />
+    <Property Name="S5Diger" Type="int" />
+    <Property Name="S5DigerAciklama" Type="nvarchar" MaxLength="500" />
+    <Property Name="S6TutunUrunleri" Type="int" />
+    <Property Name="S6AlkolluIcecekler" Type="int" />
+    <Property Name="S6Esrar" Type="int" />
+    <Property Name="S6Kokain" Type="int" />
+    <Property Name="S6AmfctaminTipiUyaricilar" Type="int" />
+    <Property Name="S6Inhalanlar" Type="int" />
+    <Property Name="S6Sakinlestiriciler" Type="int" />
+    <Property Name="S6Halüsinojenler" Type="int" />
+    <Property Name="S6Opioidler" Type="int" />
+    <Property Name="S6Diger" Type="int" />
+    <Property Name="S6DigerAciklama" Type="nvarchar" MaxLength="500" />
+    <Property Name="TamAyiklikBaslamaZamani" Type="nvarchar" MaxLength="200" />
+    <Property Name="Suboxone" Type="bit" />
+    <Property Name="SuboxoneAciklama" Type="nvarchar" MaxLength="50" />
+    <Property Name="NaltreksonImplant" Type="bit" />
+    <Property Name="NaltreksonImplantAciklama" Type="nvarchar" MaxLength="50" />
+    <Property Name="Ethylex" Type="bit" />
+    <Property Name="EthylexAciklama" Type="nvarchar" MaxLength="50" />
+    <Property Name="Campral" Type="bit" />
+    <Property Name="CampralAciklama" Type="nvarchar" MaxLength="50" />
+    <Property Name="Antabus" Type="bit" />
+    <Property Name="AntabusAciklama" Type="nvarchar" MaxLength="50" />
+    <Property Name="TedaviAciklama" Type="nvarchar" MaxLength="500" />
+    <Property Name="PlanlananRehabilitasyonProgrami" Type="int" />
+    <Property Name="PlanlananProgramSuresi" Type="int" />
+    <Property Name="ProgramGunleri" Type="int" />
+    <Property Name="BelirlenenTerapist" Type="nvarchar" MaxLength="200" />
+    <Property Name="Hedefler" Type="nvarchar" MaxLength="500" />
+    <Property Name="KaydedenKullaniciID" Type="int" />
+    <Property Name="KayitTarihi" Type="datetime" />
+  </EntityType>
+  <EntityType Name="HastaBaharFormuSonuc">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FormID" Type="int" Nullable="false" />
+    <Property Name="KodID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="HastaBaharFormuSonucKodlari">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Kod" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="Aciklama" Type="nvarchar" MaxLength="200" Nullable="false" />
+  </EntityType>
+  <EntityType Name="HastaBeyanBilgileri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BasvuruID" Type="int" Nullable="false" />
+    <Property Name="BeyanAdresi" Type="nvarchar" MaxLength="200" />
+    <Property Name="BeyanTelefonu" Type="nvarchar" MaxLength="50" />
+    <Property Name="BeyanAldigiKurum" Type="nvarchar" MaxLength="50" />
+    <Property Name="BeyanTarihi" Type="datetime" />
+    <Property Name="GuncellemeTarihi" Type="datetime" />
+  </EntityType>
+  <EntityType Name="HastaEgitimBilgileri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HastaID" Type="int" Nullable="false" />
+    <Property Name="OgrenimDurumu" Type="int" />
+    <Property Name="LiseTuru" Type="int" />
+    <Property Name="Ilkokul" Type="nvarchar" MaxLength="50" />
+    <Property Name="Ortaokul" Type="nvarchar" MaxLength="50" />
+    <Property Name="Lise" Type="nvarchar" MaxLength="50" />
+    <Property Name="Universite" Type="nvarchar" MaxLength="100" />
+    <Property Name="Fakulte" Type="nvarchar" MaxLength="100" />
+    <Property Name="Bolum" Type="nvarchar" MaxLength="100" />
+    <Property Name="IsGecmisi" Type="nvarchar(max)" />
+    <Property Name="SertifikaVeYeterlilikler" Type="nvarchar(max)" />
+    <Property Name="KayitTarihi" Type="datetime" />
+    <Property Name="KaydedenKullaniciID" Type="int" />
+    <Property Name="GuncelleyenKullaniciID" Type="int" />
+  </EntityType>
+  <EntityType Name="HastaIlkKayitBilgileri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HastaID" Type="int" Nullable="false" />
+    <Property Name="KayitTarihi" Type="datetime" Nullable="false" />
+    <Property Name="KurumTuru" Type="nvarchar" MaxLength="50" />
+    <Property Name="KaydedenKurum" Type="nvarchar" MaxLength="50" />
+    <Property Name="VakaBilgiKaynagi" Type="nvarchar" MaxLength="100" />
+    <Property Name="EldeEdilenBilgiler" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="HastaIskurGorusmeleri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HastaID" Type="int" Nullable="false" />
+    <Property Name="GorusmeyiYapanDanisman" Type="nvarchar" MaxLength="100" />
+    <Property Name="GorusmeTarihi" Type="date" />
+    <Property Name="GorusmeSonucu" Type="int" />
+    <Property Name="YonlendirilenIsyeri" Type="nvarchar" MaxLength="50" />
+    <Property Name="YonlendirmeBasvuruTarihi" Type="date" />
+    <Property Name="IsyeriYonlendirmeSonuc" Type="int" />
+    <Property Name="IseBasladigiYer" Type="nvarchar" MaxLength="50" />
+    <Property Name="IseBaslamaTarihi" Type="date" />
+    <Property Name="IseBaslamaNedeni" Type="nvarchar" MaxLength="200" />
+    <Property Name="IsKulubuYonlendirmeSonuc" Type="int" />
+    <Property Name="PlanlananBaslangicTarihi" Type="date" />
+    <Property Name="PlanlananSurecBaslangicTarihi" Type="date" />
+    <Property Name="SurecBaslamaTarihi" Type="date" />
+    <Property Name="SurecTamamlanmaTarihi" Type="date" />
+    <Property Name="IsKulubuYonlendirmeDurum" Type="int" />
+    <Property Name="SertifikaDosyaYolu" Type="nvarchar" MaxLength="100" />
+    <Property Name="Tur" Type="int" />
+    <Property Name="ProgramDurum" Type="int" />
+    <Property Name="PlanlananProgramTuru" Type="nvarchar" MaxLength="50" />
+    <Property Name="PlanlananProgramBaslangicTarihi" Type="date" />
+    <Property Name="PlanlananProgramBaslangici" Type="date" />
+    <Property Name="ProgramTuru" Type="int" />
+    <Property Name="ProgramTuruTamamlanmaTarihi" Type="date" />
+    <Property Name="YonlendirilenKursTuru" Type="nvarchar" MaxLength="50" />
+    <Property Name="YonlendirilenKursBilgisiTuru" Type="nvarchar" MaxLength="50" />
+    <Property Name="GorusmeSonucuDiger" Type="nvarchar" MaxLength="500" />
+    <Property Name="GorusmeKayitTarihi" Type="datetime" />
+    <Property Name="KaydedenKullaniciID" Type="int" />
+  </EntityType>
+  <EntityType Name="HastaIzlemBilgileri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HastaID" Type="int" Nullable="false" />
+    <Property Name="IzlemTarihi" Type="datetime" Nullable="false" />
+    <Property Name="IzlemYapanKurum" Type="nvarchar" MaxLength="50" />
+    <Property Name="IzlemBasligi" Type="nvarchar" MaxLength="200" />
+    <Property Name="IzlemAciklama" Type="nvarchar" MaxLength="500" />
+    <Property Name="IzlemYapanKurumTuru" Type="nvarchar" MaxLength="50" />
+    <Property Name="IzlemVakaKaynagi" Type="nvarchar" MaxLength="100" />
+    <Property Name="EldeEdilenBilgiler" Type="nvarchar(max)" />
+    <Property Name="IzlemSonucu" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Hastalar">
+    <Key>
+      <PropertyRef Name="HastaID" />
+    </Key>
+    <Property Name="HastaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="KurumKodu" Type="int" Nullable="false" />
+    <Property Name="HastaAdi" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="HastaSoyadi" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="HastaTCKimlikNo" Type="nvarchar" MaxLength="11" Nullable="false" />
+    <Property Name="Telefon" Type="nvarchar" MaxLength="50" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="Adres" Type="nvarchar" MaxLength="500" />
+    <Property Name="Cinsiyet" Type="nchar" MaxLength="10" />
+    <Property Name="DogumTarihi" Type="date" />
+    <Property Name="KayitTarihi" Type="datetime" Nullable="false" />
+    <Property Name="GuncellemeTarihi" Type="datetime" />
+    <Property Name="HastaEkipNo" Type="nchar" MaxLength="50" />
+    <Property Name="OnamDurumu" Type="bit" />
+    <Property Name="KaydedenKullaniciID" Type="int" />
+  </EntityType>
+  <EntityType Name="HastaMaddeKullanimBilgileri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="KurumKodu" Type="int" Nullable="false" />
+    <Property Name="HastaEkipNo" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="HastaProtokolNo" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="MaddeTuru" Type="nvarchar" MaxLength="50" />
+    <Property Name="Sure" Type="nchar" MaxLength="10" />
+    <Property Name="KullanimSuresiAy" Type="bit" />
+    <Property Name="KullanimSuresiYil" Type="bit" />
+    <Property Name="Miktar" Type="nvarchar" MaxLength="500" />
+    <Property Name="Yontem" Type="nvarchar" MaxLength="500" />
+    <Property Name="Siklik" Type="nvarchar" MaxLength="500" />
+    <Property Name="EnSonKullanmaZamani" Type="nchar" MaxLength="10" />
+    <Property Name="EnSonKullanmaZamaniGun" Type="bit" />
+    <Property Name="EnSonKullanmaZamaniAy" Type="bit" />
+    <Property Name="EnSonKullanmaZamaniYil" Type="bit" />
+  </EntityType>
+  <EntityType Name="HastaNotlari">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HastaID" Type="int" Nullable="false" />
+    <Property Name="NotBilgisi" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="KayitTarihi" Type="datetime" Nullable="false" />
+    <Property Name="KaydedenKullaniciID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="HastaOlceklerFormu">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HastaID" Type="int" Nullable="false" />
+    <Property Name="DikkatEksikligi" Type="int" />
+    <Property Name="AsiriHareketlilik" Type="int" />
+    <Property Name="UykuSoru1" Type="int" />
+    <Property Name="UykuSoru2" Type="int" />
+    <Property Name="UykuSoru3" Type="int" />
+    <Property Name="UykuSoru4" Type="int" />
+    <Property Name="UykuSoru5" Type="int" />
+    <Property Name="UykuSoru6" Type="int" />
+    <Property Name="UykuSoru7" Type="int" />
+    <Property Name="UykuSoru8" Type="int" />
+    <Property Name="UykuSoru9" Type="int" />
+    <Property Name="UykuSoru10" Type="int" />
+    <Property Name="UykuBozukluguTanisi" Type="int" />
+    <Property Name="KadinFormu1" Type="int" />
+    <Property Name="KadinFormu2" Type="int" />
+    <Property Name="KadinFormu3" Type="int" />
+    <Property Name="KadinFormu4" Type="int" />
+    <Property Name="KadinFormu5" Type="int" />
+    <Property Name="ErkekFormu1" Type="int" />
+    <Property Name="ErkekFormu2" Type="int" />
+    <Property Name="ErkekFormu3" Type="int" />
+    <Property Name="ErkekFormu4" Type="int" />
+    <Property Name="ErkekFormu5" Type="int" />
+    <Property Name="TravmatikYasam1" Type="int" />
+    <Property Name="TravmatikYasam2" Type="int" />
+    <Property Name="TravmatikYasam3" Type="int" />
+    <Property Name="TravmatikYasam4" Type="int" />
+    <Property Name="TravmatikYasam5" Type="int" />
+    <Property Name="TravmatikYasam6" Type="int" />
+    <Property Name="TravmatikYasam7" Type="int" />
+    <Property Name="TravmatikYasam8" Type="int" />
+    <Property Name="TravmatikYasam9" Type="int" />
+    <Property Name="TravmatikYasam10" Type="int" />
+    <Property Name="TravmatikYasam11" Type="int" />
+    <Property Name="TravmatikYasam12" Type="int" />
+    <Property Name="TravmatikYasam13" Type="int" />
+    <Property Name="TravmatikYasam14" Type="int" />
+    <Property Name="TravmatikYasam14Aciklama" Type="nvarchar" MaxLength="500" />
+    <Property Name="Appendix1" Type="int" />
+    <Property Name="Appendix2" Type="int" />
+    <Property Name="Appendix3" Type="int" />
+    <Property Name="Appendix4" Type="int" />
+    <Property Name="Appendix5" Type="int" />
+    <Property Name="Appendix6" Type="int" />
+    <Property Name="Appendix7" Type="int" />
+    <Property Name="Appendix8" Type="int" />
+    <Property Name="Appendix9" Type="int" />
+    <Property Name="Appendix10" Type="int" />
+    <Property Name="Appendix11" Type="int" />
+    <Property Name="Appendix12" Type="int" />
+    <Property Name="Appendix13" Type="int" />
+    <Property Name="Appendix14" Type="int" />
+    <Property Name="Appendix15" Type="int" />
+    <Property Name="Appendix16" Type="int" />
+    <Property Name="Appendix17" Type="int" />
+    <Property Name="Appendix18" Type="int" />
+    <Property Name="Appendix19" Type="int" />
+    <Property Name="Appendix20" Type="int" />
+    <Property Name="KaydedenKullaniciID" Type="int" />
+    <Property Name="KayitTarihi" Type="datetime" />
+  </EntityType>
+  <EntityType Name="HastaTimeline">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HastaID" Type="int" Nullable="false" />
+    <Property Name="Baslik" Type="nvarchar" MaxLength="50" />
+    <Property Name="Aciklama" Type="nvarchar(max)" />
+    <Property Name="Tarih" Type="date" />
+  </EntityType>
+  <EntityType Name="HastaYakinBilgileri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HastaID" Type="int" Nullable="false" />
+    <Property Name="YakinAdi" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="YakinSoyadi" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="YakinlikDerecesi" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Telefon" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Adres" Type="nvarchar" MaxLength="250" />
+  </EntityType>
+  <EntityType Name="Il">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ILAdi" Type="nvarchar" MaxLength="150" />
+    <Property Name="KOD" Type="int" />
+  </EntityType>
+  <EntityType Name="Ilce">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ILID" Type="int" />
+    <Property Name="ILCEAdi" Type="nvarchar" MaxLength="150" />
+    <Property Name="ILKOD" Type="int" />
+  </EntityType>
+  <EntityType Name="IstihdamIsyeriAdresBilgisi">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IsyeriID" Type="int" Nullable="false" />
+    <Property Name="MahalleID" Type="int" />
+    <Property Name="Sokak" Type="nvarchar" MaxLength="50" />
+    <Property Name="Cadde" Type="nvarchar" MaxLength="50" />
+    <Property Name="Bina No" Type="nvarchar" MaxLength="10" />
+    <Property Name="Daire No" Type="nvarchar" MaxLength="10" />
+    <Property Name="IlID" Type="int" />
+    <Property Name="IlceID" Type="int" />
+  </EntityType>
+  <EntityType Name="IstihdamIsyeriGorusmeleri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IsyeriID" Type="int" Nullable="false" />
+    <Property Name="GorusmeyiYapanKisi" Type="nvarchar" MaxLength="70" Nullable="false" />
+    <Property Name="GorusulenKisi" Type="nvarchar" MaxLength="70" Nullable="false" />
+    <Property Name="GorusmedeEleAlinanKonular" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="GorusmeTarihi" Type="datetime" Nullable="false" />
+    <Property Name="KaydedenKullaniciID" Type="int" />
+  </EntityType>
+  <EntityType Name="IstihdamIsyeriIletisimKisileri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IsyeriID" Type="int" Nullable="false" />
+    <Property Name="Ad" Type="nvarchar" MaxLength="100" />
+    <Property Name="Soyad" Type="nvarchar" MaxLength="100" />
+    <Property Name="Unvan" Type="nvarchar" MaxLength="100" />
+    <Property Name="Telefon" Type="nvarchar" MaxLength="50" />
+    <Property Name="EPosta" Type="nvarchar" MaxLength="50" />
+    <Property Name="Adres" Type="nvarchar" MaxLength="500" />
+    <Property Name="KaydedenKullaniciID" Type="int" />
+  </EntityType>
+  <EntityType Name="IstihdamIsyeriSektorler">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SektorAdi" Type="nvarchar" MaxLength="150" />
+  </EntityType>
+  <EntityType Name="IstihdamIsyerleri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IsyeriAdi" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="SektorID" Type="int" />
+    <Property Name="ToplamCalisanSayisi" Type="int" />
+    <Property Name="Notlar" Type="nvarchar" MaxLength="300" />
+    <Property Name="KayitTarihi" Type="datetime" Nullable="false" />
+    <Property Name="GuncellemeTarihi" Type="datetime" />
+    <Property Name="KaydedenKullaniciID" Type="int" />
+  </EntityType>
+  <EntityType Name="Kullanici">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="yas" Type="nchar" MaxLength="10" />
+    <Property Name="ad" Type="nchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="KullaniciBirimBilgileri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="KullaniciID" Type="int" Nullable="false" />
+    <Property Name="Kurum" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Bina" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Bolge" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="KullaniciErisimBilgileri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="KullaniciID" Type="int" Nullable="false" />
+    <Property Name="ErisimKoduID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="KullaniciGorevTakip">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="KullaniciID" Type="int" Nullable="false" />
+    <Property Name="Baslik" Type="nvarchar" MaxLength="50" />
+    <Property Name="Aciklama" Type="nvarchar" MaxLength="500" />
+    <Property Name="Tarih" Type="date" />
+    <Property Name="Durum" Type="char" MaxLength="1" />
+  </EntityType>
+  <EntityType Name="KullaniciIletisimBilgileri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="KullaniciID" Type="int" Nullable="false" />
+    <Property Name="Telefon" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="KurumTelefonu" Type="nvarchar" MaxLength="50" />
+    <Property Name="Mahalle" Type="nvarchar" MaxLength="50" />
+    <Property Name="Sokak" Type="nvarchar" MaxLength="50" />
+    <Property Name="Cadde" Type="nvarchar" MaxLength="50" />
+    <Property Name="Bina No" Type="nvarchar" MaxLength="10" />
+    <Property Name="Daire No" Type="nvarchar" MaxLength="10" />
+    <Property Name="IlID" Type="int" />
+    <Property Name="IlceID" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'EkipProje.dbo.KullaniciIzinBilgileri' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="KullaniciIzinBilgileri">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="KullaniciID" />
+      <PropertyRef Name="IzinTuruId" />
+      <PropertyRef Name="BaslamaTarihi" />
+      <PropertyRef Name="BitisTarihi" />
+      <PropertyRef Name="IzinAdresi" />
+      <PropertyRef Name="YerineBakacakKisiId" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="KullaniciID" Type="int" Nullable="false" />
+    <Property Name="IzinTuruId" Type="int" Nullable="false" />
+    <Property Name="BaslamaTarihi" Type="datetime" Nullable="false" />
+    <Property Name="BitisTarihi" Type="datetime" Nullable="false" />
+    <Property Name="ToplamIzinSuresi" Type="int" />
+    <Property Name="IzinAdresi" Type="nvarchar" MaxLength="350" Nullable="false" />
+    <Property Name="Aciklama" Type="nvarchar(max)" />
+    <Property Name="YerineBakacakKisiId" Type="int" Nullable="false" />
+    <Property Name="IzinDurumu" Type="bit" />
+    <Property Name="KayitTarihi" Type="datetime" />
+    <Property Name="KaydedenKullaniciId" Type="int" />
+    <Property Name="AktarimID" Type="int" />
+    <Property Name="AktarimPersonelID" Type="int" />
+    <Property Name="YerineBakacakKisiAd" Type="nvarchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="KullaniciIzinTuru">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="TurAdi" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="IsletmeId" Type="int" Nullable="false" />
+    <Property Name="Status" Type="bit" Nullable="false" />
+    <Property Name="Enum" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Kullanicilar">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="KurumID" Type="int" Nullable="false" />
+    <Property Name="HizmetMerkeziID" Type="int" Nullable="false" />
+    <Property Name="KullaniciAdi" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="Sifre" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="Ad" Type="nvarchar" MaxLength="200" />
+    <Property Name="Soyad" Type="nvarchar" MaxLength="200" />
+    <Property Name="AdSoyad" Type="nvarchar" MaxLength="400" />
+    <Property Name="TC" Type="nvarchar" MaxLength="11" Nullable="false" />
+    <Property Name="DogumTarihi" Type="nvarchar" MaxLength="50" />
+    <Property Name="Cinsiyet" Type="nvarchar" MaxLength="50" />
+    <Property Name="KanGrubu" Type="int" />
+    <Property Name="MedeniDurum" Type="nvarchar" MaxLength="50" />
+    <Property Name="Telefon" Type="nvarchar" MaxLength="200" />
+    <Property Name="KurumTelefonu" Type="nvarchar" MaxLength="200" />
+    <Property Name="KurumEposta" Type="nvarchar" MaxLength="300" />
+    <Property Name="Meslek" Type="nvarchar" MaxLength="200" />
+    <Property Name="IseBaslamaTarihi" Type="datetime" />
+    <Property Name="PersonelId" Type="int" />
+    <Property Name="KullaniciDurumu" Type="bit" />
+    <Property Name="SifreKontrol" Type="bit" />
+    <Property Name="FotoByte" Type="varbinary(max)" />
+    <Property Name="FotoContentType" Type="nvarchar" MaxLength="100" />
+    <Property Name="ExcelID" Type="nvarchar" MaxLength="250" />
+    <Property Name="KaydedenKullaniciID" Type="int" />
+    <Property Name="KayitTarihi" Type="datetime" />
+  </EntityType>
+  <EntityType Name="KullaniciRolleri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="KullaniciId" Type="int" Nullable="false" />
+    <Property Name="RolId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="KurumHizmetMerkezleri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="KurumID" Type="int" Nullable="false" />
+    <Property Name="Ad" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Adres" Type="nvarchar" MaxLength="500" />
+    <Property Name="Telefon" Type="nvarchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="Kurumlar">
+    <Key>
+      <PropertyRef Name="KurumID" />
+    </Key>
+    <Property Name="KurumID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="KurumKodu" Type="int" Nullable="false" />
+    <Property Name="KurumAdi" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="KurumPoliklinikTurleri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="KurumID" Type="int" Nullable="false" />
+    <Property Name="PoliklinikTuru" Type="nchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="KurumRandevulari">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HastaEkipNo" Type="nchar" MaxLength="50" Nullable="false" />
+    <Property Name="KurumKodu" Type="int" Nullable="false" />
+    <Property Name="RandevuTipi" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="RandevuTarihSaati" Type="datetime" Nullable="false" />
+    <Property Name="GeldiGelmedi" Type="bit" />
+    <Property Name="KayitTarihi" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Log">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Date" Type="datetime" />
+    <Property Name="Thread" Type="nvarchar(max)" />
+    <Property Name="Levels" Type="nvarchar(max)" />
+    <Property Name="Logger" Type="nvarchar(max)" />
+    <Property Name="Message" Type="nvarchar(max)" />
+    <Property Name="Exception" Type="nvarchar(max)" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="Application" Type="nvarchar" MaxLength="150" />
+    <Property Name="Url" Type="nvarchar(max)" />
+    <Property Name="UrlRefferer" Type="nvarchar(max)" />
+    <Property Name="SessionID" Type="nvarchar(max)" />
+    <Property Name="JsError" Type="nvarchar(max)" />
+    <Property Name="Status" Type="bit" Nullable="false" />
+    <Property Name="IsletmeID" Type="int" />
+  </EntityType>
+  <EntityType Name="LogCikis">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Tarih" Type="datetime" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="SessionID" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="SonIslemTarihi" Type="datetime" />
+    <Property Name="SessionCount" Type="int" />
+    <Property Name="MachineName" Type="nvarchar" MaxLength="150" />
+    <Property Name="MachineIP" Type="nvarchar" MaxLength="150" />
+  </EntityType>
+  <EntityType Name="LogHataBildirimleri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Konu" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="Mesaj" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="Tarih" Type="datetime" Nullable="false" />
+    <Property Name="Url" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="200" />
+    <Property Name="HTML" Type="text" />
+    <Property Name="FileFormat" Type="nvarchar" MaxLength="50" />
+    <Property Name="ScreenShot" Type="varbinary(max)" />
+    <Property Name="CozumDurumu" Type="bit" />
+    <Property Name="CozumMesajı" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="LogLoginIslemleri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="KullaniciId" Type="int" Nullable="false" />
+    <Property Name="LogTipi" Type="int" Nullable="false" />
+    <Property Name="Tarih" Type="datetime" Nullable="false" />
+    <Property Name="IP" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsletimSistemi" Type="nvarchar" MaxLength="250" />
+    <Property Name="TarayiciAdi" Type="nvarchar" MaxLength="250" />
+    <Property Name="MobilMi" Type="nvarchar" MaxLength="250" />
+    <Property Name="SessionID" Type="nvarchar" MaxLength="150" />
+    <Property Name="MachineName" Type="nvarchar" MaxLength="150" />
+    <Property Name="MachineIP" Type="nvarchar" MaxLength="150" />
+  </EntityType>
+  <EntityType Name="LogSchema">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Date" Type="datetime" />
+    <Property Name="Thread" Type="nvarchar(max)" />
+    <Property Name="Levels" Type="nvarchar(max)" />
+    <Property Name="Logger" Type="nvarchar(max)" />
+    <Property Name="Message" Type="nvarchar(max)" />
+    <Property Name="Exception" Type="nvarchar(max)" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="Application" Type="nvarchar" MaxLength="150" />
+    <Property Name="Url" Type="nvarchar(max)" />
+    <Property Name="UrlRefferer" Type="nvarchar(max)" />
+    <Property Name="SessionID" Type="nvarchar(max)" />
+    <Property Name="JsError" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="LogSifreDegistirme">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="Tarih" Type="datetime" Nullable="false" />
+    <Property Name="IP" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="SessionID" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LogSilinenRandevular">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RandevuID" Type="int" />
+    <Property Name="KurumID" Type="int" Nullable="false" />
+    <Property Name="PoliklinikTuruID" Type="int" Nullable="false" />
+    <Property Name="Aciklama" Type="nvarchar" MaxLength="200" />
+    <Property Name="Renk" Type="nchar" MaxLength="20" />
+    <Property Name="TumGun" Type="bit" />
+    <Property Name="HastaTCKimlikNo" Type="nvarchar" MaxLength="11" Nullable="false" />
+    <Property Name="HastaAdi" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="HastaSoyadi" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Telefon" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="YakinTelefonu" Type="nvarchar" MaxLength="20" />
+    <Property Name="RandevuBaslangicTarihi" Type="datetime" Nullable="false" />
+    <Property Name="RandevuBitisTarihi" Type="datetime" />
+    <Property Name="RandevuBaslangicSaati" Type="time" Precision="0" />
+    <Property Name="RandevuBitisSaati" Type="time" Precision="0" />
+    <Property Name="LogRandevuIptalNedeni" Type="nvarchar" MaxLength="100" />
+    <Property Name="RandevuDurumu" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Mahalle">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IlceID" Type="int" />
+    <Property Name="MahalleAdi" Type="nvarchar" MaxLength="150" />
+  </EntityType>
+  <EntityType Name="MesajGidenKullanici">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MesajId" Type="int" />
+    <Property Name="KullaniciId" Type="int" />
+    <Property Name="Durum" Type="bit" />
+  </EntityType>
+  <EntityType Name="Mesajlar">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Baslik" Type="nvarchar" MaxLength="500" />
+    <Property Name="Icerik" Type="nvarchar(max)" />
+    <Property Name="BaslangicTarihi" Type="datetime" />
+    <Property Name="BitisTarihi" Type="datetime" />
+    <Property Name="IliskiliTabloId" Type="bigint" />
+    <Property Name="IliskiliModulId" Type="int" />
+    <Property Name="MesajDurum" Type="int" />
+    <Property Name="KayitTarihi" Type="datetime" />
+    <Property Name="KaydedenKullaniciId" Type="int" />
+  </EntityType>
+  <EntityType Name="MobilEkipVakaFormlari">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HastaID" Type="int" Nullable="false" />
+    <Property Name="Adres" Type="nvarchar" MaxLength="300" />
+    <Property Name="Nitelik" Type="nvarchar" MaxLength="300" />
+    <Property Name="BilgiKaynagiKendisi" Type="bit" />
+    <Property Name="BilgiKaynagiAnne" Type="bit" />
+    <Property Name="BilgiKaynagiBaba" Type="bit" />
+    <Property Name="BilgiKaynagiEs" Type="bit" />
+    <Property Name="BilgiKaynagiCocuk" Type="bit" />
+    <Property Name="BilgiKaynagiKardes" Type="bit" />
+    <Property Name="BilgiKaynagiArkadas" Type="bit" />
+    <Property Name="BilgiKaynagiAkraba" Type="bit" />
+    <Property Name="BilgiKaynagiDiger" Type="bit" />
+    <Property Name="BilgiKaynagiAkrabaAciklama" Type="nvarchar" MaxLength="100" />
+    <Property Name="BilgiKaynagiDigerAciklama" Type="nvarchar" MaxLength="100" />
+    <Property Name="GenelTanitim" Type="nvarchar(max)" />
+    <Property Name="MaddeyeBaslamaYasi" Type="nchar" MaxLength="10" />
+    <Property Name="IlkKullandigiMadde" Type="nvarchar" MaxLength="50" />
+    <Property Name="SuAndaKullandigiMaddeler" Type="nvarchar" MaxLength="300" />
+    <Property Name="MaddeKullanimSikligi" Type="int" />
+    <Property Name="MaddeyeBaslamaNedeni" Type="nvarchar" MaxLength="500" />
+    <Property Name="EnSonMaddeKullanimZamani" Type="nvarchar" MaxLength="50" />
+    <Property Name="KurumBilgisiVarMi" Type="nvarchar" MaxLength="300" />
+    <Property Name="MotivasyonKaynagiAile" Type="bit" />
+    <Property Name="MotivasyonKaynagiEkonomi" Type="bit" />
+    <Property Name="MotivasyonKaynagiSaglik" Type="bit" />
+    <Property Name="MotivasyonKaynagiDiger" Type="bit" />
+    <Property Name="MotivasyonKaynagiDigerAciklama" Type="nvarchar" MaxLength="100" />
+    <Property Name="BagimlilikEvresi" Type="int" />
+    <Property Name="TedaviyeYaklasimi" Type="int" />
+    <Property Name="MotivasyonDuzeyi" Type="int" />
+    <Property Name="MaddeDigerTespitler" Type="nvarchar" MaxLength="500" />
+    <Property Name="OgrenimDurumu" Type="int" />
+    <Property Name="LiseTuru" Type="int" />
+    <Property Name="Fakulte" Type="nvarchar" MaxLength="100" />
+    <Property Name="Bolum" Type="nvarchar" MaxLength="100" />
+    <Property Name="EgitimDigerTespitler" Type="nvarchar" MaxLength="500" />
+    <Property Name="GecimKaynagi" Type="int" />
+    <Property Name="YaptigiIs" Type="nvarchar" MaxLength="50" />
+    <Property Name="CalistigiYer" Type="nvarchar" MaxLength="100" />
+    <Property Name="CalismaSuresi" Type="nvarchar" MaxLength="50" />
+    <Property Name="Maas" Type="int" />
+    <Property Name="CalismaSahasi" Type="nvarchar" MaxLength="50" />
+    <Property Name="AylikOrtCalistigiGunSayisi" Type="int" />
+    <Property Name="CalismaBilgisiDiger" Type="nvarchar" MaxLength="500" />
+    <Property Name="AylikOrtGelir" Type="int" />
+    <Property Name="AylikOrtGelirDuzeyi" Type="nchar" MaxLength="30" />
+    <Property Name="AileAylikOrtGelirDuzeyi" Type="nchar" MaxLength="30" />
+    <Property Name="IkametDurumu" Type="int" />
+    <Property Name="TopluIkametDetay" Type="nvarchar" MaxLength="500" />
+    <Property Name="IkametDiger" Type="nvarchar" MaxLength="500" />
+    <Property Name="EnUzunCalismaSuresi" Type="int" />
+    <Property Name="EkonomikDurumDiger" Type="nvarchar" MaxLength="500" />
+    <Property Name="EslikEdenBedenselHastaliklar" Type="nvarchar" MaxLength="500" />
+    <Property Name="EslikEdenRuhsalHastaliklar" Type="nvarchar" MaxLength="500" />
+    <Property Name="PlanliTedaviPlani" Type="nvarchar" MaxLength="500" />
+    <Property Name="DigerBagimlilikTuru" Type="nvarchar" MaxLength="500" />
+    <Property Name="SaglikDigerTespitler" Type="nvarchar" MaxLength="500" />
+    <Property Name="AdliDurumu" Type="int" />
+    <Property Name="AdliDurumDiger" Type="nvarchar" MaxLength="500" />
+    <Property Name="AileSosyalYasantisi" Type="nvarchar" MaxLength="500" />
+    <Property Name="DegerlendirmeVeSonuc" Type="nvarchar" MaxLength="500" />
+    <Property Name="DevamEtmemeNedeni" Type="int" />
+    <Property Name="DevamEtmemeNedeniAciklama" Type="nvarchar" MaxLength="500" />
+    <Property Name="Karar" Type="int" />
+    <Property Name="KayitTarihi" Type="datetime" />
+    <Property Name="KaydedenKullaniciID" Type="int" />
+  </EntityType>
+  <EntityType Name="PersonelFotograflar">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PersonelID" Type="int" Nullable="false" />
+    <Property Name="FileByte" Type="varbinary(max)" Nullable="false" />
+    <Property Name="ContentType" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Status" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PersonelGorevHareketleri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PersonelId" Type="int" Nullable="false" />
+    <Property Name="UnvanId" Type="int" Nullable="false" />
+    <Property Name="Status" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Personeller">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Ad" Type="nvarchar" MaxLength="150" />
+    <Property Name="Soyad" Type="nvarchar" MaxLength="150" />
+    <Property Name="PersonelTuruId" Type="int" />
+    <Property Name="Slug" Type="nvarchar" MaxLength="250" />
+  </EntityType>
+  <EntityType Name="PoliklinikTurleri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="KurumKodu" Type="int" Nullable="false" />
+    <Property Name="PoliklinikAdi" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="AktifOdaSayisi" Type="int" Nullable="false" />
+    <Property Name="KayitTarihi" Type="datetime" Nullable="false" />
+    <Property Name="LogTarihi" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RandevuAyarlari">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="KurumID" Type="int" Nullable="false" />
+    <Property Name="PoliklinikTuruID" Type="int" Nullable="false" />
+    <Property Name="Gun" Type="int" Nullable="false" />
+    <Property Name="BaslangicSaati" Type="time" Precision="4" Nullable="false" />
+    <Property Name="BitisSaati" Type="time" Precision="4" Nullable="false" />
+    <Property Name="SlotSayisi" Type="int" Nullable="false" />
+    <Property Name="LogTarihi" Type="datetime" Nullable="false" />
+    <Property Name="GuncellemeTarihi" Type="datetime" />
+    <Property Name="Durum" Type="bit" Nullable="false" />
+    <Property Name="PasifBaslangicTarihi" Type="datetime" />
+    <Property Name="PasifBitisTarihi" Type="datetime" />
+    <Property Name="KaydedenKullaniciID" Type="int" />
+  </EntityType>
+  <EntityType Name="RandevuBilgileri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="KurumID" Type="int" Nullable="false" />
+    <Property Name="PoliklinikTuruID" Type="int" Nullable="false" />
+    <Property Name="Aciklama" Type="nvarchar" MaxLength="200" />
+    <Property Name="Renk" Type="nchar" MaxLength="20" />
+    <Property Name="TumGun" Type="bit" />
+    <Property Name="HastaTCKimlikNo" Type="nvarchar" MaxLength="11" Nullable="false" />
+    <Property Name="HastaAdi" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="HastaSoyadi" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Telefon" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="YakinTelefonu" Type="nvarchar" MaxLength="20" />
+    <Property Name="RandevuBaslangicTarihi" Type="datetime" Nullable="false" />
+    <Property Name="RandevuBitisTarihi" Type="datetime" Nullable="false" />
+    <Property Name="RandevuBaslangicSaati" Type="time" Precision="0" Nullable="false" />
+    <Property Name="RandevuBitisSaati" Type="time" Precision="0" Nullable="false" />
+    <Property Name="RandevuDurumu" Type="nvarchar" MaxLength="50" />
+    <Property Name="KaydedenKullaniciID" Type="int" />
+    <Property Name="GuncelleyenKullaniciID" Type="int" />
+  </EntityType>
+  <EntityType Name="RandevuTalepleri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="KurumID" Type="int" Nullable="false" />
+    <Property Name="HizmetMerkeziID" Type="int" Nullable="false" />
+    <Property Name="HastaID" Type="int" Nullable="false" />
+    <Property Name="HastaAdi" Type="nvarchar" MaxLength="50" />
+    <Property Name="HastaSoyadi" Type="nvarchar" MaxLength="50" />
+    <Property Name="HastaTCKimlikNo" Type="nvarchar" MaxLength="11" />
+    <Property Name="Telefon" Type="nvarchar" MaxLength="20" />
+    <Property Name="RandevuTarihi" Type="datetime" />
+    <Property Name="RandevuTalebiNotu" Type="nvarchar" MaxLength="300" />
+    <Property Name="RandevuVerildiMi" Type="bit" />
+    <Property Name="TalepOlusturanKullaniciID" Type="int" Nullable="false" />
+    <Property Name="RandevuVerenKullaniciID" Type="int" />
+    <Property Name="RandevuDurumu" Type="nvarchar" MaxLength="50" />
+    <Property Name="KayitTarihi" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ResmiTatiller">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Yil" Type="int" />
+    <Property Name="Tarih" Type="datetime" />
+    <Property Name="TatilMi" Type="bit" />
+    <Property Name="TatilAdi" Type="nvarchar" MaxLength="250" />
+  </EntityType>
+  <EntityType Name="Roller">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Rol" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RolYetkileri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RolId" Type="int" Nullable="false" />
+    <Property Name="YetkiId" Type="int" Nullable="false" />
+    <Property Name="Goruntuleme" Type="bit" Nullable="false" />
+    <Property Name="Ekleme" Type="bit" Nullable="false" />
+    <Property Name="Duzenleme" Type="bit" Nullable="false" />
+    <Property Name="Silme" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="TaniKodlari">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ICDKodu" Type="nvarchar" MaxLength="20" />
+    <Property Name="Tani" Type="nvarchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="Unvanlar">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UnvanAdi" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="Status" Type="bit" Nullable="false" />
+    <Property Name="AktarimID" Type="int" />
+  </EntityType>
+  <EntityType Name="VakaBilgileri112">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="KurumKodu" Type="int" Nullable="false" />
+    <Property Name="HastaTCKimlikNo" Type="nvarchar" MaxLength="11" Nullable="false" />
+    <Property Name="HastaEkipNo" Type="nvarchar" MaxLength="50" />
+    <Property Name="HastaAdi" Type="nvarchar" MaxLength="100" />
+    <Property Name="HastaSoyadi" Type="nvarchar" MaxLength="100" />
+    <Property Name="CagriTarihSaati" Type="datetime" />
+    <Property Name="OnTani" Type="nvarchar" MaxLength="100" />
+    <Property Name="YapilanIslem" Type="nvarchar" MaxLength="300" />
+    <Property Name="AlindigiYer" Type="nvarchar" MaxLength="200" />
+    <Property Name="BirakildigiKurum" Type="nvarchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="VakaTanilari112">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Vaka112ID" Type="int" Nullable="false" />
+    <Property Name="TaniKoduID" Type="int" />
+  </EntityType>
+  <EntityType Name="Yatislar">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HastaEkipNo" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="KurumKodu" Type="int" Nullable="false" />
+    <Property Name="YatisTarihi" Type="datetime" Nullable="false" />
+    <Property Name="GunlukIzlemBilgisi" Type="nvarchar(max)" />
+    <Property Name="YatisSonlanmaTarihi" Type="datetime" />
+    <Property Name="YatisSonlanmaID" Type="int" />
+    <Property Name="YatisSonlanmaAciklama" Type="nvarchar(max)" />
+    <Property Name="KararID" Type="int" />
+    <Property Name="LogTarihi" Type="datetime" />
+  </EntityType>
+  <EntityType Name="YatisSonlanmaNedenleri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SonlanmaNedeni" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="YEDAMHastaBilgileri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HastaTCKimlikNo" Type="nvarchar" MaxLength="11" Nullable="false" />
+    <Property Name="HastaEkipNo" Type="nvarchar" MaxLength="50" />
+    <Property Name="HastaAdi" Type="nvarchar" MaxLength="100" />
+    <Property Name="HastaSoyadi" Type="nvarchar" MaxLength="100" />
+    <Property Name="BasvuruTarihi" Type="date" />
+    <Property Name="BasvuruTuru" Type="nvarchar" MaxLength="100" />
+    <Property Name="BasvurudaYapilanIslemler" Type="nvarchar" MaxLength="500" />
+    <Property Name="BasvuruDegerlendirmeNotlari" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Yetkiler">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="YetkiAdi" Type="nvarchar" MaxLength="200" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_AcilServisVakaTanilari_AcilServisVakaBilgileri">
+    <End Role="AcilServisVakaBilgileri" Type="Self.AcilServisVakaBilgileri" Multiplicity="1" />
+    <End Role="AcilServisVakaTanilari" Type="Self.AcilServisVakaTanilari" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AcilServisVakaBilgileri">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="AcilServisVakaTanilari">
+        <PropertyRef Name="AcilServisVakaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AcilServisVakaTanilari_TaniKodlari">
+    <End Role="TaniKodlari" Type="Self.TaniKodlari" Multiplicity="0..1" />
+    <End Role="AcilServisVakaTanilari" Type="Self.AcilServisVakaTanilari" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TaniKodlari">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="AcilServisVakaTanilari">
+        <PropertyRef Name="TaniKoduID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ArindirmaBasvuruBilgileri_ArindirmaBasvuruKararlari">
+    <End Role="ArindirmaBasvuruKararlari" Type="Self.ArindirmaBasvuruKararlari" Multiplicity="0..1" />
+    <End Role="ArindirmaBasvuruBilgileri" Type="Self.ArindirmaBasvuruBilgileri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ArindirmaBasvuruKararlari">
+        <PropertyRef Name="KararID" />
+      </Principal>
+      <Dependent Role="ArindirmaBasvuruBilgileri">
+        <PropertyRef Name="KararID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HastaBagimlilikSiddetiFormlari_Hastalar">
+    <End Role="Hastalar" Type="Self.Hastalar" Multiplicity="1" />
+    <End Role="HastaBagimlilikSiddetiFormlari" Type="Self.HastaBagimlilikSiddetiFormlari" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hastalar">
+        <PropertyRef Name="HastaID" />
+      </Principal>
+      <Dependent Role="HastaBagimlilikSiddetiFormlari">
+        <PropertyRef Name="HastaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HastaBaharFormlari_Hastalar">
+    <End Role="Hastalar" Type="Self.Hastalar" Multiplicity="1" />
+    <End Role="HastaBaharFormlari" Type="Self.HastaBaharFormlari" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hastalar">
+        <PropertyRef Name="HastaID" />
+      </Principal>
+      <Dependent Role="HastaBaharFormlari">
+        <PropertyRef Name="HastaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HastaBaharFormuSonuc_HastaBaharFormlari">
+    <End Role="HastaBaharFormlari" Type="Self.HastaBaharFormlari" Multiplicity="1" />
+    <End Role="HastaBaharFormuSonuc" Type="Self.HastaBaharFormuSonuc" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HastaBaharFormlari">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="HastaBaharFormuSonuc">
+        <PropertyRef Name="FormID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HastaBaharFormuSonuc_HastaBaharFormuSonucKodlari">
+    <End Role="HastaBaharFormuSonucKodlari" Type="Self.HastaBaharFormuSonucKodlari" Multiplicity="1" />
+    <End Role="HastaBaharFormuSonuc" Type="Self.HastaBaharFormuSonuc" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HastaBaharFormuSonucKodlari">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="HastaBaharFormuSonuc">
+        <PropertyRef Name="KodID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HastaBeyanBilgileri_ArindirmaBasvuruBilgileri">
+    <End Role="ArindirmaBasvuruBilgileri" Type="Self.ArindirmaBasvuruBilgileri" Multiplicity="1" />
+    <End Role="HastaBeyanBilgileri" Type="Self.HastaBeyanBilgileri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ArindirmaBasvuruBilgileri">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="HastaBeyanBilgileri">
+        <PropertyRef Name="BasvuruID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HastaIlkKayitBilgileri_Hastalar">
+    <End Role="Hastalar" Type="Self.Hastalar" Multiplicity="1" />
+    <End Role="HastaIlkKayitBilgileri" Type="Self.HastaIlkKayitBilgileri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hastalar">
+        <PropertyRef Name="HastaID" />
+      </Principal>
+      <Dependent Role="HastaIlkKayitBilgileri">
+        <PropertyRef Name="HastaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HastaIzlemBilgileri_Hastalar">
+    <End Role="Hastalar" Type="Self.Hastalar" Multiplicity="1" />
+    <End Role="HastaIzlemBilgileri" Type="Self.HastaIzlemBilgileri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hastalar">
+        <PropertyRef Name="HastaID" />
+      </Principal>
+      <Dependent Role="HastaIzlemBilgileri">
+        <PropertyRef Name="HastaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HastaNotlari_Hastalar">
+    <End Role="Hastalar" Type="Self.Hastalar" Multiplicity="1" />
+    <End Role="HastaNotlari" Type="Self.HastaNotlari" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hastalar">
+        <PropertyRef Name="HastaID" />
+      </Principal>
+      <Dependent Role="HastaNotlari">
+        <PropertyRef Name="HastaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HastaNotlari_Kullanicilar">
+    <End Role="Kullanicilar" Type="Self.Kullanicilar" Multiplicity="1" />
+    <End Role="HastaNotlari" Type="Self.HastaNotlari" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kullanicilar">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="HastaNotlari">
+        <PropertyRef Name="KaydedenKullaniciID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HastaOlceklerFormu_Hastalar">
+    <End Role="Hastalar" Type="Self.Hastalar" Multiplicity="1" />
+    <End Role="HastaOlceklerFormu" Type="Self.HastaOlceklerFormu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hastalar">
+        <PropertyRef Name="HastaID" />
+      </Principal>
+      <Dependent Role="HastaOlceklerFormu">
+        <PropertyRef Name="HastaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HastaTimeline_Hastalar">
+    <End Role="Hastalar" Type="Self.Hastalar" Multiplicity="1" />
+    <End Role="HastaTimeline" Type="Self.HastaTimeline" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hastalar">
+        <PropertyRef Name="HastaID" />
+      </Principal>
+      <Dependent Role="HastaTimeline">
+        <PropertyRef Name="HastaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HastaYakinBilgileri_Hastalar">
+    <End Role="Hastalar" Type="Self.Hastalar" Multiplicity="1" />
+    <End Role="HastaYakinBilgileri" Type="Self.HastaYakinBilgileri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hastalar">
+        <PropertyRef Name="HastaID" />
+      </Principal>
+      <Dependent Role="HastaYakinBilgileri">
+        <PropertyRef Name="HastaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IskurIslemleriKullaniciGorusmeleri_IskurIslemleriKullanicilar">
+    <End Role="Hastalar" Type="Self.Hastalar" Multiplicity="1" />
+    <End Role="HastaIskurGorusmeleri" Type="Self.HastaIskurGorusmeleri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hastalar">
+        <PropertyRef Name="HastaID" />
+      </Principal>
+      <Dependent Role="HastaIskurGorusmeleri">
+        <PropertyRef Name="HastaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IskurRandevuTalepleri_Hastalar">
+    <End Role="Hastalar" Type="Self.Hastalar" Multiplicity="1" />
+    <End Role="RandevuTalepleri" Type="Self.RandevuTalepleri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hastalar">
+        <PropertyRef Name="HastaID" />
+      </Principal>
+      <Dependent Role="RandevuTalepleri">
+        <PropertyRef Name="HastaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IskurRandevuTalepleri_KurumHizmetMerkezleri">
+    <End Role="KurumHizmetMerkezleri" Type="Self.KurumHizmetMerkezleri" Multiplicity="1" />
+    <End Role="RandevuTalepleri" Type="Self.RandevuTalepleri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KurumHizmetMerkezleri">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RandevuTalepleri">
+        <PropertyRef Name="HizmetMerkeziID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IskurRandevuTalepleri_Kurumlar">
+    <End Role="Kurumlar" Type="Self.Kurumlar" Multiplicity="1" />
+    <End Role="RandevuTalepleri" Type="Self.RandevuTalepleri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kurumlar">
+        <PropertyRef Name="KurumID" />
+      </Principal>
+      <Dependent Role="RandevuTalepleri">
+        <PropertyRef Name="KurumID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IstihdamIsyeriAdresBilgisi_Il">
+    <End Role="Il" Type="Self.Il" Multiplicity="0..1" />
+    <End Role="IstihdamIsyeriAdresBilgisi" Type="Self.IstihdamIsyeriAdresBilgisi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Il">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="IstihdamIsyeriAdresBilgisi">
+        <PropertyRef Name="IlID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IstihdamIsyeriAdresBilgisi_Ilce">
+    <End Role="Ilce" Type="Self.Ilce" Multiplicity="0..1" />
+    <End Role="IstihdamIsyeriAdresBilgisi" Type="Self.IstihdamIsyeriAdresBilgisi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ilce">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="IstihdamIsyeriAdresBilgisi">
+        <PropertyRef Name="IlceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IstihdamIsyeriAdresBilgisi_IstihdamIsyerleri">
+    <End Role="IstihdamIsyerleri" Type="Self.IstihdamIsyerleri" Multiplicity="1" />
+    <End Role="IstihdamIsyeriAdresBilgisi" Type="Self.IstihdamIsyeriAdresBilgisi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="IstihdamIsyerleri">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="IstihdamIsyeriAdresBilgisi">
+        <PropertyRef Name="IsyeriID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IstihdamIsyeriGorusmeleri_IstihdamIsyerleri">
+    <End Role="IstihdamIsyerleri" Type="Self.IstihdamIsyerleri" Multiplicity="1" />
+    <End Role="IstihdamIsyeriGorusmeleri" Type="Self.IstihdamIsyeriGorusmeleri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="IstihdamIsyerleri">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="IstihdamIsyeriGorusmeleri">
+        <PropertyRef Name="IsyeriID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IstihdamIsyeriIletisimKisileri_IstihdamIsyerleri">
+    <End Role="IstihdamIsyerleri" Type="Self.IstihdamIsyerleri" Multiplicity="1" />
+    <End Role="IstihdamIsyeriIletisimKisileri" Type="Self.IstihdamIsyeriIletisimKisileri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="IstihdamIsyerleri">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="IstihdamIsyeriIletisimKisileri">
+        <PropertyRef Name="IsyeriID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IstihdamIsyerleri_IstihdamIsyeriSektorler">
+    <End Role="IstihdamIsyeriSektorler" Type="Self.IstihdamIsyeriSektorler" Multiplicity="0..1" />
+    <End Role="IstihdamIsyerleri" Type="Self.IstihdamIsyerleri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="IstihdamIsyeriSektorler">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="IstihdamIsyerleri">
+        <PropertyRef Name="SektorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_KullaniciBirimBilgileri_Kullanicilar">
+    <End Role="Kullanicilar" Type="Self.Kullanicilar" Multiplicity="1" />
+    <End Role="KullaniciBirimBilgileri" Type="Self.KullaniciBirimBilgileri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kullanicilar">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="KullaniciBirimBilgileri">
+        <PropertyRef Name="KullaniciID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_KullaniciErisimBilgileri_ErisimKodlari">
+    <End Role="ErisimKodlari" Type="Self.ErisimKodlari" Multiplicity="1" />
+    <End Role="KullaniciErisimBilgileri" Type="Self.KullaniciErisimBilgileri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ErisimKodlari">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="KullaniciErisimBilgileri">
+        <PropertyRef Name="ErisimKoduID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_KullaniciErisimBilgileri_Kullanicilar">
+    <End Role="Kullanicilar" Type="Self.Kullanicilar" Multiplicity="1" />
+    <End Role="KullaniciErisimBilgileri" Type="Self.KullaniciErisimBilgileri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kullanicilar">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="KullaniciErisimBilgileri">
+        <PropertyRef Name="KullaniciID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_KullaniciGorevTakip_Kullanicilar">
+    <End Role="Kullanicilar" Type="Self.Kullanicilar" Multiplicity="1" />
+    <End Role="KullaniciGorevTakip" Type="Self.KullaniciGorevTakip" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kullanicilar">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="KullaniciGorevTakip">
+        <PropertyRef Name="KullaniciID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Kullanicilar_KurumHizmetMerkezleri">
+    <End Role="KurumHizmetMerkezleri" Type="Self.KurumHizmetMerkezleri" Multiplicity="1" />
+    <End Role="Kullanicilar" Type="Self.Kullanicilar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KurumHizmetMerkezleri">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Kullanicilar">
+        <PropertyRef Name="HizmetMerkeziID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Kullanicilar_Kurumlar">
+    <End Role="Kurumlar" Type="Self.Kurumlar" Multiplicity="1" />
+    <End Role="Kullanicilar" Type="Self.Kullanicilar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kurumlar">
+        <PropertyRef Name="KurumID" />
+      </Principal>
+      <Dependent Role="Kullanicilar">
+        <PropertyRef Name="KurumID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_KurumPoliklinikTurleri_KurumPoliklinikTurleri">
+    <End Role="Kurumlar" Type="Self.Kurumlar" Multiplicity="1" />
+    <End Role="KurumPoliklinikTurleri" Type="Self.KurumPoliklinikTurleri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kurumlar">
+        <PropertyRef Name="KurumID" />
+      </Principal>
+      <Dependent Role="KurumPoliklinikTurleri">
+        <PropertyRef Name="KurumID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Mahalle_Ilce">
+    <End Role="Ilce" Type="Self.Ilce" Multiplicity="0..1" />
+    <End Role="Mahalle" Type="Self.Mahalle" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ilce">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Mahalle">
+        <PropertyRef Name="IlceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MobilEkipVakaFormlari_Hastalar">
+    <End Role="Hastalar" Type="Self.Hastalar" Multiplicity="1" />
+    <End Role="MobilEkipVakaFormlari" Type="Self.MobilEkipVakaFormlari" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hastalar">
+        <PropertyRef Name="HastaID" />
+      </Principal>
+      <Dependent Role="MobilEkipVakaFormlari">
+        <PropertyRef Name="HastaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RandevuAyarlari_Kurumlar">
+    <End Role="Kurumlar" Type="Self.Kurumlar" Multiplicity="1" />
+    <End Role="RandevuAyarlari" Type="Self.RandevuAyarlari" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kurumlar">
+        <PropertyRef Name="KurumID" />
+      </Principal>
+      <Dependent Role="RandevuAyarlari">
+        <PropertyRef Name="KurumID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RandevuAyarlari_KurumPoliklinikTurleri">
+    <End Role="KurumPoliklinikTurleri" Type="Self.KurumPoliklinikTurleri" Multiplicity="1" />
+    <End Role="RandevuAyarlari" Type="Self.RandevuAyarlari" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KurumPoliklinikTurleri">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RandevuAyarlari">
+        <PropertyRef Name="PoliklinikTuruID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RandevuBilgileri_Kurumlar">
+    <End Role="Kurumlar" Type="Self.Kurumlar" Multiplicity="1" />
+    <End Role="RandevuBilgileri" Type="Self.RandevuBilgileri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kurumlar">
+        <PropertyRef Name="KurumID" />
+      </Principal>
+      <Dependent Role="RandevuBilgileri">
+        <PropertyRef Name="KurumID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RandevuBilgileri_KurumPoliklinikTurleri">
+    <End Role="KurumPoliklinikTurleri" Type="Self.KurumPoliklinikTurleri" Multiplicity="1" />
+    <End Role="RandevuBilgileri" Type="Self.RandevuBilgileri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KurumPoliklinikTurleri">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RandevuBilgileri">
+        <PropertyRef Name="PoliklinikTuruID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VakaTanilari112_TaniKodlari">
+    <End Role="TaniKodlari" Type="Self.TaniKodlari" Multiplicity="0..1" />
+    <End Role="VakaTanilari112" Type="Self.VakaTanilari112" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TaniKodlari">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="VakaTanilari112">
+        <PropertyRef Name="TaniKoduID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VakaTanilari112_VakaBilgileri112">
+    <End Role="VakaBilgileri112" Type="Self.VakaBilgileri112" Multiplicity="1" />
+    <End Role="VakaTanilari112" Type="Self.VakaTanilari112" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="VakaBilgileri112">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="VakaTanilari112">
+        <PropertyRef Name="Vaka112ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Yatislar_YatisSonlanmaNedenleri">
+    <End Role="ArindirmaBasvuruKararlari" Type="Self.ArindirmaBasvuruKararlari" Multiplicity="0..1" />
+    <End Role="Yatislar" Type="Self.Yatislar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ArindirmaBasvuruKararlari">
+        <PropertyRef Name="KararID" />
+      </Principal>
+      <Dependent Role="Yatislar">
+        <PropertyRef Name="KararID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="EkipProjeModelStoreContainer">
+    <EntitySet Name="AcilServisVakaBilgileri" EntityType="Self.AcilServisVakaBilgileri" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AcilServisVakaTanilari" EntityType="Self.AcilServisVakaTanilari" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AnketCevaplari" EntityType="Self.AnketCevaplari" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AnketGruplari" EntityType="Self.AnketGruplari" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AnketKullaniciCevap" EntityType="Self.AnketKullaniciCevap" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AnketKullanicilari" EntityType="Self.AnketKullanicilari" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Anketler" EntityType="Self.Anketler" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AnketSoruBankasi" EntityType="Self.AnketSoruBankasi" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AnketSorulari" EntityType="Self.AnketSorulari" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AnketTipleri" EntityType="Self.AnketTipleri" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ArindirmaBasvuruBilgileri" EntityType="Self.ArindirmaBasvuruBilgileri" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ArindirmaBasvuruKararlari" EntityType="Self.ArindirmaBasvuruKararlari" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ArindirmaHizmetBilgileri" EntityType="Self.ArindirmaHizmetBilgileri" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ArindirmaPersonelBilgileri" EntityType="Self.ArindirmaPersonelBilgileri" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BasvuruBilgileriLabSonuc" EntityType="Self.BasvuruBilgileriLabSonuc" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ErisimKodlari" EntityType="Self.ErisimKodlari" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ExcelYuklemeleri" EntityType="Self.ExcelYuklemeleri" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Faaliyetler" EntityType="Self.Faaliyetler" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FizikselHastalikOykuleri" EntityType="Self.FizikselHastalikOykuleri" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HastaBagimlilikSiddetiFormlari" EntityType="Self.HastaBagimlilikSiddetiFormlari" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HastaBaharFormlari" EntityType="Self.HastaBaharFormlari" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HastaBaharFormuSonuc" EntityType="Self.HastaBaharFormuSonuc" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HastaBaharFormuSonucKodlari" EntityType="Self.HastaBaharFormuSonucKodlari" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HastaBeyanBilgileri" EntityType="Self.HastaBeyanBilgileri" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HastaEgitimBilgileri" EntityType="Self.HastaEgitimBilgileri" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HastaIlkKayitBilgileri" EntityType="Self.HastaIlkKayitBilgileri" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HastaIskurGorusmeleri" EntityType="Self.HastaIskurGorusmeleri" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HastaIzlemBilgileri" EntityType="Self.HastaIzlemBilgileri" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Hastalar" EntityType="Self.Hastalar" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HastaMaddeKullanimBilgileri" EntityType="Self.HastaMaddeKullanimBilgileri" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HastaNotlari" EntityType="Self.HastaNotlari" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HastaOlceklerFormu" EntityType="Self.HastaOlceklerFormu" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HastaTimeline" EntityType="Self.HastaTimeline" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HastaYakinBilgileri" EntityType="Self.HastaYakinBilgileri" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Il" EntityType="Self.Il" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Ilce" EntityType="Self.Ilce" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="IstihdamIsyeriAdresBilgisi" EntityType="Self.IstihdamIsyeriAdresBilgisi" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="IstihdamIsyeriGorusmeleri" EntityType="Self.IstihdamIsyeriGorusmeleri" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="IstihdamIsyeriIletisimKisileri" EntityType="Self.IstihdamIsyeriIletisimKisileri" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="IstihdamIsyeriSektorler" EntityType="Self.IstihdamIsyeriSektorler" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="IstihdamIsyerleri" EntityType="Self.IstihdamIsyerleri" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Kullanici" EntityType="Self.Kullanici" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="KullaniciBirimBilgileri" EntityType="Self.KullaniciBirimBilgileri" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="KullaniciErisimBilgileri" EntityType="Self.KullaniciErisimBilgileri" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="KullaniciGorevTakip" EntityType="Self.KullaniciGorevTakip" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="KullaniciIletisimBilgileri" EntityType="Self.KullaniciIletisimBilgileri" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="KullaniciIzinTuru" EntityType="Self.KullaniciIzinTuru" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Kullanicilar" EntityType="Self.Kullanicilar" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="KullaniciRolleri" EntityType="Self.KullaniciRolleri" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="KurumHizmetMerkezleri" EntityType="Self.KurumHizmetMerkezleri" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Kurumlar" EntityType="Self.Kurumlar" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="KurumPoliklinikTurleri" EntityType="Self.KurumPoliklinikTurleri" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="KurumRandevulari" EntityType="Self.KurumRandevulari" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LogCikis" EntityType="Self.LogCikis" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LogHataBildirimleri" EntityType="Self.LogHataBildirimleri" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LogLoginIslemleri" EntityType="Self.LogLoginIslemleri" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LogSchema" EntityType="Self.LogSchema" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LogSifreDegistirme" EntityType="Self.LogSifreDegistirme" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LogSilinenRandevular" EntityType="Self.LogSilinenRandevular" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Mahalle" EntityType="Self.Mahalle" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MesajGidenKullanici" EntityType="Self.MesajGidenKullanici" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Mesajlar" EntityType="Self.Mesajlar" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MobilEkipVakaFormlari" EntityType="Self.MobilEkipVakaFormlari" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PersonelFotograflar" EntityType="Self.PersonelFotograflar" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PersonelGorevHareketleri" EntityType="Self.PersonelGorevHareketleri" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Personeller" EntityType="Self.Personeller" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PoliklinikTurleri" EntityType="Self.PoliklinikTurleri" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RandevuAyarlari" EntityType="Self.RandevuAyarlari" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RandevuBilgileri" EntityType="Self.RandevuBilgileri" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RandevuTalepleri" EntityType="Self.RandevuTalepleri" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ResmiTatiller" EntityType="Self.ResmiTatiller" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Roller" EntityType="Self.Roller" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RolYetkileri" EntityType="Self.RolYetkileri" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TaniKodlari" EntityType="Self.TaniKodlari" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Unvanlar" EntityType="Self.Unvanlar" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="VakaBilgileri112" EntityType="Self.VakaBilgileri112" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="VakaTanilari112" EntityType="Self.VakaTanilari112" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Yatislar" EntityType="Self.Yatislar" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="YatisSonlanmaNedenleri" EntityType="Self.YatisSonlanmaNedenleri" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="YEDAMHastaBilgileri" EntityType="Self.YEDAMHastaBilgileri" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Yetkiler" EntityType="Self.Yetkiler" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="KullaniciIzinBilgileri" EntityType="Self.KullaniciIzinBilgileri" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [KullaniciIzinBilgileri].[ID] AS [ID], 
+    [KullaniciIzinBilgileri].[KullaniciID] AS [KullaniciID], 
+    [KullaniciIzinBilgileri].[IzinTuruId] AS [IzinTuruId], 
+    [KullaniciIzinBilgileri].[BaslamaTarihi] AS [BaslamaTarihi], 
+    [KullaniciIzinBilgileri].[BitisTarihi] AS [BitisTarihi], 
+    [KullaniciIzinBilgileri].[ToplamIzinSuresi] AS [ToplamIzinSuresi], 
+    [KullaniciIzinBilgileri].[IzinAdresi] AS [IzinAdresi], 
+    [KullaniciIzinBilgileri].[Aciklama] AS [Aciklama], 
+    [KullaniciIzinBilgileri].[YerineBakacakKisiId] AS [YerineBakacakKisiId], 
+    [KullaniciIzinBilgileri].[IzinDurumu] AS [IzinDurumu], 
+    [KullaniciIzinBilgileri].[KayitTarihi] AS [KayitTarihi], 
+    [KullaniciIzinBilgileri].[KaydedenKullaniciId] AS [KaydedenKullaniciId], 
+    [KullaniciIzinBilgileri].[AktarimID] AS [AktarimID], 
+    [KullaniciIzinBilgileri].[AktarimPersonelID] AS [AktarimPersonelID], 
+    [KullaniciIzinBilgileri].[YerineBakacakKisiAd] AS [YerineBakacakKisiAd]
+    FROM [dbo].[KullaniciIzinBilgileri] AS [KullaniciIzinBilgileri]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_AcilServisVakaTanilari_AcilServisVakaBilgileri" Association="Self.FK_AcilServisVakaTanilari_AcilServisVakaBilgileri">
+      <End Role="AcilServisVakaBilgileri" EntitySet="AcilServisVakaBilgileri" />
+      <End Role="AcilServisVakaTanilari" EntitySet="AcilServisVakaTanilari" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AcilServisVakaTanilari_TaniKodlari" Association="Self.FK_AcilServisVakaTanilari_TaniKodlari">
+      <End Role="TaniKodlari" EntitySet="TaniKodlari" />
+      <End Role="AcilServisVakaTanilari" EntitySet="AcilServisVakaTanilari" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ArindirmaBasvuruBilgileri_ArindirmaBasvuruKararlari" Association="Self.FK_ArindirmaBasvuruBilgileri_ArindirmaBasvuruKararlari">
+      <End Role="ArindirmaBasvuruKararlari" EntitySet="ArindirmaBasvuruKararlari" />
+      <End Role="ArindirmaBasvuruBilgileri" EntitySet="ArindirmaBasvuruBilgileri" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HastaBagimlilikSiddetiFormlari_Hastalar" Association="Self.FK_HastaBagimlilikSiddetiFormlari_Hastalar">
+      <End Role="Hastalar" EntitySet="Hastalar" />
+      <End Role="HastaBagimlilikSiddetiFormlari" EntitySet="HastaBagimlilikSiddetiFormlari" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HastaBaharFormlari_Hastalar" Association="Self.FK_HastaBaharFormlari_Hastalar">
+      <End Role="Hastalar" EntitySet="Hastalar" />
+      <End Role="HastaBaharFormlari" EntitySet="HastaBaharFormlari" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HastaBaharFormuSonuc_HastaBaharFormlari" Association="Self.FK_HastaBaharFormuSonuc_HastaBaharFormlari">
+      <End Role="HastaBaharFormlari" EntitySet="HastaBaharFormlari" />
+      <End Role="HastaBaharFormuSonuc" EntitySet="HastaBaharFormuSonuc" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HastaBaharFormuSonuc_HastaBaharFormuSonucKodlari" Association="Self.FK_HastaBaharFormuSonuc_HastaBaharFormuSonucKodlari">
+      <End Role="HastaBaharFormuSonucKodlari" EntitySet="HastaBaharFormuSonucKodlari" />
+      <End Role="HastaBaharFormuSonuc" EntitySet="HastaBaharFormuSonuc" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HastaBeyanBilgileri_ArindirmaBasvuruBilgileri" Association="Self.FK_HastaBeyanBilgileri_ArindirmaBasvuruBilgileri">
+      <End Role="ArindirmaBasvuruBilgileri" EntitySet="ArindirmaBasvuruBilgileri" />
+      <End Role="HastaBeyanBilgileri" EntitySet="HastaBeyanBilgileri" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HastaIlkKayitBilgileri_Hastalar" Association="Self.FK_HastaIlkKayitBilgileri_Hastalar">
+      <End Role="Hastalar" EntitySet="Hastalar" />
+      <End Role="HastaIlkKayitBilgileri" EntitySet="HastaIlkKayitBilgileri" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HastaIzlemBilgileri_Hastalar" Association="Self.FK_HastaIzlemBilgileri_Hastalar">
+      <End Role="Hastalar" EntitySet="Hastalar" />
+      <End Role="HastaIzlemBilgileri" EntitySet="HastaIzlemBilgileri" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HastaNotlari_Hastalar" Association="Self.FK_HastaNotlari_Hastalar">
+      <End Role="Hastalar" EntitySet="Hastalar" />
+      <End Role="HastaNotlari" EntitySet="HastaNotlari" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HastaNotlari_Kullanicilar" Association="Self.FK_HastaNotlari_Kullanicilar">
+      <End Role="Kullanicilar" EntitySet="Kullanicilar" />
+      <End Role="HastaNotlari" EntitySet="HastaNotlari" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HastaOlceklerFormu_Hastalar" Association="Self.FK_HastaOlceklerFormu_Hastalar">
+      <End Role="Hastalar" EntitySet="Hastalar" />
+      <End Role="HastaOlceklerFormu" EntitySet="HastaOlceklerFormu" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HastaTimeline_Hastalar" Association="Self.FK_HastaTimeline_Hastalar">
+      <End Role="Hastalar" EntitySet="Hastalar" />
+      <End Role="HastaTimeline" EntitySet="HastaTimeline" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HastaYakinBilgileri_Hastalar" Association="Self.FK_HastaYakinBilgileri_Hastalar">
+      <End Role="Hastalar" EntitySet="Hastalar" />
+      <End Role="HastaYakinBilgileri" EntitySet="HastaYakinBilgileri" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IskurIslemleriKullaniciGorusmeleri_IskurIslemleriKullanicilar" Association="Self.FK_IskurIslemleriKullaniciGorusmeleri_IskurIslemleriKullanicilar">
+      <End Role="Hastalar" EntitySet="Hastalar" />
+      <End Role="HastaIskurGorusmeleri" EntitySet="HastaIskurGorusmeleri" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IskurRandevuTalepleri_Hastalar" Association="Self.FK_IskurRandevuTalepleri_Hastalar">
+      <End Role="Hastalar" EntitySet="Hastalar" />
+      <End Role="RandevuTalepleri" EntitySet="RandevuTalepleri" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IskurRandevuTalepleri_KurumHizmetMerkezleri" Association="Self.FK_IskurRandevuTalepleri_KurumHizmetMerkezleri">
+      <End Role="KurumHizmetMerkezleri" EntitySet="KurumHizmetMerkezleri" />
+      <End Role="RandevuTalepleri" EntitySet="RandevuTalepleri" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IskurRandevuTalepleri_Kurumlar" Association="Self.FK_IskurRandevuTalepleri_Kurumlar">
+      <End Role="Kurumlar" EntitySet="Kurumlar" />
+      <End Role="RandevuTalepleri" EntitySet="RandevuTalepleri" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IstihdamIsyeriAdresBilgisi_Il" Association="Self.FK_IstihdamIsyeriAdresBilgisi_Il">
+      <End Role="Il" EntitySet="Il" />
+      <End Role="IstihdamIsyeriAdresBilgisi" EntitySet="IstihdamIsyeriAdresBilgisi" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IstihdamIsyeriAdresBilgisi_Ilce" Association="Self.FK_IstihdamIsyeriAdresBilgisi_Ilce">
+      <End Role="Ilce" EntitySet="Ilce" />
+      <End Role="IstihdamIsyeriAdresBilgisi" EntitySet="IstihdamIsyeriAdresBilgisi" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IstihdamIsyeriAdresBilgisi_IstihdamIsyerleri" Association="Self.FK_IstihdamIsyeriAdresBilgisi_IstihdamIsyerleri">
+      <End Role="IstihdamIsyerleri" EntitySet="IstihdamIsyerleri" />
+      <End Role="IstihdamIsyeriAdresBilgisi" EntitySet="IstihdamIsyeriAdresBilgisi" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IstihdamIsyeriGorusmeleri_IstihdamIsyerleri" Association="Self.FK_IstihdamIsyeriGorusmeleri_IstihdamIsyerleri">
+      <End Role="IstihdamIsyerleri" EntitySet="IstihdamIsyerleri" />
+      <End Role="IstihdamIsyeriGorusmeleri" EntitySet="IstihdamIsyeriGorusmeleri" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IstihdamIsyeriIletisimKisileri_IstihdamIsyerleri" Association="Self.FK_IstihdamIsyeriIletisimKisileri_IstihdamIsyerleri">
+      <End Role="IstihdamIsyerleri" EntitySet="IstihdamIsyerleri" />
+      <End Role="IstihdamIsyeriIletisimKisileri" EntitySet="IstihdamIsyeriIletisimKisileri" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IstihdamIsyerleri_IstihdamIsyeriSektorler" Association="Self.FK_IstihdamIsyerleri_IstihdamIsyeriSektorler">
+      <End Role="IstihdamIsyeriSektorler" EntitySet="IstihdamIsyeriSektorler" />
+      <End Role="IstihdamIsyerleri" EntitySet="IstihdamIsyerleri" />
+    </AssociationSet>
+    <AssociationSet Name="FK_KullaniciBirimBilgileri_Kullanicilar" Association="Self.FK_KullaniciBirimBilgileri_Kullanicilar">
+      <End Role="Kullanicilar" EntitySet="Kullanicilar" />
+      <End Role="KullaniciBirimBilgileri" EntitySet="KullaniciBirimBilgileri" />
+    </AssociationSet>
+    <AssociationSet Name="FK_KullaniciErisimBilgileri_ErisimKodlari" Association="Self.FK_KullaniciErisimBilgileri_ErisimKodlari">
+      <End Role="ErisimKodlari" EntitySet="ErisimKodlari" />
+      <End Role="KullaniciErisimBilgileri" EntitySet="KullaniciErisimBilgileri" />
+    </AssociationSet>
+    <AssociationSet Name="FK_KullaniciErisimBilgileri_Kullanicilar" Association="Self.FK_KullaniciErisimBilgileri_Kullanicilar">
+      <End Role="Kullanicilar" EntitySet="Kullanicilar" />
+      <End Role="KullaniciErisimBilgileri" EntitySet="KullaniciErisimBilgileri" />
+    </AssociationSet>
+    <AssociationSet Name="FK_KullaniciGorevTakip_Kullanicilar" Association="Self.FK_KullaniciGorevTakip_Kullanicilar">
+      <End Role="Kullanicilar" EntitySet="Kullanicilar" />
+      <End Role="KullaniciGorevTakip" EntitySet="KullaniciGorevTakip" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Kullanicilar_KurumHizmetMerkezleri" Association="Self.FK_Kullanicilar_KurumHizmetMerkezleri">
+      <End Role="KurumHizmetMerkezleri" EntitySet="KurumHizmetMerkezleri" />
+      <End Role="Kullanicilar" EntitySet="Kullanicilar" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Kullanicilar_Kurumlar" Association="Self.FK_Kullanicilar_Kurumlar">
+      <End Role="Kurumlar" EntitySet="Kurumlar" />
+      <End Role="Kullanicilar" EntitySet="Kullanicilar" />
+    </AssociationSet>
+    <AssociationSet Name="FK_KurumPoliklinikTurleri_KurumPoliklinikTurleri" Association="Self.FK_KurumPoliklinikTurleri_KurumPoliklinikTurleri">
+      <End Role="Kurumlar" EntitySet="Kurumlar" />
+      <End Role="KurumPoliklinikTurleri" EntitySet="KurumPoliklinikTurleri" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Mahalle_Ilce" Association="Self.FK_Mahalle_Ilce">
+      <End Role="Ilce" EntitySet="Ilce" />
+      <End Role="Mahalle" EntitySet="Mahalle" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MobilEkipVakaFormlari_Hastalar" Association="Self.FK_MobilEkipVakaFormlari_Hastalar">
+      <End Role="Hastalar" EntitySet="Hastalar" />
+      <End Role="MobilEkipVakaFormlari" EntitySet="MobilEkipVakaFormlari" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RandevuAyarlari_Kurumlar" Association="Self.FK_RandevuAyarlari_Kurumlar">
+      <End Role="Kurumlar" EntitySet="Kurumlar" />
+      <End Role="RandevuAyarlari" EntitySet="RandevuAyarlari" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RandevuAyarlari_KurumPoliklinikTurleri" Association="Self.FK_RandevuAyarlari_KurumPoliklinikTurleri">
+      <End Role="KurumPoliklinikTurleri" EntitySet="KurumPoliklinikTurleri" />
+      <End Role="RandevuAyarlari" EntitySet="RandevuAyarlari" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RandevuBilgileri_Kurumlar" Association="Self.FK_RandevuBilgileri_Kurumlar">
+      <End Role="Kurumlar" EntitySet="Kurumlar" />
+      <End Role="RandevuBilgileri" EntitySet="RandevuBilgileri" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RandevuBilgileri_KurumPoliklinikTurleri" Association="Self.FK_RandevuBilgileri_KurumPoliklinikTurleri">
+      <End Role="KurumPoliklinikTurleri" EntitySet="KurumPoliklinikTurleri" />
+      <End Role="RandevuBilgileri" EntitySet="RandevuBilgileri" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VakaTanilari112_TaniKodlari" Association="Self.FK_VakaTanilari112_TaniKodlari">
+      <End Role="TaniKodlari" EntitySet="TaniKodlari" />
+      <End Role="VakaTanilari112" EntitySet="VakaTanilari112" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VakaTanilari112_VakaBilgileri112" Association="Self.FK_VakaTanilari112_VakaBilgileri112">
+      <End Role="VakaBilgileri112" EntitySet="VakaBilgileri112" />
+      <End Role="VakaTanilari112" EntitySet="VakaTanilari112" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Yatislar_YatisSonlanmaNedenleri" Association="Self.FK_Yatislar_YatisSonlanmaNedenleri">
+      <End Role="ArindirmaBasvuruKararlari" EntitySet="ArindirmaBasvuruKararlari" />
+      <End Role="Yatislar" EntitySet="Yatislar" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

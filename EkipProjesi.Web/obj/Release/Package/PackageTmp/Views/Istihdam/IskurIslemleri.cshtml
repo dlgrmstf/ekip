@@ -1,0 +1,550 @@
+﻿
+@{
+    ViewBag.Title = "İskur İşlemleri";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+<link rel="stylesheet" href="~/dist/vendors/c3/c3.min.css">
+<link rel="stylesheet" href="~/dist/vendors/datatable/css/dataTables.bootstrap4.min.css" />
+<link rel="stylesheet" href="~/dist/vendors/datatable/buttons/css/buttons.bootstrap4.min.css" />
+
+<div class="row">
+    <div class="col-12  align-self-center">
+        <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+            <div class="w-sm-100 mr-auto"><h4 class="mb-0">İşkur İşlemleri</h4> <a href="@Url.Action("Index", "Istihdam")"><p>İstihdam Modülü</p></a></div>
+            <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+                <li class="breadcrumb-item"><a href="#">İşkur İşlemleri</a></li>
+                <li class="breadcrumb-item active">Anasayfa</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<div id="myModalSave" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body" style="width:500px; height:300px;">
+                <form class="form-horizontal">
+                    <input type="hidden" id="hdEventID" value="0" />
+                    <div class="row">
+                        <div class="form-group col-sm-6">
+                            <label>Hasta TC No</label>
+                            <input type="text" id="txtTCNo" class="form-control" disabled />
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label>Hasta Adı</label>
+                            <input type="text" id="txtName" class="form-control" disabled />
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label>Hasta Soyadı</label>
+                            <input type="text" id="txtSurname" class="form-control" disabled />
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label>Telefon</label>
+                            <input type="text" id="txtPhone" class="form-control" disabled />
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label>Hizmet Merkezi</label>
+                            <input type="text" id="txtCenter" class="form-control" disabled />
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label>Randevu Baş. Tarihi</label>
+                            <div class="input-group date" id="dtp1">
+                                <input type="datetime-local" id="txtStart" class="form-control" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="btnSave" class="btn btn-success btn-md pull-right">Kaydet</button>
+                        <button type="button" class="btn btn-default btn-md pull-right" data-dismiss="modal" id="btnClose">Kapat</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="rdDurumModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body" style="width:500px; height:150px;">
+                <form class="form-horizontal">
+                    <input type="hidden" id="hdEventID" value="0" />
+                    <div class="row">
+                        <div class="form-group col-sm-12">
+                            <label>Randevu Durumu</label>
+                            <input type="text" id="txtrdDurum" class="form-control" maxlength="50" required />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="btnEdit" class="btn btn-success btn-md pull-right">Kaydet</button>
+                        <button type="button" class="btn btn-default btn-md pull-right" data-dismiss="modal" id="btnClose">Kapat</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12 col-sm-12 mt-3">
+                <div class="card">
+                    <div class="card-header justify-content-between align-items-center">
+                        <h4 class="card-title">Bekleyen Randevu Talepleri</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="example" class="display table dataTable table-striped table-bordered" width="99%">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Ad - Soyad</th>
+                                        <th scope="col">TC Kimlik No</th>
+                                        <th scope="col">Telefon</th>
+                                        <th scope="col">Hizmet Merkezi</th>
+                                        <th scope="col">Randevu Talebi Notu</th>
+                                        <th scope="col">Talep Tarihi</th>
+                                        <th scope="col">İşlem</th>
+                                    </tr>
+                                </thead>
+                                @if (User.IsInRole("90"))
+                                {
+                                    <tbody>
+                                        @foreach (var t in ViewBag.AktifRandevuTalepleriKendi)
+                                        {
+                                            if (t.KayitTarihi.AddDays(4) <= DateTime.Now)
+                                            {
+                                                <tr>
+                                                    <th scope="row" style="color:red">@t.ID</th>
+                                                    <td style="color:red">@t.HastaAdi @t.HastaSoyadi</td>
+                                                    <td style="color:red">@t.HastaTCKimlikNo</td>
+                                                    <td style="color:red">@t.Telefon</td>
+                                                    <td style="color:red">@t.HizmetMerkeziAdi</td>
+                                                    <td style="color:red">@t.RandevuTalebiNotu</td>
+                                                    <td style="color:red">@t.KayitTarihi.ToString("dd/MM/yyyy HH:mm")</td>
+                                                    @if (User.IsInRole("45"))
+                                                    {
+                                                        <td style="color:red"><button class="btn btn-outline-danger rounded-btn mb-2 olustur" id="@t.ID"><i class="icon-note"></i> Randevu Ver</button></td>
+                                                    }
+                                                </tr>
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <th scope="row">@t.ID</th>
+                                                    <td>@t.HastaAdi @t.HastaSoyadi</td>
+                                                    <td>@t.HastaTCKimlikNo</td>
+                                                    <td>@t.Telefon</td>
+                                                    <td>@t.HizmetMerkeziAdi</td>
+                                                    <td>@t.RandevuTalebiNotu</td>
+                                                    <td>@t.KayitTarihi.ToString("dd/MM/yyyy HH:mm")</td>
+                                                    @if (User.IsInRole("45"))
+                                                    {
+                                                        <td><button class="btn btn-outline-warning rounded-btn mb-2 olustur" id="@t.ID"><i class="icon-note"></i> Randevu Ver</button></td>
+                                                    }
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                }
+                                @if (User.IsInRole("92"))
+                                {
+                                    <tbody>
+                                        @foreach (var t in ViewBag.AktifRandevuTalepleri)
+                                        {
+                                            if (t.KayitTarihi.AddDays(4) <= DateTime.Now)
+                                            {
+                                                <tr>
+                                                    <th scope="row" style="color:red">@t.ID</th>
+                                                    <td style="color:red">@t.HastaAdi @t.HastaSoyadi</td>
+                                                    <td style="color:red">@t.HastaTCKimlikNo</td>
+                                                    <td style="color:red">@t.Telefon</td>
+                                                    <td style="color:red">@t.HizmetMerkeziAdi</td>
+                                                    <td style="color:red">@t.RandevuTalebiNotu</td>
+                                                    <td style="color:red">@t.KayitTarihi.ToString("dd/MM/yyyy HH:mm")</td>
+                                                    @if (User.IsInRole("45"))
+                                                    {
+                                                        <td style="color:red"><button class="btn btn-outline-danger rounded-btn mb-2 olustur" id="@t.ID"><i class="icon-note"></i> Randevu Ver</button></td>
+                                                    }
+                                                </tr>
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <th scope="row">@t.ID</th>
+                                                    <td>@t.HastaAdi @t.HastaSoyadi</td>
+                                                    <td>@t.HastaTCKimlikNo</td>
+                                                    <td>@t.Telefon</td>
+                                                    <td>@t.HizmetMerkeziAdi</td>
+                                                    <td>@t.RandevuTalebiNotu</td>
+                                                    <td>@t.KayitTarihi.ToString("dd/MM/yyyy HH:mm")</td>
+                                                    @if (User.IsInRole("45"))
+                                                    {
+                                                        <td><button class="btn btn-outline-warning rounded-btn mb-2 olustur" id="@t.ID"><i class="icon-note"></i> Randevu Ver</button></td>
+                                                    }
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<br />
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12 col-sm-12 mt-3">
+                <div class="card">
+                    <div class="card-header justify-content-between align-items-center">
+                        <h4 class="card-title">Verilen Randevular</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="example2" class="display table dataTable table-striped table-bordered" width="99%">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Ad - Soyad</th>
+                                        <th scope="col">TC Kimlik No</th>
+                                        <th scope="col">Telefon</th>
+                                        <th scope="col">Hizmet Merkezi</th>
+                                        <th scope="col">Randevu Tarihi</th>
+                                        <th scope="col">Randevu Sonucu</th>
+                                    </tr>
+                                </thead>
+                                @if (User.IsInRole("90"))
+                                {
+                                    <tbody>
+                                        @foreach (var t in ViewBag.VerilenRandevularKendi)
+                                        {
+                                            <tr>
+                                                <th scope="row">@t.ID</th>
+                                                <td>@t.HastaAdi @t.HastaSoyadi</td>
+                                                <td>@t.HastaTCKimlikNo</td>
+                                                <td>@t.Telefon</td>
+                                                <td>@t.HizmetMerkeziAdi</td>
+                                                <td>@t.RandevuTarihi.ToString("dd/MM/yyyy HH:mm")</td>
+                                                <td>
+                                                    @if (string.IsNullOrEmpty(t.RandevuDurumu))
+                                                    {
+                                                        <p>Durum bilgisi bulunamadı.</p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span>@t.RandevuDurumu&nbsp;&nbsp;</span>
+                                                    }
+                                                    @if (User.IsInRole("46"))
+                                                    {
+                                                        <button class="btn btn-outline-success rounded-btn mb-2 rdGuncelle" id="@t.ID"><i class="icon-note"></i></button>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+
+                                }
+                                @if (User.IsInRole("92"))
+                                {
+                                    <tbody>
+                                        @foreach (var t in ViewBag.VerilenRandevular)
+                                        {
+                                            <tr>
+                                                <th scope="row">@t.ID</th>
+                                                <td>@t.HastaAdi @t.HastaSoyadi</td>
+                                                <td>@t.HastaTCKimlikNo</td>
+                                                <td>@t.Telefon</td>
+                                                <td>@t.HizmetMerkeziAdi</td>
+                                                <td>@t.RandevuTarihi.ToString("dd/MM/yyyy HH:mm")</td>
+                                                <td>
+                                                    @if (string.IsNullOrEmpty(t.RandevuDurumu))
+                                                    {
+                                                        <p>Durum bilgisi bulunamadı.</p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span>@t.RandevuDurumu&nbsp;&nbsp;</span>
+                                                    }
+                                                    @if (User.IsInRole("46"))
+                                                    {
+                                                        <button class="btn btn-outline-success rounded-btn mb-2 rdGuncelle" id="@t.ID"><i class="icon-note"></i></button>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<br />
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-md-10">
+                <span class="card-title h4">Hastalar</span>
+            </div>
+            @if (User.IsInRole("47"))
+            {
+                <div class="col-md-2">
+                    <a class="btn bg-green-600 rounded-btn mb-2 ont-w-300 my-auto text-nowrap text-light" href="@Url.Action("KayitEkle", "Istihdam")" style="vertical-align:central"><i class="icon-note"></i> Hasta Ekle</a>
+                </div>
+            }
+        </div>
+        <div class="row row-eq-height">
+            <div class="col-12 col-lg-2 mt-3 todo-menu-bar flip-menu pr-lg-0">
+                <a href="#" class="d-inline-block d-lg-none mt-1 flip-menu-close"><i class="icon-close"></i></a>
+                <div class="card border h-100 contact-menu-section">
+                    <ul class="nav flex-column contact-menu">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#" data-contacttype="contact">
+                                <i class="icon-list"></i> Tümü
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-12 col-lg-10 mt-3 pl-lg-0">
+                <div class="card border h-100 contact-list-section">
+                    <div class="card-header border-bottom p-1 d-flex">
+                        <a href="#" class="d-inline-block d-lg-none flip-menu-toggle"><i class="icon-menu"></i></a>
+                        <input type="text" class="form-control border-0 p-2 w-100 h-100 contact-search" placeholder="Arayın ...">
+                        <a href="#" class="list-style search-bar-menu border-0 active"><i class="icon-list"></i></a>
+                        <a href="#" class="grid-style search-bar-menu"><i class="icon-grid"></i></a>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="contacts list">
+                            @if (User.IsInRole("48"))
+                            {
+                                if (User.IsInRole("90"))
+                                {
+                                    foreach (var v in ViewBag.KendiHastalari)
+                                    {
+                                        <div class="contact kategori1">
+                                            <div class="contact-content">
+                                                <div class="contact-profile">
+                                                    <img src="~/images/user.png" alt="avatar" class="user-image img-fluid">
+                                                    <div class="contact-info">
+                                                        <p class="contact-name mb-0">@v.HastaAdi @v.HastaSoyadi</p>
+                                                    </div>
+                                                </div>
+                                                <div class="contact-email">
+                                                    <p class="mb-0 small">TC Kimlik No: </p>
+                                                    <p class="user-email">@v.HastaTCKimlikNo</p>
+                                                </div>
+                                                <div class="contact-email">
+                                                    <p class="mb-0 small">Hasta Ekip No: </p>
+                                                    <p class="user-email">@v.HastaEkipNo</p>
+                                                </div>
+                                                <div class="contact-phone">
+                                                    <p class="mb-0 small">Telefon: </p>
+                                                    <p class="user-phone">@v.Telefon</p>
+                                                </div>
+                                                @if (User.IsInRole("48"))
+                                                {
+                                                    <div class="line-h-1 h5">
+                                                        <a class="text-success edit-contact" href="@Url.Action("KayitDetay","Istihdam", new { id = v.HastaID })" name="Detay" target="_blank"><i class="icon-plus"></i></a>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                else if (User.IsInRole("91"))
+                                {
+                                    foreach (var v in ViewBag.KurumdakiHastalar)
+                                    {
+                                        <div class="contact kategori1">
+                                            <div class="contact-content">
+                                                <div class="contact-profile">
+                                                    <img src="~/images/user.png" alt="avatar" class="user-image img-fluid">
+                                                    <div class="contact-info">
+                                                        <p class="contact-name mb-0">@v.HastaAdi @v.HastaSoyadi</p>
+                                                    </div>
+                                                </div>
+                                                <div class="contact-email">
+                                                    <p class="mb-0 small">TC Kimlik No: </p>
+                                                    <p class="user-email">@v.HastaTCKimlikNo</p>
+                                                </div>
+                                                <div class="contact-email">
+                                                    <p class="mb-0 small">Hasta Ekip No: </p>
+                                                    <p class="user-email">@v.HastaEkipNo</p>
+                                                </div>
+                                                <div class="contact-phone">
+                                                    <p class="mb-0 small">Telefon: </p>
+                                                    <p class="user-phone">@v.Telefon</p>
+                                                </div>
+                                                @if (User.IsInRole("48"))
+                                                {
+                                                    <div class="line-h-1 h5">
+                                                        <a class="text-success edit-contact" href="@Url.Action("KayitDetay","Istihdam", new { id = v.HastaID })" name="Detay" target="_blank"><i class="icon-plus"></i></a>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                else if (User.IsInRole("92"))
+                                {
+                                    foreach (var v in ViewBag.TumHastalar)
+                                    {
+                                        <div class="contact kategori1">
+                                            <div class="contact-content">
+                                                <div class="contact-profile">
+                                                    <img src="~/images/user.png" alt="avatar" class="user-image img-fluid">
+                                                    <div class="contact-info">
+                                                        <p class="contact-name mb-0">@v.HastaAdi @v.HastaSoyadi</p>
+                                                    </div>
+                                                </div>
+                                                <div class="contact-email">
+                                                    <p class="mb-0 small">TC Kimlik No: </p>
+                                                    <p class="user-email">@v.HastaTCKimlikNo</p>
+                                                </div>
+                                                <div class="contact-email">
+                                                    <p class="mb-0 small">Hasta Ekip No: </p>
+                                                    <p class="user-email">@v.HastaEkipNo</p>
+                                                </div>
+                                                <div class="contact-phone">
+                                                    <p class="mb-0 small">Telefon: </p>
+                                                    <p class="user-phone">@v.Telefon</p>
+                                                </div>
+                                                @if (User.IsInRole("48"))
+                                                {
+                                                    <div class="line-h-1 h5">
+                                                        <a class="text-success edit-contact" href="@Url.Action("KayitDetay","Istihdam", new { id = v.HastaID })" name="Detay" target="_blank"><i class="icon-plus"></i></a>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('.olustur').on('click', function () {
+        var talepId = parseInt($(this).attr('id'));
+        $.ajax({
+              type: "POST",
+              url: '@Url.Action("TalepDetayGetir", "Istihdam")',
+              data: { talepId: talepId },
+              success: function (data) {
+                  $('#myModalSave').modal('show');
+                  $('#hdEventID').val(data.ID);
+                  $('#txtName').val(data.HastaAdi);
+                  $('#txtSurname').val(data.HastaSoyadi);
+                  $('#txtTCNo').val(data.HastaTCKimlikNo);
+                  $('#txtPhone').val(data.Telefon);
+                  $('#txtCenter').val(data.HizmetMerkeziAdi);
+              },
+              error: function () {
+                    alert('İşlem sırasında hata oluştu. Lütfen tekrar deneyiniz.');
+              }
+        })
+    });
+    $('#btnSave').on('click', function () {
+        var ID = $('#hdEventID').val();
+        var RandevuTarihi = $('#txtStart').val();
+        $.ajax({
+              type: "POST",
+              url: '@Url.Action("RandevuEkle", "Istihdam")',
+              data: { ID: ID, RandevuTarihi: RandevuTarihi },
+              success: function (data) {
+                  $('#myModalSave').modal('hide');
+                  alert('Randevunuz başarılı bir şekilde oluşturulmuştur.');
+                  location.reload();
+              },
+              error: function () {
+                    alert('Randevu oluşturma sırasında hata oluştu. Lütfen tekrar deneyiniz.');
+              }
+        })
+    });
+    $('.rdGuncelle').on('click', function () {
+        var talepId = parseInt($(this).attr('id'));
+        $.ajax({
+              type: "POST",
+              url: '@Url.Action("TalepDetayGetir", "Istihdam")',
+              data: { talepId: talepId },
+              success: function (data) {
+                  $('#rdDurumModal').modal('show');
+                  $('#hdEventID').val(data.ID);
+              },
+              error: function () {
+                    alert('İşlem sırasında hata oluştu. Lütfen tekrar deneyiniz.');
+              }
+        })
+    });
+    $('#btnEdit').on('click', function () {
+        var ID = $('#hdEventID').val();
+        var RandevuDurumu = $('#txtrdDurum').val();
+        $.ajax({
+              type: "POST",
+              url: '@Url.Action("RandevuDurumGuncelle", "Istihdam")',
+              data: { ID: ID, RandevuDurumu: RandevuDurumu },
+              success: function (data) {
+                  $('#myModalSave').modal('hide');
+                  alert('Randevu durumu başarılı bir şekilde güncellenmiştir.');
+                  location.reload();
+              },
+              error: function () {
+                    alert('Randevu durumu güncelleme sırasında hata oluştu. Lütfen tekrar deneyiniz.');
+              }
+        })
+    });
+</script>
+
+<script src="~/dist/vendors/jquery/jquery-3.3.1.min.js"></script>
+<script src="~/dist/vendors/jquery-ui/jquery-ui.min.js"></script>
+<script src="~/dist/vendors/moment/moment.js"></script>
+<script src="~/dist/vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/dist/vendors/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="~/dist/js/app.js"></script>
+<script src="~/dist/js/app.contactlist.js"></script>
+
+<script src="~/dist/vendors/c3/d3.v5.min.js"></script>
+<script src="~/dist/vendors/c3/c3.min.js"></script>
+<script src="~/dist/js/c3.script.js"></script>
+
+<script src="~/dist/vendors/jquery/jquery-3.3.1.min.js"></script>
+<script src="~/dist/vendors/jquery-ui/jquery-ui.min.js"></script>
+<script src="~/dist/vendors/moment/moment.js"></script>
+<script src="~/dist/vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/dist/vendors/slimscroll/jquery.slimscroll.min.js"></script>
+
+<script src="~/dist/vendors/datatable/js/jquery.dataTables.min.js"></script>
+<script src="~/dist/vendors/datatable/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/dist/vendors/datatable/jszip/jszip.min.js"></script>
+<script src="~/dist/vendors/datatable/pdfmake/pdfmake.min.js"></script>
+<script src="~/dist/vendors/datatable/pdfmake/vfs_fonts.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/dataTables.buttons.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.colVis.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.flash.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.html5.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.print.min.js"></script>
+<script src="~/Content/DataTablesScript.js"></script>

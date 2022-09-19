@@ -1,0 +1,221 @@
+﻿@model EkipProjesi.Core.Hastalar.IHastalar
+@{
+    ViewBag.Title = "Hasta Ekle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="~/js/input-mask.min.js"></script>
+
+<div class="row">
+    <div class="col-12  align-self-center">
+        <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+            <div class="w-sm-100 mr-auto"><h4 class="mb-0">Hasta Ekleyin</h4> <a href="@Url.Action("IskurIslemleri", "Istihdam")"><p>İşkur İşlemleri</p></a></div>
+            <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+                <li class="breadcrumb-item"><a href="#">Hasta Ekle</a></li>
+                <li class="breadcrumb-item active">Anasayfa</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 mt-4">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Kayıt Bilgileri</h4>
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            @using (Html.BeginForm("KayitEkle", "Istihdam", FormMethod.Post, new { @class = "popup-validation" }))
+                            {
+                                <form>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-3">
+                                            <label for="ad">Ad</label>
+                                            <input type="text" class="form-control" id="@Html.IdFor(x=>x.HastaAdi)" name="@Html.NameFor(x=>x.HastaAdi)">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="soyad">Soyad</label>
+                                            <input type="text" class="form-control" id="@Html.IdFor(x=>x.HastaSoyadi)" name="@Html.NameFor(x=>x.HastaSoyadi)">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="tcno">TC Kimlik No</label>
+                                            <input type="text" class="form-control" id="@Html.IdFor(x=>x.HastaTCKimlikNo)" name="@Html.NameFor(x=>x.HastaTCKimlikNo)" maxlength="11">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="dogumtarihi">Doğum Tarihi</label>
+                                            <input type="date" class="form-control datepicker hasDatepicker" id="@Html.IdFor(x=>x.DogumTarihi)" name="@Html.NameFor(x=>x.DogumTarihi)">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="KurumBilgisi">Kurum</label>
+                                            <select required class="form-control form-control-sm validate[required]" name="@Html.NameFor(x => x.KurumKodu)" id="@Html.IdFor(x => x.KurumKodu)">
+                                                @foreach (var k in ViewBag.Kurum)
+                                                {
+                                                    <option value="@k.KurumKodu" selected>@k.KurumAdi</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <h6>İletişim Bilgileri</h6>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-3">
+                                            <label for="telefon">Telefon</label>
+                                            <input type="text" class="form-control tel" id="@Html.IdFor(x=>x.Telefon)" name="@Html.NameFor(x=>x.Telefon)" placeholder="0 555 555 55 55">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="email">Email</label>
+                                            <input type="email" class="form-control" id="@Html.IdFor(x=>x.Email)" name="@Html.NameFor(x=>x.Email)">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="adres">Adres</label>
+                                            <textarea type="text" rows="3" class="form-control" id="@Html.IdFor(x=>x.Adres)" name="@Html.NameFor(x=>x.Adres)"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <h6>Eğitim Bilgisi</h6>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-2">
+                                                <label for="ogrenim">Öğrenim Durumu</label>
+                                                <select id="@Html.IdFor(x=>x.EgitimBilgileri.OgrenimDurumu)" name="@Html.NameFor(x=>x.EgitimBilgileri.OgrenimDurumu)" class="form-control">
+                                                    <option selected>Seçiniz</option>
+                                                    <option value="@((int)OgrenimDurumu.OkuryazarDegil)">Okuryazar değil</option>
+                                                    <option value="@((int)OgrenimDurumu.IlkOkul)">İlkokul</option>
+                                                    <option value="@((int)OgrenimDurumu.Ortaokul)">Ortaokul</option>
+                                                    <option value="@((int)OgrenimDurumu.Lise)">Lise</option>
+                                                    <option value="@((int)OgrenimDurumu.Onlisans)">Önlisans</option>
+                                                    <option value="@((int)OgrenimDurumu.Lisans)">Lisans</option>
+                                                    <option value="@((int)OgrenimDurumu.Lisansustu)">Lisansüstü</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-2" style="display:none" id="showliseturu">
+                                                <label for="liseturu">Lise Türü</label>
+                                                <select id="@Html.IdFor(x=>x.EgitimBilgileri.LiseTuru)" name="@Html.NameFor(x=>x.EgitimBilgileri.LiseTuru)" class="form-control">
+                                                    <option selected>Seçiniz</option>
+                                                    <option value="@((int)LiseTuru.Fen)">Fen Lisesi</option>
+                                                    <option value="@((int)LiseTuru.Anadolu)">Anadolu Lisesi</option>
+                                                    <option value="@((int)LiseTuru.Teknik)">Teknik Lise</option>
+                                                    <option value="@((int)LiseTuru.Genel)">Genel Lise</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-2" style="display:none" id="showilkokul">
+                                                <label for="ilkokul">İlkokul</label>
+                                                <input id="@Html.IdFor(x=>x.EgitimBilgileri.Ilkokul)" name="@Html.NameFor(x=>x.EgitimBilgileri.Ilkokul)" type="text" class="form-control" />
+                                            </div>
+                                            <div class="form-group col-md-2" style="display:none" id="showortaokul">
+                                                <label for="ortaokul">Ortaokul</label>
+                                                <input id="@Html.IdFor(x=>x.EgitimBilgileri.Ortaokul)" name="@Html.NameFor(x=>x.EgitimBilgileri.Ortaokul)" type="text" class="form-control" />
+                                            </div>
+                                            <div class="form-group col-md-2" style="display:none" id="showlise">
+                                                <label for="lise">Lise</label>
+                                                <input id="@Html.IdFor(x=>x.EgitimBilgileri.Lise)" name="@Html.NameFor(x=>x.EgitimBilgileri.Lise)" type="text" class="form-control" />
+                                            </div>
+                                            <div class="form-group col-md-2" style="display:none" id="showuniversite">
+                                                <label for="universite">Üniversite</label>
+                                                <input id="@Html.IdFor(x=>x.EgitimBilgileri.Universite)" name="@Html.NameFor(x=>x.EgitimBilgileri.Universite)" type="text" class="form-control" />
+                                            </div>
+                                            <div class="form-group col-md-2" style="display:none" id="showfakulte">
+                                                <label for="fakulte">Fakülte</label>
+                                                <input id="@Html.IdFor(x=>x.EgitimBilgileri.Fakulte)" name="@Html.NameFor(x=>x.EgitimBilgileri.Fakulte)" type="text" class="form-control" />
+                                            </div>
+                                            <div class="form-group col-md-2" style="display:none" id="showbolum">
+                                                <label for="bolum">Bölüm</label>
+                                                <input id="@Html.IdFor(x=>x.EgitimBilgileri.Bolum)" name="@Html.NameFor(x=>x.EgitimBilgileri.Bolum)" type="text" class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <h6>İş Geçmişi</h6>
+                                        <div class="form-row">
+                                            <div class="form-row col-md-12" id="isgecmisi">
+                                                <textarea class="form-control" rows="2" cols="15" id="@Html.IdFor(x=>x.EgitimBilgileri.IsGecmisi)" name="@Html.NameFor(x=>x.EgitimBilgileri.IsGecmisi)"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <h6>Sertifika ve Yeterlilikler</h6>
+                                        <div class="form-row">
+                                            <div class="form-row col-md-12" id="sertifika">
+                                                <textarea class="form-control" rows="2" cols="15" id="@Html.IdFor(x=>x.EgitimBilgileri.SertifikaVeYeterlilikler)" name="@Html.NameFor(x=>x.EgitimBilgileri.SertifikaVeYeterlilikler)"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <button type="submit" class="btn btn-primary">Kaydet</button>
+                                    </div>
+                                </form>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#@Html.IdFor(x=>x.EgitimBilgileri.OgrenimDurumu)').on('change', function () {
+            if (this.value == "2") {
+                $("#showilkokul").show();
+                $("#showuniversite").hide();
+                $("#showbolum").hide();
+                $("#showfakulte").hide();
+                $("#showlise").hide();
+                $("#showliseturu").hide();
+                $("#showortaokul").hide();
+            }
+            if (this.value == "3") {
+                $("#showortaokul").show();
+                $("#showuniversite").hide();
+                $("#showbolum").hide();
+                $("#showfakulte").hide();
+                $("#showlise").hide();
+                $("#showliseturu").hide();
+                $("#showilkokul").hide();
+            }
+            else if (this.value == "4") {
+                $("#showlise").show();
+                $("#showliseturu").show();
+                $("#showuniversite").hide();
+                $("#showbolum").hide();
+                $("#showfakulte").hide();
+                $("#showortaokul").hide();
+                $("#showilkokul").hide();
+            }
+            else if (this.value == "5") {
+                $("#showuniversite").show();
+                $("#showbolum").show();
+                $("#showfakulte").hide();
+                $("#showlise").hide();
+                $("#showliseturu").hide();
+                $("#showilkokul").hide();
+                $("#showortaokul").hide();
+            }
+            else if (this.value == "6") {
+                $("#showuniversite").show();
+                $("#showbolum").show();
+                $("#showfakulte").show();
+                $("#showlise").hide();
+                $("#showliseturu").hide();
+                $("#showilkokul").hide();
+                $("#showortaokul").hide();
+            }
+            else if (this.value == "7") {
+                $("#showuniversite").show();
+                $("#showbolum").show();
+                $("#showfakulte").show();
+                $("#showlise").hide();
+                $("#showliseturu").hide();
+                $("#showilkokul").hide();
+                $("#showortaokul").hide();
+            }
+        });
+    });
+</script>
+<script>
+    var tel = document.getElementsByClassName("tel");
+    $('.tel').mask('0(000) 000 00 00');
+</script>

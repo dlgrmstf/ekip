@@ -1,0 +1,126 @@
+﻿@model EkipProjesi.Core.Hastalar.IHastaAramaModel
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<link rel="stylesheet" href="~/dist/vendors/c3/c3.min.css">
+<link rel="stylesheet" href="~/dist/vendors/datatable/css/dataTables.bootstrap4.min.css" />
+<link rel="stylesheet" href="~/dist/vendors/datatable/buttons/css/buttons.bootstrap4.min.css" />
+
+<div class="row">
+    <div class="col-12 mt-3">
+        <div class="card">
+            <div class="card-header">
+                <h4>
+                    HASTALAR
+                </h4>
+            </div>
+            @if (ViewBag.Hastalar != null || Model.Hastalar != null)
+            {
+                <div class="card-body">
+                    <div class="">
+                        <div class="">
+                            <div class="table-responsive">
+                                <table id="example" class="display table dataTable table-striped table-bordered" width="99%">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Hasta Adı</th>
+                                            <th>Hasta Soyadı</th>
+                                            <th>TC Kimlik No</th>
+                                            <th>Randevu</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (User.IsInRole("90"))
+                                        {
+                                            <tr>
+                                                <td>@ViewBag.Hastalar.HastaID</td>
+                                                <td>@ViewBag.Hastalar.HastaAdi</td>
+                                                <td>@ViewBag.Hastalar.HastaSoyadi</td>
+                                                <td>@ViewBag.Hastalar.HastaTCKimlikNo</td>
+                                                <td>
+                                                    <button class="btn btn-info rounded-btn mb-2 olustur" id="@ViewBag.Hastalar.HastaID"><i class="icon-note"></i>Oluştur</button>
+                                                </td>
+                                            </tr>
+                                        }
+                                        @if (User.IsInRole("91"))
+                                        {
+                                            <tr>
+                                                <td>@ViewBag.Hastalar.HastaID</td>
+                                                <td>@ViewBag.Hastalar.HastaAdi</td>
+                                                <td>@ViewBag.Hastalar.HastaSoyadi</td>
+                                                <td>@ViewBag.Hastalar.HastaTCKimlikNo</td>
+                                                <td>
+                                                    <button class="btn btn-info rounded-btn mb-2 olustur" id="@ViewBag.Hastalar.HastaID"><i class="icon-note"></i>Oluştur</button>
+                                                </td>
+                                            </tr>
+                                        }
+                                        @if (User.IsInRole("92"))
+                                        {
+                                            foreach (var item in Model.Hastalar)
+                                            {
+                                                <tr>
+                                                    <td>@item.HastaID</td>
+                                                    <td>@item.HastaAdi</td>
+                                                    <td>@item.HastaSoyadi</td>
+                                                    <td>@item.HastaTCKimlikNo</td>
+                                                    <td>
+                                                        <button class="btn btn-info rounded-btn mb-2 olustur" id="@item.HastaID"><i class="icon-note"></i>Oluştur</button>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="card-body">
+                    <div class="alert alert-danger" role="alert">
+                        Aradığınız kriterlere uygun sonuç bulunamadı.
+                        <a href="#" class="alert-link" id="hastaEkle">Yeni hasta kaydı oluşturmak için tıklayın.</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(".olustur").on("click", function () {
+        var hastaId = parseInt($(this).attr('id'));
+        var locationpage = '@Url.Action("Kurumlar", "ArindirmaMerkezleri")?HastaID=' + hastaId;
+        window.location = locationpage;
+    });
+    $('#hastaEkle').on('click', function () {
+        var locationpage2 = '@Url.Action("HastaEkle","VakaTakip")';
+        window.location = locationpage2;
+    });
+</script>
+
+<script src="~/dist/vendors/c3/d3.v5.min.js"></script>
+<script src="~/dist/vendors/c3/c3.min.js"></script>
+<script src="~/dist/js/c3.script.js"></script>
+
+<script src="~/dist/vendors/jquery/jquery-3.3.1.min.js"></script>
+<script src="~/dist/vendors/jquery-ui/jquery-ui.min.js"></script>
+<script src="~/dist/vendors/moment/moment.js"></script>
+<script src="~/dist/vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/dist/vendors/slimscroll/jquery.slimscroll.min.js"></script>
+
+<script src="~/dist/vendors/datatable/js/jquery.dataTables.min.js"></script>
+<script src="~/dist/vendors/datatable/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/dist/vendors/datatable/jszip/jszip.min.js"></script>
+<script src="~/dist/vendors/datatable/pdfmake/pdfmake.min.js"></script>
+<script src="~/dist/vendors/datatable/pdfmake/vfs_fonts.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/dataTables.buttons.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.colVis.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.flash.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.html5.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.print.min.js"></script>
+
+<script src="~/dist/js/datatable.script.js"></script>

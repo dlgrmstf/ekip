@@ -1,0 +1,183 @@
+﻿@model IKullanici
+@{
+    ViewBag.Title = "Personel Ekle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="~/Content/global/vendor/bootstrap-select/bootstrap-select.css" rel="stylesheet" />
+<script src="~/Content/global/vendor/bootstrap-select/bootstrap-select.js"></script>
+<script src="~/js/input-mask.min.js"></script>
+
+<div class="row">
+    <div class="col-12  align-self-center">
+        <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+            <div class="w-sm-100 mr-auto"><h4 class="mb-0">Personel Ekle</h4> <p><a href="@Url.Action("Index","BirimPersonelleri")">Birim Personelleri Modülü</a></p></div>
+            <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+                <li class="breadcrumb-item"><a href="#">Personel Ekle</a></li>
+                <li class="breadcrumb-item active">Anasayfa</li>
+            </ol>
+        </div>
+    </div>
+</div>
+<link href="~/Content/global/vendor/bootstrap-select/bootstrap-select.css" rel="stylesheet" />
+
+<div class="row">
+    <div class="col-12 mt-4">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Kullanıcı Bilgileri</h3>
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <form class="form-horizontal" id="form" role="form" enctype="multipart/form-data">
+                                <div>
+                                    <h6>Kişisel Bilgiler</h6>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-2">
+                                            <label for="ad">Ad</label>
+                                            <input required type="text" class="form-control form-control-sm validate[required]" id="@Html.IdFor(x=>x.Ad)" name="@Html.NameFor(x => x.Ad)">
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="soyad">Soyad</label>
+                                            <input required type="text" class="form-control form-control-sm validate[required]" id="@Html.IdFor(x=>x.Soyad)" name="@Html.NameFor(x => x.Soyad)">
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="tcno">TC Kimlik No</label>
+                                            <input required type="text" class="form-control form-control-sm validate[required]" id="@Html.IdFor(x=>x.TC)" name="@Html.NameFor(x => x.TC)">
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="dogumtarihi">Doğum Tarihi</label>
+                                            <input required type="date" class="form-control form-control-sm validate[required]" id="@Html.IdFor(x=>x.DogumTarihi)" name="@Html.NameFor(x => x.DogumTarihi)">
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="cinsiyet">Cinsiyet</label>
+                                            <select required class="form-control form-control-sm validate[required]" name="@Html.NameFor(x => x.Cinsiyet)" id="@Html.IdFor(x => x.Cinsiyet)">
+                                                <option value="Kadın">Kadın</option>
+                                                <option value="Erkek">Erkek</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="meslek">Unvan</label>
+                                            <input required type="text" class="form-control form-control-sm validate[required]" id="@Html.IdFor(x=>x.Meslek)" name="@Html.NameFor(x => x.Meslek)">
+                                        </div>
+                                    </div>
+                                    <h6>İletişim Bilgileri</h6>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-3">
+                                            <label for="Telefon">Cep Telefonu</label>
+                                            @Html.TextBoxFor(x => x.Telefon, new { @class = "form-control form-control-sm tel validate[required]", placeholder = "0 555 555 55 55" })
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="KurumTelefon">Kurum Telefonu</label>
+                                            @Html.TextBoxFor(x => x.KurumTelefonu, new { @class = "form-control form-control-sm tel validate[required]", placeholder = "0 555 555 55 55" })
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="eposta">Kişisel E-Posta</label>
+                                            <input required type="text" class="form-control form-control-sm validate[required]" id="@Html.IdFor(x=>x.KullaniciAdi)" name="@Html.NameFor(x => x.KullaniciAdi)">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="kurumeposta">Kurum E-Posta</label>
+                                            <input required type="text" class="form-control form-control-sm validate[required]" id="@Html.IdFor(x=>x.KurumEposta)" name="@Html.NameFor(x => x.KurumEposta)">
+                                        </div>
+                                    </div>
+                                    <h6>Kurum Bilgileri</h6>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-4">
+                                            <label for="KurumBilgisi">Kurum</label>
+                                            @Html.DropDownList("KurumID", (IEnumerable<SelectListItem>)ViewData["Kurumlar"], new { @class = "form-control form-control-sm" })
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="HizmetMerkezi">Hizmet Merkezi</label>
+                                            <select required class="form-control form-control-sm" name="@Html.NameFor(x => x.HizmetMerkeziID)" id="@Html.IdFor(x => x.HizmetMerkeziID)"></select>
+                                        </div>
+                                    </div>
+                                    <h6>Kullanıcı Rolleri</h6>
+                                    <div class="form-group col-md-6">
+                                        <select required multiple data-plugin="selectpicker" class="selectpicker form-control form-control-sm validate[required]" name="@Html.NameFor(x=>x.Roller2)" id="@Html.IdFor(x=>x.Roller2)" title="Kullanıcı Rolleri">
+                                            @foreach (var r in ViewBag.Roller)
+                                            {
+                                                <option value="@r.ID">@r.Rol</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="">Fotoğraf</label>
+                                        <div class="">
+                                            <input type="file" id="personelFoto" name="personelFoto" accept="image/*" />
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="form-group col-md-3">
+                                        <button type="submit" class="btn btn-primary" id="kaydet">Kaydet</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    jQuery('#@Html.IdFor(x=>x.KurumID)').on('change', function () {
+        var kurum = Number(jQuery(this).val()) | 0;
+        if (kurum > 0) {
+            var hizmet = jQuery("#@Html.IdFor(x=>x.HizmetMerkeziID)");
+            jQuery.ajax({
+                cache: false,
+                type: "GET",
+                url: "@(Url.Action("HizmetMerkeziGetir", "BirimPersonelleri"))",
+                data: { "KurumID": kurum },
+                success: function (data) {
+                    if (data != null && data.length > 0) {
+                        hizmet.html('');
+                        $.each(data, function (id, option) {
+                            $('#@Html.IdFor(x=>x.HizmetMerkeziID)').append(jQuery('<option></option>').val(option.ID).html(option.Ad));
+                        });
+                    }
+                    else {
+                        alert("Hizmet Merkezi Bulunamadı");
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert("Hizmet Merkezi Bulunamadı");
+                }
+            });
+        }
+        else {
+            alert("Hizmet Merkezi Seçiniz");
+        }
+    });
+</script>
+<script>
+    $("#kaydet").on("click", function () {
+        var form = $('#form')[0];
+        var dataString = new FormData(form);
+        jQuery.ajax({
+            cache: false,
+            type: "POST",
+            url: '@Url.Action("PersonelEkle", "BirimPersonelleri")',
+            enctype: 'multipart/form-data',
+            data: dataString,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                if (data.success) {
+                    location.href = '@Url.Action("Index", "BirimPersonelleri")';
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+            }
+        });
+    });
+</script>
+<script>
+    var tel = document.getElementsByClassName("tel");
+    $('.tel').mask('0(000) 000 00 00');
+</script>

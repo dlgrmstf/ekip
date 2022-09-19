@@ -1,0 +1,138 @@
+﻿@model EkipProjesi.Core.Formlar.AnketDTO
+@{
+    ViewBag.Title = "Formlar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/dist/vendors/datatable/css/dataTables.bootstrap4.min.css" />
+<link rel="stylesheet" href="~/dist/vendors/datatable/buttons/css/buttons.bootstrap4.min.css" />
+
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+<div class="row">
+    <div class="col-12  align-self-center">
+        <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+            <div class="w-sm-100 mr-auto"><h4 class="mb-0">Formlar</h4> <p><a href="@Url.Action("Index","Formlar")">Form Sihirbazı</a></p></div>
+            <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+                <li class="breadcrumb-item"><a href="#">Formlar</a></li>
+                <li class="breadcrumb-item active">Anasayfa</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 mt-3">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-10">
+                        <h4 class="card-title">Formlar</h4>
+                    </div>
+                    @if (User.IsInRole("77"))
+                    {
+                        <div class="col-md-2">
+                            <a href="@Url.Action("FormEkle", "Formlar")" class="btn btn-primary">Form Ekle</a>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="example" class="display table dataTable table-striped table-bordered" width="1124">
+                        <thead>
+                            <tr>
+                                <th data-visible="false">ID</th>
+                                <th data-visible="false">Anket Tip ID</th>
+                                <th>Form Türü</th>
+                                <th>Başlık</th>
+                                <th>Açıklama</th>
+                                <th>Başlangıç T.</th>
+                                <th>Bitiş T.</th>
+                                <th>Durum</th>
+                                <th>Hasta Sayısı</th>
+                                <th>Soru Sayısı</th>
+                                <th>İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var a in Model.Anketler)
+                            {
+                                <tr>
+                                    <td>@a.ID</td>
+                                    <td>@a.AnketTipID</td>
+                                    <td>@a.AnketTipAdi</td>
+                                    <td>@a.Baslik</td>
+                                    <td>@a.Aciklama</td>
+                                    <td>@string.Format("{0:dd.MM.yyyy}", a.BaslangicTarihi)</td>
+                                    <td>@string.Format("{0:dd.MM.yyyy}", a.BitisTarihi)</td>
+                                    @if (a.Status == true)
+                                    {
+                                        <td>Aktif</td>
+                                    }
+                                    else
+                                    {
+                                        <td>Pasif</td>
+                                    }
+                                    <td>@a.KullaniciSayisi</td>
+                                    <td>@a.SoruSayisi</td>
+                                    <td>
+                                        <div class="row">
+                                            @if (User.IsInRole("78"))
+                                            {
+                                                <div class="col-sm-5">
+                                                    <a href="@Url.Action("FormDetay", "Formlar", new { id = a.ID })" class="btn btn-primary"><i class="icon-note"></i>Düzenle</a>
+                                                </div>
+                                            }
+                                            @if (User.IsInRole("79"))
+                                            {
+                                                <div class="col-sm-5">
+                                                    <a class="btn btn-sm btn-dark" href="@Url.Action("HastaEsle","Formlar",new { id = a.ID })">Hasta Eşle</a>
+                                                </div>
+                                            }
+                                            <br /><br />
+                                            @if (User.IsInRole("80"))
+                                            {
+                                                <div class="col-sm-6">
+                                                    <a href="@Url.Action("FormSoruEsle", "Formlar", new { id = a.ID })" class="btn btn-success">Soru İşlemi</a>
+                                                </div>
+                                            }
+                                            @if (User.IsInRole("81"))
+                                            {
+                                                <div class="col-sm-5">
+                                                    <a class="btn btn-sm btn-warning" href="@Url.Action("Veriler","Formlar",new { id=a.ID})">Veriler</a>
+                                                </div>
+                                            }
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/dist/vendors/jquery/jquery-3.3.1.min.js"></script>
+<script src="~/dist/vendors/jquery-ui/jquery-ui.min.js"></script>
+<script src="~/dist/vendors/moment/moment.js"></script>
+<script src="~/dist/vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/dist/vendors/slimscroll/jquery.slimscroll.min.js"></script>
+
+<script src="~/dist/js/app.js"></script>
+
+<script src="~/dist/vendors/datatable/js/jquery.dataTables.min.js"></script>
+<script src="~/dist/vendors/datatable/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/dist/vendors/datatable/jszip/jszip.min.js"></script>
+<script src="~/dist/vendors/datatable/pdfmake/pdfmake.min.js"></script>
+<script src="~/dist/vendors/datatable/pdfmake/vfs_fonts.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/dataTables.buttons.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.colVis.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.flash.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.html5.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.print.min.js"></script>
+
+<script src="~/dist/js/datatable.script.js"></script>

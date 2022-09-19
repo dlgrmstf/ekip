@@ -1,0 +1,65 @@
+﻿
+@{
+    ViewBag.Title = "ExcelPersonelEkle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-12  align-self-center">
+        <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+            <div class="w-sm-100 mr-auto"><h4 class="mb-0">Excel Toplu Personel Yükleme</h4> <p><a href="@Url.Action("Index","BirimPersonelleri")">Birim Personelleri</a></p></div>
+            <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+                <li class="breadcrumb-item"><a href="#">Excel Toplu Personel Yükleme</a></li>
+                <li class="breadcrumb-item active">Anasayfa</li>
+            </ol>
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-header">
+        <div class="card-title">
+            <div class="align-content-lg-start">
+                <a class="btn btn-outline-success rounded-btn mb-2 ont-w-300 my-auto text-nowrap" target="_blank" href="@Url.Action("PersonelExcel","BirimPersonelleri")" style="vertical-align:central"><i class="icon-docs"></i> Personel Excel Taslak</a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="alert alert-danger" role="alert">
+            > Excelde korumalı görünüm uyarsı alırsanız <b>"Düzenlemeyi Etkinleştir"</b> butonuna tıklayınız. Aksi halde excel üzerinde çalışma yapamazsınız.<br /><br />
+            > <b>Toplu Personel Kaydı Yüklemede hazırladığımız excel taslağını yüklemeniz gerekmektedir.</b><br /><br />
+            > Excel <b>"Sayfa 1" in yerini ve adını değiştirmeden</b> kendi sayfalarınızı oluşturabilirsiniz.<br /><br />
+            > Excel de bütün satırlar kontrol edilip hata olmaması durumunda tüm satırlar kayıt edilmektedir.<br /><br />
+            > Hata alırsanız belirtilen satırları gözden geçirip exceli tekrardan yüklemeyi deneyiniz.<br /><br />
+            > <b>Yükleme işlemi uzun sürebilir.</b>
+        </div>
+        <br /><br />
+        @using (Html.BeginForm("ExcelPersonelEkle", "BirimPersonelleri", FormMethod.Post, new { @class = "form-validation form-horizontal", role = "form", enctype = "multipart/form-data", id = "popup-validation" }))
+        {
+            <div class="form-group">
+                <label class="control-label col-md-2" for="f">Personel Kaydı Yükleyin</label>
+                <div class="col-md-10">
+                    <input name="f" id="filesToUpload" type="file" class="validate[required, funcCall[checkfile]]] firma-file" accept=".xls,.xlsx" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-5" style="text-align:right">
+                    <button type="submit" class="btn btn-warning btn-sm m-t-10 post" id="ekle">Yükle</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-Validation-Engine/2.6.4/jquery.validationEngine.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-Validation-Engine/2.6.4/languages/jquery.validationEngine-tr.min.js"></script>
+<script>
+    var  mimeFormatlari =  [  "application/excel", "application/vnd.ms-excel", "application/x-excel", "application/x-msexcel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ];
+    function checkfile(field, rules, i, options) {
+        if (field.val() == "") {
+            return "Dosya Seçiniz.";
+        }
+        var x = jQuery.inArray(document.getElementById("filesToUpload").files[0].type, mimeFormatlari);
+        if ( x == -1) {
+            return "Dosya Türü Excel Olmalıdır.";
+        }
+    }
+</script>

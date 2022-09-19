@@ -1,0 +1,776 @@
+﻿@using Newtonsoft.Json;
+@model EkipProjesi.Core.RehabilitasyonMerkezleri.IHastaBaharFormlari
+@{
+    ViewBag.Title = "Bahar Formu Ekle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+<link href="~/Content/global/vendor/bootstrap-select/bootstrap-select.css" rel="stylesheet" />
+<script src="~/Content/global/vendor/bootstrap-select/bootstrap-select.js"></script>
+
+<div class="row">
+    <div class="col-12  align-self-center">
+        <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+            <div class="w-sm-100 mr-auto"><h4 class="mb-0">Form Ekle</h4> <a href="@Url.Action("Index", "RehabilitasyonMerkezleri")"><p>Rehabilitasyon Merkezleri Modülü</p></a></div>
+            <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+                <li class="breadcrumb-item"><a href="#">Form Ekle</a></li>
+                <li class="breadcrumb-item"><a href="@Url.Action("VakaDetay", "RehabilitasyonMerkezleri")">Vaka Detay</a></li>
+                <li class="breadcrumb-item active">Anasayfa</li>
+            </ol>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 mt-4">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Rehabilitasyon Değerlendirme Formu</h4>
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            @using (Html.BeginForm("BaharFormuEkle", "RehabilitasyonMerkezleri", FormMethod.Post, new { @class = "popup-validation" }))
+                            {
+                                <form class="form-horizontal" id="form" role="form">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6" hidden="hidden">
+                                            <label for="ID">Hasta Adı:</label>
+                                            <input type="text" class="form-control" id="@Html.IdFor(x => x.HastaID)" name="@Html.NameFor(x => x.HastaID)" value="@ViewBag.VakaID">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="hastaadi">Hasta Adı:</label>
+                                            <input type="text" class="form-control" value="@ViewBag.HastaAdi" disabled>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="hastasoyadi">Hasta Soyadı:</label>
+                                            <input type="text" class="form-control" value="@ViewBag.HastaSoyadi" disabled>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="calisma">Halen/Şu an çalışıyor mu?</label>
+                                            <select id="@Html.IdFor(x => x.CalismaDurumu)" name="@Html.NameFor(x => x.CalismaDurumu)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)BaharCalismaDurumu.Hayir)">Hayır</option>
+                                                <option value="@((int)BaharCalismaDurumu.Duzensiz)">Düzensiz olarak çalışıyor</option>
+                                                <option value="@((int)BaharCalismaDurumu.Duzenli)">Düzenli olarak çalışıyor</option>
+                                                <option value="@((int)BaharCalismaDurumu.Emekli)">Emekli</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="calisma">Ekonomik durumunu nasıl tanımlıyor?</label>
+                                            <select id="@Html.IdFor(x => x.EkonomikDurumu)" name="@Html.NameFor(x => x.EkonomikDurumu)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)BaharEkonomikDurum.Iyi)">İyi</option>
+                                                <option value="@((int)BaharEkonomikDurum.Orta)">Orta</option>
+                                                <option value="@((int)BaharEkonomikDurum.Kotu)">Kötü</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="yasadigiil">Yaşadığı İl:</label>
+                                            <input type="text" class="form-control" id="@Html.IdFor(x => x.YasadigiIl)" name="@Html.NameFor(x => x.YasadigiIl)" maxlength="50">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="yasadigiilce">Yaşadığı İlçe:</label>
+                                            <input type="text" class="form-control" id="@Html.IdFor(x => x.YasadigiIlce)" name="@Html.NameFor(x => x.YasadigiIlce)" maxlength="50">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="gorusme">Görüşmenin Yapıldığı Merkez:</label>
+                                            <select id="@Html.IdFor(x => x.GorusmeninYapildigiMerkez)" name="@Html.NameFor(x => x.GorusmeninYapildigiMerkez)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)GorusmeMerkezi.Erenkoy)">Erenköy BAHAR</option>
+                                                <option value="@((int)GorusmeMerkezi.Uskudar)">Üsküdar BAHAR</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="adres">Adres:</label>
+                                            <input type="text" class="form-control" id="@Html.IdFor(x => x.Adres)" name="@Html.NameFor(x => x.Adres)" maxlength="300">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="telefon">Telefon:</label>
+                                            <input type="text" class="form-control" id="@Html.IdFor(x => x.Telefon)" name="@Html.NameFor(x => x.Telefon)" maxlength="50">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="adres">Yakının Adı/Soyadı:</label>
+                                            <input type="text" class="form-control" id="@Html.IdFor(x => x.YakinAdiSoyadi)" name="@Html.NameFor(x => x.YakinAdiSoyadi)" maxlength="200">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="telefon">Yakınının Telefonu:</label>
+                                            <input type="text" class="form-control" id="@Html.IdFor(x => x.YakinTelefonu)" name="@Html.NameFor(x => x.YakinTelefonu)" maxlength="50">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="gelis">Geliş Şekli:</label>
+                                            <select id="@Html.IdFor(x => x.GelisSekli)" name="@Html.NameFor(x => x.GelisSekli)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)GelisSekli.Poliklinik)">Poliklinik</option>
+                                                <option value="@((int)GelisSekli.Amatem)">AMATEM Servisi</option>
+                                                <option value="@((int)GelisSekli.KurumDisi)">Kurum Dışı</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="gelis">Tedavi Başvuru Nedeni:</label>
+                                            <select id="@Html.IdFor(x => x.TedaviBasvuruNedeni)" name="@Html.NameFor(x => x.TedaviBasvuruNedeni)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)TedaviBasvuruNedeni.Kendi)">Kendi isteği</option>
+                                                <option value="@((int)TedaviBasvuruNedeni.Aile)">Ailesinin isteği</option>
+                                                <option value="@((int)TedaviBasvuruNedeni.Her)">Her ikisi</option>
+                                                <option value="@((int)TedaviBasvuruNedeni.Diger)">Diğer (adli, psikolojik vb.)</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="telefon">En son tedaviye başvuru sebebini açıklayınız:</label>
+                                            <textarea class="form-control" rows="2" cols="15" id="@Html.IdFor(x=>x.SonTedaviBasvuruNedeni)" name="@Html.NameFor(x=>x.SonTedaviBasvuruNedeni)" maxlength="500"></textarea>
+                                        </div>
+                                    </div>
+                                    <h5>ALKOL/MADDE KULLANIM ÖYKÜSÜ</h5>
+                                    <h6>Soru 1</h6>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-12">
+                                            <label>Hayatınız boyunca aşağıdaki maddelerden hangilerini kullandınız? <br />(YALNIZCA TIBBİ AMAÇLI OLMAYAN KULLANIMLAR (HEKİMİN REÇETE ETTİĞİ DIAZEM, SUBOXONE vb. BU BÖLÜMDE İŞARETLEMEYİNİZ) </label>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Tütün ürünleri (sigara, nargile, çiğneme tütünleri vb.)</label>
+                                            <select id="@Html.IdFor(x => x.S1TutunUrunleri)" name="@Html.NameFor(x => x.S1TutunUrunleri)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)EvetHayir.Evet)">Evet</option>
+                                                <option value="@((int)EvetHayir.Hayir)">Hayır</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Alkollü içecekler (bira, şarap, rakı, viski vb.)</label>
+                                            <select id="@Html.IdFor(x => x.S1AlkolluIcecekler)" name="@Html.NameFor(x => x.S1AlkolluIcecekler)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)EvetHayir.Evet)">Evet</option>
+                                                <option value="@((int)EvetHayir.Hayir)">Hayır</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Esrar (marihuana, ot, gubar vb.)</label>
+                                            <select id="@Html.IdFor(x => x.S1Esrar)" name="@Html.NameFor(x => x.S1Esrar)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)EvetHayir.Evet)">Evet</option>
+                                                <option value="@((int)EvetHayir.Hayir)">Hayır</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Kokain (kok, taş, kokain vb.)</label>
+                                            <select id="@Html.IdFor(x => x.S1Kokain)" name="@Html.NameFor(x => x.S1Kokain)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)EvetHayir.Evet)">Evet</option>
+                                                <option value="@((int)EvetHayir.Hayir)">Hayır</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Amfetamin tipi uyarıcılar (met, ice, ekstazi vb.)</label>
+                                            <select id="@Html.IdFor(x => x.S1AmfctaminTipiUyaricilar)" name="@Html.NameFor(x => x.S1AmfctaminTipiUyaricilar)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)EvetHayir.Evet)">Evet</option>
+                                                <option value="@((int)EvetHayir.Hayir)">Hayır</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>İnhalanlar (tiner, yapıştırıcı, benzin, çakmak gazı, vb.)</label>
+                                            <select id="@Html.IdFor(x => x.S1Inhalanlar)" name="@Html.NameFor(x => x.S1Inhalanlar)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)EvetHayir.Evet)">Evet</option>
+                                                <option value="@((int)EvetHayir.Hayir)">Hayır</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Sakinleştiriciler ve uyku ilaçları (diazepam (Diazem, Nervium), alprazolam (Xanax), lorazapam (Ativan),klonazepam (Rivotril) vb.)</label>
+                                            <select id="@Html.IdFor(x => x.S1Sakinlestiriciler)" name="@Html.NameFor(x => x.S1Sakinlestiriciler)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)EvetHayir.Evet)">Evet</option>
+                                                <option value="@((int)EvetHayir.Hayir)">Hayır</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Halüsinojenler (LSD, asit, mantarlar, melek tozu, ketamin, vb.)</label>
+                                            <select id="@Html.IdFor(x => x.S1Halüsinojenler)" name="@Html.NameFor(x => x.S1Halüsinojenler)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)EvetHayir.Evet)">Evet</option>
+                                                <option value="@((int)EvetHayir.Hayir)">Hayır</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Opioidler (eroin, morfin, metadon, buprenorfin (Suboxone), kodein, vb.)</label>
+                                            <select id="@Html.IdFor(x => x.S1Opioidler)" name="@Html.NameFor(x => x.S1Opioidler)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)EvetHayir.Evet)">Evet</option>
+                                                <option value="@((int)EvetHayir.Hayir)">Hayır</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Diğer (bonzai)</label>
+                                            <select id="@Html.IdFor(x => x.S1Diger)" name="@Html.NameFor(x => x.S1Diger)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)EvetHayir.Evet)">Evet</option>
+                                                <option value="@((int)EvetHayir.Hayir)">Hayır</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Diğer (bonzai)- belirtiniz:</label>
+                                            <textarea class="form-control" rows="2" cols="15" id="@Html.IdFor(x=>x.S1DigerAciklama)" name="@Html.NameFor(x=>x.S1DigerAciklama)" maxlength="500"></textarea>
+                                        </div>
+                                    </div>
+                                    <h6>Soru 2</h6>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-12">
+                                            <label>Arındırma tedavisinden önceki son üç ay boyunca, bahsettiğiniz maddeleri ne sıklıkla kullandınız?</label>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Tütün ürünleri (sigara, nargile, çiğneme tütünleri vb.)</label>
+                                            <select id="@Html.IdFor(x => x.S2TutunUrunleri)" name="@Html.NameFor(x => x.S2TutunUrunleri)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)SoruCevap.Hic)">Hiç</option>
+                                                <option value="@((int)SoruCevap.Bir)">Bir ya da İki kez</option>
+                                                <option value="@((int)SoruCevap.Aylik)">Aylık</option>
+                                                <option value="@((int)SoruCevap.Haftalik)">Haftalık</option>
+                                                <option value="@((int)SoruCevap.Gunluk)">Günlük veya neredeyse her gün</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Alkollü içecekler (bira, şarap, rakı, viski vb.)</label>
+                                            <select id="@Html.IdFor(x => x.S2AlkolluIcecekler)" name="@Html.NameFor(x => x.S2AlkolluIcecekler)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)SoruCevap.Hic)">Hiç</option>
+                                                <option value="@((int)SoruCevap.Bir)">Bir ya da İki kez</option>
+                                                <option value="@((int)SoruCevap.Aylik)">Aylık</option>
+                                                <option value="@((int)SoruCevap.Haftalik)">Haftalık</option>
+                                                <option value="@((int)SoruCevap.Gunluk)">Günlük veya neredeyse her gün</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Esrar (marihuana, ot, gubar vb.)</label>
+                                            <select id="@Html.IdFor(x => x.S2Esrar)" name="@Html.NameFor(x => x.S2Esrar)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)SoruCevap.Hic)">Hiç</option>
+                                                <option value="@((int)SoruCevap.Bir)">Bir ya da İki kez</option>
+                                                <option value="@((int)SoruCevap.Aylik)">Aylık</option>
+                                                <option value="@((int)SoruCevap.Haftalik)">Haftalık</option>
+                                                <option value="@((int)SoruCevap.Gunluk)">Günlük veya neredeyse her gün</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Kokain (kok, taş, kokain vb.)</label>
+                                            <select id="@Html.IdFor(x => x.S2Kokain)" name="@Html.NameFor(x => x.S2Kokain)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)SoruCevap.Hic)">Hiç</option>
+                                                <option value="@((int)SoruCevap.Bir)">Bir ya da İki kez</option>
+                                                <option value="@((int)SoruCevap.Aylik)">Aylık</option>
+                                                <option value="@((int)SoruCevap.Haftalik)">Haftalık</option>
+                                                <option value="@((int)SoruCevap.Gunluk)">Günlük veya neredeyse her gün</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Amfetamin tipi uyarıcılar (met, ice, ekstazi vb.)</label>
+                                            <select id="@Html.IdFor(x => x.S2AmfctaminTipiUyaricilar)" name="@Html.NameFor(x => x.S2AmfctaminTipiUyaricilar)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)SoruCevap.Hic)">Hiç</option>
+                                                <option value="@((int)SoruCevap.Bir)">Bir ya da İki kez</option>
+                                                <option value="@((int)SoruCevap.Aylik)">Aylık</option>
+                                                <option value="@((int)SoruCevap.Haftalik)">Haftalık</option>
+                                                <option value="@((int)SoruCevap.Gunluk)">Günlük veya neredeyse her gün</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>İnhalanlar (tiner, yapıştırıcı, benzin, çakmak gazı, vb.)</label>
+                                            <select id="@Html.IdFor(x => x.S2Inhalanlar)" name="@Html.NameFor(x => x.S2Inhalanlar)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)SoruCevap.Hic)">Hiç</option>
+                                                <option value="@((int)SoruCevap.Bir)">Bir ya da İki kez</option>
+                                                <option value="@((int)SoruCevap.Aylik)">Aylık</option>
+                                                <option value="@((int)SoruCevap.Haftalik)">Haftalık</option>
+                                                <option value="@((int)SoruCevap.Gunluk)">Günlük veya neredeyse her gün</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Sakinleştiriciler ve uyku ilaçları (diazepam (Diazem, Nervium), alprazolam (Xanax), lorazapam (Ativan),klonazepam (Rivotril) vb.)</label>
+                                            <select id="@Html.IdFor(x => x.S2Sakinlestiriciler)" name="@Html.NameFor(x => x.S2Sakinlestiriciler)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)SoruCevap.Hic)">Hiç</option>
+                                                <option value="@((int)SoruCevap.Bir)">Bir ya da İki kez</option>
+                                                <option value="@((int)SoruCevap.Aylik)">Aylık</option>
+                                                <option value="@((int)SoruCevap.Haftalik)">Haftalık</option>
+                                                <option value="@((int)SoruCevap.Gunluk)">Günlük veya neredeyse her gün</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Halüsinojenler (LSD, asit, mantarlar, melek tozu, ketamin, vb.)</label>
+                                            <select id="@Html.IdFor(x => x.S2Halüsinojenler)" name="@Html.NameFor(x => x.S2Halüsinojenler)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)SoruCevap.Hic)">Hiç</option>
+                                                <option value="@((int)SoruCevap.Bir)">Bir ya da İki kez</option>
+                                                <option value="@((int)SoruCevap.Aylik)">Aylık</option>
+                                                <option value="@((int)SoruCevap.Haftalik)">Haftalık</option>
+                                                <option value="@((int)SoruCevap.Gunluk)">Günlük veya neredeyse her gün</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Opioidler (eroin, morfin, metadon, buprenorfin (Suboxone), kodein, vb.)</label>
+                                            <select id="@Html.IdFor(x => x.S2Opioidler)" name="@Html.NameFor(x => x.S2Opioidler)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)SoruCevap.Hic)">Hiç</option>
+                                                <option value="@((int)SoruCevap.Bir)">Bir ya da İki kez</option>
+                                                <option value="@((int)SoruCevap.Aylik)">Aylık</option>
+                                                <option value="@((int)SoruCevap.Haftalik)">Haftalık</option>
+                                                <option value="@((int)SoruCevap.Gunluk)">Günlük veya neredeyse her gün</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Diğer (bonzai)</label>
+                                            <select id="@Html.IdFor(x => x.S2Diger)" name="@Html.NameFor(x => x.S2Diger)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)SoruCevap.Hic)">Hiç</option>
+                                                <option value="@((int)SoruCevap.Bir)">Bir ya da İki kez</option>
+                                                <option value="@((int)SoruCevap.Aylik)">Aylık</option>
+                                                <option value="@((int)SoruCevap.Haftalik)">Haftalık</option>
+                                                <option value="@((int)SoruCevap.Gunluk)">Günlük veya neredeyse her gün</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Diğer (bonzai)- belirtiniz:</label>
+                                            <textarea class="form-control" rows="2" cols="15" id="@Html.IdFor(x=>x.S2DigerAciklama)" name="@Html.NameFor(x=>x.S2DigerAciklama)" maxlength="500"></textarea>
+                                        </div>
+                                    </div>
+                                    <h6>Soru 3</h6>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-12">
+                                            <label>Düzenli olarak kullandığınızı belirttiğiniz maddeyi ne kadar süredir (yıl) kullanmaktasınız? </label>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Tütün ürünleri (sigara, nargile, çiğneme tütünleri vb.)</label>
+                                            <input type="number" class="form-control" id="@Html.IdFor(x => x.S3TutunUrunleri)" name="@Html.NameFor(x => x.S3TutunUrunleri)">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Alkollü içecekler (bira, şarap, rakı, viski vb.)</label>
+                                            <input type="number" class="form-control" id="@Html.IdFor(x => x.S3AlkolluIcecekler)" name="@Html.NameFor(x => x.S3AlkolluIcecekler)">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Esrar (marihuana, ot, gubar vb.)</label>
+                                            <input type="number" class="form-control" id="@Html.IdFor(x => x.S3Esrar)" name="@Html.NameFor(x => x.S3Esrar)">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Kokain (kok, taş, kokain vb.)</label>
+                                            <input type="number" class="form-control" id="@Html.IdFor(x => x.S3Kokain)" name="@Html.NameFor(x => x.S3Kokain)">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Amfetamin tipi uyarıcılar (met, ice, ekstazi vb.)</label>
+                                            <input type="number" class="form-control" id="@Html.IdFor(x => x.S3AmfctaminTipiUyaricilar)" name="@Html.NameFor(x => x.S3AmfctaminTipiUyaricilar)">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>İnhalanlar (tiner, yapıştırıcı, benzin, çakmak gazı, vb.)</label>
+                                            <input type="number" class="form-control" id="@Html.IdFor(x => x.S3Inhalanlar)" name="@Html.NameFor(x => x.S3Inhalanlar)">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Sakinleştiriciler ve uyku ilaçları (diazepam (Diazem, Nervium), alprazolam (Xanax), lorazapam (Ativan),klonazepam (Rivotril) vb.)</label>
+                                            <input type="number" class="form-control" id="@Html.IdFor(x => x.S3Sakinlestiriciler)" name="@Html.NameFor(x => x.S3Sakinlestiriciler)">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Halüsinojenler (LSD, asit, mantarlar, melek tozu, ketamin, vb.)</label>
+                                            <input type="number" class="form-control" id="@Html.IdFor(x => x.S3Halüsinojenler)" name="@Html.NameFor(x => x.S3Halüsinojenler)">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Opioidler (eroin, morfin, metadon, buprenorfin (Suboxone), kodein, vb.)</label>
+                                            <input type="number" class="form-control" id="@Html.IdFor(x => x.S3Opioidler)" name="@Html.NameFor(x => x.S3Opioidler)">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Diğer (bonzai)</label>
+                                            <input type="number" class="form-control" id="@Html.IdFor(x => x.S3Diger)" name="@Html.NameFor(x => x.S3Diger)">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Diğer (bonzai)- belirtiniz:</label>
+                                            <textarea class="form-control" rows="2" cols="15" id="@Html.IdFor(x=>x.S3DigerAciklama)" name="@Html.NameFor(x=>x.S3DigerAciklama)" maxlength="500"></textarea>
+                                        </div>
+                                    </div>
+                                    <h6>Soru 4</h6>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-12">
+                                            <label>Son bir hafta boyunca ne sıklıkla bu maddeleri kullanmak için güçlü bir istek veya dürtü hissettiniz?</label>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Tütün ürünleri (sigara, nargile, çiğneme tütünleri vb.)</label>
+                                            <select id="@Html.IdFor(x => x.S4TutunUrunleri)" name="@Html.NameFor(x => x.S4TutunUrunleri)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)SoruCevap.Hic)">Hiç</option>
+                                                <option value="@((int)SoruCevap.Bir)">Bir ya da İki kez</option>
+                                                <option value="@((int)SoruCevap.Aylik)">Aylık</option>
+                                                <option value="@((int)SoruCevap.Haftalik)">Haftalık</option>
+                                                <option value="@((int)SoruCevap.Gunluk)">Günlük veya neredeyse her gün</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Alkollü içecekler (bira, şarap, rakı, viski vb.)</label>
+                                            <select id="@Html.IdFor(x => x.S4AlkolluIcecekler)" name="@Html.NameFor(x => x.S4AlkolluIcecekler)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)SoruCevap.Hic)">Hiç</option>
+                                                <option value="@((int)SoruCevap.Bir)">Bir ya da İki kez</option>
+                                                <option value="@((int)SoruCevap.Aylik)">Aylık</option>
+                                                <option value="@((int)SoruCevap.Haftalik)">Haftalık</option>
+                                                <option value="@((int)SoruCevap.Gunluk)">Günlük veya neredeyse her gün</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Esrar (marihuana, ot, gubar vb.)</label>
+                                            <select id="@Html.IdFor(x => x.S4Esrar)" name="@Html.NameFor(x => x.S4Esrar)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)SoruCevap.Hic)">Hiç</option>
+                                                <option value="@((int)SoruCevap.Bir)">Bir ya da İki kez</option>
+                                                <option value="@((int)SoruCevap.Aylik)">Aylık</option>
+                                                <option value="@((int)SoruCevap.Haftalik)">Haftalık</option>
+                                                <option value="@((int)SoruCevap.Gunluk)">Günlük veya neredeyse her gün</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Kokain (kok, taş, kokain vb.)</label>
+                                            <select id="@Html.IdFor(x => x.S4Kokain)" name="@Html.NameFor(x => x.S4Kokain)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)SoruCevap.Hic)">Hiç</option>
+                                                <option value="@((int)SoruCevap.Bir)">Bir ya da İki kez</option>
+                                                <option value="@((int)SoruCevap.Aylik)">Aylık</option>
+                                                <option value="@((int)SoruCevap.Haftalik)">Haftalık</option>
+                                                <option value="@((int)SoruCevap.Gunluk)">Günlük veya neredeyse her gün</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Amfetamin tipi uyarıcılar (met, ice, ekstazi vb.)</label>
+                                            <select id="@Html.IdFor(x => x.S4AmfctaminTipiUyaricilar)" name="@Html.NameFor(x => x.S4AmfctaminTipiUyaricilar)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)SoruCevap.Hic)">Hiç</option>
+                                                <option value="@((int)SoruCevap.Bir)">Bir ya da İki kez</option>
+                                                <option value="@((int)SoruCevap.Aylik)">Aylık</option>
+                                                <option value="@((int)SoruCevap.Haftalik)">Haftalık</option>
+                                                <option value="@((int)SoruCevap.Gunluk)">Günlük veya neredeyse her gün</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>İnhalanlar (tiner, yapıştırıcı, benzin, çakmak gazı, vb.)</label>
+                                            <select id="@Html.IdFor(x => x.S4Inhalanlar)" name="@Html.NameFor(x => x.S4Inhalanlar)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)SoruCevap.Hic)">Hiç</option>
+                                                <option value="@((int)SoruCevap.Bir)">Bir ya da İki kez</option>
+                                                <option value="@((int)SoruCevap.Aylik)">Aylık</option>
+                                                <option value="@((int)SoruCevap.Haftalik)">Haftalık</option>
+                                                <option value="@((int)SoruCevap.Gunluk)">Günlük veya neredeyse her gün</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Sakinleştiriciler ve uyku ilaçları (diazepam (Diazem, Nervium), alprazolam (Xanax), lorazapam (Ativan),klonazepam (Rivotril) vb.)</label>
+                                            <select id="@Html.IdFor(x => x.S4Sakinlestiriciler)" name="@Html.NameFor(x => x.S4Sakinlestiriciler)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)SoruCevap.Hic)">Hiç</option>
+                                                <option value="@((int)SoruCevap.Bir)">Bir ya da İki kez</option>
+                                                <option value="@((int)SoruCevap.Aylik)">Aylık</option>
+                                                <option value="@((int)SoruCevap.Haftalik)">Haftalık</option>
+                                                <option value="@((int)SoruCevap.Gunluk)">Günlük veya neredeyse her gün</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Halüsinojenler (LSD, asit, mantarlar, melek tozu, ketamin, vb.)</label>
+                                            <select id="@Html.IdFor(x => x.S4Halüsinojenler)" name="@Html.NameFor(x => x.S4Halüsinojenler)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)SoruCevap.Hic)">Hiç</option>
+                                                <option value="@((int)SoruCevap.Bir)">Bir ya da İki kez</option>
+                                                <option value="@((int)SoruCevap.Aylik)">Aylık</option>
+                                                <option value="@((int)SoruCevap.Haftalik)">Haftalık</option>
+                                                <option value="@((int)SoruCevap.Gunluk)">Günlük veya neredeyse her gün</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Opioidler (eroin, morfin, metadon, buprenorfin (Suboxone), kodein, vb.)</label>
+                                            <select id="@Html.IdFor(x => x.S4Opioidler)" name="@Html.NameFor(x => x.S4Opioidler)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)SoruCevap.Hic)">Hiç</option>
+                                                <option value="@((int)SoruCevap.Bir)">Bir ya da İki kez</option>
+                                                <option value="@((int)SoruCevap.Aylik)">Aylık</option>
+                                                <option value="@((int)SoruCevap.Haftalik)">Haftalık</option>
+                                                <option value="@((int)SoruCevap.Gunluk)">Günlük veya neredeyse her gün</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Diğer (bonzai)</label>
+                                            <select id="@Html.IdFor(x => x.S4Diger)" name="@Html.NameFor(x => x.S4Diger)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)SoruCevap.Hic)">Hiç</option>
+                                                <option value="@((int)SoruCevap.Bir)">Bir ya da İki kez</option>
+                                                <option value="@((int)SoruCevap.Aylik)">Aylık</option>
+                                                <option value="@((int)SoruCevap.Haftalik)">Haftalık</option>
+                                                <option value="@((int)SoruCevap.Gunluk)">Günlük veya neredeyse her gün</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Diğer (bonzai)- belirtiniz:</label>
+                                            <textarea class="form-control" rows="2" cols="15" id="@Html.IdFor(x=>x.S4DigerAciklama)" name="@Html.NameFor(x=>x.S4DigerAciklama)" maxlength="500"></textarea>
+                                        </div>
+                                    </div>
+                                    <h6>Soru 5</h6>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-12">
+                                            <label>Bu maddeleri bırakmayı denediğiniz oldu mu?</label>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Tütün ürünleri (sigara, nargile, çiğneme tütünleri vb.)</label>
+                                            <select id="@Html.IdFor(x => x.S5TutunUrunleri)" name="@Html.NameFor(x => x.S5TutunUrunleri)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)EvetHayir.Evet)">Evet</option>
+                                                <option value="@((int)EvetHayir.Hayir)">Hayır</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Alkollü içecekler (bira, şarap, rakı, viski vb.)</label>
+                                            <select id="@Html.IdFor(x => x.S5AlkolluIcecekler)" name="@Html.NameFor(x => x.S5AlkolluIcecekler)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)EvetHayir.Evet)">Evet</option>
+                                                <option value="@((int)EvetHayir.Hayir)">Hayır</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Esrar (marihuana, ot, gubar vb.)</label>
+                                            <select id="@Html.IdFor(x => x.S5Esrar)" name="@Html.NameFor(x => x.S5Esrar)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)EvetHayir.Evet)">Evet</option>
+                                                <option value="@((int)EvetHayir.Hayir)">Hayır</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Kokain (kok, taş, kokain vb.)</label>
+                                            <select id="@Html.IdFor(x => x.S5Kokain)" name="@Html.NameFor(x => x.S5Kokain)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)EvetHayir.Evet)">Evet</option>
+                                                <option value="@((int)EvetHayir.Hayir)">Hayır</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Amfetamin tipi uyarıcılar (met, ice, ekstazi vb.)</label>
+                                            <select id="@Html.IdFor(x => x.S5AmfctaminTipiUyaricilar)" name="@Html.NameFor(x => x.S5AmfctaminTipiUyaricilar)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)EvetHayir.Evet)">Evet</option>
+                                                <option value="@((int)EvetHayir.Hayir)">Hayır</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>İnhalanlar (tiner, yapıştırıcı, benzin, çakmak gazı, vb.)</label>
+                                            <select id="@Html.IdFor(x => x.S5Inhalanlar)" name="@Html.NameFor(x => x.S5Inhalanlar)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)EvetHayir.Evet)">Evet</option>
+                                                <option value="@((int)EvetHayir.Hayir)">Hayır</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Sakinleştiriciler ve uyku ilaçları (diazepam (Diazem, Nervium), alprazolam (Xanax), lorazapam (Ativan),klonazepam (Rivotril) vb.)</label>
+                                            <select id="@Html.IdFor(x => x.S5Sakinlestiriciler)" name="@Html.NameFor(x => x.S5Sakinlestiriciler)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)EvetHayir.Evet)">Evet</option>
+                                                <option value="@((int)EvetHayir.Hayir)">Hayır</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Halüsinojenler (LSD, asit, mantarlar, melek tozu, ketamin, vb.)</label>
+                                            <select id="@Html.IdFor(x => x.S5Halüsinojenler)" name="@Html.NameFor(x => x.S5Halüsinojenler)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)EvetHayir.Evet)">Evet</option>
+                                                <option value="@((int)EvetHayir.Hayir)">Hayır</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Opioidler (eroin, morfin, metadon, buprenorfin (Suboxone), kodein, vb.)</label>
+                                            <select id="@Html.IdFor(x => x.S5Opioidler)" name="@Html.NameFor(x => x.S5Opioidler)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)EvetHayir.Evet)">Evet</option>
+                                                <option value="@((int)EvetHayir.Hayir)">Hayır</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Diğer (bonzai)</label>
+                                            <select id="@Html.IdFor(x => x.S5Diger)" name="@Html.NameFor(x => x.S5Diger)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)EvetHayir.Evet)">Evet</option>
+                                                <option value="@((int)EvetHayir.Hayir)">Hayır</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Diğer (bonzai)- belirtiniz:</label>
+                                            <textarea class="form-control" rows="2" cols="15" id="@Html.IdFor(x=>x.S5DigerAciklama)" name="@Html.NameFor(x=>x.S5DigerAciklama)" maxlength="500"></textarea>
+                                        </div>
+                                    </div>
+                                    <h6>Soru 6</h6>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-12">
+                                            <label>
+                                                Bu maddeleri en uzun ne kadar süre ile bırakabildiniz? (Soru 4’e Evet yanıtı verdikleriniz için işaretleyiniz)
+                                            </label>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Tütün ürünleri (sigara, nargile, çiğneme tütünleri vb.)</label>
+                                            <input type="number" class="form-control" id="@Html.IdFor(x => x.S6TutunUrunleri)" name="@Html.NameFor(x => x.S6TutunUrunleri)">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Alkollü içecekler (bira, şarap, rakı, viski vb.)</label>
+                                            <input type="number" class="form-control" id="@Html.IdFor(x => x.S6AlkolluIcecekler)" name="@Html.NameFor(x => x.S6AlkolluIcecekler)">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Esrar (marihuana, ot, gubar vb.)</label>
+                                            <input type="number" class="form-control" id="@Html.IdFor(x => x.S6Esrar)" name="@Html.NameFor(x => x.S6Esrar)">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Kokain (kok, taş, kokain vb.)</label>
+                                            <input type="number" class="form-control" id="@Html.IdFor(x => x.S6Kokain)" name="@Html.NameFor(x => x.S6Kokain)">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Amfetamin tipi uyarıcılar (met, ice, ekstazi vb.)</label>
+                                            <input type="number" class="form-control" id="@Html.IdFor(x => x.S6AmfctaminTipiUyaricilar)" name="@Html.NameFor(x => x.S6AmfctaminTipiUyaricilar)">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>İnhalanlar (tiner, yapıştırıcı, benzin, çakmak gazı, vb.)</label>
+                                            <input type="number" class="form-control" id="@Html.IdFor(x => x.S6Inhalanlar)" name="@Html.NameFor(x => x.S6Inhalanlar)">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Sakinleştiriciler ve uyku ilaçları (diazepam (Diazem, Nervium), alprazolam (Xanax), lorazapam (Ativan),klonazepam (Rivotril) vb.)</label>
+                                            <input type="number" class="form-control" id="@Html.IdFor(x => x.S6Sakinlestiriciler)" name="@Html.NameFor(x => x.S6Sakinlestiriciler)">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Halüsinojenler (LSD, asit, mantarlar, melek tozu, ketamin, vb.)</label>
+                                            <input type="number" class="form-control" id="@Html.IdFor(x => x.S6Halüsinojenler)" name="@Html.NameFor(x => x.S6Halüsinojenler)">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Opioidler (eroin, morfin, metadon, buprenorfin (Suboxone), kodein, vb.)</label>
+                                            <input type="number" class="form-control" id="@Html.IdFor(x => x.S6Opioidler)" name="@Html.NameFor(x => x.S6Opioidler)">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Diğer (bonzai)</label>
+                                            <input type="number" class="form-control" id="@Html.IdFor(x => x.S6Diger)" name="@Html.NameFor(x => x.S6Diger)">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Diğer (bonzai)- belirtiniz:</label>
+                                            <textarea class="form-control" rows="2" cols="15" id="@Html.IdFor(x=>x.S6DigerAciklama)" name="@Html.NameFor(x=>x.S6DigerAciklama)" maxlength="500"></textarea>
+                                        </div>
+                                    </div>
+                                    <h5>ALKOL/MADDE TEDAVİ ÖYKÜSÜ</h5>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-12">
+                                            <label>Tam ayıklığınızın başladığı tarih:</label>
+                                            <input type="text" class="form-control" id="@Html.IdFor(x => x.TamAyiklikBaslamaZamani)" name="@Html.NameFor(x => x.TamAyiklikBaslamaZamani)" maxlength="200">
+                                        </div>
+                                    </div>
+                                    <h6>Halen bağımlılık tedavisinde kullanmakta olduğunuz ilaçlar nelerdir?</h6>
+                                    <div class="form-row" style="margin-left:10px">
+                                        <div class="custom-control custom-checkbox custom-control-inline">
+                                            <input type="checkbox" class="custom-control-input" id="@Html.IdFor(x=>x.Suboxone)" name="@Html.NameFor(x=>x.Suboxone)">
+                                            <label class="custom-control-label checkbox-primary" for="@Html.IdFor(x=>x.Suboxone)">Suboxone</label>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <textarea class="form-control" rows="2" cols="15" id="@Html.IdFor(x=>x.SuboxoneAciklama)" name="@Html.NameFor(x=>x.SuboxoneAciklama)" maxlength="50" placeholder="mg"></textarea>
+                                        </div>
+                                        <div class="custom-control custom-checkbox custom-control-inline">
+                                            <input type="checkbox" class="custom-control-input" id="@Html.IdFor(x=>x.NaltreksonImplant)" name="@Html.NameFor(x=>x.NaltreksonImplant)">
+                                            <label class="custom-control-label checkbox-primary" for="@Html.IdFor(x=>x.NaltreksonImplant)">NaltreksonImplant</label>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <textarea class="form-control" rows="2" cols="15" id="@Html.IdFor(x=>x.NaltreksonImplantAciklama)" name="@Html.NameFor(x=>x.NaltreksonImplantAciklama)" maxlength="50" placeholder="SKT"></textarea>
+                                        </div>
+                                        <div class="custom-control custom-checkbox custom-control-inline">
+                                            <input type="checkbox" class="custom-control-input" id="@Html.IdFor(x=>x.Ethylex)" name="@Html.NameFor(x=>x.Ethylex)">
+                                            <label class="custom-control-label checkbox-primary" for="@Html.IdFor(x=>x.Ethylex)">Ethylex</label>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <textarea class="form-control" rows="2" cols="15" id="@Html.IdFor(x=>x.EthylexAciklama)" name="@Html.NameFor(x=>x.EthylexAciklama)" maxlength="50" placeholder="mg"></textarea>
+                                        </div>
+                                        <div class="custom-control custom-checkbox custom-control-inline">
+                                            <input type="checkbox" class="custom-control-input" id="@Html.IdFor(x=>x.Campral)" name="@Html.NameFor(x=>x.Campral)">
+                                            <label class="custom-control-label checkbox-primary" for="@Html.IdFor(x=>x.Campral)">Campral</label>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <textarea class="form-control" rows="2" cols="15" id="@Html.IdFor(x=>x.CampralAciklama)" name="@Html.NameFor(x=>x.CampralAciklama)" maxlength="50" placeholder="mg"></textarea>
+                                        </div>
+                                        <div class="custom-control custom-checkbox custom-control-inline">
+                                            <input type="checkbox" class="custom-control-input" id="@Html.IdFor(x=>x.Antabus)" name="@Html.NameFor(x=>x.Antabus)">
+                                            <label class="custom-control-label checkbox-primary" for="@Html.IdFor(x=>x.Antabus)">Antabus</label>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <textarea class="form-control" rows="2" cols="15" id="@Html.IdFor(x=>x.AntabusAciklama)" name="@Html.NameFor(x=>x.AntabusAciklama)" maxlength="50" placeholder="mg"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label>Açıklama (gerekli ise): </label>
+                                            <textarea class="form-control" rows="2" cols="15" id="@Html.IdFor(x=>x.TedaviAciklama)" name="@Html.NameFor(x=>x.TedaviAciklama)" maxlength="500"></textarea>
+                                        </div>
+                                    </div>
+                                    <h5>SONUÇ</h5>
+                                    <h6>Muayeneniz sonucundaki alkol/madde kullanımı ile ilgili ve diğer ruhsal bozukluklar ile ilgili tanılarınızı işaretleyiniz.</h6>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-12">
+                                            <label>Kodlar:</label><br />
+                                            <select required multiple data-plugin="selectpicker" class="selectpicker form-control form-control-sm validate[required]" name="@Html.NameFor(x=>x.FormSonuc)" id="@Html.IdFor(x=>x.FormSonuc)" title="Kodlar">
+                                                @foreach (var d in ViewBag.Kodlar)
+                                                {
+                                                    <option value="@d.ID">@d.Aciklama</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <h5>PLANLANAN REHABİLİTASYON PROGRAMI</h5>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label>Planlanan Rehabilitasyon programı:</label>
+                                            <select id="@Html.IdFor(x => x.PlanlananRehabilitasyonProgrami)" name="@Html.NameFor(x => x.PlanlananRehabilitasyonProgrami)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)TamYari.Tam)">Tam zamanlı</option>
+                                                <option value="@((int)TamYari.Yari)">Yarı zamanlı</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Planlanan program süresi:</label>
+                                            <select id="@Html.IdFor(x => x.PlanlananProgramSuresi)" name="@Html.NameFor(x => x.PlanlananProgramSuresi)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)ProgramSuresi.Bir)">3 ay</option>
+                                                <option value="@((int)ProgramSuresi.Iki)">6 ay</option>
+                                                <option value="@((int)ProgramSuresi.Uc)">9 ay ve üzeri</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Rehabilitasyon program günleri:</label>
+                                            <select id="@Html.IdFor(x => x.ProgramGunleri)" name="@Html.NameFor(x => x.ProgramGunleri)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)Gunler.Pazartesi)">Pazartesi</option>
+                                                <option value="@((int)Gunler.Sali)">Salı</option>
+                                                <option value="@((int)Gunler.Carsamba)">Carşamba</option>
+                                                <option value="@((int)Gunler.Persembe)">Perşembe</option>
+                                                <option value="@((int)Gunler.Cuma)">Cuma</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Belirlenen terapist:</label>
+                                            <input type="text" class="form-control" id="@Html.IdFor(x => x.BelirlenenTerapist)" name="@Html.NameFor(x => x.BelirlenenTerapist)" maxlength="200">
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label>Kişinin belirlenen program sonunda ulaşmak istediği hedefleri açıklayınız:</label>
+                                            <textarea class="form-control" rows="2" cols="15" id="@Html.IdFor(x=>x.Hedefler)" name="@Html.NameFor(x=>x.Hedefler)" maxlength="500"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <button type="submit" class="btn btn-primary" id="kaydet">Kaydet</button>
+                                    </div>
+                                </form>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function () {
+    $("#form input[type='checkbox']").on("click", function () {
+            if ($(this).prop('checked')) {
+                $(this).attr('value', true);
+            } else {
+                $(this).attr('value', false);
+            }
+    });
+     var hastaId = @Html.Raw(JsonConvert.SerializeObject(ViewBag.VakaID));
+     $('#HastaID').val(hastaId);
+});
+</script>

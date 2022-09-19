@@ -1,0 +1,269 @@
+﻿@model EkipProjesi.Core.IstihdamModulu.IHastaIskurGorusmeleri
+@{
+    ViewBag.Title = "GorusmeDetay";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+<div class="row">
+    <div class="col-12  align-self-center">
+        <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+            <div class="w-sm-100 mr-auto"><h4 class="mb-0">Görüşme Detay</h4> <a href="@Url.Action("IskurIslemleri", "Istihdam")"><p>İşkur İşlemleri</p></a></div>
+            <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+                <li class="breadcrumb-item"><a href="#">Görüşme Detay</a></li>
+                <li class="breadcrumb-item"><a href="@Url.Action("KayitDetay", "Istihdam")">Kayıt Detay</a></li>
+                <li class="breadcrumb-item active">Anasayfa</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 mt-4">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Görüşme Bilgileri</h4>
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <form class="form-horizontal" id="form" role="form" enctype="multipart/form-data">
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="gorusmeyapandanisman">Görüşmeyi Yapan Danışman</label>
+                                        <input type="text" class="form-control" id="@Html.IdFor(x => x.GorusmeyiYapanDanisman)" name="@Html.NameFor(x => x.GorusmeyiYapanDanisman)" value="@Model.GorusmeyiYapanDanisman">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="gorusmetarihi">Görüşme Tarihi</label>
+                                        <input type="datetime" class="form-control form-control-sm validate[required]" id="@Html.IdFor(x => x.GorusmeTarihi)" name="@Html.NameFor(x => x.GorusmeTarihi)" value="@string.Format("{0:dd.MM.yyyy}", Model.GorusmeTarihi)">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="gorusme">Görüşme Sonucu</label>
+                                        <select id="@Html.IdFor(x => x.GorusmeSonucu)" name="@Html.NameFor(x => x.GorusmeSonucu)" class="form-control">
+                                            <option selected>Seçiniz</option>
+                                            <option value="@((int)GorusmeSonucu.Bir)">İşyerine yönlendirildi</option>
+                                            <option value="@((int)GorusmeSonucu.Iki)">İşyeri yönlendirme sonucu bilgisi edinildi</option>
+                                            <option value="@((int)GorusmeSonucu.Uc)">İş kulübüne yönlendirildi</option>
+                                            <option value="@((int)GorusmeSonucu.Dort)">İş kulübü yönlendirme sonucu bilgisi edinildi</option>
+                                            <option value="@((int)GorusmeSonucu.Bes)">Kurs ve programlara yönlendirildi</option>
+                                            <option value="@((int)GorusmeSonucu.Alti)">Kurs ve programlara yönlendirme sonucu bilgisi edinildi</option>
+                                            <option value="@((int)GorusmeSonucu.Yedi)">Danışma ve/veya tedavi merkezinde yeniden değerlendirmek üzere yönlendirildi </option>
+                                            <option value="@((int)GorusmeSonucu.Sekiz)">Diğer </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                @if (Model.GorusmeSonucuDiger != null)
+                                {
+                                    <div div class="form-group col-md-12" id="showsonaciklama">
+                                        <label for="sondiger">Diğer</label>
+                                        @Html.TextAreaFor(x => x.GorusmeSonucuDiger, new { @class = "form-control form-control-sm validate[required]" })
+                                    </div>
+                                }
+                                <div class="form-group" id="showyonlendirmesonucubilgisi">
+                                    <div class="form-row">
+                                        @if (Model.YonlendirmeBasvuruTarihi != null)
+                                        {
+                                            <div class="form-group col-md-2">
+                                                <label for="basvurutarihi">Başvuru Tarihi</label>
+                                                <input type="datetime" class="form-control datepicker hasDatepicker" id="@Html.IdFor(x => x.YonlendirmeBasvuruTarihi)" name="@Html.NameFor(x => x.YonlendirmeBasvuruTarihi)" value="@string.Format("{0:dd.MM.yyyy}", Model.YonlendirmeBasvuruTarihi)">
+                                            </div>
+                                        }
+                                        @if (Model.IsyeriYonlendirmeSonuc != null)
+                                        {
+                                            <div class="form-group col-md-2">
+                                                <label for="durum">Durum</label>
+                                                <select class="form-control" id="@Html.IdFor(x => x.IsyeriYonlendirmeSonuc)" name="@Html.NameFor(x => x.IsyeriYonlendirmeSonuc)">
+                                                    <option selected>Seçiniz</option>
+                                                    <option value="@((int)IDurum.Olumlu)">Olumlu</option>
+                                                    <option value="@((int)IDurum.Olumsuz)">Olumsuz</option>
+                                                </select>
+                                            </div>
+                                        }
+                                        @if (Model.IseBasladigiYer != null)
+                                        {
+                                            <div class="form-group col-md-6" id="showisebasladigiyer">
+                                                <label for="isebasladigiyer">İşe Başladığı Yer</label>
+                                                <input type="text" class="form-control" id="@Html.IdFor(x=>x.IseBasladigiYer)" name="@Html.NameFor(x=>x.IseBasladigiYer)" value="@Model.IseBasladigiYer">
+                                            </div>
+                                        }
+                                        @if (Model.IseBaslamaTarihi != null)
+                                        {
+                                            <div class="form-group col-md-2" id="showisebaslamatarihi">
+                                                <label for="isebaslamatarihi">İşe Başlama Tarihi</label>
+                                                <input type="datetime" class="form-control datepicker hasDatepicker" id="@Html.IdFor(x=>x.IseBaslamaTarihi)" name="@Html.NameFor(x=>x.IseBaslamaTarihi)" value="@string.Format("{0:dd.MM.yyyy}", Model.IseBaslamaTarihi)">
+                                            </div>
+                                        }
+                                        @if (Model.IseBaslamaNedeni != null)
+                                        {
+                                            <div class="form-group col-md-6" id="shownedeni">
+                                                <label for="nedeni">Nedeni</label>
+                                                @Html.TextAreaFor(x => x.IseBaslamaNedeni, new { @class = "form-control form-control-sm validate[required]" })
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    @if (Model.IsKulubuYonlendirmeSonuc != 0)
+                                    {
+                                        <div class="form-group col-md-4" id="showisklubuyonlendirmebilgisi">
+                                            <label for="iskulubudurum">Durum</label>
+                                            <select class="form-control" id="@Html.IdFor(x=>x.IsKulubuYonlendirmeSonuc)" name="@Html.NameFor(x=>x.IsKulubuYonlendirmeSonuc)">
+                                                <option value="0" selected>Seçiniz</option>
+                                                <option value="@((int)IsKulubu.Programlandi)">Süreç programlandı</option>
+                                                <option value="@((int)IsKulubu.Baslandi)">Sürece başlandı</option>
+                                                <option value="@((int)IsKulubu.Devam)">Süreç devam ediyor</option>
+                                                <option value="@((int)IsKulubu.Tamamlandi)">İş kulübü süreci tamamlandı</option>
+                                            </select>
+                                        </div>
+                                    }
+                                    @if (string.Format("{0:dd.MM.yyyy}", Model.PlanlananProgramBaslangici) != "01.01.0001")
+                                    {
+                                        <div class="form-group col-md-2" id="showplanlananbaslangictarihi">
+                                            <label for="showplanlananbaslangictarihi">Planlanan Başlangıç Tarihi</label>
+                                            <input type="datetime" class="form-control datepicker hasDatepicker" id="@Html.IdFor(x=>x.PlanlananBaslangicTarihi)" name="@Html.NameFor(x=>x.PlanlananBaslangicTarihi)" value="@string.Format("{0:dd.MM.yyyy}", Model.PlanlananBaslangicTarihi)">
+                                        </div>
+                                    }
+                                    @if (Model.SurecBaslamaTarihi != null)
+                                    {
+                                        <div class="form-group col-md-2" id="showsurecbaslamatarihi">
+                                            <label for="surecbaslamatarihi">Başlama Tarihi</label>
+                                            <input type="datetime" class="form-control datepicker hasDatepicker" id="@Html.IdFor(x=>x.SurecBaslamaTarihi)" name="@Html.NameFor(x=>x.SurecBaslamaTarihi)" value="@string.Format("{0:dd.MM.yyyy}", Model.SurecBaslamaTarihi)">
+                                        </div>
+                                    }
+                                    @if (Model.SurecTamamlanmaTarihi != null)
+                                    {
+                                        <div class="form-group col-md-2" id="showtamamlanmatarihi">
+                                            <label for="tamamlanmatarihi">Tamamlanma Tarihi</label>
+                                            <input type="datetime" class="form-control datepicker hasDatepicker" id="@Html.IdFor(x=>x.SurecTamamlanmaTarihi)" name="@Html.NameFor(x=>x.SurecTamamlanmaTarihi)" value="@string.Format("{0:dd.MM.yyyy}", Model.SurecTamamlanmaTarihi)">
+                                        </div>
+                                    }
+                                    @if (Model.IsKulubuYonlendirmeDurum != 0)
+                                    {
+                                        <div class="form-group col-md-2">
+                                            <label for="iskulubuyonlendirmedurum">Durum</label>
+                                            <select class="form-control" id="@Html.IdFor(x=>x.IsKulubuYonlendirmeDurum)" name="@Html.NameFor(x=>x.IsKulubuYonlendirmeDurum)">
+                                                <option value="0" selected>Seçiniz</option>
+                                                <option value="@((int)IYonlendirmeDurum.Basarili)">Başarılı</option>
+                                                <option value="@((int)IYonlendirmeDurum.Basarisiz)">Başarısız</option>
+                                            </select>
+                                        </div>
+                                    }
+                                    @*@if (Model.SertifikaDosyaYolu != null)
+                                    {
+                                        <div class="form-row" id="showsertifika" style="display:none">
+                                            <label>Sertifika Yükle</label>
+                                            <div class="form-group col-md-12" style="display:none" id="showsertifikayukle">
+                        <input id="@Html.IdFor(x=>x.SertifikaDosyaYolu)" name="@Html.NameFor(x=>x.SertifikaDosyaYolu)" type="file" class="custom-file-input">
+                        <label for="sertifikayukle" class="custom-file-label">Dosya seçin</label>
+                    </div>
+                                        </div>
+                                    }*@
+                                </div>
+                                @if (Model.Tur != 0)
+                                {
+                                    <div class="form-group col-md-2" id="showkursprogramlar">
+                                        <label for="kursprogramlar">Tür</label>
+                                        <select class="form-control" id="@Html.IdFor(x=>x.Tur)" name="@Html.NameFor(x=>x.Tur)">
+                                            <option value="0" selected>Seçiniz</option>
+                                            <option value="@((int)Tur.TYP)">TYP</option>
+                                            <option value="@((int)Tur.Isbasi)">İşbaşı eğitim programı</option>
+                                            <option value="@((int)Tur.Mesleki)">Mesleki eğitim</option>
+                                        </select>
+                                    </div>
+                                }
+                            <div class="form-row">
+                                @if (Model.ProgramDurum != 0)
+                                {
+                                    <div class="form-group col-md-2" id="showkursprogramlarayonlendirmesonucbilgisi">
+                                        <label for="kursprogramlarayonlendirmesonucbilgisi">Durum</label>
+                                        <select class="form-control" id="@Html.IdFor(x=>x.ProgramDurum)" name="@Html.NameFor(x=>x.ProgramDurum)">
+                                            <option value="0" selected>Seçiniz</option>
+                                            <option value="@((int)IsKulubu.Programlandi)">Süreç programlandı</option>
+                                            <option value="@((int)IsKulubu.Baslandi)">Sürece başlandı</option>
+                                            <option value="@((int)IsKulubu.Devam)">Süreç devam ediyor</option>
+                                            <option value="@((int)IsKulubu.Tamamlandi)">Süreci tamamlandı</option>
+                                        </select>
+                                    </div>
+                                }
+                                @if (Model.PlanlananProgramTuru != "0")
+                                {
+                                    <div class="form-group col-md-2" id="showsureciprogramlandi">
+                                        <label for="sureciprogramlandi">Planlanan Program Türü</label>
+                                        <select class="form-control" id="@Html.IdFor(x=>x.PlanlananProgramTuru)" name="@Html.NameFor(x=>x.PlanlananProgramTuru)">
+                                            <option value="0" selected>Seçiniz</option>
+                                            <option value="@((int)Tur.TYP)">TYP</option>
+                                            <option value="@((int)Tur.Isbasi)">İşbaşı eğitim programı</option>
+                                            <option value="@((int)Tur.Mesleki)">Mesleki eğitim</option>
+                                        </select>
+                                    </div>
+                                }
+                                @if (Model.PlanlananProgramBaslangicTarihi != null)
+                                {
+                                    <div class="form-group col-md-2" id="showkursprogramlarplanlananbaslangic">
+                                        <label for="kursprogramlarplanlananbaslangic">Planlanan Başlangıç Tarihi</label>
+                                        <input type="datetime" class="form-control datepicker hasDatepicker" id="@Html.IdFor(x=>x.PlanlananProgramBaslangicTarihi)" name="@Html.NameFor(x=>x.PlanlananProgramBaslangicTarihi)" value="@string.Format("{0:dd.MM.yyyy}", Model.PlanlananProgramBaslangicTarihi)">
+                                    </div>
+                                }
+                                @if (Model.PlanlananProgramTuru != "0")
+                                {
+                                    <div class="form-group col-md-2" id="showsureciprogramlandiiki">
+                                        <label for="sureciprogramlandiiki">Planlanan Program Türü</label>
+                                        <select class="form-control" id="@Html.IdFor(x=>x.PlanlananProgramTuru)" name="@Html.NameFor(x=>x.PlanlananProgramTuru)">
+                                            <option value="0" selected>Seçiniz</option>
+                                            <option value="@((int)Tur.TYP)">TYP</option>
+                                            <option value="@((int)Tur.Isbasi)">İşbaşı eğitim programı</option>
+                                            <option value="@((int)Tur.Mesleki)">Mesleki eğitim</option>
+                                        </select>
+                                    </div>
+                                }
+                                @if (string.Format("{0:dd.MM.yyyy}", Model.PlanlananProgramBaslangici) != "01.01.0001")
+                                {
+                                    <div class="form-group col-md-2" id="showkursprogramlarplanlananbaslangiciki">
+                                        <label for="kursprogramlarplanlananbaslangiciki">Başlama Tarihi</label>
+                                        <input type="datetime" class="form-control datepicker hasDatepicker" id="@Html.IdFor(x=>x.PlanlananProgramBaslangici)" name="@Html.NameFor(x=>x.PlanlananProgramBaslangici)" value="@string.Format("{0:dd.MM.yyyy}", Model.PlanlananProgramBaslangici)">
+                                    </div>
+                                }
+                                @if (Model.ProgramTuru != 0)
+                                {
+                                    <div class="form-group col-md-2" id="showsureciprogramlandi3">
+                                        <label for="sureciprogramlandi3">Planlanan Program Türü</label>
+                                        <select class="form-control" id="@Html.IdFor(x=>x.ProgramTuru)" name="@Html.NameFor(x=>x.ProgramTuru)">
+                                            <option value="0" selected>Seçiniz</option>
+                                            <option value="@((int)Tur.TYP)">TYP</option>
+                                            <option value="@((int)Tur.Isbasi)">İşbaşı eğitim programı</option>
+                                            <option value="@((int)Tur.Mesleki)">Mesleki eğitim</option>
+                                        </select>
+                                    </div>
+                                }
+                                @if (string.Format("{0:dd.MM.yyyy}", Model.PlanlananProgramBaslangici) != "01.01.0001")
+                                {
+                                    <div class="form-group col-md-2" id="showtamamlanmatarihi3">
+                                        <label for="tamamlanmatarihi2">Tamamlanma Tarihi</label>
+                                        <input type="datetime" class="form-control datepicker hasDatepicker" id="@Html.IdFor(x=>x.ProgramTuruTamamlanmaTarihi)" name="@Html.NameFor(x=>x.ProgramTuruTamamlanmaTarihi)" value="@string.Format("{0:dd.MM.yyyy}", Model.ProgramTuruTamamlanmaTarihi)">
+                                    </div>
+                                }
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#@Html.IdFor(x => x.GorusmeSonucu) option[value="@Model.GorusmeSonucu"]').attr('selected', 'selected');
+        $('#@Html.IdFor(x => x.IsyeriYonlendirmeSonuc) option[value="@Model.IsyeriYonlendirmeSonuc"]').attr('selected', 'selected');
+        $('#@Html.IdFor(x => x.IsKulubuYonlendirmeSonuc) option[value="@Model.IsKulubuYonlendirmeSonuc"]').attr('selected', 'selected');
+        $('#@Html.IdFor(x => x.IsKulubuYonlendirmeDurum) option[value="@Model.IsKulubuYonlendirmeDurum"]').attr('selected', 'selected');
+        $('#@Html.IdFor(x => x.Tur) option[value="@Model.Tur"]').attr('selected', 'selected');
+        $('#@Html.IdFor(x => x.ProgramDurum) option[value="@Model.ProgramDurum"]').attr('selected', 'selected');
+        $('#@Html.IdFor(x => x.PlanlananProgramTuru) option[value="@Model.PlanlananProgramTuru"]').attr('selected', 'selected');
+        $('#@Html.IdFor(x => x.ProgramTuru) option[value="@Model.ProgramTuru"]').attr('selected', 'selected');
+    });
+</script>

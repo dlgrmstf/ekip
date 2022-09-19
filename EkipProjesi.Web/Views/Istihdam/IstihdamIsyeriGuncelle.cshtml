@@ -1,0 +1,200 @@
+﻿@model EkipProjesi.Core.IstihdamModulu.IIstihdamIsyerleri
+@{
+    ViewBag.Title = "Istihdam Isyeri Guncelle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+<div class="row">
+    <div class="col-12  align-self-center">
+        <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+            <div class="w-sm-100 mr-auto"><h4 class="mb-0">İstihdam İşyeri Güncelle</h4> <a href="@Url.Action("Index", "Istihdam")"><p>İstihdam Modülü</p></a></div>
+            <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+                <li class="breadcrumb-item"><a href="#">İstihdam İşyeri Güncelle</a></li>
+                <li class="breadcrumb-item active">Anasayfa</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 mt-4">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">İşyeri Bilgileri</h4>
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <form class="form-horizontal" id="form" role="form" enctype="multipart/form-data">
+                                <input type="hidden" id="@Html.IdFor(x => x.ID)" name="@Html.NameFor(x => x.ID)" value="@Model.ID" />
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="isyeriadi">İşyeri Adı</label>
+                                        @Html.TextBoxFor(x => x.IsyeriAdi, new { @class = "form-control form-control-sm validate[required]", @maxlength = "150" })
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="isyerisektoru">İşyeri Sektörü</label>
+                                        <select id="@Html.IdFor(x => x.SektorID)" name="@Html.NameFor(x => x.SektorID)" class="form-control">
+                                            <option selected>Seçiniz</option>
+                                            @foreach (var s in ViewBag.Sektorler)
+                                            {
+                                                <option value="@s.ID">@s.SektorAdi</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="calisansayisi">Toplam Çalışan Sayısı</label>
+                                        @Html.TextBoxFor(x => x.ToplamCalisanSayisi, new { @class = "form-control form-control-sm validate[required]" })
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="isyerinotlari">İşyerine Ait Diğer Notlar</label>
+                                        @Html.TextAreaFor(x => x.Notlar, new { @class = "form-control form-control-sm validate[required]", @maxlength = "300" })
+                                    </div>
+                                </div>
+                                <h6>Adres Bilgileri</h6>
+                                <div class="form-row">
+                                    <div class="form-group col-md-2">
+                                        <label class="" for="Il">İl</label>
+                                        @Html.DropDownList("IlID", (IEnumerable<SelectListItem>)ViewData["Iller"], new { @class = "form-control form-control-sm" })
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label class="" for="Ilce">İlçe</label>
+                                        <select class="form-control form-control-sm" name="@Html.NameFor(x => x.IsyeriAdresBilgisi.IlceID)" id="@Html.IdFor(x => x.IsyeriAdresBilgisi.IlceID)"></select>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="MahalleID">Mahalle</label>
+                                        <select required class="form-control form-control-sm" name="@Html.NameFor(x => x.IsyeriAdresBilgisi.MahalleID)" id="@Html.IdFor(x => x.IsyeriAdresBilgisi.MahalleID)"></select>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="cadde">Cadde</label>
+                                        @Html.TextBoxFor(x => x.IsyeriAdresBilgisi.Cadde, new { @class = "form-control form-control-sm validate[required]", @maxlength = "50" })
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="sokak">Sokak</label>
+                                        @Html.TextBoxFor(x => x.IsyeriAdresBilgisi.Sokak, new { @class = "form-control form-control-sm validate[required]", @maxlength = "50" })
+                                    </div>
+                                    <div class="form-group col-md-1">
+                                        <label for="binano">Bina No</label>
+                                        @Html.TextBoxFor(x => x.IsyeriAdresBilgisi.BinaNo, new { @class = "form-control form-control-sm validate[required]" })
+                                    </div>
+                                    <div class="form-group col-md-1">
+                                        <label for="daireno">Daire No</label>
+                                        @Html.TextBoxFor(x => x.IsyeriAdresBilgisi.DaireNo, new { @class = "form-control form-control-sm validate[required]" })
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <button type="submit" class="btn btn-primary" id="guncelle">Güncelle</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $('#IlID option[value="@Model.IsyeriAdresBilgisi.IlID"]').attr('selected', 'selected');
+    $('#SektorID option[value="@Model.SektorID"]').attr('selected', 'selected');
+</script>
+<script>
+    var ilce = 0;
+    @if(Model.IsyeriAdresBilgisi != null && Model.IsyeriAdresBilgisi.IlceID > 0)
+    {
+        @: ilce =  @Model.IsyeriAdresBilgisi.IlceID;
+    }
+    ilceSearch(@Model.IsyeriAdresBilgisi.IlID);
+        function ilceSearch(IlID) {
+
+            if (IlID > 0) {
+
+                var County = jQuery("#@Html.IdFor(x=>x.IsyeriAdresBilgisi.IlceID)");
+                jQuery.ajax({
+                    cache: false,
+                    type: "GET",
+                    url: "@(Url.Action("IlceGetir", "BirimPersonelleri"))",
+                    data: { "IlID": IlID },
+                success: function (data) {
+                    County.html('');
+                    County.append(jQuery('<option></option>').val('').html('-Seçiniz-'));
+                    jQuery.each(data, function (id, option) {
+                        $('#@Html.IdFor(x=>x.IsyeriAdresBilgisi.IlceID)').append(jQuery('<option></option>').val(option.IlceID).html(option.IlceAdi));
+                    });
+                    if(ilce != null){
+                        $('#@Html.IdFor(x=>x.IsyeriAdresBilgisi.IlceID) option[value='+ilce+']').attr('selected', 'selected');
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                }
+            });
+        }
+
+    }
+
+    jQuery('#IlID').on('change', function () {
+        ilceSearch(jQuery(this).val())
+    });
+</script>
+<script>
+    var mahalle = 0;
+    @if(Model.IsyeriAdresBilgisi != null && Model.IsyeriAdresBilgisi.MahalleID > 0)
+    {
+        @: mahalle =  @Model.IsyeriAdresBilgisi.MahalleID;
+    }
+    mahalleSearch(@Model.IsyeriAdresBilgisi.IlceID);
+    function mahalleSearch(IlceID) {
+        if (IlceID > 0) {
+                var County2 = jQuery("#@Html.IdFor(x=>x.IsyeriAdresBilgisi.MahalleID)");
+                jQuery.ajax({
+                    cache: false,
+                    type: "GET",
+                    url: "@(Url.Action("MahalleGetir", "BirimPersonelleri"))",
+                    data: { "IlceID": IlceID },
+                success: function (data) {
+                    County2.html('');
+                    jQuery.each(data, function (id, option) {
+                        $('#@Html.IdFor(x=>x.IsyeriAdresBilgisi.MahalleID)').append(jQuery('<option></option>').val(option.ID).html(option.MahalleAdi));
+                    });
+                    if (mahalle != null) {
+                        $('#@Html.IdFor(x=>x.IsyeriAdresBilgisi.MahalleID) option[value=' + mahalle + ']').attr('selected', 'selected');
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                }
+                });
+        }
+    }
+
+    jQuery('#@Html.IdFor(x=>x.IsyeriAdresBilgisi.IlceID)').on('change', function () {
+        mahalleSearch(jQuery(this).val())
+    });
+</script>
+<script>
+    $("#guncelle").on("click", function () {
+        beforeCallIsyeri();
+    });
+
+    function beforeCallIsyeri(form, options) {
+        var form = $('#form')[0];
+        var dataString = new FormData(form);
+        jQuery.ajax({
+            cache: false,
+            type: "POST",
+            url: '@Url.Action("IstihdamIsyeriGuncelle", "Istihdam")',
+            enctype: 'multipart/form-data',
+            data: dataString,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                    if (data.success) {
+                        location.href = '@Url.Action("IstihdamIsyerleri", "Istihdam")';
+                    }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+            }
+        });
+    }
+</script>

@@ -1,0 +1,62 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30621.155
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EkipProjesi.Web", "EkipProjesi.Web\EkipProjesi.Web.csproj", "{D396089A-D44F-41DA-8B46-F3A310C8BE86}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{860D078F-A2B4-4543-B75E-F298249755DC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{E25964D5-2388-42FD-8BF0-16D215123AA1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{37C94C7C-F5E4-4BF8-93E1-FF7149B17B2E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EkipProjesi.Core", "EkipProjesi.Core\EkipProjesi.Core.csproj", "{1A47CFB2-D0E8-49DD-9D39-6D4213FCEDD4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EkipProjesi.Data", "EkipProjesi.Data\EkipProjesi.Data.csproj", "{E646C433-E694-4234-A491-BD3A11BA5C36}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EkipProjesi.API", "EkipProjesi.API\EkipProjesi.API.csproj", "{1815B2BD-8F0E-4A36-B261-9BC097F11C09}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EkipProjesi.Cryptography", "EkipProjesi.Cryptography\EkipProjesi.Cryptography.csproj", "{E5E2ECCE-DB8C-4AB8-9C05-7BB8B85925F5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D396089A-D44F-41DA-8B46-F3A310C8BE86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D396089A-D44F-41DA-8B46-F3A310C8BE86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D396089A-D44F-41DA-8B46-F3A310C8BE86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D396089A-D44F-41DA-8B46-F3A310C8BE86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A47CFB2-D0E8-49DD-9D39-6D4213FCEDD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A47CFB2-D0E8-49DD-9D39-6D4213FCEDD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A47CFB2-D0E8-49DD-9D39-6D4213FCEDD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A47CFB2-D0E8-49DD-9D39-6D4213FCEDD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E646C433-E694-4234-A491-BD3A11BA5C36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E646C433-E694-4234-A491-BD3A11BA5C36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E646C433-E694-4234-A491-BD3A11BA5C36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E646C433-E694-4234-A491-BD3A11BA5C36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1815B2BD-8F0E-4A36-B261-9BC097F11C09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1815B2BD-8F0E-4A36-B261-9BC097F11C09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1815B2BD-8F0E-4A36-B261-9BC097F11C09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1815B2BD-8F0E-4A36-B261-9BC097F11C09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5E2ECCE-DB8C-4AB8-9C05-7BB8B85925F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5E2ECCE-DB8C-4AB8-9C05-7BB8B85925F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5E2ECCE-DB8C-4AB8-9C05-7BB8B85925F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5E2ECCE-DB8C-4AB8-9C05-7BB8B85925F5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D396089A-D44F-41DA-8B46-F3A310C8BE86} = {37C94C7C-F5E4-4BF8-93E1-FF7149B17B2E}
+		{1A47CFB2-D0E8-49DD-9D39-6D4213FCEDD4} = {860D078F-A2B4-4543-B75E-F298249755DC}
+		{E646C433-E694-4234-A491-BD3A11BA5C36} = {E25964D5-2388-42FD-8BF0-16D215123AA1}
+		{1815B2BD-8F0E-4A36-B261-9BC097F11C09} = {37C94C7C-F5E4-4BF8-93E1-FF7149B17B2E}
+		{E5E2ECCE-DB8C-4AB8-9C05-7BB8B85925F5} = {E25964D5-2388-42FD-8BF0-16D215123AA1}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DD5F7395-7C66-4A04-984E-92E1B80BE263}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,170 @@
+﻿@using Newtonsoft.Json;
+@model EkipProjesi.Core.Hastalar.IHastalar
+@{
+    ViewBag.Title = "VakaDetay";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<EkipProjesi.Core.MobilEkip.IMobilEkipVakaFormlari> formlar = new List<EkipProjesi.Core.MobilEkip.IMobilEkipVakaFormlari>(ViewBag.Formlar);
+}
+
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+<div class="row">
+    <div class="col-12  align-self-center">
+        <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+            <div class="w-sm-100 mr-auto"><h4 class="mb-0">Vaka Detay Ekranı</h4> <a href="@Url.Action("Index", "MobilEkip")"><p>Anasayfa</p></a></div>
+            <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+                <li class="breadcrumb-item"><a href="#">Vaka Detay Ekranı</a></li>
+                <li class="breadcrumb-item active">Anasayfa</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<div id="YonlendirmeModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body" style="width:500px; height:160px">
+                <form class="form-horizontal">
+                    <div class="row">
+                        <div class="form-group col-sm-6">
+                            <a class="btn btn-primary" href="#" id="arindirmaYonlendir">Arındırma Tedavisi</a>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <a class="btn btn-secondary" href="#" id="rehabilitasyonYonlendir">Rehabilitasyon Tedavisi</a>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <a class="btn btn-success" href="#" id="yedamYonlendir">YEDAM</a>
+                            <a class="btn btn-info" href="#" id="iskurYonlendir">İşkur</a>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <a class="btn btn-danger" href="#" id="ilceSaglikYonlendir">İlçe Sağlık Müdürlükleri</a>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <a class="btn btn-warning" href="#" id="sosyalHizmetYonlendir">Sosyal Hizmet Merkezleri</a>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <a class="btn btn-dark" href="#" id="mobilYonlendir">Mobil Ekip</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 mt-1">
+        <div class="position-relative">
+            <div class="position-relative px-1 py-3" style="background-color: #1e3d73">
+                <div class="media d-md-flex d-block">
+                    <a href="#"><img src="~/images/user.png" width="100" height="100" alt="" class="img-fluid rounded-circle" style="margin-left:10px"></a>
+                    <div class="media-body z-index-1">
+                        <div class="pl-4">
+                            <h3 class="display-4 text text-white mb-0">@Model.HastaAdi @Model.HastaSoyadi</h3>
+                            <h6 class="text text-white mb-0">TC Kimlik No: @Model.HastaTCKimlikNo</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <h3 class="card-title">Formlar</h3>
+                    </div>
+                    @if (User.IsInRole("118"))
+                    {
+                        <div class="col-sm-2">
+                            <a class="btn btn-warning rounded-btn mb-2 ont-w-300 my-auto text-nowrap" data-toggle="tab" href="#" id="yonlendirme"> Yönlendirme Ekle</a>
+                        </div>
+                    }
+                    @if (User.IsInRole("67"))
+                    {
+                        <div class="col-sm-2">
+                            <button class="btn btn-info rounded-btn mb-2 ont-w-300 my-auto text-nowrap" id="formEkle" style="vertical-align:central"><i class="icon-note"></i> Form Ekle</button>
+                        </div>
+                    }
+                </div>
+            </div>
+            <br />
+            <div class="card-content" style="margin-left:10px; margin-right:10px">
+                @if (formlar.Count() > 0)
+                {
+                    <div class="row">
+                        @foreach (var f in ViewBag.Formlar)
+                        {
+                            <div class="col-md-3">
+                                <div class="card outline-badge-primary" style="margin-bottom:10px">
+                                    <div class="card-content">
+                                        <div class="card-body p-4">
+                                            <div class="d-md-flex">
+                                                <div class="my-auto">
+                                                    <span class="icon-docs h3 text-primary"></span>
+                                                </div>
+                                                <div class="content px-md-3 my-3 my-md-0">
+                                                    <span class="mb-0 font-w-600 h5">Form</span><br>
+                                                    <p class="mb-0 font-w-600 tx-s-12">@f.KayitTarihi.ToString("dd/MM/yyyy")</p>
+                                                </div>
+                                                @if (User.IsInRole("68"))
+                                                {
+                                                    <div class="my-auto">
+                                                        <a href="@Url.Action("FormDetay", "MobilEkip", new { id = f.ID })" target="_blank" class="btn btn-outline-primary font-w-600 my-auto text-nowrap">Detay</a>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Uyarı!</strong> Vakaya ait form bilgisi bulunmamaktadır.
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $("#formEkle").on("click", function () {
+        var HastaID = @Html.Raw(JsonConvert.SerializeObject(ViewBag.HastaID));
+        window.location = '@Url.Action("FormEkle", "MobilEkip")?HastaID=' + HastaID;
+    });
+</script>
+<script>
+    var hId = @Model.HastaID;
+    $('#yonlendirme').click(function () {
+        $('#YonlendirmeModal').modal('show');
+    })
+    $('#arindirmaYonlendir').click(function () {
+        window.location = '@Url.Action("Kurumlar", "ArindirmaMerkezleri")?HastaID=' + hId;
+    })
+    $('#rehabilitasyonYonlendir').click(function () {
+        window.location = '@Url.Action("Kurumlar", "ArindirmaMerkezleri")?HastaID=' + hId;
+    })
+    $('#yedamYonlendir').click(function () {
+        window.location = '@Url.Action("YEDAMRandevuTalebiOlustur", "KurumlarArasiSevkVeTakip")?HastaID=' + hId;
+    })
+    $('#sosyalHizmetYonlendir').click(function () {
+        window.location = '@Url.Action("SHMRandevuTalebiOlustur", "KurumlarArasiSevkVeTakip")?HastaID=' + hId;
+    })
+    $('#iskurYonlendir').click(function () {
+        window.location = '@Url.Action("IskurRandevuTalebiOlustur", "KurumlarArasiSevkVeTakip")?HastaID=' + hId;
+    })
+    $('#ilceSaglikYonlendir').click(function () {
+        window.location = '@Url.Action("ISMRandevuTalebiOlustur", "KurumlarArasiSevkVeTakip")?HastaID=' + hId;
+    })
+    $('#mobilYonlendir').click(function () {
+        window.location = '@Url.Action("MobilEkipRandevuTalebiOlustur", "KurumlarArasiSevkVeTakip")?HastaID=' + hId;
+    })
+</script>

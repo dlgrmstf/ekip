@@ -1,0 +1,109 @@
+﻿@model List<EkipProjesi.Core.Faaliyet.IFaaliyet>
+@{
+    ViewBag.Title = "Faaliyetler";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<div class="row">
+    <div class="col-12  align-self-center">
+        <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+            <div class="w-sm-100 mr-auto"><h4 class="mb-0">Faaliyetler</h4> <p><a href="@Url.Action("Index","KoruyucuOnleyiciHizmetler")">Koruyucu Önleyici Hizmetler Modülü</a></p></div>
+            <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+                <li class="breadcrumb-item"><a href="#">Faaliyetler</a></li>
+                <li class="breadcrumb-item active">Anasayfa</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body text-info border-bottom border-info border-w-5">
+                <h2 class="text-center">@ViewBag.ToplamFaaliyetSayisi</h2>
+                <h6 class="text-center">Toplam Faaliyet Sayısı</h6>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body text-success border-bottom border-success border-w-5">
+                <h2 class="text-center">@ViewBag.UlasilanKisiSayisi</h2>
+                <h6 class="text-center">Toplam Ulaşılan Kişi Sayısı</h6>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 mt-3">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-3">
+                        <h3 class="card-title">FİLTRELEME</h3>
+                    </div>
+                    <div class="col-md-6"></div>
+                    @if (User.IsInRole("53"))
+                    {
+                        <div class="col-md-3">
+                            <a class="btn btn-outline-primary rounded-btn" href="@Url.Action("TumFaaliyetler", "KoruyucuOnleyiciHizmetler")"><i class="fa fa-check-circle"></i> Tüm Faaliyetleri Göster</a>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="card-content">
+                <div class="card-body py-3">
+                    <form class="form-row" id="filtreform" role="form">
+                        <div class="form-group col-sm-2">
+                            <label for="dbas">Başlangıç Tarihi:</label>
+                            <input type="datetime-local" class="form-control" id="BaslangicTarihi" name="BaslangicTarihi" required>
+                        </div>
+                        <div class="form-group col-sm-2">
+                            <label for="dbit">Bitiş Tarihi:</label>
+                            <input type="datetime-local" class="form-control" id="BitisTarihi" name="BitisTarihi" required>
+                        </div>
+                        <div class="form-group col-sm-1">
+                            <button class="btn btn-outline-primary rounded-btn" id="sorgula" type="submit"><i class="fa fa-search"></i> Sorgula</button>
+                        </div>
+                        <div class="form-group col-sm-1">
+                            <button class="btn btn-outline-primary rounded-btn" onclick="butontemizle();"><i class="fa fa-recycle"></i> Temizle</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function butontemizle() {
+        $('[data-plugin="selectpicker"]').selectpicker('deselectAll');
+    }
+    $("#sorgula").on("click", function () {
+        var baslangictarihi = $("#BaslangicTarihi").val();
+        var bitistarihi = $("#BitisTarihi").val();
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("PartialFiltreSonuc", "KoruyucuOnleyiciHizmetler")',
+            contentType: "application/json; charset=utf-8",
+            data: { baslangictarihi: baslangictarihi, bitistarihi: bitistarihi},
+            dataType: 'html',
+            success: function (data) {
+                $('#sonucdiv').html('').html(data);
+                table = $('table.display').DataTable(config);
+                Site.run();
+                $(".loader-overlay").css("display", "none");
+                durdur();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+            }
+        });
+    });
+</script>
+
+<div id="sonucdiv">
+    @{ Html.RenderAction("PartialFiltreSonuc", "KoruyucuOnleyiciHizmetler"); }
+</div>

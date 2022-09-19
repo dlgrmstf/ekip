@@ -1,0 +1,119 @@
+﻿@model RandevuAyarlariModel
+@{
+    ViewBag.Title = "RandevuAyarlari";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/dist/vendors/datatable/css/dataTables.bootstrap4.min.css" />
+<link rel="stylesheet" href="~/dist/vendors/datatable/buttons/css/buttons.bootstrap4.min.css" />
+
+<div class="row">
+    <div class="col-12  align-self-center">
+        <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+            <div class="w-sm-100 mr-auto"><h4 class="mb-0">Randevu Ayarları</h4> <a href="@Url.Action("Index", "ArindirmaMerkezleri")"><p>Arındırma Merkezleri Modülü</p></a></div>
+            <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+                <li class="breadcrumb-item"><a href="#">Randevu Ayarları</a></li>
+                <li class="breadcrumb-item active">Anasayfa</li>
+            </ol>
+        </div>
+    </div>
+</div>
+<div class="row">
+    @if (User.IsInRole("20"))
+    {
+        <div class="col-md-3">
+            <a href="@Url.Action("RandevuAyariEkle", "ArindirmaMerkezleri")" class="btn btn-primary">Randevu Ayarı Oluştur</a>
+        </div>
+    }
+    <div class="col-md-9"></div>
+    <div class="col-12 mt-4">
+        <div class="card">
+            <div class="card-content">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="table-responsive">
+                                <table id="example" class="display table dataTable table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Kurum Adı</th>
+                                            <th>Poliklinik Türü</th>
+                                            <th>Gün</th>
+                                            <th>Başlangıç Saati</th>
+                                            <th>Bitiş Saati</th>
+                                            <th>Slot Sayısı</th>
+                                            <th>Durum</th>
+                                            <th>Detay</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var m in Model.RandevuAyarlariList)
+                                        {
+                                            <tr>
+                                                <td>@m.KurumAdi</td>
+                                                <td>@m.PoliklinikAdi</td>
+                                                @if (m.Gun == 1)
+                                                {
+                                                    <td>Pazartesi</td>
+                                                }
+                                                @if (m.Gun == 2)
+                                                {
+                                                    <td>Salı</td>
+                                                }
+                                                @if (m.Gun == 3)
+                                                {
+                                                    <td>Çarşamba</td>
+                                                }
+                                                @if (m.Gun == 4)
+                                                {
+                                                    <td>Perşembe</td>
+                                                }
+                                                @if (m.Gun == 5)
+                                                {
+                                                    <td>Cuma</td>
+                                                }
+                                                <td>@m.BaslangicSaati.ToString(@"hh\:mm")</td>
+                                                <td>@m.BitisSaati.ToString(@"hh\:mm")</td>
+                                                <td>@m.SlotSayisi</td>
+                                                @if (m.Durum == true)
+                                                {
+                                                    <td>Aktif</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>Pasif</td>
+                                                }
+                                                @if (User.IsInRole("21")) 
+                                                {
+                                                    <td><a href="@Url.Action("RandevuAyariDetay", "ArindirmaMerkezleri", new { id = m.ID })"><i class="icon-plus"></i></a></td>
+                                                }
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/dist/vendors/jquery/jquery-3.3.1.min.js"></script>
+<script src="~/dist/vendors/jquery-ui/jquery-ui.min.js"></script>
+<script src="~/dist/vendors/moment/moment.js"></script>
+<script src="~/dist/vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/dist/vendors/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="~/dist/vendors/datatable/js/jquery.dataTables.min.js"></script>
+<script src="~/dist/vendors/datatable/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/dist/vendors/datatable/jszip/jszip.min.js"></script>
+<script src="~/dist/vendors/datatable/pdfmake/pdfmake.min.js"></script>
+<script src="~/dist/vendors/datatable/pdfmake/vfs_fonts.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/dataTables.buttons.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.colVis.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.flash.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.html5.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.print.min.js"></script>
+<script src="~/dist/js/datatable.script.js"></script>

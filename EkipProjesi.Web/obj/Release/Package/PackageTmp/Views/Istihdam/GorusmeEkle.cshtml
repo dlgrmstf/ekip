@@ -1,0 +1,385 @@
+﻿@using Newtonsoft.Json;
+@model EkipProjesi.Core.IstihdamModulu.IHastaIskurGorusmeleri
+@{
+    ViewBag.Title = "Görüşme Ekle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/dist/vendors/select2/css/select2.min.css" />
+<link rel="stylesheet" href="~/dist/vendors/select2/css/select2-bootstrap.min.css" />
+
+<div class="row">
+    <div class="col-12  align-self-center">
+        <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+            <div class="w-sm-100 mr-auto"><h4 class="mb-0">Görüşme Ekle</h4> <a href="@Url.Action("IskurIslemleri", "Istihdam")"><p>İşkur İşlemleri</p></a></div>
+            <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+                <li class="breadcrumb-item"><a href="#">Görüşme Ekle</a></li>
+                <li class="breadcrumb-item"><a href="@Url.Action("KayitDetay", "Istihdam")">Kayıt Detay</a></li>
+                <li class="breadcrumb-item active">Anasayfa</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 mt-4">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Görüşme Bilgileri</h4>
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <form class="form-horizontal" id="form" role="form" enctype="multipart/form-data">
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="gorusmeyapandanisman">Görüşmeyi Yapan Danışman</label>
+                                        <input type="text" class="form-control" id="@Html.IdFor(x => x.GorusmeyiYapanDanisman)" name="@Html.NameFor(x => x.GorusmeyiYapanDanisman)">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="gorusmetarihi">Görüşme Tarihi</label>
+                                        <input type="date" class="form-control datepicker hasDatepicker" id="@Html.IdFor(x => x.GorusmeTarihi)" name="@Html.NameFor(x => x.GorusmeTarihi)">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="gorusme">Görüşme Sonucu</label>
+                                        <select id="@Html.IdFor(x => x.GorusmeSonucu)" name="@Html.NameFor(x => x.GorusmeSonucu)" class="form-control">
+                                            <option selected>Seçiniz</option>
+                                            <option value="@((int)GorusmeSonucu.Bir)">İşyerine yönlendirildi</option>
+                                            <option value="@((int)GorusmeSonucu.Iki)">İşyeri yönlendirme sonucu bilgisi edinildi</option>
+                                            <option value="@((int)GorusmeSonucu.Uc)">İş kulübüne yönlendirildi</option>
+                                            <option value="@((int)GorusmeSonucu.Dort)">İş kulübü yönlendirme sonucu bilgisi edinildi</option>
+                                            <option value="@((int)GorusmeSonucu.Bes)">Kurs ve programlara yönlendirildi</option>
+                                            <option value="@((int)GorusmeSonucu.Alti)">Kurs ve programlara yönlendirme sonucu bilgisi edinildi</option>
+                                            <option value="@((int)GorusmeSonucu.Yedi)">Danışma ve/veya tedavi merkezinde yeniden değerlendirmek üzere yönlendirildi </option>
+                                            <option value="@((int)GorusmeSonucu.Sekiz)">Diğer </option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group col-md-4" style="display:none" id="showisyerilistesi">
+                                        <label for="isyerilistesi">İşyeri Listesi</label>
+                                        <select multiple data-allow-clear="1" id="@Html.IdFor(x => x.YonlendirilenIsyeri)" name="@Html.NameFor(x => x.YonlendirilenIsyeri)">
+                                            <option value="1">Deneme İşyeri</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div class="form-group" style="display:none" id="showyonlendirmesonucubilgisi">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-2">
+                                            <label for="basvurutarihi">Başvuru Tarihi</label>
+                                            <input type="date" class="form-control datepicker hasDatepicker" id="@Html.IdFor(x => x.YonlendirmeBasvuruTarihi)" name="@Html.NameFor(x => x.YonlendirmeBasvuruTarihi)">
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="durum">Durum</label>
+                                            <select class="form-control" id="@Html.IdFor(x => x.IsyeriYonlendirmeSonuc)" name="@Html.NameFor(x => x.IsyeriYonlendirmeSonuc)">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)IDurum.Olumlu)">Olumlu</option>
+                                                <option value="@((int)IDurum.Olumsuz)">Olumsuz</option>
+
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-6" style="display:none" id="showisebasladigiyer">
+                                            <label for="isebasladigiyer">İşe Başladığı Yer</label>
+                                            <input type="text" class="form-control" id="@Html.IdFor(x=>x.IseBasladigiYer)" name="@Html.NameFor(x=>x.IseBasladigiYer)">
+                                        </div>
+                                        <div class="form-group col-md-2" style="display:none" id="showisebaslamatarihi">
+                                            <label for="isebaslamatarihi">İşe Başlama Tarihi</label>
+                                            <input type="date" class="form-control datepicker hasDatepicker" id="@Html.IdFor(x=>x.IseBaslamaTarihi)" name="@Html.NameFor(x=>x.IseBaslamaTarihi)">
+                                        </div>
+                                        <div class="form-group col-md-6" style="display:none" id="shownedeni">
+                                            <label for="nedeni">Nedeni</label>
+                                            <textarea type="text" class="form-control" id="@Html.IdFor(x=>x.IseBaslamaNedeni)" name="@Html.NameFor(x=>x.IseBaslamaNedeni)" rows="1"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4" style="display:none" id="showisklubuyonlendirmebilgisi">
+                                        <label for="iskulubudurum">Durum</label>
+                                        <select class="form-control" id="@Html.IdFor(x=>x.IsKulubuYonlendirmeSonuc)" name="@Html.NameFor(x=>x.IsKulubuYonlendirmeSonuc)">
+                                            <option value="0" selected>Seçiniz</option>
+                                            <option value="@((int)IsKulubu.Programlandi)">Süreç programlandı</option>
+                                            <option value="@((int)IsKulubu.Baslandi)">Sürece başlandı</option>
+                                            <option value="@((int)IsKulubu.Devam)">Süreç devam ediyor</option>
+                                            <option value="@((int)IsKulubu.Tamamlandi)">İş kulübü süreci tamamlandı</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-2" style="display:none" id="showplanlananbaslangictarihi">
+                                        <label for="showplanlananbaslangictarihi">Planlanan Başlangıç Tarihi</label>
+                                        <input type="date" class="form-control datepicker hasDatepicker" id="@Html.IdFor(x=>x.PlanlananBaslangicTarihi)" name="@Html.NameFor(x=>x.PlanlananBaslangicTarihi)">
+                                    </div>
+                                    <div class="form-group col-md-2" style="display:none" id="showsurecbaslamatarihi">
+                                        <label for="surecbaslamatarihi">Başlama Tarihi</label>
+                                        <input type="date" class="form-control datepicker hasDatepicker" id="@Html.IdFor(x=>x.SurecBaslamaTarihi)" name="@Html.NameFor(x=>x.SurecBaslamaTarihi)">
+                                    </div>
+                                    <div class="form-group col-md-2" style="display:none" id="showtamamlanmatarihi">
+                                        <label for="tamamlanmatarihi">Tamamlanma Tarihi</label>
+                                        <input type="date" class="form-control datepicker hasDatepicker" id="@Html.IdFor(x=>x.SurecTamamlanmaTarihi)" name="@Html.NameFor(x=>x.SurecTamamlanmaTarihi)">
+                                    </div>
+                                    <div class="form-group col-md-2" style="display:none">
+                                        <label for="iskulubuyonlendirmedurum">Durum</label>
+                                        <select class="form-control" id="@Html.IdFor(x=>x.IsKulubuYonlendirmeDurum)" name="@Html.NameFor(x=>x.IsKulubuYonlendirmeDurum)">
+                                            <option value="0" selected>Seçiniz</option>
+                                            <option value="@((int)IYonlendirmeDurum.Basarili)">Başarılı</option>
+                                            <option value="@((int)IYonlendirmeDurum.Basarisiz)">Başarısız</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-row" id="showsertifika" style="display:none">
+                                        <label>Sertifika Yükle</label>
+                                        @*<div class="form-group col-md-12" style="display:none" id="showsertifikayukle">
+                                            <input id="@Html.IdFor(x=>x.SertifikaDosyaYolu)" name="@Html.NameFor(x=>x.SertifikaDosyaYolu)" type="file" class="custom-file-input">
+                                            <label for="sertifikayukle" class="custom-file-label">Dosya seçin</label>
+                                        </div>*@
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-2" style="display:none" id="showkursprogramlar">
+                                    <label for="kursprogramlar">Tür</label>
+                                    <select class="form-control" id="@Html.IdFor(x=>x.Tur)" name="@Html.NameFor(x=>x.Tur)">
+                                        <option value="0" selected>Seçiniz</option>
+                                        <option value="@((int)Tur.TYP)">TYP</option>
+                                        <option value="@((int)Tur.Isbasi)">İşbaşı eğitim programı</option>
+                                        <option value="@((int)Tur.Mesleki)">Mesleki eğitim</option>
+                                    </select>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-2" style="display:none" id="showkursprogramlarayonlendirmesonucbilgisi">
+                                        <label for="kursprogramlarayonlendirmesonucbilgisi">Durum</label>
+                                        <select class="form-control" id="@Html.IdFor(x=>x.ProgramDurum)" name="@Html.NameFor(x=>x.ProgramDurum)">
+                                            <option value="0" selected>Seçiniz</option>
+                                            <option value="@((int)IsKulubu.Programlandi)">Süreç programlandı</option>
+                                            <option value="@((int)IsKulubu.Baslandi)">Sürece başlandı</option>
+                                            <option value="@((int)IsKulubu.Devam)">Süreç devam ediyor</option>
+                                            <option value="@((int)IsKulubu.Tamamlandi)">Süreci tamamlandı</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-2" style="display:none" id="showsureciprogramlandi">
+                                        <label for="sureciprogramlandi">Planlanan Program Türü</label>
+                                        <select class="form-control" id="@Html.IdFor(x=>x.PlanlananProgramTuru)" name="@Html.NameFor(x=>x.PlanlananProgramTuru)">
+                                            <option value="0" selected>Seçiniz</option>
+                                            <option value="@((int)Tur.TYP)">TYP</option>
+                                            <option value="@((int)Tur.Isbasi)">İşbaşı eğitim programı</option>
+                                            <option value="@((int)Tur.Mesleki)">Mesleki eğitim</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-2" style="display:none" id="showkursprogramlarplanlananbaslangic">
+                                        <label for="kursprogramlarplanlananbaslangic">Planlanan Başlangıç Tarihi</label>
+                                        <input type="date" class="form-control datepicker hasDatepicker" id="@Html.IdFor(x=>x.PlanlananProgramBaslangicTarihi)" name="@Html.NameFor(x=>x.PlanlananProgramBaslangicTarihi)">
+                                    </div>
+                                    <div class="form-group col-md-2" style="display:none" id="showsureciprogramlandiiki">
+                                        <label for="sureciprogramlandiiki">Planlanan Program Türü</label>
+                                        <select class="form-control" id="@Html.IdFor(x=>x.PlanlananProgramTuru)" name="@Html.NameFor(x=>x.PlanlananProgramTuru)">
+                                            <option value="0" selected>Seçiniz</option>
+                                            <option value="@((int)Tur.TYP)">TYP</option>
+                                            <option value="@((int)Tur.Isbasi)">İşbaşı eğitim programı</option>
+                                            <option value="@((int)Tur.Mesleki)">Mesleki eğitim</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-2" style="display:none" id="showkursprogramlarplanlananbaslangiciki">
+                                        <label for="kursprogramlarplanlananbaslangiciki">Başlama Tarihi</label>
+                                        <input type="date" class="form-control datepicker hasDatepicker" id="@Html.IdFor(x=>x.PlanlananProgramBaslangici)" name="@Html.NameFor(x=>x.PlanlananProgramBaslangici)">
+                                    </div>
+                                    <div class="form-group col-md-2" style="display:none" id="showsureciprogramlandi3">
+                                        <label for="sureciprogramlandi3">Planlanan Program Türü</label>
+                                        <select class="form-control" id="@Html.IdFor(x=>x.ProgramTuru)" name="@Html.NameFor(x=>x.ProgramTuru)">
+                                            <option value="0" selected>Seçiniz</option>
+                                            <option value="@((int)Tur.TYP)">TYP</option>
+                                            <option value="@((int)Tur.Isbasi)">İşbaşı eğitim programı</option>
+                                            <option value="@((int)Tur.Mesleki)">Mesleki eğitim</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-2" style="display:none" id="showtamamlanmatarihi3">
+                                        <label for="tamamlanmatarihi2">Tamamlanma Tarihi</label>
+                                        <input type="date" class="form-control datepicker hasDatepicker" id="@Html.IdFor(x=>x.ProgramTuruTamamlanmaTarihi)" name="@Html.NameFor(x=>x.ProgramTuruTamamlanmaTarihi)">
+                                    </div>
+                                    <div class="form-row" id="showsertifika3" style="display:none">
+                                        <label>Sertifika Yükle</label>
+                                        <div class="form-group col-md-12" style="display:none" id="sertifika3">
+                                            <input id="@Html.IdFor(x=>x.GorusmeyiYapanDanisman)" name="@Html.NameFor(x=>x.GorusmeyiYapanDanisman)" type="file" class="custom-file-input">
+                                            <label for="sertifika3" class="custom-file-label">Dosya seçin</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div div class="form-group col-md-12" style="display:none" id="showsonaciklama">
+                                    <label for="sondiger">Diğer</label>
+                                    <textarea type="text" class="form-control" id="@Html.IdFor(x=>x.GorusmeSonucuDiger)" name="@Html.NameFor(x=>x.GorusmeSonucuDiger)"></textarea>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <button type="submit" class="btn btn-primary" id="kaydet">Kaydet</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="~/dist/vendors/select2/js/select2.full.min.js"></script>
+<script src="~/dist/js/select2.script.js"></script>
+<script src="~/dist/js/app.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#@Html.IdFor(x=>x.GorusmeSonucu)').on('change', function () {
+            if (this.value == "1") {
+                $("#showisyerilistesi").show();
+                $("#showyonlendirmesonucubilgisi").hide();
+                $("#showisklubuyonlendirmebilgisi").hide();
+                $("#showkursprogramlar").hide();
+                $("#showkursprogramlarayonlendirmesonucbilgisi").hide();
+            }
+            else if (this.value == "2") {
+                $("#showyonlendirmesonucubilgisi").show();
+                $("#showisyerilistesi").hide();
+                $("#showisklubuyonlendirmebilgisi").hide();
+                $("#showkursprogramlar").hide();
+                $("#showkursprogramlarayonlendirmesonucbilgisi").hide();
+            }
+            else if (this.value == "4") {
+                $("#showisklubuyonlendirmebilgisi").show();
+                $("#showyonlendirmesonucubilgisi").hide();
+                $("#showisyerilistesi").hide();
+                $("#showkursprogramlar").hide();
+                $("#showkursprogramlarayonlendirmesonucbilgisi").hide();
+            }
+            else if (this.value == "5") {
+                $("#showkursprogramlar").show();
+                $("#showisklubuyonlendirmebilgisi").hide();
+                $("#showyonlendirmesonucubilgisi").hide();
+                $("#showsertifika").hide();
+                $('#showisklubuyonlendirmebilgisidurum').hide();
+                $('#showtamamlanmatarihi').hide();
+                $("#showisyerilistesi").hide();
+                $("#showkursprogramlarayonlendirmesonucbilgisi").hide();
+            }
+            else if (this.value == "6") {
+                $("#showkursprogramlarayonlendirmesonucbilgisi").show();
+                $("#showkursprogramlar").hide();
+                $("#showisklubuyonlendirmebilgisi").hide();
+                $("#showyonlendirmesonucubilgisi").hide();
+                $("#showisyerilistesi").hide();
+            }
+            else if (this.value == "7") {
+                alert("Yönlendirme ekranına geçiliyor....");
+            }
+            else if (this.value == "8") {
+                $("#showsonaciklama").show();
+            }
+            else {
+                $("#showisklubuyonlendirmebilgisi").hide();
+                $("#showisyerilistesi").hide();
+                $("#showyonlendirmesonucubilgisi").hide();
+                $("#showkursprogramlar").hide();
+                $("#showkursprogramlarayonlendirmesonucbilgisi").hide();
+            }
+        });
+        $('#@Html.IdFor(x => x.IsyeriYonlendirmeSonuc)').on('change', function () {
+            if (this.value == "1") {
+                $("#showisebasladigiyer").show();
+                $("#showisebaslamatarihi").show();
+                $("#shownedeni").hide();
+            }
+            else if (this.value == "2") {
+                $("#shownedeni").show();
+                $("#showisebasladigiyer").hide();
+                $("#showisebaslamatarihi").hide();
+            }
+            else {
+                $("#shownedeni").hide();
+                $("#showisebasladigiyer").hide();
+                $("#showisebaslamatarihi").hide();
+            }
+        });
+        $('#@Html.IdFor(x=>x.IsKulubuYonlendirmeSonuc)').on('change', function () {
+            if (this.value == "1") {
+                $("#showplanlananbaslangictarihi").show();
+                $("#showsurecbaslamatarihi").hide();
+                $("#showtamamlanmatarihi").hide();
+                $("#showisklubuyonlendirmebilgisidurum").hide();
+                $("#showsertifikayukle").hide();
+                $("#showsertifika").hide();
+            }
+            else if (this.value == "2") {
+                $("#showsurecbaslamatarihi").show();
+                $("#showplanlananbaslangictarihi").hide();
+                $("#showtamamlanmatarihi").hide();
+                $("#showisklubuyonlendirmebilgisidurum").hide();
+                $("#showsertifikayukle").hide();
+                $("#showsertifika").hide();
+            }
+            else if (this.value == "4") {
+                $("#showtamamlanmatarihi").show();
+                $("#showisklubuyonlendirmebilgisidurum").show();
+                $("#showsertifikayukle").show();
+                $("#showsurecbaslamatarihi").hide();
+                $("#showplanlananbaslangictarihi").hide();
+                $("#showsertifika").show();
+            }
+            else {
+                $("#showplanlananbaslangictarihi").hide();
+                $("#showsurecbaslamatarihi").hide();
+                $("#showtamamlanmatarihi").hide();
+                $("#showisklubuyonlendirmebilgisidurum").hide();
+                $("#showsertifikayukle").hide();
+                $("#showsertifika").hide();
+            }
+        });
+        $('#@Html.IdFor(x=>x.ProgramDurum)').on('change', function () {
+            if (this.value == "1") {
+                $("#showsureciprogramlandi").show();
+                $("#showkursprogramlarplanlananbaslangic").show();
+                $("#showsureciprogramlandiiki").hide();
+                $("#showkursprogramlarplanlananbaslangiciki").hide();
+                $("#showsureciprogramlandi3").hide();
+                $("#showtamamlanmatarihi3").hide();
+                $("#showsertifika3").hide();
+                $("#sertifika3").hide();
+            }
+            if (this.value == "2") {
+                $("#showsureciprogramlandiiki").show();
+                $("#showkursprogramlarplanlananbaslangiciki").show();
+                $("#showsureciprogramlandi").hide();
+                $("#showkursprogramlarplanlananbaslangic").hide();
+                $("#showsureciprogramlandi3").hide();
+                $("#showtamamlanmatarihi3").hide();
+                $("#showsertifika3").hide();
+                $("#sertifika3").hide();
+            }
+            if (this.value == "4") {
+                $("#showsureciprogramlandi3").show();
+                $("#showtamamlanmatarihi3").show();
+                $("#showsertifika3").show();
+                $("#sertifika3").show();
+                $("#showsureciprogramlandi").hide();
+                $("#showkursprogramlarplanlananbaslangic").hide();
+                $("#showsureciprogramlandiiki").hide();
+                $("#showkursprogramlarplanlananbaslangiciki").hide();
+            }
+        });
+    });
+</script>
+<script>
+    $("#kaydet").on("click", function () {
+            beforeCallKullanici();
+    });
+    function beforeCallKullanici(form, options) {
+          var KayitID = @Html.Raw(JsonConvert.SerializeObject(ViewBag.KayitID));
+          var form = $('#form')[0];
+          var dataString = new FormData(form);
+            jQuery.ajax({
+                cache: false,
+                type: "POST",
+                url: '@Url.Action("KullaniciGorusmeEkle", "Istihdam")?KayitID=' + KayitID,
+                enctype: 'multipart/form-data',
+                data: dataString,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    window.location = '@Url.Action("IskurIslemleri", "Istihdam")';
+                }
+          });
+        }
+</script>

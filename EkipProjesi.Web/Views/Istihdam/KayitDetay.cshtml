@@ -1,0 +1,328 @@
+﻿@using Newtonsoft.Json;
+@model EkipProjesi.Core.Hastalar.IHastalar
+@{
+    ViewBag.Title = "Kayıt Detay";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<EkipProjesi.Core.IstihdamModulu.IHastaIskurGorusmeleri> gorusmeler = new List<EkipProjesi.Core.IstihdamModulu.IHastaIskurGorusmeleri>(ViewBag.Gorusmeler);
+}
+
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+<div class="row">
+    <div class="col-12  align-self-center">
+        <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+            <div class="w-sm-100 mr-auto"><h4 class="mb-0">Kayıt Detay</h4> <a href="@Url.Action("Index", "Istihdam")"><p>Anasayfa</p></a></div>
+            <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+                <li class="breadcrumb-item"><a href="#">Kayıt Detay</a></li>
+                <li class="breadcrumb-item active">Anasayfa</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<div id="YonlendirmeModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body" style="width:500px; height:160px">
+                <form class="form-horizontal">
+                    <div class="row">
+                        <div class="form-group col-sm-6">
+                            <a class="btn btn-primary" href="#" id="arindirmaYonlendir">Arındırma Tedavisi</a>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <a class="btn btn-secondary" href="#" id="rehabilitasyonYonlendir">Rehabilitasyon Tedavisi</a>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <a class="btn btn-success" href="#" id="yedamYonlendir">YEDAM</a>
+                            <a class="btn btn-info" href="#" id="iskurYonlendir">İşkur</a>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <a class="btn btn-danger" href="#" id="ilceSaglikYonlendir">İlçe Sağlık Müdürlükleri</a>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <a class="btn btn-warning" href="#" id="sosyalHizmetYonlendir">Sosyal Hizmet Merkezleri</a>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <a class="btn btn-dark" href="#" id="mobilYonlendir">Mobil Ekip</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 mt-4">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-10">
+                        <h3 class="card-title">Kayıt Bilgileri</h3>
+                    </div>
+                    @if (User.IsInRole("134"))
+                    {
+                        <div class="col-md-2">
+                            <a class="btn btn-warning  py-2 px-3 px-lg-4" data-toggle="tab" href="#" id="yonlendirme"> Yönlendirme Ekle</a>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <form>
+                                @Html.HiddenFor(x => x.HastaID)
+                                <div class="form-row">
+                                    <div class="form-group col-md-3">
+                                        <label for="ad">Ad</label>
+                                        <input type="text" class="form-control" id="@Html.IdFor(x=>x.HastaAdi)" name="@Html.NameFor(x=>x.HastaAdi)" value="@Model.HastaAdi" disabled>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="soyad">Soyad</label>
+                                        <input type="text" class="form-control" id="@Html.IdFor(x=>x.HastaSoyadi)" name="@Html.NameFor(x=>x.HastaSoyadi)" value="@Model.HastaSoyadi" disabled>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="tcno">TC Kimlik No</label>
+                                        <input type="text" class="form-control" id="@Html.IdFor(x=>x.HastaTCKimlikNo)" name="@Html.NameFor(x=>x.HastaTCKimlikNo)" value="@Model.HastaTCKimlikNo" disabled>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="tcno">Ekip No</label>
+                                        <input type="text" class="form-control" id="@Html.IdFor(x=>x.HastaEkipNo)" name="@Html.NameFor(x=>x.HastaEkipNo)" value="@Model.HastaEkipNo" disabled>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="dogumtarihi">Doğum Tarihi</label>
+                                        <input required type="datetime" class="form-control form-control-sm validate[required]" id="@Html.IdFor(x=>x.DogumTarihi)" name="@Html.NameFor(x => x.DogumTarihi)" value="@string.Format("{0:dd.MM.yyyy}", Model.DogumTarihi)" disabled />
+                                    </div>
+                                </div>
+                                <h6>İletişim Bilgileri</h6>
+                                <div class="form-row">
+                                    <div class="form-group col-md-3">
+                                        <label for="telefon">Telefon</label>
+                                        <input type="text" class="form-control" id="@Html.IdFor(x=>x.Telefon)" name="@Html.NameFor(x=>x.Telefon)" value="@Model.Telefon" disabled>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="email">Email</label>
+                                        <input type="email" class="form-control" id="@Html.IdFor(x=>x.Email)" name="@Html.NameFor(x=>x.Email)" value="@Model.Email" disabled>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="adres">Adres</label>
+                                        @Html.TextAreaFor(x => x.Adres, new { @class = "form-control form-control-sm validate[required]", @readonly = true })
+                                    </div>
+                                </div>
+                                @if (Model.EgitimBilgileri != null)
+                                {
+                                    <div class="form-group">
+                                        <h6>Eğitim Bilgisi</h6>
+                                        <div class="form-row">
+                                            @if (Model.EgitimBilgileri.OgrenimDurumu != 0)
+                                            {
+                                                <div class="form-group col-md-2">
+                                                    <label for="ogrenim">Öğrenim Durumu</label>
+                                                    <select id="@Html.IdFor(x=>x.EgitimBilgileri.OgrenimDurumu)" name="@Html.NameFor(x=>x.EgitimBilgileri.OgrenimDurumu)" class="form-control" disabled>
+                                                        <option selected>Seçiniz</option>
+                                                        <option value="@((int)OgrenimDurumu.OkuryazarDegil)">Okuryazar değil</option>
+                                                        <option value="@((int)OgrenimDurumu.IlkOkul)">İlkokul</option>
+                                                        <option value="@((int)OgrenimDurumu.Ortaokul)">Ortaokul</option>
+                                                        <option value="@((int)OgrenimDurumu.Lise)">Lise</option>
+                                                        <option value="@((int)OgrenimDurumu.Onlisans)">Önlisans</option>
+                                                        <option value="@((int)OgrenimDurumu.Lisans)">Lisans</option>
+                                                        <option value="@((int)OgrenimDurumu.Lisansustu)">Lisansüstü</option>
+                                                    </select>
+                                                </div>
+                                            }
+                                            @if (Model.EgitimBilgileri.LiseTuru != null)
+                                            {
+                                                <div class="form-group col-md-2" id="showliseturu">
+                                                    <label for="liseturu">Lise Türü</label>
+                                                    <select id="@Html.IdFor(x=>x.EgitimBilgileri.LiseTuru)" name="@Html.NameFor(x=>x.EgitimBilgileri.LiseTuru)" class="form-control" disabled>
+                                                        <option selected>Seçiniz</option>
+                                                        <option value="@((int)LiseTuru.Fen)">Fen Lisesi</option>
+                                                        <option value="@((int)LiseTuru.Anadolu)">Anadolu Lisesi</option>
+                                                        <option value="@((int)LiseTuru.Teknik)">Teknik Lise</option>
+                                                        <option value="@((int)LiseTuru.Genel)">Genel Lise</option>
+                                                    </select>
+                                                </div>
+                                            }
+                                            @if (Model.EgitimBilgileri.Ilkokul != null)
+                                            {
+                                                <div class="form-group col-md-2" id="showilkokul">
+                                                    <label for="ilkokul">İlkokul</label>
+                                                    <input id="@Html.IdFor(x=>x.EgitimBilgileri.Ilkokul)" name="@Html.NameFor(x=>x.EgitimBilgileri.Ilkokul)" value="@Model.EgitimBilgileri.Ilkokul" type="text" class="form-control" disabled />
+                                                </div>
+                                            }
+                                            @if (Model.EgitimBilgileri.Ortaokul != null)
+                                            {
+                                                <div class="form-group col-md-2" id="showortaokul">
+                                                    <label for="ortaokul">Ortaokul</label>
+                                                    <input id="@Html.IdFor(x=>x.EgitimBilgileri.Ortaokul)" name="@Html.NameFor(x=>x.EgitimBilgileri.Ortaokul)" value="@Model.EgitimBilgileri.Ortaokul" type="text" class="form-control" disabled />
+                                                </div>
+                                            }
+                                            @if (Model.EgitimBilgileri.Lise != null)
+                                            {
+                                                <div class="form-group col-md-2" id="showlise">
+                                                    <label for="lise">Lise</label>
+                                                    <input id="@Html.IdFor(x=>x.EgitimBilgileri.Lise)" name="@Html.NameFor(x=>x.EgitimBilgileri.Lise)" value="@Model.EgitimBilgileri.Lise" type="text" class="form-control" disabled />
+                                                </div>
+                                            }
+                                            @if (Model.EgitimBilgileri.Universite != null)
+                                            {
+                                                <div class="form-group col-md-2" id="showuniversite">
+                                                    <label for="universite">Üniversite</label>
+                                                    <input id="@Html.IdFor(x=>x.EgitimBilgileri.Universite)" name="@Html.NameFor(x=>x.EgitimBilgileri.Universite)" value="@Model.EgitimBilgileri.Universite" type="text" class="form-control" disabled />
+                                                </div>
+                                            }
+                                            @if (Model.EgitimBilgileri.Fakulte != null)
+                                            {
+                                                <div class="form-group col-md-2" id="showfakulte">
+                                                    <label for="fakulte">Fakülte</label>
+                                                    <input id="@Html.IdFor(x=>x.EgitimBilgileri.Fakulte)" name="@Html.NameFor(x=>x.EgitimBilgileri.Fakulte)" value="@Model.EgitimBilgileri.Fakulte" type="text" class="form-control" disabled />
+                                                </div>
+                                            }
+                                            @if (Model.EgitimBilgileri.Bolum != null)
+                                            {
+                                                <div class="form-group col-md-2" id="showbolum">
+                                                    <label for="bolum">Bölüm</label>
+                                                    <input id="@Html.IdFor(x=>x.EgitimBilgileri.Bolum)" name="@Html.NameFor(x=>x.EgitimBilgileri.Bolum)" value="@Model.EgitimBilgileri.Bolum" type="text" class="form-control" disabled />
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                    if (Model.EgitimBilgileri.IsGecmisi != null)
+                                    {
+                                        <div class="form-group">
+                                            <h6>İş Geçmişi</h6>
+                                            <div class="form-row">
+                                                <div class="form-row col-md-12" id="isgecmisi">
+                                                    @Html.TextAreaFor(x => x.EgitimBilgileri.IsGecmisi, new { @class = "form-control form-control-sm validate[required]", @readonly = true })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    if (Model.EgitimBilgileri.SertifikaVeYeterlilikler != null)
+                                    {
+                                        <div class="form-group">
+                                            <h6>Sertifika ve Yeterlilikler</h6>
+                                            <div class="form-row">
+                                                <div class="form-row col-md-12" id="sertifika">
+                                                    @Html.TextAreaFor(x => x.EgitimBilgileri.SertifikaVeYeterlilikler, new { @class = "form-control form-control-sm validate[required]", @readonly = true })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 mt-4">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-10">
+                        <h4 class="card-title">Görüşmeler</h4>
+                    </div>
+                    @if (User.IsInRole("49"))
+                    {
+                        <div class="col-md-2">
+                            <button class="btn btn-info rounded-btn mb-2 ont-w-300 my-auto text-nowrap" style="vertical-align:central" id="gorusmeEkle"><i class="icon-note"></i> Görüşme Ekle</button>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="card-content" style="margin-left:10px; margin-right:10px">
+                <br />
+                @if (gorusmeler.Count() > 0)
+                {
+                    <div class="row">
+                        @foreach (var f in ViewBag.Gorusmeler)
+                        {
+                            <div class="col-md-3">
+                                <div class="card outline-badge-primary" style="margin-bottom:10px">
+                                    <div class="card-content">
+                                        <div class="card-body p-4">
+                                            <div class="d-md-flex">
+                                                <div class="my-auto">
+                                                    <span class="icon-docs h3 text-primary"></span>
+                                                </div>
+                                                <div class="content px-md-3 my-3 my-md-0">
+                                                    <span class="mb-0 font-w-600 h5">Görüşme</span><br>
+                                                    <p class="mb-0 font-w-600 tx-s-12">@f.GorusmeTarihi.ToString("dd/MM/yyyy")</p>
+                                                </div>
+                                                @if (User.IsInRole("50"))
+                                                {
+                                                    <div class="my-auto">
+                                                        <a href="@Url.Action("GorusmeDetay", "Istihdam", new { id = f.ID })" target="_blank" class="btn btn-outline-primary font-w-600 my-auto text-nowrap">Detay</a>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Uyarı!</strong> Hastaya ait görüşme bilgisi bulunmamaktadır.
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.EgitimBilgileri != null)
+{
+    <script>
+    $(document).ready(function () {
+         $('#@Html.IdFor(x => x.EgitimBilgileri.LiseTuru) option[value="@Model.EgitimBilgileri.LiseTuru"]').attr('selected', 'selected');
+         $('#@Html.IdFor(x => x.EgitimBilgileri.OgrenimDurumu) option[value="@Model.EgitimBilgileri.OgrenimDurumu"]').attr('selected', 'selected');
+    });
+    </script>
+}
+<script>
+    $("#gorusmeEkle").on("click", function () {
+        var KayitID = @Html.Raw(JsonConvert.SerializeObject(ViewBag.KayitID));
+        window.location = '@Url.Action("GorusmeEkle", "Istihdam")?KayitID=' + KayitID;
+    });
+</script>
+<script>
+    var hId = @Model.HastaID;
+    $('#yonlendirme').click(function () {
+        $('#YonlendirmeModal').modal('show');
+    })
+    $('#arindirmaYonlendir').click(function () {
+        window.location = '@Url.Action("Kurumlar", "ArindirmaMerkezleri")?HastaID=' + hId;
+    })
+    $('#rehabilitasyonYonlendir').click(function () {
+        window.location = '@Url.Action("Kurumlar", "ArindirmaMerkezleri")?HastaID=' + hId;
+    })
+    $('#yedamYonlendir').click(function () {
+        window.location = '@Url.Action("YEDAMRandevuTalebiOlustur", "KurumlarArasiSevkVeTakip")?HastaID=' + hId;
+    })
+    $('#sosyalHizmetYonlendir').click(function () {
+        window.location = '@Url.Action("SHMRandevuTalebiOlustur", "KurumlarArasiSevkVeTakip")?HastaID=' + hId;
+    })
+    $('#iskurYonlendir').click(function () {
+        window.location = '@Url.Action("IskurRandevuTalebiOlustur", "KurumlarArasiSevkVeTakip")?HastaID=' + hId;
+    })
+    $('#ilceSaglikYonlendir').click(function () {
+        window.location = '@Url.Action("ISMRandevuTalebiOlustur", "KurumlarArasiSevkVeTakip")?HastaID=' + hId;
+    })
+    $('#mobilYonlendir').click(function () {
+        window.location = '@Url.Action("MobilEkipRandevuTalebiOlustur", "KurumlarArasiSevkVeTakip")?HastaID=' + hId;
+    })
+</script>

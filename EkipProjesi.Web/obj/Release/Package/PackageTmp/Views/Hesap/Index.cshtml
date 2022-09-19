@@ -1,0 +1,146 @@
+﻿@model IKullanici
+@{
+    ViewBag.Title = "Index";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>EKİP</title>
+    <link rel="shortcut icon" href="dist/images/favicon.ico" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <link rel="stylesheet" href="~/dist/vendors/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/dist/vendors/jquery-ui/jquery-ui.min.css">
+    <link rel="stylesheet" href="~/dist/vendors/jquery-ui/jquery-ui.theme.min.css">
+    <link rel="stylesheet" href="~/dist/vendors/simple-line-icons/css/simple-line-icons.css">
+    <link rel="stylesheet" href="~/dist/vendors/flags-icon/css/flag-icon.min.css">
+    <link rel="stylesheet" href="~/dist/vendors/social-button/bootstrap-social.css" />
+    <link rel="stylesheet" href="~/dist/css/main.css">
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+</head>
+<body id="main-container" class="default">
+    <div id="SifreModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <input type="hidden" id="ID" value="0" />
+                        <div class="row">
+                            <div class="form-group col-sm-12">
+                                <label>Kullanıcı Adı</label>
+                                <input type="text" id="@Html.IdFor(x=>x.KullaniciAdi)" name="@Html.NameFor(x=>x.KullaniciAdi)" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="SmsGonder" class="btn btn-success btn-md pull-right">SMS Gönder</button>
+                            <button type="button" class="btn btn-default btn-md pull-right" data-dismiss="modal" id="btnClose">Kapat</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="SMSModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="row">
+                            <div class="form-group col-sm-12">
+                                <label>Kod</label>
+                                <input type="text" id="@Html.IdFor(x=>x.SifreYenilemeSMSOnayKodu)" name="@Html.NameFor(x=>x.SifreYenilemeSMSOnayKodu)" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="SifreYenile" class="btn btn-success btn-md pull-right">Şifre Yenile</button>
+                            <button type="button" class="btn btn-default btn-md pull-right" data-dismiss="modal" id="btnClose2">Kapat</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row vh-100 justify-content-between align-items-center">
+            <div class="col-12">
+                <div class="row row-eq-height lockscreen mt-5 mb-5">
+                    <div class="lock-image col-12 col-sm-5"></div>
+                    @using (Html.BeginForm("Index", "Hesap", FormMethod.Post, new { @class = "popup-validation", enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <br />
+                        <div class="login-form col-12 col-sm-9">
+                            <div class="form-group mb-3">
+                                <label>Kullanıcı Adı</label>
+                                @Html.TextBoxFor(x => x.TC, new { @class = "form-control", required = "required" })
+                            </div>
+                            <div class="form-group mb-3">
+                                <label>Şifre</label>
+                                @Html.PasswordFor(x => x.Sifre, new { @class = "form-control", required = "required" })
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-3">
+                                    <button type="submit" class="btn btn-primary">Giriş</button>
+                                </div>
+                                <div class="form-group col-md-9">
+                                    <span class="pull-right">
+                                        <button class="btn btn-outline-warning" id="SifremiUnuttum" type="button">Şifremi Unuttum</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Content/js/jquery-1.12.4.min.js"></script>
+    <script src="~/Content/js/bootstrap.min.js"></script>
+    <script src="~/Content/js/jquery.metisMenu.js"></script>
+    <script src="~/Content/js/custom.js"></script>
+    <script>
+        if ('@ViewBag.Msg' != "") {
+            alert('@ViewBag.Msg');
+        }
+    </script>
+    <script src="~/dist/vendors/jquery/jquery-3.3.1.min.js"></script>
+    <script src="~/dist/vendors/jquery-ui/jquery-ui.min.js"></script>
+    <script src="~/dist/vendors/moment/moment.js"></script>
+    <script src="~/dist/vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/dist/vendors/slimscroll/jquery.slimscroll.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var kullanici;
+            $('#KullaniciAdi').on("change", function () {
+                 kullanici = $('#KullaniciAdi').val();
+            });
+            $('#SifremiUnuttum').on("click", function () {
+                 $('#SifreModal').modal('show');
+            });
+            $('#SmsGonder').on("click", function () {
+                $('#SifreModal').modal('hide');
+                $('#SMSModal').modal('show');
+                @*debugger;
+                var kullaniciAdi = $('#@Html.IdFor(x => x.KullaniciAdi)').val();
+                jQuery.ajax({
+                    cache: false,
+                    type: "POST",
+                    url: '@Url.Action("SMSOnayKoduGonder", "Hesap")',
+                    data: { "KullaniciAdi": kullaniciAdi },
+                    success: function (data) {
+                        location.reload;
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                      alert("SMS gönderimi sırasında hata oluştu. Lütfen tekrar deneyiniz.");
+                    }
+                });*@
+            });
+            $('#SifreYenile').on("click", function () {
+                 window.location = '@Url.Action("SifreYenile", "Hesap")?KullaniciAdi=' + kullanici;
+            });
+        });
+    </script>
+</body>
+</html>

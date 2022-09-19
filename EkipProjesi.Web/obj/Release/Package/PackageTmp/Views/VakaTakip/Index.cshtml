@@ -1,0 +1,182 @@
+﻿@model List<EkipProjesi.Core.Hastalar.IHastalar>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-12  align-self-center">
+        <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+            <div class="w-sm-100 mr-auto"><h4 class="mb-0">Vaka Takip Modülü</h4> <a href="@Url.Action("Index", "Home")"><p>Anasayfa</p></a></div>
+            <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+                <li class="breadcrumb-item"><a href="#">Vaka Takip Modülü</a></li>
+                <li class="breadcrumb-item active">Anasayfa</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 mt-3">
+        <div class="card">
+            <div class="card-header  justify-content-between align-items-center">
+                <div class="row">
+                    <div class="col-md-10">
+                        <h3 class="card-title">Hastalar</h3>
+                    </div>
+                    @if (User.IsInRole("69"))
+                    {
+                        <div class="col-md-2">
+                            <div class="align-content-lg-end">
+                                <a class="btn btn-info rounded-btn mb-2 ont-w-300 my-auto text-nowrap" href="@Url.Action("HastaEkle", "VakaTakip")" style="vertical-align:central"><i class="icon-plus"></i> Hasta Ekle</a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row row-eq-height">
+                    <div class="col-12 col-lg-2 mt-3 todo-menu-bar flip-menu pr-lg-0">
+                        <a href="#" class="d-inline-block d-lg-none mt-1 flip-menu-close"><i class="icon-close"></i></a>
+                        <div class="card border h-100 contact-menu-section">
+                            <ul class="nav flex-column contact-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="#" data-contacttype="contact">
+                                        <i class="icon-list"></i> Tümü
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-10 mt-3 pl-lg-0">
+                        <div class="card border h-100 contact-list-section">
+                            <div class="card-header border-bottom p-1 d-flex">
+                                <a href="#" class="d-inline-block d-lg-none flip-menu-toggle"><i class="icon-menu"></i></a>
+                                <input type="text" class="form-control border-0 p-2 w-100 h-100 contact-search" placeholder="Arayın ...">
+                                <a href="#" class="list-style search-bar-menu border-0 active"><i class="icon-list"></i></a>
+                                <a href="#" class="grid-style search-bar-menu"><i class="icon-grid"></i></a>
+                            </div>
+                            <div class="card-body p-0">
+                                <div class="contacts list">
+                                    @if (User.IsInRole("70"))
+                                    {
+                                        if (User.IsInRole("90"))
+                                        {
+                                            foreach (var v in ViewBag.KendiHastalari)
+                                            {
+                                                <div class="contact kategori1">
+                                                    <div class="contact-content">
+                                                        <div class="contact-profile">
+                                                            <img src="~/images/user.png" alt="avatar" class="user-image img-fluid">
+                                                            <div class="contact-info">
+                                                                <p class="contact-name mb-0">@v.HastaAdi @v.HastaSoyadi</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="contact-email">
+                                                            <p class="mb-0 small">TC Kimlik No: </p>
+                                                            <p class="user-email">@v.HastaTCKimlikNo</p>
+                                                        </div>
+                                                        <div class="contact-email">
+                                                            <p class="mb-0 small">Hasta Ekip No: </p>
+                                                            <p class="user-email">@v.HastaEkipNo</p>
+                                                        </div>
+                                                        <div class="contact-phone">
+                                                            <p class="mb-0 small">Telefon: </p>
+                                                            <p class="user-phone">@v.Telefon</p>
+                                                        </div>
+                                                        @if (User.IsInRole("70"))
+                                                        {
+                                                            <div class="line-h-1 h5">
+                                                                <a class="text-success edit-contact" href="@Url.Action("VakaDetay","VakaTakip", new { id = v.HastaID })" name="Detay" target="_blank"><i class="icon-plus"></i></a>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+                                        else if (User.IsInRole("91"))
+                                        {
+                                            foreach (var v in ViewBag.KurumdakiHastalar)
+                                            {
+                                                <div class="contact kategori1">
+                                                    <div class="contact-content">
+                                                        <div class="contact-profile">
+                                                            <img src="~/images/user.png" alt="avatar" class="user-image img-fluid">
+                                                            <div class="contact-info">
+                                                                <p class="contact-name mb-0">@v.HastaAdi @v.HastaSoyadi</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="contact-email">
+                                                            <p class="mb-0 small">TC Kimlik No: </p>
+                                                            <p class="user-email">@v.HastaTCKimlikNo</p>
+                                                        </div>
+                                                        <div class="contact-email">
+                                                            <p class="mb-0 small">Hasta Ekip No: </p>
+                                                            <p class="user-email">@v.HastaEkipNo</p>
+                                                        </div>
+                                                        <div class="contact-phone">
+                                                            <p class="mb-0 small">Telefon: </p>
+                                                            <p class="user-phone">@v.Telefon</p>
+                                                        </div>
+                                                        @if (User.IsInRole("70"))
+                                                        {
+                                                            <div class="line-h-1 h5">
+                                                                <a class="text-success edit-contact" href="@Url.Action("VakaDetay","VakaTakip", new { id = v.HastaID })" name="Detay" target="_blank"><i class="icon-plus"></i></a>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+                                        else if (User.IsInRole("92"))
+                                        {
+                                            foreach (var v in ViewBag.TumHastalar)
+                                            {
+                                                <div class="contact kategori1">
+                                                    <div class="contact-content">
+                                                        <div class="contact-profile">
+                                                            <img src="~/images/user.png" alt="avatar" class="user-image img-fluid">
+                                                            <div class="contact-info">
+                                                                <p class="contact-name mb-0">@v.HastaAdi @v.HastaSoyadi</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="contact-email">
+                                                            <p class="mb-0 small">TC Kimlik No: </p>
+                                                            <p class="user-email">@v.HastaTCKimlikNo</p>
+                                                        </div>
+                                                        <div class="contact-email">
+                                                            <p class="mb-0 small">Hasta Ekip No: </p>
+                                                            <p class="user-email">@v.HastaEkipNo</p>
+                                                        </div>
+                                                        <div class="contact-phone">
+                                                            <p class="mb-0 small">Telefon: </p>
+                                                            <p class="user-phone">@v.Telefon</p>
+                                                        </div>
+                                                        @if (User.IsInRole("70"))
+                                                        {
+                                                            <div class="line-h-1 h5">
+                                                                <a class="text-success edit-contact" href="@Url.Action("VakaDetay","VakaTakip", new { id = v.HastaID })" name="Detay" target="_blank"><i class="icon-plus"></i></a>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/dist/vendors/jquery/jquery-3.3.1.min.js"></script>
+<script src="~/dist/vendors/jquery-ui/jquery-ui.min.js"></script>
+<script src="~/dist/vendors/moment/moment.js"></script>
+<script src="~/dist/vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/dist/vendors/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="~/dist/js/app.js"></script>
+<script src="~/dist/js/app.contactlist.js"></script>

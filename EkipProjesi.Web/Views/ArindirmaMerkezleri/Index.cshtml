@@ -1,0 +1,84 @@
+﻿
+@{
+    ViewBag.Title = "Arındırma Merkezleri Modülü";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-12  align-self-center">
+        <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+            <div class="w-sm-100 mr-auto"><h4 class="mb-0">Arındırma Merkezleri Modülü</h4><p><a href="@Url.Action("Index","Home")">Anasayfa</a></p></div>
+            <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+                <li class="breadcrumb-item"><a href="#">Arındırma Merkezleri Modülü</a></li>
+                <li class="breadcrumb-item active">Anasayfa</li>
+            </ol>
+        </div>
+    </div>
+</div>
+<div class="row">
+    @if (User.IsInRole("14"))
+    {
+        <div class="col-12 col-sm-6 col-xl-3 mt-3">
+            <a href="@Url.Action("PersonelBilgileri", "ArindirmaMerkezleri")">
+                <div class="card bg-red-600 text-white h-100">
+                    <div class="card-body text-center p-3 d-flex">
+                        <div class="align-self-center text-center w-100">
+                            <span class="icon-people h1 bg-red-600 text-white shadow-circle p-3 rounded-circle"></span>
+                            <h2 class="card-title font-weight-bold mt-4">Personel Bilgileri</h2>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
+    @if (User.IsInRole("15"))
+    {
+        <div class="col-12 col-sm-6 col-xl-3 mt-3">
+            <a href="@Url.Action("HizmetBilgileri", "ArindirmaMerkezleri")">
+                <div class="card bg-primary text-white h-100">
+                    <div class="card-body text-center p-3 d-flex">
+                        <div class="align-self-center text-center w-100">
+                            <span class="icon-folder h1 bg-primary text-white shadow-circle p-3 rounded-circle"></span>
+                            <h2 class="card-title font-weight-bold mt-4">Hizmet Bilgileri</h2>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
+    @if (User.IsInRole("16"))
+    {
+        <div class="col-12 col-sm-6 col-xl-3 mt-3">
+            <a href="@Url.Action("BasvuruBilgileri", "ArindirmaMerkezleri")">
+                <div class="card bg-cyan-600 text-white h-100">
+                    <div class="card-body text-center p-3 d-flex">
+                        <div class="align-self-center text-center w-100">
+                            <span class="icon-magnifier h1 bg-cyan-600 text-white shadow-circle p-3 rounded-circle"></span>
+                            <h2 class="card-title font-weight-bold mt-4">Başvuru Bilgileri</h2>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
+    @if (User.IsInRole("18"))
+    {
+        <div class="col-12 col-sm-6 col-xl-3 mt-3">
+            <a href="@Url.Action("Randevu", "ArindirmaMerkezleri")">
+                <div class="card bg-indigo-600 text-white h-100">
+                    <div class="card-body text-center p-3 d-flex">
+                        <div class="align-self-center text-center w-100">
+                            <span class="icon-event h1 bg-indigo-600 text-white shadow-circle p-3 rounded-circle"></span>
+                            <h2 class="card-title font-weight-bold mt-4">Randevu</h2>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
+</div>
+<style>
+    .card-body {
+        height: 235px;
+    }   
+</style>

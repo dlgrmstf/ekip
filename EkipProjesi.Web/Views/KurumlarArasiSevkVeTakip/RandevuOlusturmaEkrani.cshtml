@@ -1,0 +1,688 @@
+﻿@using Newtonsoft.Json;
+@model RandevularModel
+@{
+    ViewBag.Title = "RandevuOlusturmaEkrani";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+<link href="~/Content/customselect/jquery-customselect-1.9.1.css" rel="stylesheet" />
+
+<div class="row">
+    <div class="col-12  align-self-center">
+        <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+            <div class="w-sm-100 mr-auto"><h4 class="mb-0">Randevu Oluştur</h4> <a href="@Url.Action("Index", "KurumlarArasiSevkVeTakip")"><p>Kurumlar Arası Sevk Ve Takip Modülü</p></a></div>
+            <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+                <li class="breadcrumb-item"><a href="#">Randevu Oluştur</a></li>
+                <li class="breadcrumb-item active">Anasayfa</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 center">
+        <div class="border-0 outline-badge-info p-3 rounded text-center">
+            <span class="h6 mb-0">@ViewBag.KurumAdi - @ViewBag.PoliklinikTuruAdi Polikliniği Randevu Takvimi</span>
+        </div>
+        <br />
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div id="calender"></div>
+    </div>
+</div>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title"><span id="eventTitle"></span></h6>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="pDetails"></p>
+            </div>
+            <div class="modal-footer" id="butonlar">
+                @if (User.IsInRole("25"))
+                {
+                    <button id="btnDelete" class="btn btn-danger btn-md pull-right">
+                        <span class="glyphicon glyphicon-remove"></span><i class="icon-trash"></i> Sil
+                    </button>
+                }
+                @if (User.IsInRole("24"))
+                {
+                    <button id="btnEdit" class="btn btn-warning btn-md pull-right" style="margin-right:5px;">
+                        <span class="glyphicon glyphicon-pencil"></span><i class="icon-note"></i> Düzenle
+                    </button>
+                }
+                <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="myModalSave" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body" style="width:500px; height:550px;">
+                <form class="form-horizontal">
+                    <input type="hidden" id="hdEventID" value="0" />
+                    <div class="row">
+                        <div class="form-group col-sm-12">
+                            <label>Hasta TC No</label>
+                            <input type="text" id="txtTCNo" class="form-control" value="@ViewBag.TC" />
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label>Hasta Adı</label>
+                            <input type="text" id="txtName" class="form-control" />
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label>Hasta Soyadı</label>
+                            <input type="text" id="txtSurname" class="form-control" />
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label>Telefon (Onay kodu gönderilecek)</label>
+                            <input type="text" id="txtPhone" class="form-control" />
+                        </div>
+                        @if (ViewBag.PID == 3 || ViewBag.PID == 8 || ViewBag.PID == 11)
+                        {
+                            <div class="form-group col-sm-6">
+                                <label>Yakın Telefonu</label>
+                                <input type="text" id="txtPhoneYakin" class="form-control" />
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="form-group col-sm-6">
+                                <label>Yakın Telefonu</label>
+                                <input type="text" id="txtPhoneYakin" class="form-control" placeholder="- - - - - - -" style="background-color:#eaeaea" disabled />
+                            </div>
+                        }
+                        <div class="form-group col-sm-3" hidden>
+                            <label>Kurum ID</label>
+                            <input type="number" id="txtKurum" class="form-control" value="@ViewBag.KID" disabled />
+                        </div>
+                        <div class="form-group col-sm-3" hidden>
+                            <label>Poliklinik ID</label>
+                            <input type="number" id="txtPoliklinik" class="form-control" value="@ViewBag.PID" disabled />
+                        </div>
+                        <div class="form-group col-sm-3">
+                            <label>Randevu Baş. Tarihi</label>
+                            <div class="input-group date" id="dtp1">
+                                <input type="text" id="txtStart" class="form-control" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-3" id="divEndDate">
+                            <label>Randevu Bitiş Tarihi</label>
+                            <div class="input-group date" id="dtp2">
+                                <input type="text" id="txtEnd" class="form-control" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-3">
+                            <label>Randevu Baş. Saati</label>
+                            <select class="form-control" name="BaslangicSaatleri" id="BaslangicSaatleri" required>
+                            </select>
+                        </div>
+                        <div class="form-group col-sm-3" hidden>
+                            <label>Randevu Bitiş Saati</label>
+                            <select class="form-control" name="BitisSaati" id="BitisSaati" required disabled>
+                            </select>
+                        </div>
+                        <div class="form-group col-sm-3">
+                            <label>Renk<br />Seçimi</label>
+                            <select id="ddThemeColor" class="form-control">
+                                <option value="0">Default</option>
+                                <option value="blue">Mavi</option>
+                                @*<option value="red">Kırmızı</option>*@
+                                @*<option value="black">Siyah</option>
+                                    <option value="green">Yeşil</option>*@
+                            </select>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label>Açıklama</label>
+                            <textarea id="txtDescription" rows="3" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        @if (User.IsInRole("23"))
+                        {
+                            <button type="button" id="btnSave" class="btn btn-success btn-md pull-right">Kaydet</button>
+                        }
+                        <button type="button" class="btn btn-default btn-md pull-right" data-dismiss="modal" id="btnClose">Kapat</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="myModalDelete" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body" style="width:500px; height:200px;">
+                <form class="form-horizontal">
+                    <input type="hidden" id="hdEventID" value="0" />
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label>Randevu İptal Nedenini Giriniz</label>
+                            <textarea id="txtIptalNedeni" rows="3" class="form-control" required></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="btnDelete2" class="btn btn-success btn-md pull-right">Sil</button>
+                        <button type="button" class="btn btn-default btn-md pull-right" data-dismiss="modal" id="btnClose">Kapat</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="smsOnayModal" class="modal fade" role="dialog">
+    <div class="modal-dialog" style="width:300px; height:170px;">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="row">
+                        <div class="form-group col-12">
+                            <label>Hasta telefonuna gönderilen SMS onay kodunu giriniz:</label>
+                            <input type="text" id="smsKod" class="form-control" required />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="btnSaveWSms" class="btn btn-success btn-md pull-right">Kaydet</button>
+                        <button type="button" class="btn btn-default btn-md pull-right" data-dismiss="modal" id="btnClose">Kapat</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.print.css" rel="stylesheet" media="print" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+@section Scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="~/Content/customselect/jquery-customselect-1.9.1.min.js"></script>
+
+    <script>
+        $(function () {
+            $("#Hastalar").customselect({
+                search: true
+            });
+        });
+    </script>
+    <script>
+        $("#btnSave").on("click", function () {
+            $('#smsOnayModal').modal('show');
+        });
+        @*$("#Hastalar").change(function () {
+            var hastaid = $("#Hastalar").val();
+            $.ajax({
+                url: '@Url.Action("HastaBilgiGetir", "ArindirmaMerkezleri")',
+                type: "POST",
+                dataType: "json",
+                data: { hastaid: hastaid },
+                success: function (data) {
+                    $("#txtName").val(data.HastaAdi);
+                    $("#txtSurname").val(data.HastaSoyadi);
+                    $("#txtTCNo").val(data.HastaTCKimlikNo);
+                }
+            });
+        });*@
+    </script>
+    <script>
+        $(document).ready(function () {
+            var kid = parseInt(@ViewBag.KID);
+            var pid = parseInt(@ViewBag.PID);
+
+            var events = [];
+            var selectedEvent = null;
+
+            FetchEventAndRenderCalendar();
+
+            function FetchEventAndRenderCalendar() {
+                 $.ajax({
+                     type: "GET",
+                     url: "@Url.Action("RandevulariGetir","ArindirmaMerkezleri")",
+                     data: { kurumid: kid, polid: pid },
+                     success: function (data) {
+                         $.each(data, function (i, e) {
+
+                             var event = {
+                                 eventID: e.ID,
+                                 title: e.HastaAdi + ' ' + e.HastaSoyadi,
+                                 description: e.Aciklama,
+                                 start: moment(e.RandevuBaslangicTarihi),
+                                 end: moment(e.RandevuBitisTarihi),
+                                 color: e.Renk,
+                                 phone: e.Telefon,
+                                 phoneYakin: e.YakinTelefonu,
+                                 name: e.HastaAdi,
+                                 surname: e.HastaSoyadi,
+                                 tcno: e.HastaTCKimlikNo,
+                                 kurum: e.KurumID,
+                                 poliklinik: e.PoliklinikTuruID,
+                                 durum: e.RandevuDurumu,
+                                 basSaati: moment(e.RandevuBaslangicSaati).format('HH:mm'),
+                                 bitSaati: moment(e.RandevuBitisSaati).format('HH:mm')
+                             };
+
+                             events.push(event);
+                         })
+
+                         GenerateCalender(events);
+
+                     },
+                     error: function (error) {
+                         alert('Veriler getirilirken hata oluştu, lütfen tekrar deneyiniz.');
+                     }
+                 })
+            }
+
+            function GenerateCalender(events) {
+                $('#calender').fullCalendar('destroy');
+                $('#calender').fullCalendar({
+                    monthNames: ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'],
+                    monthNamesShort: ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'],
+                    dayNames: ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'],
+                    dayNamesShort: ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'],
+                    contentHeight: 450,
+                    defaultDate: new Date(),
+                    timeFormat: 'HH:mm',
+                    buttonText: {
+                        today: 'Bugün',
+                        month: 'Ay',
+                        week: 'Hafta',
+                        day: 'Gün',
+                        list: 'Liste',
+                        agenda: 'Ajanda'
+                    },
+                    header: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'month,basicWeek,basicDay,agenda'
+                    },
+                    eventLimit: true,
+                    eventColor: '#378006',
+                    events: events,
+                    eventClick: function (calEvent, jsEvent, view) {
+                        selectedEvent = calEvent;
+
+                        var kurumadi = @Html.Raw(JsonConvert.SerializeObject(ViewBag.KurumAdi));
+                        var poladi = @Html.Raw(JsonConvert.SerializeObject(ViewBag.PoliklinikTuruAdi));
+                        var selectedDate = moment(calEvent.start).format('YYYY/MM/DD');
+                        var todayDate = moment().format('YYYY/MM/DD');
+                        var title = calEvent.name + ' ' + calEvent.surname;
+
+                        $('#myModal #eventTitle').text(title);
+                        var $description = $('<div/>');
+                        $description.append($('<p/>').html('<b>Randevu Başlangıç Tarihi: </b>' + calEvent.start.format("DD/MMM/YYYY HH:mm")));
+                        if (calEvent.end != null) {
+                            $description.append($('<p/>').html('<b>Randevu Bitiş Tarihi: </b>' + calEvent.end.format("DD/MMM/YYYY HH:mm")));
+                        }
+                        //$description.append($('<p/>').html('<b>Başlangıç Saati: </b>' + calEvent.basSaati));
+                        //$description.append($('<p/>').html('<b>Bitiş Saati: </b>' + calEvent.bitSaati));
+                        $description.append($('<p/>').html('<b>Açıklama: </b>' + calEvent.description));
+                        $description.append($('<p/>').html('<b>Hasta Adı: </b>' + calEvent.name));
+                        $description.append($('<p/>').html('<b>Hasta Soyadı: </b>' + calEvent.surname));
+                        $description.append($('<p/>').html('<b>Hasta TC No: </b>' + calEvent.tcno));
+                        $description.append($('<p/>').html('<b>Telefon: </b>' + calEvent.phone));
+                        $description.append($('<p/>').html('<b>Yakın Telefonu: </b>' + calEvent.phoneYakin));
+                        $description.append($('<p/>').html('<b>Kurum adı: </b>' + kurumadi));
+                        $description.append($('<p/>').html('<b>Poliklinik Adı: </b>' + poladi));
+                        //$description.append($('<p/>').html('<b>Kurum Kodu: </b>' + calEvent.kurum));
+                        //$description.append($('<p/>').html('<b>Poliklinik Türü Kodu: </b>' + calEvent.poliklinik));
+
+                        $('#myModal #pDetails').empty().html($description);
+
+                        $('#myModal').modal();
+
+                        if (selectedDate > todayDate) {
+                            $('#btnEdit').show();
+                            $('#btnDelete').show();
+                        }
+                        else {
+                            $description.append($('<p/>').html('<b>Randevu Durumu: </b>' + calEvent.durum));
+                            $('#btnEdit').hide();
+                            $('#btnDelete').hide();
+                        }
+                    },
+                    selectable: true,
+                    select: function (start, end) {
+                        var selectedDate = moment(start).format('YYYY/MM/DD');
+                        var todayDate = moment().format('YYYY/MM/DD');
+                        if (selectedDate > todayDate) {
+                            selectedEvent = {
+                                eventID: 0,
+                                description: '',
+                                start: start,
+                                end: end,
+                                color: 0,
+                                name: '@ViewBag.Ad',
+                                surname: '@ViewBag.Soyad',
+                                phone: '',
+                                phoneYakin: '',
+                                tcno: '@ViewBag.TC',
+                                kurum: kid,
+                                poliklinik: pid,
+                                basSaati: 0,
+                                bitSaati: 0
+                            };
+
+                            var gun = moment(start).format('YYYY/MM/DD');
+                            var muayenesuresi = "";
+                            var slotsayisi = "";
+                            var baslangic = "";
+                            var i = 0;
+                            $.ajax({
+                                url: '@Url.Action("RandevuAyarGetir", "ArindirmaMerkezleri")',
+                                type: "POST",
+                                dataType: "json",
+                                data: { gun: gun, kid: kid, pid: pid },
+                                success: function (data) {
+                                    var d1 = moment(start).format("YYYY-MM-DDTkk:mm");
+                                    var d2 = moment(data.PasifBaslangicTarihi).format("YYYY-MM-DDTkk:mm");
+                                    var d3 = moment(data.PasifBitisTarihi).format("YYYY-MM-DDTkk:mm");
+                                    if (data.Durum == false && d1 > d2 && d1 < d3) {
+                                        alert('Seçili gün pasif olduğu için randevu oluşturma işlemi yapılamamaktadır. Pasiflik Tarihleri: ' + moment(data.PasifBaslangicTarihi).format("DD/MM/YYYY HH:mm") + ' - ' + moment(data.PasifBitisTarihi).format("DD/MM/YYYY HH:mm"));
+                                    }
+                                    else {
+                                        openAddEditForm();
+                                        $('#calendar').fullCalendar('unselect');
+                                    }
+                                }
+                            });
+                        }
+                        else {
+                            alert('Seçili gün için randevu oluşturma işlemi yapılamamaktadır.');
+                        }
+                    },
+                    editable: false,
+                    eventDrop: false,
+                    slotDuration: '01:00',
+                    slotLabelFormat: 'HH:mm',
+                    weekends: false,
+                    dayRender: function (date, cell) {
+                        var today = new Date();
+                        var end = new Date();
+                        end.setDate(today.getDate());
+                        if (date < end) {
+                            cell.css("background-color", "#ebebeb");
+                        }
+                    }
+                });
+            }
+
+            $('#btnEdit').click(function () {
+                //Open modal dialog for edit event
+                openAddEditForm();
+            })
+
+            $('#btnDelete').click(function () {
+                openDeleteForm();
+                $('#btnDelete2').click(function () {
+                    DeleteEvent();
+                });
+            })
+
+            $('#dtp1,#dtp2').datetimepicker({
+                format: 'DD/MM/YYYY HH:mm'
+            });
+
+            function openAddEditForm() {
+                if (selectedEvent != null) {
+
+                     $('#hdEventID').val(selectedEvent.eventID);
+                     $('#txtStart').val(selectedEvent.start.format('DD/MM/YYYY HH:mm'));
+                     $('#txtEnd').val(selectedEvent.start.format('DD/MM/YYYY HH:mm'));
+                     //var bt1 = moment(selectedEvent.basSaati).format('HH:mm');
+                     //var bt2 = moment(selectedEvent.bitSaati).format('HH:mm');
+                     //$("#BaslangicSaatleri option[value=" + '"' + bt1 + '"' + "]").attr("selected", "selected");
+                     //$("#BitisSaati option[value=" + '"' + bt2 + '"' + "]").attr("selected", "selected");
+                     $('#txtDescription').val(selectedEvent.description);
+                     $("#ddThemeColor option[value=" + selectedEvent.color + "]").attr("selected", "true");
+                     $('#txtName').val(selectedEvent.name);
+                     $('#txtSurname').val(selectedEvent.surname);
+                     $('#txtTCNo').val(selectedEvent.tcno);
+                     $('#txtPhone').val(selectedEvent.phone);
+                     $('#txtPhoneYakin').val(selectedEvent.phoneYakin);
+                     $('#txtKurum').val(selectedEvent.kurum);
+                     $('#txtPoliklinik').val(selectedEvent.poliklinik);
+
+                     RandevuAyarKontrol();
+                }
+
+                $('#myModal').modal('hide');
+                $('#myModalSave').modal();
+            }
+
+            $('#btnSaveWSms').click(function () {
+                $('#smsOnayModal').modal('hide');
+                //Validation/
+                if ($('#txtName').val().trim() == "") {
+                    alert('Lütfen Hasta Adı Giriniz.');
+                    return;
+                }
+                if ($('#txtSurname').val().trim() == "") {
+                    alert('Lütfen Hasta Soyadı Giriniz.');
+                    return;
+                }
+                if ($('#txtPhone').val().trim() == "") {
+                    alert('Lütfen Hasta Telefonu Giriniz.');
+                    return;
+                }
+                if ($('#txtKurum').val().trim() == "") {
+                    alert('Lütfen Kurum ID Giriniz.');
+                    return;
+                }
+                if ($('#txtPoliklinik').val().trim() == "") {
+                    alert('Lütfen Poliklinik ID Giriniz.');
+                    return;
+                }
+                if ($('#BaslangicSaatleri').val() == 0) {
+                    alert('lütfen Randevu Başlangıç Saatini Giriniz.');
+                    return;
+                }
+                if ($('#BitisSaati').val() == 0) {
+                    alert('lütfen Randevu Bitiş Saatini Giriniz.');
+                    return;
+                }
+                else {
+                    var startDate = moment($('#txtStart').val(), "DD/MM/YYYY HH:mm").toDate();
+                    var endDate = moment($('#txtEnd').val(), "DD/MM/YYYY HH:mm").toDate();
+                    if (startDate > endDate) {
+                        alert('Geçersiz Bitiş Tarihi');
+                        return;
+                    }
+                }
+                var data = {
+                    ID: $('#hdEventID').val(),
+                    RandevuBaslangicTarihi: $('#txtStart').val().trim(),
+                    RandevuBitisTarihi: $('#txtEnd').val().trim(),
+                    Aciklama: $('#txtDescription').val(),
+                    Renk: $('#ddThemeColor').val(),
+                    HastaAdi: $('#txtName').val().trim(),
+                    HastaSoyadi: $('#txtSurname').val().trim(),
+                    HastaTCKimlikNo: $('#txtTCNo').val().trim(),
+                    Telefon: $('#txtPhone').val(),
+                    YakinTelefonu: $('#txtPhoneYakin').val(),
+                    KurumID: $('#txtKurum').val(),
+                    PoliklinikTuruID: $('#txtPoliklinik').val(),
+                    RandevuBaslangicSaati: $('#BaslangicSaatleri').val(),
+                    RandevuBitisSaati: $('#BitisSaati').val()
+                }
+                SaveEvent(data);
+                // call function for submit data to the server
+            })
+
+            function openDeleteForm() {
+                 if (selectedEvent != null) {
+                     $('#hdEventID').val(selectedEvent.eventID);
+                     var iptalNedeni = $('#txtIptalNedeni').val();
+                 }
+                 $('#myModal').modal('hide');
+                 $('#myModalDelete').modal();
+             }
+
+            $('#btnDelete2').click(function () {
+                 //Validation/
+                 if ($('#txtIptalNedeni').val().trim() == "") {
+                     alert('Lütfen Randevu İptal Nedenini Giriniz.');
+                 }
+            })
+
+            function SaveEvent(data) {
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("RandevuKaydet", "ArindirmaMerkezleri")',
+                        data: data,
+                        success: function (data) {
+                            if (data.status) {
+                                //Refresh the calender
+                                FetchEventAndRenderCalendar();
+                                //$('#calender').fullcalendar('refetchevents');
+                                location.reload();
+                                $('#myModalSave').modal('hide');
+                            }
+                        },
+                        error: function () {
+                            alert('Kayıt sırasında hata oluştu.Lütfen tekrar deneyiniz.');
+                        }
+                    })
+            }
+
+            function DeleteEvent(data) {
+                var iptalNedeni = $('#txtIptalNedeni').val();
+                if (iptalNedeni != null)
+                {
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("RandevuSil", "ArindirmaMerkezleri")',
+                        data: { 'eventID': selectedEvent.eventID, 'iptalNedeni': iptalNedeni },
+                            success: function (data) {
+                                if (data.status) {
+                                    //Refresh the calender
+                                    FetchEventAndRenderCalendar();
+                                    //$('#calender').fullCalendar('refetchEvents');
+                                    location.reload();
+                                    $('#myModalDelete').modal('hide');
+                                }
+                            },
+                            error: function () {
+                                alert('Silme işlemi sırasında hata oluştu. Lütfen tekrar deneyiniz.');
+                            }
+                    })
+                }
+            }
+
+            function RandevuAyarKontrol(data) {
+
+                 $("#BaslangicSaatleri").empty();
+                 $("#BitisSaati").empty();
+
+                 var gun = moment(selectedEvent.start).format('YYYY/MM/DD');
+                 var muayenesuresi = "";
+                 var slotsayisi = "";
+                 var baslangic = "";
+                 var i = 0;
+
+                             $.ajax({
+                                  url: '@Url.Action("RandevuAyarGetir", "ArindirmaMerkezleri")',
+                                  type: "POST",
+                                  dataType: "json",
+                                  data: { gun: gun, kid: kid, pid: pid },
+                                  success: function (data) {
+
+                                      muayenesuresi = data.MuayeneSuresi;
+                                      slotsayisi = data.SlotSayisi;
+                                      baslangic = data.BaslangicSaati;
+                                      var ts2 = muayenesuresi;
+                                      for (i = 0; i < slotsayisi; i++) {
+                                          var ts3 = ts2 * i;
+                                          var ts4 = moment(data.BaslangicSaati).add(parseInt(ts3), 'minutes').format('HH:mm');
+                                          $('#BaslangicSaatleri').append('<option value=' + ts4 + '>' + ts4 + '</option>');
+                                          if (ts4 == selectedEvent.basSaati) {
+                                              $('#BaslangicSaatleri option[value="' + ts4 + '"]').css('display', 'none');
+                                          }
+
+                                          var ts5 = ts2 * (i + 1);
+                                          var ts6 = moment(data.BaslangicSaati).add(parseInt(ts5), 'minutes').format('HH:mm');
+                                          $('#BitisSaati').append('<option value=' + ts6 + '>' + ts6 + '</option>');
+                                      }
+
+                                      if (selectedEvent.basSaati != null && selectedEvent.bitSaati != null) {
+                                          $('#BaslangicSaatleri').append('<option selected value=' + selectedEvent.basSaati + '>' + selectedEvent.basSaati + '</option>');
+                                          $('#BitisSaati').append('<option selected value=' + selectedEvent.bitSaati + '>' + selectedEvent.bitSaati + '</option>');
+                                          if (selectedEvent.basSaati == 0) {
+                                              $('#BaslangicSaatleri').append('<option selected value=' + selectedEvent.basSaati + '>' + "Seçiniz" + '</option>');
+                                              $('#BitisSaati').append('<option selected value=' + selectedEvent.bitSaati + '>' + "Seçiniz" + '</option>');
+                                              $('#BaslangicSaatleri').append('<options value=' + 0 + '>' + 0 + '</option>').prop('selected', false);
+                                              $('#BaslangicSaatleri option[value="' + 0 + '"]').css('display', 'none');
+                                          }
+                                      }
+
+                                      $("#BaslangicSaatleri").change(function () {
+                                          var bs = $("#BaslangicSaatleri").val();
+                                          var bs1 = moment(bs, 'HH:mm');
+                                          var bts = moment(bs1).add(ts2, 'minutes').format('HH:mm');
+                                          $('#BitisSaati').val(bts).attr('selected', 'selected');
+                                      });
+
+                                      var gunbilgisi = moment(selectedEvent.start).format('D.MM.YYYY');
+                                      var list = [];
+
+                                      $.ajax({
+                                          url: '@Url.Action("RandevuSaatiKontrol", "ArindirmaMerkezleri")',
+                                          type: "POST",
+                                          dataType: "json",
+                                          data: { gunbilgisi: gunbilgisi, kid: kid, pid: pid },
+                                          success: function (data) {
+                                              $.each(data, function (i, e) {
+                                                  var oge = {
+                                                      bslngcs: moment(e.RandevuBaslangicSaati).format("HH:mm")
+                                                  };
+
+                                                  list.push(oge);
+
+                                                  for (var i = 0; i < list.length; i++) {
+                                                      $('#BaslangicSaatleri option[value="' + oge.bslngcs + '"]').prop('disabled', true);
+                                                  }
+                                              })
+                                          }
+                                    });
+                                  }
+                             });
+            }
+        })
+    </script>
+}
+<style>
+    textarea {
+        max-height: 110px;
+        min-height: 50px;
+    }
+
+    .fc-content {
+        color: #ffffff;
+        font-size: 11px;
+    }
+
+    #smsButon {
+        height: 5px;
+        width: 5px;
+    }
+</style>

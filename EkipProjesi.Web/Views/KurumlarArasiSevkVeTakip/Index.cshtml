@@ -1,0 +1,115 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-12  align-self-center">
+        <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+            <div class="w-sm-100 mr-auto"><h4 class="mb-0">Kurumlar Arası Sevk ve Takip Modülü</h4>  <p><a href="@Url.Action("Index","Home")">Anasayfa</a></p></div>
+            <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+                <li class="breadcrumb-item"><a href="#">Kurumlar Arası Sevk ve Takip Modülü</a></li>
+                <li class="breadcrumb-item active">Anasayfa</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    @if (User.IsInRole("54"))
+    {
+        <div class="col-12 col-sm-6 col-xl-3 mt-3">
+            <a href="@Url.Action("HastaSecimi", "KurumlarArasiSevkVeTakip")">
+                <div class="card bg-red-600 text-white h-100">
+                    <div class="card-body text-center p-3 d-flex">
+                        <div class="align-self-center text-center w-100">
+                            <span class="fas fa-hospital-alt h1 bg-red-600 text-white shadow-circle p-3 rounded-circle"></span>
+                            <h3 class="card-title font-weight-bold mt-4">Arındırma Tedavisi Birimleri</h3>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
+    @if (User.IsInRole("56"))
+    {
+        <div class="col-12 col-sm-6 col-xl-3 mt-3">
+            <a href="@Url.Action("HastaSecimi", "KurumlarArasiSevkVeTakip")">
+                <div class="card bg-success text-white h-100">
+                    <div class="card-body text-center p-3 d-flex">
+                        <div class="align-self-center text-center w-100">
+                            <span class="icon-action-redo h1 bg-success text-white shadow-circle p-3 rounded-circle"></span>
+                            <h3 class="card-title font-weight-bold mt-4">Rehabilitasyon Tedavisi Birimleri</h3>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
+    @if (User.IsInRole("57"))
+    {
+        <div class="col-12 col-sm-6 col-xl-3 mt-3">
+            <a href="@Url.Action("DanismaMerkezleri", "KurumlarArasiSevkVeTakip")">
+                <div class="card bg-purple-600 text-white h-100">
+                    <div class="card-body text-center p-3 d-flex">
+                        <div class="align-self-center text-center w-100">
+                            <span class="fas fa-user-md h1 bg-purple-600 text-white shadow-circle p-3 rounded-circle"></span>
+                            <h3 class="card-title font-weight-bold mt-4">Danışma Merkezleri</h3>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
+    @if (User.IsInRole("61"))
+    {
+        <div class="col-12 col-sm-6 col-xl-3 mt-3">
+            <a href="@Url.Action("SosyalHizmetBirimleri", "KurumlarArasiSevkVeTakip")">
+                <div class="card bg-dark text-white h-100">
+                    <div class="card-body text-center p-3 d-flex">
+                        <div class="align-self-center text-center w-100">
+                            <span class="icon-arrow-right-circle h1 bg-dark text-white shadow-circle p-3 rounded-circle"></span>
+                            <h3 class="card-title font-weight-bold mt-4">Sosyal Hizmet Birimleri</h3>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
+    @if (User.IsInRole("63"))
+    {
+        <div class="col-12 col-sm-6 col-xl-3 mt-3">
+            <a href="@Url.Action("Iskur", "KurumlarArasiSevkVeTakip")">
+                <div class="card bg-warning text-white h-100">
+                    <div class="card-body text-center p-3 d-flex">
+                        <div class="align-self-center text-center w-100">
+                            <span class="icon-info h1 bg-warning text-white shadow-circle p-3 rounded-circle"></span>
+                            <h2 class="card-title font-weight-bold mt-4">İŞKUR</h2>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
+    @if (User.IsInRole("65"))
+    {
+        <div class="col-12 col-sm-6 col-xl-3 mt-3">
+            <a href="@Url.Action("KoordinasyonTakipModulu", "KurumlarArasiSevkVeTakip")">
+                <div class="card bg-grey-600 text-white h-100">
+                    <div class="card-body text-center p-3 d-flex">
+                        <div class="align-self-center text-center w-100">
+                            <span class="icon-direction h1 bg-grey-600 text-white shadow-circle p-3 rounded-circle"></span>
+                            <h3 class="card-title font-weight-bold mt-4">Koordinasyon Takip Modülü</h3>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
+</div>
+<style>
+    .card-body {
+        height: 235px;
+    }
+</style>

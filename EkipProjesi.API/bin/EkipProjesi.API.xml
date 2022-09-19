@@ -1,0 +1,773 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>EkipProjesi.API</name>
+    </assembly>
+    <members>
+        <member name="M:EkipProjesi.API.Areas.HelpPage.ApiDescriptionExtensions.GetFriendlyId(System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Generates an URI-friendly ID for the <see cref="T:System.Web.Http.Description.ApiDescription"/>. E.g. "Get-Values-id_name" instead of "GetValues/{id}?name={name}"
+            </summary>
+            <param name="description">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The ID as a string.</returns>
+        </member>
+        <member name="T:EkipProjesi.API.Areas.HelpPage.HelpPageConfig">
+            <summary>
+            Use this class to customize the Help Page.
+            For example you can set a custom <see cref="T:System.Web.Http.Description.IDocumentationProvider"/> to supply the documentation
+            or you can provide the samples for the requests/responses.
+            </summary>
+        </member>
+        <member name="T:EkipProjesi.API.Areas.HelpPage.Controllers.HelpController">
+            <summary>
+            The controller that will handle requests for the help page.
+            </summary>
+        </member>
+        <member name="M:EkipProjesi.API.Areas.HelpPage.HelpPageConfigurationExtensions.SetDocumentationProvider(System.Web.Http.HttpConfiguration,System.Web.Http.Description.IDocumentationProvider)">
+            <summary>
+            Sets the documentation provider for help page.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="documentationProvider">The documentation provider.</param>
+        </member>
+        <member name="M:EkipProjesi.API.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleObjects(System.Web.Http.HttpConfiguration,System.Collections.Generic.IDictionary{System.Type,System.Object})">
+            <summary>
+            Sets the objects that will be used by the formatters to produce sample requests/responses.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sampleObjects">The sample objects.</param>
+        </member>
+        <member name="M:EkipProjesi.API.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleRequest(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.String,System.String)">
+            <summary>
+            Sets the sample request directly for the specified media type and action.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample request.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+        </member>
+        <member name="M:EkipProjesi.API.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleRequest(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.String,System.String,System.String[])">
+            <summary>
+            Sets the sample request directly for the specified media type and action with parameters.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample request.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:EkipProjesi.API.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleResponse(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.String,System.String)">
+            <summary>
+            Sets the sample request directly for the specified media type of the action.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample response.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+        </member>
+        <member name="M:EkipProjesi.API.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleResponse(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.String,System.String,System.String[])">
+            <summary>
+            Sets the sample response directly for the specified media type of the action with specific parameters.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample response.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:EkipProjesi.API.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleForMediaType(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue)">
+            <summary>
+            Sets the sample directly for all actions with the specified media type.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample.</param>
+            <param name="mediaType">The media type.</param>
+        </member>
+        <member name="M:EkipProjesi.API.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleForType(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.Type)">
+            <summary>
+            Sets the sample directly for all actions with the specified type and media type.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="type">The parameter type or return type of an action.</param>
+        </member>
+        <member name="M:EkipProjesi.API.Areas.HelpPage.HelpPageConfigurationExtensions.SetActualRequestType(System.Web.Http.HttpConfiguration,System.Type,System.String,System.String)">
+            <summary>
+            Specifies the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> passed to the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            The help page will use this information to produce more accurate request samples.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="type">The type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+        </member>
+        <member name="M:EkipProjesi.API.Areas.HelpPage.HelpPageConfigurationExtensions.SetActualRequestType(System.Web.Http.HttpConfiguration,System.Type,System.String,System.String,System.String[])">
+            <summary>
+            Specifies the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> passed to the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            The help page will use this information to produce more accurate request samples.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="type">The type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:EkipProjesi.API.Areas.HelpPage.HelpPageConfigurationExtensions.SetActualResponseType(System.Web.Http.HttpConfiguration,System.Type,System.String,System.String)">
+            <summary>
+            Specifies the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> returned as part of the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            The help page will use this information to produce more accurate response samples.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="type">The type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+        </member>
+        <member name="M:EkipProjesi.API.Areas.HelpPage.HelpPageConfigurationExtensions.SetActualResponseType(System.Web.Http.HttpConfiguration,System.Type,System.String,System.String,System.String[])">
+            <summary>
+            Specifies the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> returned as part of the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            The help page will use this information to produce more accurate response samples.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="type">The type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:EkipProjesi.API.Areas.HelpPage.HelpPageConfigurationExtensions.GetHelpPageSampleGenerator(System.Web.Http.HttpConfiguration)">
+            <summary>
+            Gets the help page sample generator.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <returns>The help page sample generator.</returns>
+        </member>
+        <member name="M:EkipProjesi.API.Areas.HelpPage.HelpPageConfigurationExtensions.SetHelpPageSampleGenerator(System.Web.Http.HttpConfiguration,EkipProjesi.API.Areas.HelpPage.HelpPageSampleGenerator)">
+            <summary>
+            Sets the help page sample generator.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sampleGenerator">The help page sample generator.</param>
+        </member>
+        <member name="M:EkipProjesi.API.Areas.HelpPage.HelpPageConfigurationExtensions.GetModelDescriptionGenerator(System.Web.Http.HttpConfiguration)">
+            <summary>
+            Gets the model description generator.
+            </summary>
+            <param name="config">The configuration.</param>
+            <returns>The <see cref="T:EkipProjesi.API.Areas.HelpPage.ModelDescriptions.ModelDescriptionGenerator"/></returns>
+        </member>
+        <member name="M:EkipProjesi.API.Areas.HelpPage.HelpPageConfigurationExtensions.GetHelpPageApiModel(System.Web.Http.HttpConfiguration,System.String)">
+            <summary>
+            Gets the model that represents an API displayed on the help page. The model is initialized on the first call and cached for subsequent calls.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="apiDescriptionId">The <see cref="T:System.Web.Http.Description.ApiDescription"/> ID.</param>
+            <returns>
+            An <see cref="T:EkipProjesi.API.Areas.HelpPage.Models.HelpPageApiModel"/>
+            </returns>
+        </member>
+        <member name="T:EkipProjesi.API.Areas.HelpPage.ModelDescriptions.ModelDescription">
+            <summary>
+            Describes a type model.
+            </summary>
+        </member>
+        <member name="T:EkipProjesi.API.Areas.HelpPage.ModelDescriptions.ModelDescriptionGenerator">
+            <summary>
+            Generates model descriptions for given types.
+            </summary>
+        </member>
+        <member name="T:EkipProjesi.API.Areas.HelpPage.ModelDescriptions.ModelNameAttribute">
+            <summary>
+            Use this attribute to change the name of the <see cref="T:EkipProjesi.API.Areas.HelpPage.ModelDescriptions.ModelDescription"/> generated for a type.
+            </summary>
+        </member>
+        <member name="T:EkipProjesi.API.Areas.HelpPage.Models.HelpPageApiModel">
+            <summary>
+            The model that represents an API displayed on the help page.
+            </summary>
+        </member>
+        <member name="M:EkipProjesi.API.Areas.HelpPage.Models.HelpPageApiModel.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:EkipProjesi.API.Areas.HelpPage.Models.HelpPageApiModel"/> class.
+            </summary>
+        </member>
+        <member name="P:EkipProjesi.API.Areas.HelpPage.Models.HelpPageApiModel.ApiDescription">
+            <summary>
+            Gets or sets the <see cref="P:EkipProjesi.API.Areas.HelpPage.Models.HelpPageApiModel.ApiDescription"/> that describes the API.
+            </summary>
+        </member>
+        <member name="P:EkipProjesi.API.Areas.HelpPage.Models.HelpPageApiModel.UriParameters">
+            <summary>
+            Gets or sets the <see cref="T:EkipProjesi.API.Areas.HelpPage.ModelDescriptions.ParameterDescription"/> collection that describes the URI parameters for the API.
+            </summary>
+        </member>
+        <member name="P:EkipProjesi.API.Areas.HelpPage.Models.HelpPageApiModel.RequestDocumentation">
+            <summary>
+            Gets or sets the documentation for the request.
+            </summary>
+        </member>
+        <member name="P:EkipProjesi.API.Areas.HelpPage.Models.HelpPageApiModel.RequestModelDescription">
+            <summary>
+            Gets or sets the <see cref="T:EkipProjesi.API.Areas.HelpPage.ModelDescriptions.ModelDescription"/> that describes the request body.
+            </summary>
+        </member>
+        <member name="P:EkipProjesi.API.Areas.HelpPage.Models.HelpPageApiModel.RequestBodyParameters">
+            <summary>
+            Gets the request body parameter descriptions.
+            </summary>
+        </member>
+        <member name="P:EkipProjesi.API.Areas.HelpPage.Models.HelpPageApiModel.ResourceDescription">
+            <summary>
+            Gets or sets the <see cref="T:EkipProjesi.API.Areas.HelpPage.ModelDescriptions.ModelDescription"/> that describes the resource.
+            </summary>
+        </member>
+        <member name="P:EkipProjesi.API.Areas.HelpPage.Models.HelpPageApiModel.ResourceProperties">
+            <summary>
+            Gets the resource property descriptions.
+            </summary>
+        </member>
+        <member name="P:EkipProjesi.API.Areas.HelpPage.Models.HelpPageApiModel.SampleRequests">
+            <summary>
+            Gets the sample requests associated with the API.
+            </summary>
+        </member>
+        <member name="P:EkipProjesi.API.Areas.HelpPage.Models.HelpPageApiModel.SampleResponses">
+            <summary>
+            Gets the sample responses associated with the API.
+            </summary>
+        </member>
+        <member name="P:EkipProjesi.API.Areas.HelpPage.Models.HelpPageApiModel.ErrorMessages">
+            <summary>
+            Gets the error messages associated with this model.
+            </summary>
+        </member>
+        <member name="T:EkipProjesi.API.Areas.HelpPage.HelpPageSampleGenerator">
+            <summary>
+            This class will generate the samples for the help page.
+            </summary>
+        </member>
+        <member name="M:EkipProjesi.API.Areas.HelpPage.HelpPageSampleGenerator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:EkipProjesi.API.Areas.HelpPage.HelpPageSampleGenerator"/> class.
+            </summary>
+        </member>
+        <member name="P:EkipProjesi.API.Areas.HelpPage.HelpPageSampleGenerator.ActualHttpMessageTypes">
+            <summary>
+            Gets CLR types that are used as the content of <see cref="T:System.Net.Http.HttpRequestMessage"/> or <see cref="T:System.Net.Http.HttpResponseMessage"/>.
+            </summary>
+        </member>
+        <member name="P:EkipProjesi.API.Areas.HelpPage.HelpPageSampleGenerator.ActionSamples">
+            <summary>
+            Gets the objects that are used directly as samples for certain actions.
+            </summary>
+        </member>
+        <member name="P:EkipProjesi.API.Areas.HelpPage.HelpPageSampleGenerator.SampleObjects">
+            <summary>
+            Gets the objects that are serialized as samples by the supported formatters.
+            </summary>
+        </member>
+        <member name="P:EkipProjesi.API.Areas.HelpPage.HelpPageSampleGenerator.SampleObjectFactories">
+            <summary>
+            Gets factories for the objects that the supported formatters will serialize as samples. Processed in order,
+            stopping when the factory successfully returns a non-<see langref="null"/> object.
+            </summary>
+            <remarks>
+            Collection includes just <see cref="M:EkipProjesi.API.Areas.HelpPage.ObjectGenerator.GenerateObject(System.Type)"/> initially. Use
+            <code>SampleObjectFactories.Insert(0, func)</code> to provide an override and
+            <code>SampleObjectFactories.Add(func)</code> to provide a fallback.</remarks>
+        </member>
+        <member name="M:EkipProjesi.API.Areas.HelpPage.HelpPageSampleGenerator.GetSampleRequests(System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Gets the request body samples for a given <see cref="T:System.Web.Http.Description.ApiDescription"/>.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The samples keyed by media type.</returns>
+        </member>
+        <member name="M:EkipProjesi.API.Areas.HelpPage.HelpPageSampleGenerator.GetSampleResponses(System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Gets the response body samples for a given <see cref="T:System.Web.Http.Description.ApiDescription"/>.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The samples keyed by media type.</returns>
+        </member>
+        <member name="M:EkipProjesi.API.Areas.HelpPage.HelpPageSampleGenerator.GetSample(System.Web.Http.Description.ApiDescription,EkipProjesi.API.Areas.HelpPage.SampleDirection)">
+            <summary>
+            Gets the request or response body samples.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <param name="sampleDirection">The value indicating whether the sample is for a request or for a response.</param>
+            <returns>The samples keyed by media type.</returns>
+        </member>
+        <member name="M:EkipProjesi.API.Areas.HelpPage.HelpPageSampleGenerator.GetActionSample(System.String,System.String,System.Collections.Generic.IEnumerable{System.String},System.Type,System.Net.Http.Formatting.MediaTypeFormatter,System.Net.Http.Headers.MediaTypeHeaderValue,EkipProjesi.API.Areas.HelpPage.SampleDirection)">
+            <summary>
+            Search for samples that are provided directly through <see cref="P:EkipProjesi.API.Areas.HelpPage.HelpPageSampleGenerator.ActionSamples"/>.
+            </summary>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+            <param name="type">The CLR type.</param>
+            <param name="formatter">The formatter.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="sampleDirection">The value indicating whether the sample is for a request or for a response.</param>
+            <returns>The sample that matches the parameters.</returns>
+        </member>
+        <member name="M:EkipProjesi.API.Areas.HelpPage.HelpPageSampleGenerator.GetSampleObject(System.Type)">
+            <summary>
+            Gets the sample object that will be serialized by the formatters. 
+            First, it will look at the <see cref="P:EkipProjesi.API.Areas.HelpPage.HelpPageSampleGenerator.SampleObjects"/>. If no sample object is found, it will try to create
+            one using <see cref="M:EkipProjesi.API.Areas.HelpPage.HelpPageSampleGenerator.DefaultSampleObjectFactory(EkipProjesi.API.Areas.HelpPage.HelpPageSampleGenerator,System.Type)"/> (which wraps an <see cref="T:EkipProjesi.API.Areas.HelpPage.ObjectGenerator"/>) and other
+            factories in <see cref="P:EkipProjesi.API.Areas.HelpPage.HelpPageSampleGenerator.SampleObjectFactories"/>.
+            </summary>
+            <param name="type">The type.</param>
+            <returns>The sample object.</returns>
+        </member>
+        <member name="M:EkipProjesi.API.Areas.HelpPage.HelpPageSampleGenerator.ResolveHttpRequestMessageType(System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Resolves the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> passed to the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The type.</returns>
+        </member>
+        <member name="M:EkipProjesi.API.Areas.HelpPage.HelpPageSampleGenerator.ResolveType(System.Web.Http.Description.ApiDescription,System.String,System.String,System.Collections.Generic.IEnumerable{System.String},EkipProjesi.API.Areas.HelpPage.SampleDirection,System.Collections.ObjectModel.Collection{System.Net.Http.Formatting.MediaTypeFormatter}@)">
+            <summary>
+            Resolves the type of the action parameter or return value when <see cref="T:System.Net.Http.HttpRequestMessage"/> or <see cref="T:System.Net.Http.HttpResponseMessage"/> is used.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+            <param name="sampleDirection">The value indicating whether the sample is for a request or a response.</param>
+            <param name="formatters">The formatters.</param>
+        </member>
+        <member name="M:EkipProjesi.API.Areas.HelpPage.HelpPageSampleGenerator.WriteSampleObjectUsingFormatter(System.Net.Http.Formatting.MediaTypeFormatter,System.Object,System.Type,System.Net.Http.Headers.MediaTypeHeaderValue)">
+            <summary>
+            Writes the sample object using formatter.
+            </summary>
+            <param name="formatter">The formatter.</param>
+            <param name="value">The value.</param>
+            <param name="type">The type.</param>
+            <param name="mediaType">Type of the media.</param>
+            <returns></returns>
+        </member>
+        <member name="T:EkipProjesi.API.Areas.HelpPage.HelpPageSampleKey">
+            <summary>
+            This is used to identify the place where the sample should be applied.
+            </summary>
+        </member>
+        <member name="M:EkipProjesi.API.Areas.HelpPage.HelpPageSampleKey.#ctor(System.Net.Http.Headers.MediaTypeHeaderValue)">
+            <summary>
+            Creates a new <see cref="T:EkipProjesi.API.Areas.HelpPage.HelpPageSampleKey"/> based on media type.
+            </summary>
+            <param name="mediaType">The media type.</param>
+        </member>
+        <member name="M:EkipProjesi.API.Areas.HelpPage.HelpPageSampleKey.#ctor(System.Net.Http.Headers.MediaTypeHeaderValue,System.Type)">
+            <summary>
+            Creates a new <see cref="T:EkipProjesi.API.Areas.HelpPage.HelpPageSampleKey"/> based on media type and CLR type.
+            </summary>
+            <param name="mediaType">The media type.</param>
+            <param name="type">The CLR type.</param>
+        </member>
+        <member name="M:EkipProjesi.API.Areas.HelpPage.HelpPageSampleKey.#ctor(EkipProjesi.API.Areas.HelpPage.SampleDirection,System.String,System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Creates a new <see cref="T:EkipProjesi.API.Areas.HelpPage.HelpPageSampleKey"/> based on <see cref="P:EkipProjesi.API.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>, controller name, action name and parameter names.
+            </summary>
+            <param name="sampleDirection">The <see cref="P:EkipProjesi.API.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:EkipProjesi.API.Areas.HelpPage.HelpPageSampleKey.#ctor(System.Net.Http.Headers.MediaTypeHeaderValue,EkipProjesi.API.Areas.HelpPage.SampleDirection,System.String,System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Creates a new <see cref="T:EkipProjesi.API.Areas.HelpPage.HelpPageSampleKey"/> based on media type, <see cref="P:EkipProjesi.API.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>, controller name, action name and parameter names.
+            </summary>
+            <param name="mediaType">The media type.</param>
+            <param name="sampleDirection">The <see cref="P:EkipProjesi.API.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="P:EkipProjesi.API.Areas.HelpPage.HelpPageSampleKey.ControllerName">
+            <summary>
+            Gets the name of the controller.
+            </summary>
+            <value>
+            The name of the controller.
+            </value>
+        </member>
+        <member name="P:EkipProjesi.API.Areas.HelpPage.HelpPageSampleKey.ActionName">
+            <summary>
+            Gets the name of the action.
+            </summary>
+            <value>
+            The name of the action.
+            </value>
+        </member>
+        <member name="P:EkipProjesi.API.Areas.HelpPage.HelpPageSampleKey.MediaType">
+            <summary>
+            Gets the media type.
+            </summary>
+            <value>
+            The media type.
+            </value>
+        </member>
+        <member name="P:EkipProjesi.API.Areas.HelpPage.HelpPageSampleKey.ParameterNames">
+            <summary>
+            Gets the parameter names.
+            </summary>
+        </member>
+        <member name="P:EkipProjesi.API.Areas.HelpPage.HelpPageSampleKey.SampleDirection">
+            <summary>
+            Gets the <see cref="P:EkipProjesi.API.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>.
+            </summary>
+        </member>
+        <member name="T:EkipProjesi.API.Areas.HelpPage.ImageSample">
+            <summary>
+            This represents an image sample on the help page. There's a display template named ImageSample associated with this class.
+            </summary>
+        </member>
+        <member name="M:EkipProjesi.API.Areas.HelpPage.ImageSample.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:EkipProjesi.API.Areas.HelpPage.ImageSample"/> class.
+            </summary>
+            <param name="src">The URL of an image.</param>
+        </member>
+        <member name="T:EkipProjesi.API.Areas.HelpPage.InvalidSample">
+            <summary>
+            This represents an invalid sample on the help page. There's a display template named InvalidSample associated with this class.
+            </summary>
+        </member>
+        <member name="T:EkipProjesi.API.Areas.HelpPage.ObjectGenerator">
+            <summary>
+            This class will create an object of a given type and populate it with sample data.
+            </summary>
+        </member>
+        <member name="M:EkipProjesi.API.Areas.HelpPage.ObjectGenerator.GenerateObject(System.Type)">
+            <summary>
+            Generates an object for a given type. The type needs to be public, have a public default constructor and settable public properties/fields. Currently it supports the following types:
+            Simple types: <see cref="T:System.Int32"/>, <see cref="T:System.String"/>, <see cref="T:System.Enum"/>, <see cref="T:System.DateTime"/>, <see cref="T:System.Uri"/>, etc.
+            Complex types: POCO types.
+            Nullables: <see cref="T:System.Nullable`1"/>.
+            Arrays: arrays of simple types or complex types.
+            Key value pairs: <see cref="T:System.Collections.Generic.KeyValuePair`2"/>
+            Tuples: <see cref="T:System.Tuple`1"/>, <see cref="T:System.Tuple`2"/>, etc
+            Dictionaries: <see cref="T:System.Collections.Generic.IDictionary`2"/> or anything deriving from <see cref="T:System.Collections.Generic.IDictionary`2"/>.
+            Collections: <see cref="T:System.Collections.Generic.IList`1"/>, <see cref="T:System.Collections.Generic.IEnumerable`1"/>, <see cref="T:System.Collections.Generic.ICollection`1"/>, <see cref="T:System.Collections.IList"/>, <see cref="T:System.Collections.IEnumerable"/>, <see cref="T:System.Collections.ICollection"/> or anything deriving from <see cref="T:System.Collections.Generic.ICollection`1"/> or <see cref="T:System.Collections.IList"/>.
+            Queryables: <see cref="T:System.Linq.IQueryable"/>, <see cref="T:System.Linq.IQueryable`1"/>.
+            </summary>
+            <param name="type">The type.</param>
+            <returns>An object of the given type.</returns>
+        </member>
+        <member name="T:EkipProjesi.API.Areas.HelpPage.SampleDirection">
+            <summary>
+            Indicates whether the sample is used for request or response
+            </summary>
+        </member>
+        <member name="T:EkipProjesi.API.Areas.HelpPage.TextSample">
+            <summary>
+            This represents a preformatted text sample on the help page. There's a display template named TextSample associated with this class.
+            </summary>
+        </member>
+        <member name="T:EkipProjesi.API.Areas.HelpPage.XmlDocumentationProvider">
+            <summary>
+            A custom <see cref="T:System.Web.Http.Description.IDocumentationProvider"/> that reads the API documentation from an XML documentation file.
+            </summary>
+        </member>
+        <member name="M:EkipProjesi.API.Areas.HelpPage.XmlDocumentationProvider.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:EkipProjesi.API.Areas.HelpPage.XmlDocumentationProvider"/> class.
+            </summary>
+            <param name="documentPath">The physical path to XML document.</param>
+        </member>
+        <member name="T:EkipProjesi.API.Controllers.ArindirmaModuluController">
+            <summary>
+            Arındırma Modulu için gerekli metodları içermektedir. Hastane hizmet bilgileri, hastane personel bilgileri ve hasta başvuru bilgilerinin kayıt ve güncelleme metodları mevcuttur. Hasta başvuru bilgisi kaydında bulunan karar bilgisi için kararkodukontrol metodu eklenmiştir. Bu metoddan karar koduna göre karar ve açıklamasına(karar için gerekli alanlara) ulaşılabilir.
+            </summary>
+            <returns></returns>
+            <response code="200">Başarılı</response>
+            <response code="400">Geçersiz istek</response>
+            <response code="500">Sunucuya bağlanılamadı</response>
+        </member>
+        <member name="M:EkipProjesi.API.Controllers.ArindirmaModuluController.Test">
+            <summary>
+            API Test
+            </summary>
+            <returns></returns>
+            <response code="200">API is UP!</response>
+            <response code="400">Geçersiz istek</response>
+            <response code="500">Sunucuya bağlanılamadı</response>
+        </member>
+        <member name="M:EkipProjesi.API.Controllers.ArindirmaModuluController.HastaEkle(EkipProjesi.API.Models.Models.HastaEkleModel)">
+            <summary>
+            Yeni Hasta Kaydı Eklenir
+            </summary>
+            <param name="model">Modelde yer alan alanlar zorunludur. Hasta kaydı bu bilgilere göre oluşturulacaktır. Hasta TC Kimlik Numarasına ait kayıt sistemimizde mevcut ise kayıt gerçekleşmez ve HastaID döndürülür. Bu HastaID üzerinden işlem yapılabilir. KayitTarihi hastanın sisteme dahil olduğu tarihtir.</param>
+            <returns></returns>
+            <response code="200">Metod, başarılı işlem sonucunda yeni eklenen hastaya ait EKİP Projesi tarafındaki unique ID'yi geri döndürür.</response>
+            <response code="400">Geçersiz istek</response>
+            <response code="500">Sunucuya bağlanılamadı</response>
+        </member>
+        <member name="M:EkipProjesi.API.Controllers.ArindirmaModuluController.HizmetBilgisiEkle(EkipProjesi.API.Models.Models.HizmetBilgisiEkleModel)">
+            <summary>
+            Yeni Hizmet Bilgisi Kaydı Eklenir
+            </summary>
+            <param name="model">Modelde yer alan alanlar zorunludur. Hizmet bilgisi kaydı bu bilgilere göre oluşturulacaktır.</param>
+            <returns></returns>
+            <response code="200">Metod, başarılı işlem sonucunda yeni eklenen hizmet bilgisi kaydına ait EKİP Projesi tarafındaki unique ID'yi geri döndürür.</response>
+            <response code="400">Geçersiz istek</response>
+            <response code="500">Sunucuya bağlanılamadı</response>
+        </member>
+        <member name="M:EkipProjesi.API.Controllers.ArindirmaModuluController.PersonelBilgisiEkle(EkipProjesi.API.Models.Models.PersonelBilgisiEkleModel)">
+            <summary>
+            Yeni Personel Bilgisi Kaydı Eklenir
+            </summary>
+            <param name="model">Modelde yer alan alanlar zorunludur. Personel bilgisi kaydı bu bilgilere göre oluşturulacaktır.</param>
+            <returns></returns>
+            <response code="200">Metod, başarılı işlem sonucunda yeni eklenen personel kaydına ait EKİP Projesi tarafındaki unique ID'yi geri döndürür.</response>
+            <response code="400">Geçersiz istek</response>
+            <response code="500">Sunucuya bağlanılamadı</response>
+        </member>
+        <member name="M:EkipProjesi.API.Controllers.ArindirmaModuluController.BasvuruBilgisiEkle(EkipProjesi.API.Models.Models.HastaBasvuruBilgisiEkleModel)">
+            <summary>
+            Yeni Hasta Başvuru Bilgisi Kaydı Eklenir
+            </summary>
+            <param name="model">Modelde yer alan alanlar zorunludur. Hasta başvuru kaydı bu bilgilere göre oluşturulacaktır.</param>
+            <returns></returns>
+            <response code="200">Metod, başarılı işlem sonucunda yeni eklenen başvuruya ait EKİP Projesi tarafındaki unique ID'yi geri döndürür.</response>
+            <response code="400">Geçersiz istek</response>
+            <response code="500">Sunucuya bağlanılamadı</response>
+        </member>
+        <member name="M:EkipProjesi.API.Controllers.ArindirmaModuluController.HastaYatisEkle(EkipProjesi.API.Models.Models.HastaYatisEkleModel)">
+            <summary>
+            Yeni Hasta Yatış Kaydı Eklenir
+            </summary>
+            <param name="model">Modelde yer alan alanlar zorunludur. Hasta yatış kaydı bu bilgilere göre oluşturulacaktır.</param>
+            <returns></returns>
+            <response code="200">Metod, başarılı işlem sonucunda yeni eklenen hasta yatış bilgisine ait EKİP Projesi tarafındaki unique ID'yi geri döndürür.</response>
+            <response code="400">Geçersiz istek</response>
+            <response code="500">Sunucuya bağlanılamadı</response>
+        </member>
+        <member name="M:EkipProjesi.API.Controllers.ArindirmaModuluController.HastaFizikselHastalikOykusuEkle(EkipProjesi.API.Models.Models.HastaFizikselHastalikOykusuEkleModel)">
+            <summary>
+            Yeni Hasta Fiziksel Hastalık Öyküsü Kaydı Eklenir
+            </summary>
+            <param name="model">Modelde yer alan alanlar zorunludur. Hasta fiziksel hastalık öyküsü kaydı bu bilgilere göre oluşturulacaktır.</param>
+            <returns></returns>
+            <response code="200">Metod, başarılı işlem sonucunda yeni eklenen fiziksel hastalık öyküsü kaydına ait EKİP Projesi tarafındaki unique ID'yi geri döndürür.</response>
+            <response code="400">Geçersiz istek</response>
+            <response code="500">Sunucuya bağlanılamadı</response>
+        </member>
+        <member name="M:EkipProjesi.API.Controllers.ArindirmaModuluController.HastanePoliklinikBilgisiEkle(EkipProjesi.API.Models.Models.HastanePoliklinikBilgisiEkleModel)">
+            <summary>
+            Yeni Hastane Poliklinik Bilgisi Kaydı Eklenir
+            </summary>
+            <param name="model">Modelde yer alan alanlar zorunludur. Hastane poliklinik bilgisi kaydı bu bilgilere göre oluşturulacaktır.</param>
+            <returns></returns>
+            <response code="200">Metod, başarılı işlem sonucunda yeni eklenen poliklinik bilgisi kaydına ait EKİP Projesi tarafındaki unique ID'yi geri döndürür.</response>
+            <response code="400">Geçersiz istek</response>
+            <response code="500">Sunucuya bağlanılamadı</response>
+        </member>
+        <member name="M:EkipProjesi.API.Controllers.ArindirmaModuluController.YatisSonlanmaNedenleriKontrol(EkipProjesi.API.Models.Models.YatisSonlanmaNedenleriKontrolModel)">
+            <summary>
+            Hasta Yatış Kaydı Yatış Sonlanma Nedenleri Kontrol Metodu
+            </summary>
+            <param name="model">Modelde yer alan alanlar zorunludur ve hatasız girilmelidir. Yatış Sonlanma Nedenleri bu bilgilere göre kontrol edilecektir.</param>
+            <returns></returns>
+            <response code="200">Metod başarılı işlem yatış sonlanma nedenine ait EKİP Projesi tarafındaki unique ID'yi geri döndürür.</response>
+            <response code="400">Geçersiz istek</response>
+            <response code="500">Sunucuya bağlanılamadı</response>
+        </member>
+        <member name="M:EkipProjesi.API.Controllers.ArindirmaModuluController.HastaGuncelle(EkipProjesi.API.Models.Models.HastaGuncelleModel)">
+            <summary>
+            Hasta Kaydı Güncellenir
+            </summary>
+            <param name="model">Modelde yer alan alanlar zorunludur. Hasta kaydı bu bilgilere göre güncellenecektir.</param>
+            <returns></returns>
+            <response code="200">Metod, başarılı işlem sonucunda güncellenen hastaya ait EKİP Projesi tarafındaki unique ID'yi geri döndürür.</response>
+            <response code="400">Geçersiz istek</response>
+            <response code="500">Sunucuya bağlanılamadı</response>
+        </member>
+        <member name="M:EkipProjesi.API.Controllers.ArindirmaModuluController.HizmetBilgisiGuncelle(EkipProjesi.API.Models.Models.HizmetBilgisiGuncelleModel)">
+            <summary>
+            Hizmet Bilgisi Kaydı Güncellenir
+            </summary>
+            <param name="model">Modelde yer alan alanlar zorunludur. Hizmet bilgisi kaydı bu bilgilere göre güncellenecektir.</param>
+            <returns></returns>
+            <response code="200">Metod, başarılı işlem sonucunda yeni güncellenen hizmet bilgisi kaydına ait EKİP Projesi tarafındaki unique ID'yi geri döndürür.</response>
+            <response code="400">Geçersiz istek</response>
+            <response code="500">Sunucuya bağlanılamadı</response>
+        </member>
+        <member name="M:EkipProjesi.API.Controllers.ArindirmaModuluController.PersonelBilgisiGuncelle(EkipProjesi.API.Models.Models.PersonelBilgisiGuncelleModel)">
+            <summary>
+            Personel Bilgisi Kaydı Güncellenir
+            </summary>
+            <param name="model">Modelde yer alan alanlar zorunludur. Personel bilgisi kaydı bu bilgilere göre güncellenecektir.</param>
+            <returns></returns>
+            <response code="200">Metod, başarılı işlem sonucunda güncellenen personel bilgisi kaydına ait EKİP Projesi tarafındaki unique ID'yi geri döndürür.</response>
+            <response code="400">Geçersiz istek</response>
+            <response code="500">Sunucuya bağlanılamadı</response>
+        </member>
+        <member name="M:EkipProjesi.API.Controllers.ArindirmaModuluController.BasvuruBilgisiGuncelle(EkipProjesi.API.Models.Models.HastaBasvuruBilgisiGuncelleModel)">
+            <summary>
+            Hasta Başvuru Bilgisi Güncellenir
+            </summary>
+            <param name="model">Modelde yer alan alanlar zorunludur. Başvuru bilgisi kaydı bu bilgilere göre güncellenecektir. HastaID ve HastaProtokolNo alanlarında güncelleme yapılamaz.</param>
+            <returns></returns>
+            <response code="200">Metod, başarılı işlem sonucunda güncellenen başvuru bilgisi kaydına ait EKİP Projesi tarafındaki unique ID'yi geri döndürür.</response>
+            <response code="400">Geçersiz istek</response>
+            <response code="500">Sunucuya bağlanılamadı</response>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:EkipProjesi.API.Controllers.ArindirmaModuluController.RandevuPoliklinikTuruKontrol(System.Int32)" -->
+        <member name="M:EkipProjesi.API.Controllers.ArindirmaModuluController.RandevuSorgula(System.Int32,System.Int32,System.DateTime,System.DateTime)">
+            <summary>
+            Randevu Kayıtları Sorgulama Metodu
+            Modelde yer alan alanlar zorunludur ve hatasız girilmelidir. Randevu bilgileri buna göre sorgulanacaktır. Günlük randevu sorgulaması için Randevu Bitis Tarihini Randevu Baslangic Tarihinden 1 gün fazla giriniz.
+            </summary>
+            <param name="KurumKodu">Kurum Kodu giriniz.</param>
+            <param name="PoliklinikTuruID">Poliklinik Türü Adı giriniz.</param>
+            <param name="RandevuBaslangicTarihi">Randevu Başlangıç Tarihi giriniz.</param>
+            <param name="RandevuBitisTarihi">Randevu Bitiş Tarihi giriniz.</param>
+            <returns></returns>
+            <response code="200">Metod başarılı ise işlem kuruma ait EKİP Projesi tarafındaki randevuya ait unique ID'yi ve bilgileri geri döndürür.</response>
+            <response code="400">Geçersiz istek</response>
+            <response code="500">Sunucuya bağlanılamadı</response>
+        </member>
+        <member name="M:EkipProjesi.API.Controllers.ArindirmaModuluController.RandevuDurumuGuncelle(EkipProjesi.API.Models.Models.RandevuDurumuGuncelleModel)">
+            <summary>
+            Randevu Durumu Güncellenir
+            </summary>
+            <param name="model">Modelde yer alan alanlar zorunludur. Randevu durumu bu bilgilere göre güncellenecektir.</param>
+            <returns></returns>
+            <response code="200">Metod, başarılı işlem sonucunda güncellenen randevuya ait EKİP Projesi tarafındaki unique ID'yi geri döndürür.</response>
+            <response code="400">Geçersiz istek</response>
+            <response code="500">Sunucuya bağlanılamadı</response>
+        </member>
+        <member name="M:EkipProjesi.API.Controllers.ArindirmaModuluController.AcilServisVakaBilgisiEkle(EkipProjesi.API.Models.Models.AcilServisVakaBilgisiEkleModel)">
+            <summary>
+            Acil Servis Vaka Bilgisi Eklenir
+            </summary>
+            <param name="model">Acil Servis Vaka Bilgisi Eklenir. Modelde yer alan alanlar zorunludur. Vaka kaydı bu bilgilere göre eklenecektir.  Metod, başarılı işlem sonucunda eklenen vaka bilgisine ait EKİP Projesi tarafındaki unique ID'yi geri döndürür.</param>
+            <returns></returns>
+            <response code="200">Metod, başarılı işlem sonucunda yeni eklenen hastaya ait EKİP Projesi tarafındaki unique ID'yi geri döndürür.</response>
+            <response code="400">Geçersiz istek</response>
+            <response code="500">Sunucuya bağlanılamadı</response>
+        </member>
+        <member name="M:EkipProjesi.API.Controllers.ArindirmaModuluController.TaniKoduSorgula(System.Int32)">
+            <summary>
+            Tanı Kodları Sorgulama Metodu
+            Modelde yer alan alanlar zorunludur ve hatasız girilmelidir. Tanı kodları buna göre sorgulanacaktır.
+            </summary>
+            <param name="KurumKodu">Kurum Kodu giriniz.</param>
+            <returns></returns>
+            <response code="200">Metod başarılı ise işlem kuruma ait EKİP Projesi tarafındaki randevuya ait unique ID'yi ve bilgileri geri döndürür.</response>
+            <response code="400">Geçersiz istek</response>
+            <response code="500">Sunucuya bağlanılamadı</response>
+        </member>
+        <member name="M:EkipProjesi.API.Controllers.ArindirmaModuluController.AcilServisVakaBilgisiGuncelle(EkipProjesi.API.Models.Models.AcilServisVakaBilgisiGuncelleModel)">
+            <summary>
+            Acil Servis Vaka Bilgisi Güncellenir
+            </summary>
+            <param name="model">Modelde yer alan alanlar zorunludur. Acil servis vaka bilgisi bu bilgilere göre güncellenecektir.</param>
+            <returns></returns>
+            <response code="200">Metod, başarılı işlem sonucunda güncellenen hastaya ait EKİP Projesi tarafındaki unique ID'yi geri döndürür.</response>
+            <response code="400">Geçersiz istek</response>
+            <response code="500">Sunucuya bağlanılamadı</response>
+        </member>
+        <member name="M:EkipProjesi.API.Controllers.ArindirmaModuluController.KararKodlariKontrol(System.Int32)">
+            <summary>
+            Hasta Başvuru Kaydı Karar Kodları Kontrol Metodu
+            </summary>
+            <param name="KararKodu">KurumKodu alanı zorunludur ve hatasız girilmelidir. Poliklinik türleri buna göre kontrol edilecektir.</param>
+            <returns></returns>
+            <response code="200">Metod başarılı işlem kuruma ait EKİP Projesi tarafındaki unique ID'yi geri döndürür.</response>
+            <response code="400">Geçersiz istek</response>
+            <response code="500">Sunucuya bağlanılamadı</response>
+        </member>
+        <member name="M:EkipProjesi.API.Controllers.ArindirmaModuluController.HastaYatisGuncelle(EkipProjesi.API.Models.Models.HastaYatisGuncelleModel)">
+            <summary>
+            Hasta Yatış Kaydı Güncellenir
+            </summary>
+            <param name="model">Modelde yer alan alanlar zorunludur. Hasta yatış kaydı bu bilgilere göre güncellenecektir.</param>
+            <returns></returns>
+            <response code="200">Metod, başarılı işlem sonucunda güncellenen hasta yatış bilgisine ait EKİP Projesi tarafındaki unique ID'yi geri döndürür.</response>
+            <response code="400">Geçersiz istek</response>
+            <response code="500">Sunucuya bağlanılamadı</response>
+        </member>
+        <member name="M:EkipProjesi.API.Controllers.ArindirmaModuluController.SMSOnamKoduGonder(System.String,System.String,System.String,System.String)">
+            <summary>
+            SMS Onam Kodu Gönderilir.
+            </summary>
+            <param name="HastaEkipNo">Hasta bilgilerinin Ekip Projesi ile paylaşılmasına dair SMS ile onam gönderme metodudur. Tüm parametreler doğru ve eksiksiz girilmelidir. Onam SMS'i buna göre gönderilecektir. </param>
+            <param name="Telefon">Hasta bilgilerinin Ekip Projesi ile paylaşılmasına dair SMS ile onam gönderme metodudur. Tüm parametreler doğru ve eksiksiz girilmelidir. Onam SMS'i buna göre gönderilecektir. </param>
+            <param name="KurumKodu">Hasta bilgilerinin Ekip Projesi ile paylaşılmasına dair SMS ile onam gönderme metodudur. Tüm parametreler doğru ve eksiksiz girilmelidir. Onam SMS'i buna göre gönderilecektir. </param>
+            <param name="OnamIsteyenAdSoyad">Hasta bilgilerinin Ekip Projesi ile paylaşılmasına dair SMS ile onam gönderme metodudur. Tüm parametreler doğru ve eksiksiz girilmelidir. Onam SMS'i buna göre gönderilecektir. </param>
+            <returns></returns>
+            <response code="200">Metod, başarılı işlem sonucunda ilgili SMS_ID'yi geri döndürür.</response>
+            <response code="400">Geçersiz istek</response>
+            <response code="500">Sunucuya bağlanılamadı</response>
+        </member>
+        <member name="M:EkipProjesi.API.Controllers.ArindirmaModuluController.OnamKoduDogrula(System.Int32,System.String)">
+            <summary>
+            SMS Onam Kodu Doğrulanır.
+            </summary>
+            <param name="SMS_ID">Onam için hastaya SMS ile gönderilen OnamKodu doğrulama metodudur. Doğrulama metodu başarılı işlem durumunda TRUE, hatalı işlem durumunda FALSE değerini geri döndürür.</param>     
+            <param name="OnamKodu">Onam için hastaya SMS ile gönderilen OnamKodu doğrulama metodudur. Doğrulama metodu başarılı işlem durumunda TRUE, hatalı işlem durumunda FALSE değerini geri döndürür.</param> 
+            <returns></returns>
+            <response code="200">Doğrulama metodu başarılı işlem durumunda TRUE, hatalı işlem durumunda FALSE değerini geri döndürür.</response>
+            <response code="400">Geçersiz istek</response>
+            <response code="500">Sunucuya bağlanılamadı</response>
+        </member>
+        <member name="M:EkipProjesi.API.Controllers.ArindirmaModuluController.HastaOnamSorgula(System.String)">
+            <summary>
+            Hasta onam durumu sorgulanır.
+            </summary>
+            <param name="HastaEkipNo">Hastaya ait onam durumu sorgulama metodudur. Hastadan veri paylaşımına dair onam alınmışsa metod, EkipOnamDurumu = TRUE değerini, onam alınmamışsa EkipOnamDurumu = FALSE değerini geri döndürür. HBYS, HastaEkipNo ve EkipOnamDurumu bilgilerini kendi bünyesinde kaydetmek zorundadır. İlgili HastaEkipNo'suna ait çalıştırılacak diğer tüm metodlar için öncelikle bu metod (HastaOnamSorgula) çalıştırılmalıdır. Eğer EkipOnamDurumu = TRUE ise hastadan tekrar onam sorgulaması yapılmamalı, onam durumu diğer tüm metodlar için aynı şekilde geçerli olacak şekilde tanımlanmalı ve diğer metodlarda gerekli olan bilgiler maskelenmemiş şekilde tarafımıza gönderilmelidir.</param>      
+            <returns></returns>
+            <response code="200">Hastadan veri paylaşımına dair onam alınmışsa metod, EkipOnamDurumu = TRUE değerini, onam alınmamışsa EkipOnamDurumu = FALSE değerini geri döndürür.</response>
+            <response code="400">Geçersiz istek</response>
+            <response code="500">Sunucuya bağlanılamadı</response>
+        </member>
+        <member name="M:EkipProjesi.API.Controllers.ArindirmaModuluController.KurumRandevuDurumEkle(EkipProjesi.API.Models.Models.KurumRandevuDurumEkleModel)">
+            <summary>
+             Hasta Kurum Randevu Kaydı Eklenir
+            </summary>
+            <param name="model">Hastaya ait kurum randevu bilgisi eklenir. Modelde yer alan alanlar zorunludur. Randevu bilgisi kaydı bu bilgilere göre oluşturulacaktır. Metod, başarılı işlem sonucunda yeni eklenen randevu kaydına ait EKİP Projesi tarafındaki unique ID'yi geri döndürür.</param>
+            <returns></returns>
+            <response code="200">Metod, başarılı işlem sonucunda yeni eklenen randevuya ait EKİP Projesi tarafındaki unique ID'yi geri döndürür.</response>
+            <response code="400">Geçersiz istek</response>
+            <response code="500">Sunucuya bağlanılamadı</response>
+        </member>
+        <member name="M:EkipProjesi.API.Controllers.ArindirmaModuluController.KurumRandevuDurumGuncelle(EkipProjesi.API.Models.Models.KurumRandevuDurumGuncelleModel)">
+            <summary>
+             Hasta Kurum Randevu Kaydı Güncellenir
+            </summary>
+            <param name="model">Hastaya ait kurum randevu bilgisi güncellenir. Modelde yer alan alanlar zorunludur. Randevu bilgisi kaydı bu bilgilere göre güncellenecektir. Metod, başarılı işlem sonucunda güncellenen randevu kaydına ait EKİP Projesi tarafındaki unique ID'yi geri döndürür.</param>
+            <returns></returns>
+            <response code="200">Metod, başarılı işlem sonucunda güncellenen randevuya ait EKİP Projesi tarafındaki unique ID'yi geri döndürür.</response>
+            <response code="400">Geçersiz istek</response>
+            <response code="500">Sunucuya bağlanılamadı</response>
+        </member>
+        <member name="M:EkipProjesi.API.Controllers.ArindirmaModuluController.ICDKoduSorgula(System.String)">
+            <summary>
+            KurumKodu'nuza göre kurumunuzdan EKİP yazılımına bildirebileceğiniz ICD kodların listesini döner.
+            </summary>
+            <param name="KurumKodu">"AcilServis" değeri TRUE/FALSE olarak sevis edilir, eğer TRUE ise acil servisten gelen hastaların gönderimini kabul eder. "Diger" değeri TRUE/FALSE olarak döner. TRUE değerinde Poliklinik vb.. alanlardan gelenleri kapsar.Eğer bir hastada size dönen ICD kodların haricinde bir tanı var ise kayıt metotları sırasında kabul edilmeyecektir. Bu metodu her gönderim öncesinde çalıştırmayınız. Günlük olarak geçici tabloda tutup hbys yazılımlarınız üzerinde sorgulayınız. Gün sonu tabloyu boşaltıp tekrardan yeni verileri çekiniz. Amaç; oluşabilecek network trafiğini azaltmaktır. NOT : Eğer dönen verilerde  ICDTaniKod paramtersinde "HEPSI" olarak dönerse (Şimdilik AMATEM ve CEMATEM) tüm tanı kodlarını kapsamaktadır.</param>      
+            <returns></returns>
+            <response code="200">Başarılı</response>
+            <response code="400">Geçersiz istek</response>
+            <response code="500">Sunucuya bağlanılamadı</response>
+        </member>
+        <member name="M:EkipProjesi.API.Controllers.KontrolController.KurumKoduKontrol(System.Int32)">
+            <summary>
+            Kurum Kodu Kontrol
+            </summary>
+            <param name="KurumKodu">KurumKodu zorunludur ve hatasız girilmelidir. Kurum bu bilgilere göre kontrol edilecektir.</param>
+            <returns></returns>
+            <response code="200">Metod başarılı ise işlem kuruma ait EKİP Projesi tarafındaki kuruma ait unique ID'yi ve kurum bilgilerini geri döndürür.</response>
+            <response code="400">Geçersiz istek</response>
+            <response code="500">Sunucuya bağlanılamadı</response>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,123 @@
+﻿@model EkipProjesi.Core.Faaliyet.IFaaliyet
+@{
+    ViewBag.Title = "Faaliyet Detay";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+<div class="row">
+    <div class="col-12  align-self-center">
+        <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+            <div class="w-sm-100 mr-auto"><h4 class="mb-0">Faaliyet Detay</h4> <p><a href="@Url.Action("Index","KoruyucuOnleyiciHizmetler")">Koruyucu Önleyici Hizmetler Modülü</a></p></div>
+            <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+                <li class="breadcrumb-item"><a href="#">Faaliyet Detay</a></li>
+                <li class="breadcrumb-item active">Anasayfa</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 mt-4">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Faaliyet Bilgileri</h3>
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <form class="form-horizontal" id="form" role="form" enctype="multipart/form-data">
+                                <input type="hidden" id="@Html.IdFor(x=>x.ID)" name="@Html.NameFor(x=>x.ID)" value="@Model.ID" />
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="faaliyetadi">Faaliyet Adı</label>
+                                        @Html.TextBoxFor(x => x.FaaliyetAdi, new { @class = "form-control form-control-sm validate[required]" })
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="faaliyetkonusu">Faaliyet Konusu</label>
+                                        @Html.TextBoxFor(x => x.FaaliyetKonusu, new { @class = "form-control form-control-sm validate[required]" })
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="faaliyetturu">Faaliyet Türü</label>
+                                        <select id="@Html.IdFor(x=>x.FaaliyetTuru)" name="@Html.NameFor(x=>x.FaaliyetTuru)" class="form-control">
+                                            <option selected>Seçiniz</option>
+                                            <option value="HalkEgitim">Halk Eğitimi</option>
+                                            <option value="HizmetIciEgitim">Hizmet İçi Eğitim</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="faaliyettarihi">Faaliyet Tarihi</label>
+                                        <input required type="datetime" class="form-control form-control-sm validate[required]" id="@Html.IdFor(x=>x.FaaliyetTarihi)" name="@Html.NameFor(x => x.FaaliyetTarihi)" value="@string.Format("{0:dd/MM/yyyy HH:mm}", Model.FaaliyetTarihi)" />
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="faaliyetingerceklestigiyer">Faaliyetin Gerçekleştiği Yer</label>
+                                        @Html.TextBoxFor(x => x.GerceklestigiYer, new { @class = "form-control form-control-sm validate[required]" })
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="faaliyetigerceklestirenkurum">Faaliyeti Gerçekleştiren Kurum</label>
+                                        @Html.TextBoxFor(x => x.GerceklestirenKurum, new { @class = "form-control form-control-sm validate[required]" })
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="faaliyetigerceklestirenkisi">Faaliyeti Gerçekleştiren Kişi</label>
+                                        @Html.TextBoxFor(x => x.GerceklestirenKisi, new { @class = "form-control form-control-sm validate[required]" })
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="faaliyetteulasilankisisayisi">Faaliyette Ulaşılan Kişi Sayısı</label>
+                                        @Html.TextBoxFor(x => x.UlasilanKisiSayisi, new { @class = "form-control form-control-sm validate[required]" })
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label for="faaliyetraporu">Faaliyet Raporu</label>
+                                        @Html.TextAreaFor(x => x.FaaliyetRaporu, new { @class = "form-control form-control-sm validate[required]" })
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="form-group col-md-6">
+                                    <button type="submit" class="btn btn-primary" id="guncelle">Güncelle</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    if ('@ViewBag.Msg' != "") {
+        alert("@Html.Encode(ViewBag.Msg)");
+    }   
+</script>
+<script>
+    $('#@Html.IdFor(x=>x.FaaliyetTuru) option[value="@Model.FaaliyetTuru"]').attr('selected', 'selected');
+</script>
+<script>
+
+    $("#guncelle").on("click", function () {
+        beforeCallFaaliyet();
+    });
+
+    function beforeCallFaaliyet(form, options) {
+          var form = $('#form')[0];
+          var dataString = new FormData(form);
+          jQuery.ajax({
+                cache: false,
+                type: "POST",
+                url: '@Url.Action("FaaliyetGuncelle", "KoruyucuOnleyiciHizmetler")',
+                enctype: 'multipart/form-data',
+                data: dataString,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if (data.success) {
+                        location.href = '@Url.Action("Faaliyetler", "KoruyucuOnleyiciHizmetler")';
+                    }
+                    else {
+                        alert("İşleminiz sırasında hata oluştu. Lütfen tekrar deneyiniz.")
+                    }
+                }
+          });
+    }
+</script>

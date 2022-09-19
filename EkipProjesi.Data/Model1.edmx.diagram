@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="729a1102e26840478e677b5381fa7ffb" Name="Diagram1" ZoomLevel="55">
+        <EntityTypeShape EntityType="EkipProjeModel.AnketCevaplari" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkipProjeModel.AnketGruplari" Width="1.5" PointX="5.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkipProjeModel.AnketKullaniciCevap" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkipProjeModel.AnketKullanicilari" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkipProjeModel.Anketler" Width="1.5" PointX="2.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkipProjeModel.AnketSoruBankasi" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkipProjeModel.AnketSorulari" Width="1.5" PointX="4.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkipProjeModel.AnketTipleri" Width="1.5" PointX="7.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkipProjeModel.ArindirmaBasvuruBilgileri" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkipProjeModel.ArindirmaBasvuruKararlari" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkipProjeModel.ArindirmaHizmetBilgileri" Width="1.5" PointX="9.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkipProjeModel.ArindirmaPersonelBilgileri" Width="1.5" PointX="6.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkipProjeModel.BasvuruBilgileriLabSonuc" Width="1.5" PointX="8.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkipProjeModel.FizikselHastalikOykuleri" Width="1.5" PointX="11.75" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkipProjeModel.Hastalar" Width="1.5" PointX="0.625" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkipProjeModel.Il" Width="1.5" PointX="8.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkipProjeModel.Ilce" Width="1.5" PointX="12.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkipProjeModel.Kullanicilar" Width="1.5" PointX="13.625" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkipProjeModel.KullaniciRolleri" Width="1.5" PointX="10.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkipProjeModel.Kurumlar" Width="1.5" PointX="12.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkipProjeModel.Log" Width="1.5" PointX="0.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkipProjeModel.LogCikis" Width="1.5" PointX="2.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkipProjeModel.LogHataBildirimleri" Width="1.5" PointX="14.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkipProjeModel.LogLoginIslemleri" Width="1.5" PointX="14.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkipProjeModel.LogSchema" Width="1.5" PointX="14.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkipProjeModel.LogSifreDegistirme" Width="1.5" PointX="15.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkipProjeModel.PersonelFotograflar" Width="1.5" PointX="4.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkipProjeModel.PersonelGorevHareketleri" Width="1.5" PointX="16.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkipProjeModel.Personeller" Width="1.5" PointX="6.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkipProjeModel.PoliklinikTurleri" Width="1.5" PointX="8.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkipProjeModel.Roller" Width="1.5" PointX="16.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkipProjeModel.RolYetkileri" Width="1.5" PointX="10.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkipProjeModel.sysdiagrams" Width="1.5" PointX="16.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkipProjeModel.Unvanlar" Width="1.5" PointX="16.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkipProjeModel.Yatislar" Width="1.5" PointX="18.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkipProjeModel.YatisSonlanmaNedenleri" Width="1.5" PointX="18.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EkipProjeModel.Yetkiler" Width="1.5" PointX="18.75" PointY="7.75" IsExpanded="true" />
+        <AssociationConnector Association="EkipProjeModel.FK_Yatislar_YatisSonlanmaNedenleri" />
+        <EntityTypeShape EntityType="EkipProjeModel.HastaMaddeKullanimBilgileri" Width="1.5" PointX="13.375" PointY="18.75" />
+        <EntityTypeShape EntityType="EkipProjeModel.Kullanici" Width="1.5" PointX="15.375" PointY="18.75" />
+        <EntityTypeShape EntityType="EkipProjeModel.ResmiTatiller" Width="1.5" PointX="5.375" PointY="19.75" />
+        <EntityTypeShape EntityType="EkipProjeModel.Events" Width="1.5" PointX="7.375" PointY="19.75" />
+        <EntityTypeShape EntityType="EkipProjeModel.RandevuBilgileri" Width="2.125" PointX="0.75" PointY="19.75" />
+        <EntityTypeShape EntityType="EkipProjeModel.KurumPoliklinikTurleri" Width="1.5" PointX="15" PointY="23.75" />
+        <AssociationConnector Association="EkipProjeModel.FK_KurumPoliklinikTurleri_KurumPoliklinikTurleri" />
+        <AssociationConnector Association="EkipProjeModel.FK_RandevuBilgileri_Kurumlar" />
+        <AssociationConnector Association="EkipProjeModel.FK_RandevuBilgileri_KurumPoliklinikTurleri" />
+        <EntityTypeShape EntityType="EkipProjeModel.Mesajlar" Width="1.5" PointX="19.375" PointY="10.75" />
+        <EntityTypeShape EntityType="EkipProjeModel.MesajGidenKullanici" Width="1.5" PointX="19.375" PointY="14.75" />
+        <EntityTypeShape EntityType="EkipProjeModel.KullaniciIletisimBilgileri" Width="1.5" PointX="19.375" PointY="17.75" />
+        <EntityTypeShape EntityType="EkipProjeModel.KullaniciIzinTuru" Width="1.5" PointX="9.375" PointY="20.75" />
+        <EntityTypeShape EntityType="EkipProjeModel.KullaniciBirimBilgileri" Width="1.5" PointX="21.375" PointY="0.75" />
+        <EntityTypeShape EntityType="EkipProjeModel.KullaniciIzinBilgileri" Width="1.5" PointX="21.375" PointY="3.75" />
+        <AssociationConnector Association="EkipProjeModel.FK_KullaniciBirimBilgileri_Kullanicilar" />
+        <EntityTypeShape EntityType="EkipProjeModel.LogSilinenRandevular" Width="1.5" PointX="21.375" PointY="8.75" />
+        <EntityTypeShape EntityType="EkipProjeModel.KullaniciErisimBilgileri" Width="1.5" PointX="15.875" PointY="27.125" />
+        <AssociationConnector Association="EkipProjeModel.FK_KullaniciErisimBilgileri_Kullanicilar" />
+        <EntityTypeShape EntityType="EkipProjeModel.ErisimKodlari" Width="1.5" PointX="21.375" PointY="14.75" />
+        <AssociationConnector Association="EkipProjeModel.FK_KullaniciErisimBilgileri_ErisimKodlari" />
+        <EntityTypeShape EntityType="EkipProjeModel.HastaYakinBilgileri" Width="1.5" PointX="3" PointY="25" />
+        <AssociationConnector Association="EkipProjeModel.FK_HastaYakinBilgileri_Hastalar" />
+        <EntityTypeShape EntityType="EkipProjeModel.HastaNotlari" Width="1.5" PointX="15.875" PointY="30.125" />
+        <AssociationConnector Association="EkipProjeModel.FK_HastaNotlari_Kullanicilar" />
+        <AssociationConnector Association="EkipProjeModel.FK_HastaNotlari_Hastalar" />
+        <EntityTypeShape EntityType="EkipProjeModel.Faaliyetler" Width="1.5" PointX="21.375" PointY="17.75" />
+        <EntityTypeShape EntityType="EkipProjeModel.HastaIlkKayitBilgileri" Width="1.5" PointX="19.375" PointY="21.75" />
+        <EntityTypeShape EntityType="EkipProjeModel.HastaIzlemBilgileri" Width="1.5" PointX="21.375" PointY="21.75" />
+        <EntityTypeShape EntityType="EkipProjeModel.HastaTimeline" Width="1.5" PointX="3" PointY="28.5" />
+        <AssociationConnector Association="EkipProjeModel.FK_HastaIlkKayitBilgileri_Hastalar" />
+        <AssociationConnector Association="EkipProjeModel.FK_HastaIzlemBilgileri_Hastalar" />
+        <AssociationConnector Association="EkipProjeModel.FK_HastaTimeline_Hastalar" />
+        <EntityTypeShape EntityType="EkipProjeModel.IstihdamIsyerleri" Width="1.5" PointX="23.375" PointY="0.75" />
+        <EntityTypeShape EntityType="EkipProjeModel.IstihdamIsyeriIletisimKisileri" Width="1.5" PointX="23.375" PointY="4.75" />
+        <AssociationConnector Association="EkipProjeModel.FK_IstihdamIsyeriIletisimKisileri_IstihdamIsyerleri" />
+        <EntityTypeShape EntityType="EkipProjeModel.IstihdamIsyeriGorusmeleri" Width="1.5" PointX="25.625" PointY="1" />
+        <AssociationConnector Association="EkipProjeModel.FK_IstihdamIsyeriGorusmeleri_IstihdamIsyerleri" />
+        <EntityTypeShape EntityType="EkipProjeModel.KullaniciGorevTakip" Width="1.5" PointX="15.875" PointY="34.125" />
+        <AssociationConnector Association="EkipProjeModel.FK_KullaniciGorevTakip_Kullanicilar" />
+        <EntityTypeShape EntityType="EkipProjeModel.KurumHizmetMerkezleri" Width="1.5" PointX="21.75" PointY="26.125" />
+        <EntityTypeShape EntityType="EkipProjeModel.RandevuTalepleri" Width="1.5" PointX="24" PointY="14.25" />
+        <AssociationConnector Association="EkipProjeModel.FK_IskurRandevuTalepleri_Hastalar1" />
+        <AssociationConnector Association="EkipProjeModel.FK_IskurRandevuTalepleri_KurumHizmetMerkezleri1" />
+        <AssociationConnector Association="EkipProjeModel.FK_IskurRandevuTalepleri_Kurumlar1" />
+        <EntityTypeShape EntityType="EkipProjeModel.RandevuAyarlari" Width="1.5" PointX="24.25" PointY="20" />
+        <AssociationConnector Association="EkipProjeModel.FK_RandevuAyarlari_Kurumlar" />
+        <AssociationConnector Association="EkipProjeModel.FK_RandevuAyarlari_KurumPoliklinikTurleri" />
+        <EntityTypeShape EntityType="EkipProjeModel.IstihdamIsyeriAdresBilgisi" Width="1.5" PointX="25.625" PointY="6" />
+        <AssociationConnector Association="EkipProjeModel.FK_IstihdamIsyeriAdresBilgisi_Il" />
+        <AssociationConnector Association="EkipProjeModel.FK_IstihdamIsyeriAdresBilgisi_Ilce" />
+        <AssociationConnector Association="EkipProjeModel.FK_IstihdamIsyeriAdresBilgisi_IstihdamIsyerleri" />
+        <EntityTypeShape EntityType="EkipProjeModel.MobilEkipVakaFormlari" Width="1.5" PointX="3" PointY="32.25" />
+        <AssociationConnector Association="EkipProjeModel.FK_MobilEkipVakaFormlari_Hastalar" />
+        <AssociationConnector Association="EkipProjeModel.FK_Kullanicilar_Kurumlar" />
+        <EntityTypeShape EntityType="EkipProjeModel.AcilServisVakaBilgileri" Width="1.5" PointX="10.375" PointY="23.75" />
+        <EntityTypeShape EntityType="EkipProjeModel.TaniKodlari" Width="1.5" PointX="24.375" PointY="24.75" />
+        <EntityTypeShape EntityType="EkipProjeModel.YEDAMHastaBilgileri" Width="1.5" PointX="25.375" PointY="10.75" />
+        <EntityTypeShape EntityType="EkipProjeModel.VakaBilgileri112" Width="1.5" PointX="18.375" PointY="26.375" />
+        <EntityTypeShape EntityType="EkipProjeModel.HastaBeyanBilgileri" Width="1.5" PointX="5.375" PointY="30.625" />
+        <AssociationConnector Association="EkipProjeModel.FK_ArindirmaBasvuruBilgileri_ArindirmaBasvuruKararlari" />
+        <AssociationConnector Association="EkipProjeModel.FK_HastaBeyanBilgileri_ArindirmaBasvuruBilgileri" />
+        <AssociationConnector Association="EkipProjeModel.FK_Yatislar_YatisSonlanmaNedenleri1" />
+        <EntityTypeShape EntityType="EkipProjeModel.HastaEgitimBilgileri" Width="1.5" PointX="12.5" PointY="26.75" />
+        <EntityTypeShape EntityType="EkipProjeModel.HastaIskurGorusmeleri" Width="1.5" PointX="3" PointY="47.125" />
+        <AssociationConnector Association="EkipProjeModel.FK_IskurIslemleriKullaniciGorusmeleri_IskurIslemleriKullanicilar1" />
+        <EntityTypeShape EntityType="EkipProjeModel.HastaBaharFormlari" Width="1.5" PointX="26.375" PointY="28" />
+        <EntityTypeShape EntityType="EkipProjeModel.HastaBaharFormuSonuc" Width="1.5" PointX="28.625" PointY="14.875" />
+        <EntityTypeShape EntityType="EkipProjeModel.HastaBaharFormuSonucKodlari" Width="1.5" PointX="26.375" PointY="15" />
+        <AssociationConnector Association="EkipProjeModel.FK_HastaBaharFormuSonuc_HastaBaharFormlari" />
+        <AssociationConnector Association="EkipProjeModel.FK_HastaBaharFormuSonuc_HastaBaharFormuSonucKodlari" />
+        <EntityTypeShape EntityType="EkipProjeModel.HastaOlceklerFormu" Width="1.5" PointX="7.375" PointY="24.375" />
+        <AssociationConnector Association="EkipProjeModel.FK_HastaBaharFormlari_Hastalar" />
+        <AssociationConnector Association="EkipProjeModel.FK_HastaOlceklerFormu_Hastalar" />
+        <EntityTypeShape EntityType="EkipProjeModel.AcilServisVakaTanilari" Width="1.5" PointX="26.625" PointY="24.875" />
+        <AssociationConnector Association="EkipProjeModel.FK_AcilServisVakaTanilari_AcilServisVakaBilgileri" />
+        <AssociationConnector Association="EkipProjeModel.FK_AcilServisVakaTanilari_TaniKodlari" />
+        <EntityTypeShape EntityType="EkipProjeModel.VakaTanilari112" Width="1.5" PointX="28.625" PointY="28.25" />
+        <AssociationConnector Association="EkipProjeModel.FK_VakaTanilari112_TaniKodlari" />
+        <AssociationConnector Association="EkipProjeModel.FK_VakaTanilari112_VakaBilgileri112" />
+        <EntityTypeShape EntityType="EkipProjeModel.Mahalle" Width="1.5" PointX="15" PointY="38" />
+        <AssociationConnector Association="EkipProjeModel.FK_Mahalle_Ilce" />
+        <AssociationConnector Association="EkipProjeModel.FK_Kullanicilar_KurumHizmetMerkezleri" />
+        <EntityTypeShape EntityType="EkipProjeModel.IstihdamIsyeriSektorler" Width="1.5" PointX="21.125" PointY="29.75" />
+        <AssociationConnector Association="EkipProjeModel.FK_IstihdamIsyerleri_IstihdamIsyeriSektorler" />
+        <EntityTypeShape EntityType="EkipProjeModel.ExcelYuklemeleri" Width="1.5" PointX="26.375" PointY="17.875" />
+        <EntityTypeShape EntityType="EkipProjeModel.KurumRandevulari" Width="1.5" PointX="26.375" PointY="21.75" />
+        <EntityTypeShape EntityType="EkipProjeModel.HastaBagimlilikSiddetiFormlari" Width="1.5" PointX="3" PointY="55.25" />
+        <AssociationConnector Association="EkipProjeModel.FK_HastaBagimlilikSiddetiFormlari_Hastalar" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

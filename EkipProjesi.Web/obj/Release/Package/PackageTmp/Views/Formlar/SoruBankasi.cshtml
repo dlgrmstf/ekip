@@ -1,0 +1,98 @@
+﻿@model List<EkipProjesi.Core.Formlar.AnketSoruBankasiDTO>
+@{
+    ViewBag.Title = "SoruBankasi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/dist/vendors/datatable/css/dataTables.bootstrap4.min.css" />
+<link rel="stylesheet" href="~/dist/vendors/datatable/buttons/css/buttons.bootstrap4.min.css" />
+
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+<div class="row">
+    <div class="col-12  align-self-center">
+        <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+            <div class="w-sm-100 mr-auto"><h4 class="mb-0">Soru Bankası</h4> <a href="@Url.Action("Index", "Formlar")"><p>Formlar</p></a></div>
+            <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+                <li class="breadcrumb-item"><a href="#">Soru Bankası</a></li>
+                <li class="breadcrumb-item active">Anasayfa</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 mt-3">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-10">
+                        <h4 class="card-title">Soru Bankası</h4>
+                    </div>
+                    @if (User.IsInRole("86"))
+                    {
+                        <div class="col-md-2">
+                            <a href="@Url.Action("SoruEkle", "Formlar")" class="btn btn-primary">Soru Ekle</a>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="example" class="display table dataTable table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Soru Kodu</th>
+                                <th>Soru</th>
+                                <th>Açıklama</th>
+                                <th>Durum</th>
+                                <th>İşlem</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var a in Model)
+                            {
+                                <tr>
+                                    <td>@a.ID</td>
+                                    <td>@a.SoruKodu</td>
+                                    <td>@a.Soru</td>
+                                    <td>@a.Aciklama</td>
+                                    <td>@a.Status</td>
+                                    <td>
+                                        @if (User.IsInRole("87"))
+                                        {
+                                            <a href="@Url.Action("SoruDetay", "Formlar", new { id = a.ID })" class="btn btn-primary"><i class="icon-note"></i></a>
+                                        }
+                                    </td>
+                                </tr>
+                             }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/dist/vendors/jquery/jquery-3.3.1.min.js"></script>
+<script src="~/dist/vendors/jquery-ui/jquery-ui.min.js"></script>
+<script src="~/dist/vendors/moment/moment.js"></script>
+<script src="~/dist/vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/dist/vendors/slimscroll/jquery.slimscroll.min.js"></script>
+
+<script src="~/dist/js/app.js"></script>
+
+<script src="~/dist/vendors/datatable/js/jquery.dataTables.min.js"></script>
+<script src="~/dist/vendors/datatable/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/dist/vendors/datatable/jszip/jszip.min.js"></script>
+<script src="~/dist/vendors/datatable/pdfmake/pdfmake.min.js"></script>
+<script src="~/dist/vendors/datatable/pdfmake/vfs_fonts.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/dataTables.buttons.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.colVis.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.flash.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.html5.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.print.min.js"></script>
+
+<script src="~/dist/js/datatable.script.js"></script>

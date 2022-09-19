@@ -1,0 +1,63 @@
+﻿@{ 
+}
+<ul id="side-menu" class="sidebar-menu">
+    <li class="dropdown">
+        <ul>
+            <li><a href="@Url.Action("Index", "Home")"><i class="icon-home"></i> Anasayfa</a></li>
+
+            @if (User.IsInRole("1"))
+            {
+                <li><a href="@Url.Action("Index", "Aksam")"><i class="icon-link"></i> Aksam Modülü</a> </li>
+            }
+            @if (User.IsInRole("2"))
+            {
+                <li><a href="@Url.Action("Index", "ArindirmaMerkezleri")"><i class="fas fa-clinic-medical"></i> Arındırma Merkezleri Modülü</a></li>
+            }
+            @if (User.IsInRole("3"))
+            {
+                <li><a href="@Url.Action("Index", "BirimPersonelleri")"><i class="icon-people"></i> Birim Personelleri Modülü</a></li>
+            }
+            @if (User.IsInRole("4"))
+            {
+                <li><a href="@Url.Action("Index", "DanismaMerkezleri")"><i class="icon-direction"></i> Danışma Birimleri Modülü</a></li>
+            }
+            @if (User.IsInRole("5"))
+            {
+                <li><a href="@Url.Action("Index", "GenelHastanelerAcilServis")"><i class="fas fa-hospital-alt"></i> Genel Hastaneler Acil Servis Modülü</a></li>
+            }
+            @if (User.IsInRole("6"))
+            {
+                <li><a href="@Url.Action("Index", "Istihdam")"><i class="icon-info"></i> İstihdam Modülü</a></li>
+            }
+            @if (User.IsInRole("7"))
+            {
+                <li><a href="@Url.Action("Index", "KoruyucuOnleyiciHizmetler")"><i class="fas fa-user-md"></i> Koruyucu Önleyici Hizmetler Modülü</a></li>
+            }
+            @if (User.IsInRole("8"))
+            {
+                <li><a href="@Url.Action("Index", "KurumlarArasiSevkVeTakip")"><i class="icon-arrow-right-circle"></i> Kurumlar Arası Sevk ve Takip Modülü</a></li>
+            }
+            @if (User.IsInRole("9"))
+            {
+                <li><a href="@Url.Action("MobilEkip", "MobilEkip")"><i class="fas fa-map-marked"></i> Mobil Ekip Modülü</a></li>
+            }
+            @if (User.IsInRole("10"))
+            {
+                <li><a href="@Url.Action("Index", "RehabilitasyonMerkezleri")"><i class="fas fa-user-nurse"></i> Rehabilitasyon Merkezleri Modülü</a></li>
+            }
+            @if (User.IsInRole("11"))
+            {
+                <li><a href="@Url.Action("Index", "SosyalHizmetMerkezleri")"><i class="fas fa-user-friends"></i> Sosyal Hizmet Merkezleri Modülü</a></li>
+            }
+            @if (User.IsInRole("12"))
+            {
+                <li><a href="@Url.Action("Index", "VakaTakip")"><i class="fas fa-id-card"></i> Vaka Takip Modülü</a></li>
+            }
+            @if (User.IsInRole("13"))
+            {
+                <li><a href="@Url.Action("Index", "Formlar")"><i class="icon-puzzle"></i>Form Sihirbazı</a></li>
+
+            }
+        </ul>
+    </li>
+</ul>

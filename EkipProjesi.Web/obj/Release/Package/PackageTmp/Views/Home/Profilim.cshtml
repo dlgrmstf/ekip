@@ -1,0 +1,156 @@
+﻿@model IKullanici
+@{
+    ViewBag.Title = "Profilim";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    IKullaniciIletisimBilgileri iletisim = (IKullaniciIletisimBilgileri)ViewBag.IletisimBilgileri;
+    IKullaniciBirimBilgileri birim = (IKullaniciBirimBilgileri)ViewBag.BirimBilgileri;
+}
+
+<div class="container-fluid site-width">
+    <div class="row ">
+        <div class="col-12  align-self-center">
+            <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+                <div class="w-sm-100 mr-auto"><span class="h4 my-auto">Profilim</span></div>
+
+                <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")">Anasayfa</a></li>
+                    <li class="breadcrumb-item active">Profilim</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 mt-3">
+            <div class="position-relative">
+                <div class="background-image-maker py-5"></div>
+                <div class="holder-image">
+                    <img src="~/dist/images/portfolio13.jpg" alt="" class="img-fluid d-none">
+                </div>
+                <div class="position-relative px-3 py-3" style="background-color: #1e3d73; height:170px">
+                    <div class="media d-md-flex d-block">
+                        @if (Model.FotoByte != null && Model.FotoContentType != null)
+                        {
+                            <a href="#" style="width:100px;">
+                                <img src="data:@Model.FotoContentType;base64,@System.Convert.ToBase64String(Model.FotoByte)" style="width:100px;max-width:100px;max-height:100px;" />
+                            </a>
+                        }
+                        else
+                        {
+                            <a href="#"><img src="~/images/user.png" width="100" height="100" alt="" class="img-fluid rounded-circle" style="margin-left:10px"></a>
+                        }
+                        <div class="media-body z-index-1">
+                            <div class="pl-4">
+                                <h3 class="display-4 text text-white mb-0">@Model.Ad @Model.Soyad</h3><br />
+                                <h6 class="text text-white mb-0">Kullanıcı Adı: @Model.KullaniciAdi</h6>
+                                <br />
+                                <h6 class="text text-white mb-0">Meslek: @Model.Meslek</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-6 mt-3">
+            <div class="card">
+                <div class="card-header  justify-content-between align-items-center">
+                    <h4 class="card-title">Kişisel Bilgiler</h4>
+                </div>
+                <div class="card-body">
+                    <dl class="row mb-0 redial-line-height-2_5">
+                        <dt class="col-sm-5">Ad - Soyad:</dt>
+                        <dd class="col-sm-7">@Model.Ad @Model.Soyad</dd>
+
+                        <dt class="col-sm-5">TC Kimlik No:</dt>
+                        <dd class="col-sm-7">@Model.TC</dd>
+
+                        <dt class="col-sm-5">Doğum Tarihi:</dt>
+                        <dd class="col-sm-7">@Model.DogumTarihi</dd>
+
+                        <dt class="col-sm-5">Cinsiyet:</dt>
+                        <dd class="col-sm-7">@Model.Cinsiyet</dd>
+
+                        <dt class="col-sm-5">Durum:</dt>
+                        @if (Model.KullaniciDurumu == true)
+                        {
+                            <dd class="col-sm-7"><span class="badge badge-success text-white">Aktif</span></dd>
+                        }
+                        else
+                        {
+                            <dd class="col-sm-7"><span class="badge badge-danger text-white">Pasif</span></dd>
+                        }
+                    </dl>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="col-12 col-md-6 mt-3">
+            <div class="card">
+                <div class="card-header  justify-content-between align-items-center">
+                    <h4 class="card-title">İletişim Bilgileri</h4>
+                </div>
+                <div class="card-body">
+                    <dl class="row mb-0 redial-line-height-2_5">
+                        <dt class="col-sm-5">Telefon:</dt>
+                        <dd class="col-sm-7">@iletisim.Telefon</dd>
+
+                        <dt class="col-sm-5">E-Posta:</dt>
+                        <dd class="col-sm-7">@Model.KullaniciAdi</dd>
+
+                        <dt class="col-sm-5">Mahalle:</dt>
+                        <dd class="col-sm-7">@iletisim.Mahalle</dd>
+
+                        <dt class="col-sm-5">Sokak:</dt>
+                        <dd class="col-sm-7">@iletisim.Sokak</dd>
+
+                        <dt class="col-sm-5">Cadde:</dt>
+                        <dd class="col-sm-7">@iletisim.Cadde</dd>
+
+                        <dt class="col-sm-5">Bina - Daire No:</dt>
+                        <dd class="col-sm-7">@iletisim.BinaNo - @iletisim.DaireNo</dd>
+
+                        <dt class="col-sm-5">İl:</dt>
+                        <dd class="col-sm-7">@iletisim.IlAd</dd>
+
+                        <dt class="col-sm-5">İlçe:</dt>
+                        <dd class="col-sm-7">@iletisim.IlceAd</dd>                       
+                    </dl>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="col-12 col-md-6 mt-3">
+            <div class="card">
+                <div class="card-header  justify-content-between align-items-center">
+                    <h4 class="card-title">Birim Bilgileri</h4>
+                </div>
+                <div class="card-body">
+                    <dl class="row mb-0 redial-line-height-2_5">
+                        <dt class="col-sm-5">Kurum:</dt>
+                        <dd class="col-sm-7">@Model.KurumAdi</dd>
+
+                        <dt class="col-sm-5">Bina:</dt>
+                        <dd class="col-sm-7">@Model.HizmetMerkeziAdi</dd>                   
+                    </dl>
+                </div>
+            </div>
+        </div>
+        @*<div class="col-12 col-md-6 mt-3">
+            <div class="card">
+                <div class="card-header  justify-content-between align-items-center">
+                    <h4 class="card-title">İzin Bilgileri</h4>
+                </div>
+                <div class="card-body">
+                    <dl class="row mb-0 redial-line-height-2_5">
+                        <dt class="col-sm-5">??:</dt>
+                        <dd class="col-sm-7">??</dd>                  
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>*@
+</div>

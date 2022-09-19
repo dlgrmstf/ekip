@@ -1,0 +1,94 @@
+﻿@model EkipProjesi.Core.AcilServis.IAcilServisVakaBilgileri
+@{
+    ViewBag.Title = "Vaka Detay";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/dist/vendors/datatable/css/dataTables.bootstrap4.min.css" />
+<link rel="stylesheet" href="~/dist/vendors/datatable/buttons/css/buttons.bootstrap4.min.css" />
+
+<div class="row">
+    <div class="col-12  align-self-center">
+        <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+            <div class="w-sm-100 mr-auto"><h4 class="mb-0">Vaka Detay</h4> <a href="@Url.Action("HastaneAcilServisleri","GenelHastanelerAcilServis")">Hastane Acil Servisleri</a></div>
+            <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+                <li class="breadcrumb-item"><a href="#">Vaka Detay</a></li>
+                <li class="breadcrumb-item active">Anasayfa</li>
+            </ol>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 mt-1">
+        <div class="position-relative">
+            <div class="position-relative px-1 py-3" style="background-color: #1e3d73">
+                <div class="media d-md-flex d-block">
+                    <a href="#"><img src="~/images/user.png" width="100" height="100" alt="" class="img-fluid rounded-circle" style="margin-left:10px"></a>
+                    <div class="media-body z-index-1">
+                        <div class="pl-4">
+                            <h3 class="display-4 text text-white mb-0">@Model.HastaAdi @Model.HastaSoyadi</h3>
+                            <h6 class="text text-white mb-0">TC Kimlik No: @Model.HastaTCKimlikNo</h6>
+                            <h6 class="text text-white mb-0">Hasta Ekip No: @Model.HastaEkipNo</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <span class="h4">Vaka Bilgileri</span>
+            </div>
+            <div class="card-content">
+                <div class="table-responsive">
+                    <table class="table vakadetaybilgileri">
+                        <tbody>
+                            <tr>
+                                <td><b>Acil Servis Başvuru Tarihi</b></td>
+                                <td><b>:</b></td>
+                                <td>@Model.BasvuruTarihi</td>
+
+                                <td><b>Hekim Adı</b></td>
+                                <td><b>:</b></td>
+                                <td>@Model.HekimAdi</td>
+                            </tr>
+                            <tr>
+                                <td><b>Acil Servis Tanı Kodları</b></td>
+                                <td><b>:</b></td>
+                                <td>
+                                    @foreach (var t in Model.Tanilar)
+                                    {
+                                        <span><b>@t.TaniKodu</b></span>
+                                        <span>@t.Tani</span>
+                                        <br />
+                                    }
+                                </td>
+
+                                <td><b>Acil Servis Taburculuk Tarihi</b></td>
+                                <td><b>:</b></td>
+                                <td>@Model.TaburculukTarihi</td>
+                            </tr>
+                            <tr>
+                                <td><b>Acil Serviste Gerçekleştirilen İşlemler</b></td>
+                                <td><b>:</b></td>
+                                <td>@Model.GerceklestirilenIslemler</td>
+
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><b>Acil Servis Taburculuk Notları</b></td>
+                                <td><b>:</b></td>
+                                <td>@Model.TaburculukNotlari</td>
+
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

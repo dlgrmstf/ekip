@@ -1,0 +1,348 @@
+﻿@model IArindirmaBasvuruBilgileri
+@{
+    ViewBag.Title = "Başvuru Detay";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/dist/vendors/datatable/css/dataTables.bootstrap4.min.css" />
+<link rel="stylesheet" href="~/dist/vendors/datatable/buttons/css/buttons.bootstrap4.min.css" />
+
+<div class="row">
+    <div class="col-12  align-self-center">
+        <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+            <div class="w-sm-100 mr-auto"><h4 class="mb-0">Başvuru Detay</h4> <a href="@Url.Action("Index", "ArindirmaMerkezleri")"><p>Arındırma Merkezleri Modülü</p></a></div>
+            <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+                <li class="breadcrumb-item"><a href="@Url.Action("BasvuruBilgileri", "ArindirmaMerkezleri")">Başvuru Bilgileri</a></li>
+                <li class="breadcrumb-item"><a href="#">Başvuru Detay</a></li>
+                <li class="breadcrumb-item active">Anasayfa</li>
+            </ol>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 mt-1">
+        <div class="position-relative">
+            <div class="position-relative px-1 py-3" style="background-color: #1e3d73">
+                <div class="media d-md-flex d-block">
+                    <a href="#"><img src="~/images/user.png" width="100" height="100" alt="" class="img-fluid rounded-circle" style="margin-left:10px"></a>
+                    <div class="media-body z-index-1">
+                        <div class="pl-4">
+                            <h3 class="display-4 text text-white mb-0">@Model.HastaAdi @Model.HastaSoyadi</h3>
+                            <h6 class="text text-white mb-0">TC Kimlik No: @Model.HastaTCKimlikNo</h6>
+                            <h6 class="text text-white mb-0">Ekip No: @Model.HastaEkipNo</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="profile-menu mt-4 theme-background border  z-index-1 p-2">
+            <div class="d-sm-flex">
+                <div class="align-self-center">
+                    <ul class="nav nav-pills flex-column flex-sm-row" id="myTab" role="tablist">
+                        @if (User.IsInRole("135"))
+                        {
+                            <li class="nav-item ml-0">
+                                <a class="nav-link  py-2 px-3 px-lg-4  active" data-toggle="tab" href="#poliklinikbilgileri"> Poliklinik Bilgileri</a>
+                            </li>
+                        }
+                        @if (User.IsInRole("136"))
+                        {
+                            <li class="nav-item ml-0">
+                                <a class="nav-link  py-2 px-4 px-lg-4 " data-toggle="tab" href="#bulgular"> Bulgular</a>
+                            </li>
+                        }
+                        @if (User.IsInRole("137"))
+                        {
+                            <li class="nav-item ml-0">
+                                <a class="nav-link py-2 px-4 px-lg-4" data-toggle="tab" href="#yatis">Yatış </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mt-3">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="tab-content">
+                    @if (User.IsInRole("135"))
+                    {
+                        <div class="tab-pane active" id="poliklinikbilgileri" role="tabpanel">
+                            <div class="card">
+                                <div class="table-responsive">
+                                    <table class="table poliklinik">
+                                        <tbody>
+                                            <tr>
+                                                <td><b>Ad - Soyad</b></td>
+                                                <td><b>:</b></td>
+                                                <td>@Model.HastaAdi @Model.HastaSoyadi</td>
+
+                                                <td><b>Poliklinik Türü</b></td>
+                                                <td><b>:</b></td>
+                                                <td>@Model.PoliklinikTuru</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Muayene Tarih Saati</b></td>
+                                                <td><b>:</b></td>
+                                                <td>@Model.PoliklinikMuayeneTarihSaati.ToString("hh/MM/yyyy HH:mm")</td>
+
+                                                <td><b>Muayeneyi Gerçekleştiren Hekim (Uzman/Asistan)</b></td>
+                                                <td><b>:</b></td>
+                                                <td>@Model.MuayeneyiGerceklestirenHekim / @Model.MuayeneyiGerceklestirenHekimTuru</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    @if (User.IsInRole("136"))
+                    {
+                        <div class="tab-pane" id="bulgular" role="tabpanel">
+                            <div class="row">
+                                <div class="col-12 mt-3">
+                                    <div class="card">
+                                        <div class="card-header justify-content-between align-items-center">
+                                            <h4 class="card-title">Madde Kullanım Bilgileri</h4>
+                                        </div>
+                                        @if (Model.MaddeBilgileri != null)
+                                        {
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table id="example" class="display table dataTable table-striped table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Başvuru No</th>
+                                                                <th>Madde Türü</th>
+                                                                <th>Süre</th>
+                                                                <th>Miktar</th>
+                                                                <th>Yöntem</th>
+                                                                <th>Sıklık</th>
+                                                                <th>En Son Kullanma Zamanı</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var h in Model.MaddeBilgileri)
+                                                            {
+                                                                <tr>
+                                                                    <td>@h.HastaProtokolNo</td>
+                                                                    <td>@h.MaddeTuru</td>
+                                                                    <td>
+                                                                        @h.Sure
+                                                                        @if (h.KullanimSuresiAy == true)
+                                                                        {
+                                                                            <span>Ay</span>
+                                                                        }
+                                                                        else if (h.KullanimSuresiYil == true)
+                                                                        {
+                                                                            <span>Yıl</span>
+                                                                        }
+                                                                    </td>
+                                                                    <td>@h.Miktar</td>
+                                                                    <td>@h.Yontem</td>
+                                                                    <td>@h.Siklik</td>
+                                                                    <td>
+                                                                        @h.EnSonKullanmaZamani
+                                                                        @if (h.EnSonKullanmaZamaniGun == true)
+                                                                        {
+                                                                            <span>Gün</span>
+                                                                        }
+                                                                        else if (h.EnSonKullanmaZamaniAy == true)
+                                                                        {
+                                                                            <span>Ay</span>
+                                                                        }
+                                                                        else if (h.EnSonKullanmaZamaniYil == true)
+                                                                        {
+                                                                            <span>Yıl</span>
+                                                                        }
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="card-body">
+                                                <p>Madde bilgisi bulunamadı.</p>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <br /><br />
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">
+                                        <h5>Bulgular</h5>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table bulgu">
+                                            <tbody>
+                                                <tr>
+                                                    <td><b>Eşlik Eden Hastalık Öyküsü</b></td>
+                                                    <td><b>:</b></td>
+                                                    <td>@Model.EslikEdenHastalikOykusu</td>
+
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b>Psikiyatrik Hastalık Öyküsü</b></td>
+                                                    <td><b>:</b></td>
+                                                    @if (Model.PsikiyatrikHastalikOykusu == true)
+                                                    {
+                                                        <td>Var</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>Yok</td>
+                                                    }
+
+                                                    <td><b>Psikiyatrik Hastalık Öyküsü Açıklama</b></td>
+                                                    <td><b>:</b></td>
+                                                    <td>@Model.PsikiyatrikHastalikOykusuAciklama</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b>Kullanmakta Olduğu Diğer İlaç Bilgisi</b></td>
+                                                    <td><b>:</b></td>
+                                                    <td>@Model.KullanmaktaOlduguDigerIlacBilgisi</td>
+
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b>Son Başvurudan Sonra Alkol/Madde Kullanımı Olmuş Mu?</b></td>
+                                                    <td><b>:</b></td>
+                                                    <td>@Model.SonBasvurudanSonraAlkolMaddeKullanimiOlmusMu</td>
+
+                                                    <td><b>Son Başvurudan Sonra Önerilen İlaçları Düzenli Kullanmış Mı? </b></td>
+                                                    <td><b>:</b></td>
+                                                    <td>@Model.SonBasvurudanSonraOnerilenIlaclariDuzenliKullanmisMi</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b>Yoksunluk Bulgusu</b></td>
+                                                    <td><b>:</b></td>
+                                                    @if (Model.YoksunlukBulgusu == true)
+                                                    {
+                                                        <td>Var</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>Yok</td>
+                                                    }
+
+                                                    <td><b>İntoksikasyon Bulgusu</b></td>
+                                                    <td><b>:</b></td>
+                                                    @if (Model.IntoksikasyonBulgusu == true)
+                                                    {
+                                                        <td>Var</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>Yok</td>
+                                                    }
+                                                </tr>
+                                                <tr>
+                                                    <td><b>İdrar Toksikoloji Bulgusu</b></td>
+                                                    <td><b>:</b></td>
+                                                    @if (Model.IdrarToksikolojiBulgusu == true)
+                                                    {
+                                                        <td>Var</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>Yok</td>
+                                                    }
+
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b>Karar:</b></td>
+                                                    <td><b>:</b></td>
+                                                    <td>@Model.Karar</td>
+
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    @if (User.IsInRole("137"))
+                    {
+                        <div class="tab-pane" id="yatis" role="tabpanel">
+                            <div class="card">
+                                <div class="table-responsive">
+                                    <table class="table yatis">
+                                        <tbody>
+                                            <tr>
+                                                <td><b>Yatış Tarihi</b></td>
+                                                <td><b>:</b></td>
+                                                <td>@Model.Yatislar.YatisTarihi.ToString("dd/MM/yyyy HH:mm")</td>
+
+                                                <td><b>Günlük Yapılan İşlemlere Dair İzlem Notları</b></td>
+                                                <td><b>:</b></td>
+                                                <td>@Model.Yatislar.GunlukIzlemBilgisi</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Yatış Sonlanma Tarihi</b></td>
+                                                <td><b>:</b></td>
+                                                <td>@Model.Yatislar.YatisSonlanmaTarihi.ToString("dd/MM/yyyy HH:mm")</td>
+
+                                                <td><b>Yatış Sonlanma Nedeni</b></td>
+                                                <td><b>:</b></td>
+                                                <td>@Model.Yatislar.YatisSonlanmaNedeni</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Yatış Sonlanma Açıklama</b></td>
+                                                <td><b>:</b></td>
+                                                <td>@Model.Yatislar.YatisSonlanmaAciklama</td>
+
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/dist/vendors/jquery/jquery-3.3.1.min.js"></script>
+<script src="~/dist/vendors/jquery-ui/jquery-ui.min.js"></script>
+<script src="~/dist/vendors/moment/moment.js"></script>
+<script src="~/dist/vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/dist/vendors/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="~/dist/vendors/datatable/js/jquery.dataTables.min.js"></script>
+<script src="~/dist/vendors/datatable/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/dist/vendors/datatable/jszip/jszip.min.js"></script>
+<script src="~/dist/vendors/datatable/pdfmake/pdfmake.min.js"></script>
+<script src="~/dist/vendors/datatable/pdfmake/vfs_fonts.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/dataTables.buttons.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.colVis.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.flash.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.html5.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.print.min.js"></script>
+<script src="~/dist/js/datatable.script.js"></script>

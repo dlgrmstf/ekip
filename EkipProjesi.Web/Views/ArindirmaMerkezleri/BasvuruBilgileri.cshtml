@@ -1,0 +1,145 @@
+﻿@model List<IArindirmaBasvuruBilgileri>
+@{
+    ViewBag.Title = "Başvuru Bilgileri";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/dist/vendors/datatable/css/dataTables.bootstrap4.min.css" />
+<link rel="stylesheet" href="~/dist/vendors/datatable/buttons/css/buttons.bootstrap4.min.css" />
+
+<div class="row">
+    <div class="col-12  align-self-center">
+        <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+            <div class="w-sm-100 mr-auto"><h4 class="mb-0">Başvuru Bilgileri</h4> <a href="@Url.Action("Index", "ArindirmaMerkezleri")"><p>Arındırma Merkezleri Modülü</p></a></div>
+            <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+                <li class="breadcrumb-item"><a href="#">Başvuru Bilgileri</a></li>
+                <li class="breadcrumb-item active">Anasayfa</li>
+            </ol>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 mt-3">
+        <div class="card">
+            <div class="card-header  justify-content-between align-items-center">
+                <h4 class="card-title">Başvurular</h4>
+            </div>
+            @if (User.IsInRole("16"))
+            {
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="example" class="display table dataTable table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Başvuru No</th>
+                                    <th>Ad-Soyad</th>
+                                    <th>Poliklinik Türü</th>
+                                    <th>Muayene Tarihi</th>
+                                    <th>Muayeneyi Gerçekleştiren Hekim</th>
+                                    <th>Uzman/Asistan</th>
+                                    <th>Karar</th>
+                                    <th>Detay</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (User.IsInRole("90"))
+                                {
+                                    foreach (var h in ViewBag.KendiHastalariBasvuru)
+                                    {
+                                        <tr>
+                                            <td>@h.HastaProtokolNo</td>
+                                            <td>@h.HastaAdi @h.HastaSoyadi</td>
+                                            <td>@h.PoliklinikTuru</td>
+                                            <td>@h.PoliklinikMuayeneTarihSaati.ToString("dd/MM/yyyy HH:mm")</td>
+                                            <td>@h.MuayeneyiGerceklestirenHekim</td>
+                                            <td>@h.MuayeneyiGerceklestirenHekimTuru</td>
+                                            <td>@h.Karar</td>
+                                            @if (User.IsInRole("17"))
+                                            {
+                                                <td><a class="btn btn-outline-primary rounded-btn mb-2" href="@Url.Action("BasvuruDetay", "ArindirmaMerkezleri", new { id = h.ID })"><i class="fa fa-plus"></i></a></td>
+                                            }
+                                        </tr>
+                                    }
+                                }
+                                else if (User.IsInRole("91"))
+                                {
+                                    foreach (var h in ViewBag.KurumdakiHastalarBasvuru)
+                                    {
+                                        <tr>
+                                            <td>@h.HastaProtokolNo</td>
+                                            <td>@h.HastaAdi @h.HastaSoyadi</td>
+                                            <td>@h.PoliklinikTuru</td>
+                                            <td>@h.PoliklinikMuayeneTarihSaati.ToString("dd/MM/yyyy HH:mm")</td>
+                                            <td>@h.MuayeneyiGerceklestirenHekim</td>
+                                            <td>@h.MuayeneyiGerceklestirenHekimTuru</td>
+                                            <td>@h.Karar</td>
+                                            @if (User.IsInRole("17"))
+                                            {
+                                                <td><a class="btn btn-outline-primary rounded-btn mb-2" href="@Url.Action("BasvuruDetay", "ArindirmaMerkezleri", new { id = h.ID })"><i class="fa fa-plus"></i></a></td>
+                                            }
+                                        </tr>
+                                    }
+                                }
+                                else if (User.IsInRole("92"))
+                                {
+                                    foreach (var h in ViewBag.TumBasvurular)
+                                    {
+                                        <tr>
+                                            <td>@h.HastaProtokolNo</td>
+                                            <td>@h.HastaAdi @h.HastaSoyadi</td>
+                                            <td>@h.PoliklinikTuru</td>
+                                            <td>@h.PoliklinikMuayeneTarihSaati.ToString("dd/MM/yyyy HH:mm")</td>
+                                            <td>@h.MuayeneyiGerceklestirenHekim</td>
+                                            <td>@h.MuayeneyiGerceklestirenHekimTuru</td>
+                                            <td>@h.Karar</td>
+                                            @if (User.IsInRole("17"))
+                                            {
+                                                <td><a class="btn btn-outline-primary rounded-btn mb-2" href="@Url.Action("BasvuruDetay", "ArindirmaMerkezleri", new { id = h.ID })"><i class="fa fa-plus"></i></a></td>
+                                            }
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Başvuru No</th>
+                                    <th>Ad-Soyad</th>
+                                    <th>Poliklinik Türü</th>
+                                    <th>Muayene Saati</th>
+                                    <th>Muayeneyi Gerçekleştiren Hekim</th>
+                                    <th>Uzman/Asistan</th>
+                                    <th>Karar</th>
+                                    <th>Detay</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="card-body">
+                    <p>Başvuru bilgisi bulunamadı.</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script src="~/dist/vendors/jquery/jquery-3.3.1.min.js"></script>
+<script src="~/dist/vendors/jquery-ui/jquery-ui.min.js"></script>
+<script src="~/dist/vendors/moment/moment.js"></script>
+<script src="~/dist/vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/dist/vendors/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="~/dist/vendors/datatable/js/jquery.dataTables.min.js"></script>
+<script src="~/dist/vendors/datatable/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/dist/vendors/datatable/jszip/jszip.min.js"></script>
+<script src="~/dist/vendors/datatable/pdfmake/pdfmake.min.js"></script>
+<script src="~/dist/vendors/datatable/pdfmake/vfs_fonts.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/dataTables.buttons.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.colVis.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.flash.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.html5.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.print.min.js"></script>
+<script src="~/dist/js/datatable.script.js"></script>

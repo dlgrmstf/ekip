@@ -1,0 +1,73 @@
+﻿@model EkipProjesi.Core.Kullanici.IKullanici
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Pick Admin</title>
+    <link rel="shortcut icon" href="dist/images/favicon.ico" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <link rel="stylesheet" href="~/dist/vendors/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/dist/vendors/jquery-ui/jquery-ui.min.css">
+    <link rel="stylesheet" href="~/dist/vendors/jquery-ui/jquery-ui.theme.min.css">
+    <link rel="stylesheet" href="~/dist/vendors/simple-line-icons/css/simple-line-icons.css">
+    <link rel="stylesheet" href="~/dist/vendors/flags-icon/css/flag-icon.min.css">
+    <link rel="stylesheet" href="~/dist/vendors/social-button/bootstrap-social.css" />
+    <link rel="stylesheet" href="~/dist/css/main.css">
+</head>
+<body id="main-container" class="default">
+    <div class="container">
+        <div class="row vh-100 justify-content-between align-items-center">
+            <div class="col-12">
+                <form action="#" class="row row-eq-height lockscreen  mt-5 mb-5">
+                    <div class="lock-image col-12 col-sm-5"></div>
+                    @using (Html.BeginForm("Index", "Hesap", FormMethod.Post, new { @class = "form-validation", id = "box-login" }))
+                    {
+                        <div class="login-form col-12 col-sm-7">
+                            <div class="form-group mb-3">
+                                <label for="@Html.IdFor(x => x.Email)">Email</label>
+                                @Html.TextBoxFor(x => x.KullaniciAdi, new { @class = "form-control validate[required,custom[email]]", placeholder = "E - Posta", type = "email" })
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="@Html.IdFor(x=>x.Sifre)">Şifre</label>
+                                <input type="password" class="form-control validate[required]" id="@Html.IdFor(x=>x.Sifre)" name="@Html.NameFor(x=>x.Sifre)" placeholder="Lütfen şifrenizi giriniz." required>
+                            </div>
+
+                            <div class="form-group clearfix">
+                                <a class="float-right" href="@Url.Action("SifremiUnuttum","Hesap")">Şifrenizi mi Unuttunuz?</a>
+                            </div>
+
+                            <div class="form-group mb-0">
+                                <button class="btn btn-primary" type="submit" onclick="login();"> Giriş</button>
+                            </div>
+                        </div>
+                     }
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function login() {
+            if (jQuery("#box-login").validationEngine('validate')) {
+                basla();
+                $("#box-login").submit();
+            }
+        }
+        jQuery(document).ready(function () {
+            jQuery("#box-login").validationEngine();
+        });
+    </script>
+
+    <script src="~/dist/vendors/jquery/jquery-3.3.1.min.js"></script>
+    <script src="~/dist/vendors/jquery-ui/jquery-ui.min.js"></script>
+    <script src="~/dist/vendors/moment/moment.js"></script>
+    <script src="~/dist/vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/dist/vendors/slimscroll/jquery.slimscroll.min.js"></script>
+
+</body>
+</html>

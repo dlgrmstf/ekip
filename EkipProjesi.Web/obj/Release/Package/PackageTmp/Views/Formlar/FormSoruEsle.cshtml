@@ -1,0 +1,716 @@
+﻿@model EkipProjesi.Core.Formlar.AnketDTO
+@{
+    ViewBag.Title = "FormSoruEsle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int say = 0;
+}
+
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+<div class="row">
+    <div class="col-12  align-self-center">
+        <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+            <div class="w-sm-100 mr-auto"><h4 class="mb-0">Form Soru Eşle</h4> <p><a href="@Url.Action("Index","Formlar")">Formlar</a></p></div>
+            <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+                <li class="breadcrumb-item"><a href="#">Form Soru Eşle</a></li>
+                <li class="breadcrumb-item active">Anasayfa</li>
+            </ol>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Form Detayı</h3>
+            </div>
+            <div class="card-body">
+                <table class="table table-hover">
+                    <tr>
+                        <th>Anket Türü</th>
+                        <td>@Model.AnketTipAdi</td>
+                        <th>Başlık</th>
+                        <td>@Model.Baslik</td>
+                        <th>Açıklama</th>
+                        <td>@Model.Aciklama</td>
+                    </tr>
+                    <tr>
+                        <th>Başlangıç Tarihi</th>
+                        <td>@string.Format("{0:dd.MM.yyyy}", Model.BaslangicTarihi)</td>
+                        <th>Bitiş Tarihi</th>
+                        <td>@string.Format("{0:dd.MM.yyyy}", Model.BitisTarihi)</td>
+                        <th>Durum</th>
+                        <td>
+                            @if (Model.Status)
+                            {
+                                <span class="badge badge-success">Aktif</span>
+                            }
+                            else
+                            {
+                                <span class="badge badge-danger">Pasif</span>
+                            }
+                        </td>
+                    </tr>
+                </table>
+                <button class="btn btn-success" data-toggle="modal" data-target="#grupModal">Grup Ekle</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+<br />
+<br />
+@foreach (var a in Model.AnketGruplari)
+{
+    say = 0;
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <br />
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h5 class="card-title">
+                                @a.Sira - @a.GrupAdi
+                            </h5>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="btn btn-warning btn-sm" onclick="soruEkle(@a.ID,'@Html.Raw(a.GrupAdi)');">Soru Ekle</button>
+                            <button class="btn btn-primary btn-sm" onclick="grupGuncelle(@a.ID,'@Html.Raw(a.GrupAdi)','@Html.Raw(a.Aciklama)',@a.Sira, '@Html.Raw(a.Status)');">Grup Güncelle</button>
+                            <button class="btn btn-danger btn-sm" onclick="grupSil(@a.ID);">Grup Sil</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    @if (Model.Sorular.Where(x => x.GrupID == a.ID).Sum(x => x.Agirlik) != 100)
+                    {
+                        <div class="alert dark alert-danger alert-dismissible">
+                            <p><i class="fa fa-info-circle"></i> Soruların ağırlık toplamı %100 olmalıdır!</p>
+                        </div>
+                    }
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>#</th>
+                                    <th width="40%">Soru</th>
+                                    <th width="10%">
+                                        Ağırlık
+                                        <span class="badge" id="sum_@a.ID">%</span>
+                                    </th>
+                                    <th width="15%">Tipi</th>
+                                    <th>Zorunlu Mu?</th>
+                                    <th>Cevaplar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var s in Model.Sorular.Where(x => x.GrupID == a.ID))
+                                {
+                                    say++;
+                                    <tr>
+                                        <td>
+                                            <button type="button" class="btn btn-sm btn-icon btn-flat btn-default" data-toggle="tooltip" data-original-title="Soruyu Sil" onclick="sorusil(@s.ID)">
+                                                <i class="icon-minus" aria-hidden="true"></i>
+                                            </button>
+                                        </td>
+                                        <td>
+                                            @say
+                                        </td>
+                                        <td>@s.SoruAdi</td>
+                                        <td>
+                                            <div class="form-group">
+                                                <div class="input-group input-group-sm">
+                                                    <span class="input-group-addon">%</span>
+                                                    <input type="number" id="" soru="@s.ID" class="form-control input-sm g_@a.ID hesapla" value="@s.Agirlik" />
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <div class="col-sm-12">
+                                                    <select class="form-control input-sm" id="tip_@s.ID" name="" onchange="tipdegistir(this);" soru="@s.ID">
+                                                        <option value="0">Seçiniz</option>
+                                                        <option value="1">Radio (Tek Seçimlik Cevap)</option>
+                                                        <option value="2">Checkbox (Çoklu Cevap Seçimleri)</option>
+                                                        <option value="3">Input</option>
+                                                        <option value="4">Text Area</option>
+                                                    </select>
+                                                    <script>
+                                                        $('#tip_@s.ID option[value="@s.SoruTipi"]').attr('selected', 'selected');
+                                                    </script>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            @if (s.ZorunluMu)
+                                            {
+                                                <div class="radio-custom radio-primary">
+                                                    <input type="radio" name="zorunlu_@s.ID" id="evet_@s.ID" class="input-sm" soru="@s.ID" checked onchange="zorunludegistir(this);" value="True" />
+                                                    <label for="evet_@s.ID">Evet</label>
+                                                </div>
+                                                <div class="radio-custom radio-primary">
+                                                    <input type="radio" name="zorunlu_@s.ID" id="hayir_@s.ID" class="input-sm" soru="@s.ID" onchange="zorunludegistir(this);" value="False" />
+                                                    <label for="hayir_@s.ID">Hayır</label>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="radio-custom radio-primary">
+                                                    <input type="radio" name="zorunlu_@s.ID" id="evet_@s.ID" class="input-sm" soru="@s.ID" onchange="zorunludegistir(this);" value="True" />
+                                                    <label for="evet_@s.ID">Evet</label>
+                                                </div>
+                                                <div class="radio-custom radio-primary">
+                                                    <input type="radio" name="zorunlu_@s.ID" id="hayir_@s.ID" class="input-sm" soru="@s.ID" checked onchange="zorunludegistir(this);" value="False" />
+                                                    <label for="hayir_@s.ID">Hayır</label>
+                                                </div>
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (s.SoruTipleri != AnketSoruTipi.Yok)
+                                            {
+                                                if (s.SoruTipleri == AnketSoruTipi.Input || s.SoruTipleri == AnketSoruTipi.TextArea)
+                                                {
+                                                    if (s.Cevaplar.Count() == 0)
+                                                    {
+                                                        <button class="btn btn-sm btn-warning" onclick="cevapekle(@s.ID)">Cevap Ekle</button>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <button class="btn btn-sm btn-warning" onclick="cevapekle(@s.ID)" style="width:100px;height:70px">Cevap Ekle</button>
+                                                }
+                                            }
+
+                                            @foreach (var c in s.Cevaplar)
+                                            {
+
+                                                <p>
+                                                    <i class="fa fa-pencil-square" onclick="cevapguncelle(@c.ID,'@Html.Raw(c.CevapAdi)',@c.Puan)" title="Cevap Güncelle"></i>
+                                                    <i class="fa fa-times" style="color:red;" onclick="cevapsil(@c.ID)" title="Cevap Sil"></i>
+                                                    Cevap: <span class="badge badge-danger">@c.CevapAdi</span><br />
+                                                    Puan: <span class="badge badge-success">@c.Puan</span>
+                                                </p>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th><button class="btn btn-primary" onclick="agirlikguncelle(@a.ID)" style="width:130px; height:30px"><span>Ağırlık Güncelle</span></button></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<div class="modal fade" id="cevapModal" tabindex="-1" role="dialog" aria-labelledby="editor-title">
+    <div class="modal-dialog modal-simple" role="document">
+        <div class="modal-content form-horizontal" id="editor">
+            <div class="modal-header">
+                <h4 class="modal-title" id="title">Cevap Ekle</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="CevapID" value="" />
+                <input type="hidden" id="cSoruID" value="" />
+                <div class="form-group">
+                    <label for="CevapAdi" class="col-sm-3 control-label">Cevap Adı</label>
+                    <div class="col-sm-12">
+                        @Html.TextBox("CevapAdi", "", new { @class = "form-control", type = "text" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Puan" class="col-sm-3 control-label">Puan</label>
+                    <div class="col-sm-12">
+                        @Html.TextBox("Puan", "0", new { @class = "form-control", type = "number" })
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" onclick="cevapIslem();">Kaydet</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Vazgeç</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="soruModal" tabindex="-1" role="dialog" aria-labelledby="editor-title">
+    <div class="modal-dialog modal-simple" role="document">
+        <div class="modal-content form-horizontal" id="editor">
+            <div class="modal-header">
+                <h6 class="modal-title" id="soru-title"></h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="height:300px">
+                <input type="hidden" id="sGrupID" value="" />
+                <div class="form-group required">
+                    <label for="GrupAdi" class="col-sm-3 control-label">Soru Bankası</label>
+                    <div class="col-sm-12">
+                        <input class="col-sm-12" type="text" placeholder="Arayın.." id="myInput" onkeyup="filterFunction()">
+                        <select class="form-control" id="SoruID" name="SoruID" multiple data-plugin="selectpicker" data-actions-box="true" style="height:230px">
+                            @foreach (var s in Model.SoruBankasi)
+                            {
+                                <option value="@s.ID">@s.Soru</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                @*<div class="form-group required">
+                        <label for="SoruTipi" class="col-sm-3 control-label">Soru Tipi</label>
+                        <div class="col-sm-12">
+                            <select class="form-control" id="SoruTipi" name="SoruTipi">
+                                <option value="1">Radio</option>
+                                <option value="2">Checkbox</option>
+                                <option value="3">Input</option>
+                                <option value="4">Text Area</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Agirlik" class="col-sm-3 control-label">Ağırlık</label>
+                        <div class="col-sm-12">
+                            @Html.TextBox("Agirlik", "0", new { @class = "form-control", type = "number" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="CevapSayisi" class="col-sm-3 control-label">Cevap Sayısı</label>
+                        <div class="col-sm-12">
+                            @Html.TextBox("CevapSayisi", "0", new { @class = "form-control", required = "required", type = "number" })
+                        </div>
+                    </div>
+                    <div class="form-group required">
+                        <label for="ZorunluMu" class="col-sm-3 control-label">Zorunlu Mu?</label>
+                        <div class="col-sm-12">
+                            <select class="form-control" id="ZorunluMu" name="ZorunluMu">
+                                <option value="False">Hayır</option>
+                                <option value="True">Evet</option>
+                            </select>
+                        </div>
+                    </div>*@
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" onclick="soruIslem();">Kaydet</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Vazgeç</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="grupModal" tabindex="-1" role="dialog" aria-labelledby="editor-title">
+    <div class="modal-dialog modal-simple" role="document">
+        <div class="modal-content form-horizontal" id="editor">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="grup-title"></h4>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="GrupID" value="0" />
+                <div class="form-group required">
+                    <label for="GrupAdi" class="col-sm-3 control-label">Grup Adı</label>
+                    <div class="col-sm-12">
+                        @Html.TextBox("GrupAdi", "", new { @class = "form-control", required = "required" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="@Html.IdFor(x=>x.Aciklama)" class="col-sm-3 control-label">Açıklama</label>
+                    <div class="col-sm-12">
+                        @Html.TextBox("Aciklama", "", new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Sira" class="col-sm-3 control-label">Sıra</label>
+                    <div class="col-sm-12">
+                        @Html.TextBox("Sira", "", new { @class = "form-control", required = "required", type = "number" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Sira" class="col-sm-3 control-label">Durum</label>
+                    <div class="col-sm-12">
+                        <select name="Status" id="Status" class="form-control">
+                            <option value="True">Aktif</option>
+                            <option value="False">Pasif</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" onclick="grupIslem();">Kaydet</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Vazgeç</button>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .btn {
+        height: 30px;
+    }
+</style>
+
+<link href="~/Content/global/vendor/bootstrap-select/bootstrap-select.css" rel="stylesheet" />
+<script src="~/Content/global/vendor/bootstrap-select/bootstrap-select.js"></script>
+<script src="~/Content/global/js/Plugin/bootstrap-select.js"></script>
+<script>
+    var gruplar = @Html.Encode(Json.Encode(Model.AnketGruplari.Select(x => x.ID).ToList()));
+    var sum = 0;
+    agirlikHesapla();
+    function cevapguncelle(id, cevap, puan) {
+        $("#cSoruID").val(id);
+        $("#CevapAdi").val(cevap);
+        $("#Puan").val(puan);
+        $("#CevapID").val(id);
+        $("#cevapModal").modal("show");
+    }
+    function cevapekle(id) {
+        $("#cSoruID").val(id);
+        $("#CevapAdi").val("");
+        $("#Puan").val(0);
+        $("#CevapID").val(0);
+        $("#cevapModal").modal("show");
+    }
+    function cevapsil(id) {
+        if (confirm("Cevabı Silmek İstediğinizden Emin Misiniz?")) {
+            jQuery.ajax({
+                cache: false,
+                type: "POST",
+                url: '@Url.Action("CevapSil", "Formlar")',
+                data: { id: id },
+            success: function (data) {
+                if (data.success) {
+                    window.location.reload();
+                }
+                else {
+                    durdur();
+                    if (data.message != '') {
+                        toastr["error"](data.message, "Bilgi");
+                    }
+                    else {
+                        toastr["error"]("İşleminiz Sırasında Hata Oluşmuştur.", "Bilgi");
+                    }
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+            }
+        });
+        }
+    }
+    function cevapIslem() {
+        var values = {
+            ID: $("#CevapID").val(),
+            SoruID: $("#cSoruID").val(),
+            Puan: $("#Puan").val(),
+            CevapAdi: $("#CevapAdi").val()
+        };
+
+                    jQuery.ajax({
+                cache: false,
+                type: "POST",
+                        url: '@Url.Action("CevapEkleGuncelle", "Formlar")',
+                        data: values,
+            success: function (data) {
+                if (data.success) {
+                    window.location.reload();
+                }
+                else {
+                    durdur();
+                    if (data.message != '') {
+                        toastr["error"](data.message, "Bilgi");
+                    }
+                    else {
+                        toastr["error"]("İşleminiz Sırasında Hata Oluşmuştur.", "Bilgi");
+                    }
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+            }
+        });
+    }
+    function agirlikguncelle(id) {
+        sum = 0;
+        var puanlar = [];
+        $(".g_" + id).each(function () {
+            sum += Number($(this).val());
+            puanlar.push({ "ID": $(this).attr("soru"), "Agirlik": $(this).val()});
+        });
+
+        console.log("sum:" + sum);
+        if (sum <= 100) {
+            console.log(puanlar);
+            jQuery.ajax({
+                cache: false,
+                type: "POST",
+                url: '@Url.Action("SoruPuanGuncelle", "Formlar")',
+                data: {
+                    model: puanlar
+                },
+            success: function (data) {
+                if (data.success) {
+                    window.location.reload();
+                }
+                else {
+                    durdur();
+                    if (data.message != '') {
+                        alert(data.message);
+                    }
+                    else {
+                        alert("İşleminiz Sırasında Hata Oluşmuştur.");
+                    }
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+            }
+        });
+        }
+        else {
+            agirlikHesapla();
+            alert("Toplam Ağırlık %100 den Küçük Olmalıdır!");
+        }
+        agirlikHesapla();
+    }
+    function sorusil(id) {
+        if (confirm("Soru Silmek İstediğinizden Emin Misiniz?")) {
+                    var values = {
+            ID: id
+        };
+          jQuery.ajax({
+            cache: false,
+            type: "POST",
+            url: '@Url.Action("SoruSil", "Formlar")',
+            data: values,
+            success: function (data) {
+                if (data.success) {
+                    window.location.reload();
+                }
+                else {
+                    durdur();
+                    if (data.message != '') {
+                        alert(data.message);
+                    }
+                    else {
+                        alert("İşleminiz Sırasında Hata Oluşmuştur.");
+                    }
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+            }
+        });
+        }
+    }
+    function zorunludegistir(zorunlu) {
+        console.log($(zorunlu).attr("soru"));
+        var values = {
+            ID: $(zorunlu).attr("soru"),
+            ZorunluMu: $(zorunlu).val()
+        };
+          jQuery.ajax({
+            cache: false,
+            type: "POST",
+            url: '@Url.Action("SoruZorunluGuncelle", "Formlar")',
+            data: values,
+            success: function (data) {
+                if (data.success) {
+                    durdur();
+                }
+                else {
+                    durdur();
+                    if (data.message != '') {
+                        alert(data.message);
+                    }
+                    else {
+                        alert("İşleminiz Sırasında Hata Oluşmuştur.");
+                    }
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+            }
+        });
+    }
+    function tipdegistir(tip) {
+        console.log($(tip).attr("soru"));
+                var values = {
+                    ID: $(tip).attr("soru"),
+                    SoruTipi: $(tip).val()
+        };
+          jQuery.ajax({
+            cache: false,
+            type: "POST",
+            url: '@Url.Action("SoruTipGuncelle", "Formlar")',
+            data: values,
+            success: function (data) {
+                if (data.success) {
+                    window.location.reload();
+                }
+                else {
+                    durdur();
+                    if (data.message != '') {
+                        alert(data.message);
+                    }
+                    else {
+                        alert("İşleminiz Sırasında Hata Oluşmuştur.");
+                    }
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+            }
+        });
+    }
+    function agirlikHesapla() {
+        for (var i = 0; i < gruplar.length; i++) {
+            sum = 0;
+            $(".g_" + gruplar[i]).each(function () {
+                sum += Number($(this).val());
+            });
+            if (sum == 100) {
+                $("#sum_" + gruplar[i]).removeClass("badge-danger").addClass("badge-success");
+                $("#sum_" + gruplar[i]).text("%" + sum);
+            }
+            else {
+                $("#sum_" + gruplar[i]).removeClass("badge-success").addClass("badge-danger");
+            }
+            $("#sum_" + gruplar[i]).text("%" + sum);
+        }
+    }
+    $(".hesapla").change(function () {
+        agirlikHesapla();
+    });
+    function soruEkle(id,ad) {
+        $("#soru-title").text(ad + " İçin Soru Ekleyin");
+        $("#sGrupID").val(id);
+        $("#soruModal").modal("show");
+    }
+    function soruIslem() {
+        var values = {
+            GrupID: $('#sGrupID').val(),
+            Sorular: $('#SoruID').val(),
+            //ZorunluMu: $('#ZorunluMu').val(),
+            //CevapSayisi: $('#CevapSayisi').val(),
+            //Agirlik: $('#Agirlik').val(),
+            //SoruTipi: $('#SoruTipi').val(),
+            //SoruID: $('#SoruID').val(),
+            AnketID: @Model.ID,
+        };
+
+             jQuery.ajax({
+                    cache: false,
+                    type: "POST",
+                    url: '@Url.Action("FormSoruEkle", "Formlar")',
+                    data: values,
+                    success: function (data) {
+                        if (data.success) {
+                            window.location.reload();
+                        }
+                        else {
+                            durdur();
+                            if (data.message != '') {
+                                alert(data.message);
+                            }
+                            else {
+                                alert("İşleminiz Sırasında Hata Oluşmuştur.");
+                            }
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                    }
+                });
+    }
+    function grupGuncelle(id, ad, aciklama, sira, status) {
+        $('#GrupID').val(id);
+        $('#GrupAdi').val(ad);
+        $('#Aciklama').val(aciklama);
+        $('#Sira').val(sira);
+        $('#Status').val(status);
+        $("#grupModal").modal("show");
+    }
+    function grupSil(id) {
+        if (confirm("Grubu Silmek İstediğinizden Emin Misiniz? (Sorular ve Cevaplarda Silinecektir)")) {
+            jQuery.ajax({
+                cache: false,
+                type: "POST",
+                url: '@Url.Action("GrupSil", "Formlar")',
+                data: { id: id },
+                    success: function (data) {
+                        if (data.success) {
+                            window.location.reload();
+                        }
+                        else {
+                            durdur();
+                            if (data.message != '') {
+                                alert(data.message);
+                            }
+                            else {
+                                alert("İşleminiz Sırasında Hata Oluşmuştur.");
+                            }
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                    }
+                });
+        }
+    }
+    function grupIslem() {
+        var values = {
+            ID: $('#GrupID').val(),
+            GrupAdi: $('#GrupAdi').val(),
+            Aciklama: $('#Aciklama').val(),
+            Sira: $('#Sira').val(),
+            Status: $('#Status').val(),
+            AnketID: @Model.ID,
+        };
+
+                    jQuery.ajax({
+                    cache: false,
+                    type: "POST",
+                    url: '@Url.Action("GrupEkleGuncelle", "Formlar")',
+                    data: values,
+                    success: function (data) {
+                        if (data.success) {
+                            window.location.reload();
+                        }
+                        else {
+                            durdur();
+                            if (data.message != '') {
+                                alert(data.message);
+                            }
+                            else {
+                                alert("İşleminiz Sırasında Hata Oluşmuştur.");
+                            }
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                    }
+                });
+    }
+</script>
+
+
+<script>
+    function filterFunction() {
+        var input, filter, ul, li, a, i;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        div = document.getElementById("SoruID");
+        a = div.getElementsByTagName("option");
+        for (i = 0; i < a.length; i++) {
+            txtValue = a[i].textContent || a[i].innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                a[i].style.display = "";
+            } else {
+                a[i].style.display = "none";
+            }
+        }
+    }
+</script>

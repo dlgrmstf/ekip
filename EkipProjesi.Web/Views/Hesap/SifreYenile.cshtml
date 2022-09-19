@@ -1,0 +1,93 @@
+﻿@model IKullanici
+@{
+    ViewBag.Title = "SifreYenile";
+    Layout = null;
+}
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>EKİP</title>
+    <link rel="shortcut icon" href="dist/images/favicon.ico" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <link rel="stylesheet" href="~/dist/vendors/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/dist/vendors/jquery-ui/jquery-ui.min.css">
+    <link rel="stylesheet" href="~/dist/vendors/jquery-ui/jquery-ui.theme.min.css">
+    <link rel="stylesheet" href="~/dist/vendors/simple-line-icons/css/simple-line-icons.css">
+    <link rel="stylesheet" href="~/dist/vendors/flags-icon/css/flag-icon.min.css">
+    <link rel="stylesheet" href="~/dist/vendors/social-button/bootstrap-social.css" />
+    <link rel="stylesheet" href="~/dist/css/main.css">
+</head>
+<body id="main-container" class="default">
+    <div class="container">
+        <div class="row vh-100 justify-content-between align-items-center">
+            <div class="col-12">
+                <div class="row row-eq-height lockscreen mt-5 mb-5">
+                    <form class="form-horizontal" id="form" role="form" enctype="multipart/form-data">
+                        <div class="login-form col-12 col-sm-7">
+                            <div class="form-group mb-12">
+                                <label>Kullanıcı Adı</label>
+                                @Html.TextBoxFor(x => x.KullaniciAdi, new { @class = "form-control", required = "required", style = "width: 230px", value = ViewBag.KullaniciAdi })
+                            </div>
+                            <div class="form-group mb-12">
+                                <label>Şifre</label>
+                                @Html.PasswordFor(x => x.Sifre, new { @class = "form-control", required = "required", style = "width: 230px" })
+                            </div>
+                            @*<div class="form-group mb-12">
+                                    <label>Şifre Tekrar</label>
+                                    @Html.PasswordFor(x => x.Sifre, new { @class = "form-control", required = "required", style = "width: 230px" })
+                                </div>*@
+                            <div class="form-group mb-0">
+                                <button type="button" class="btn btn-success" id="yenile">Yenile</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Content/js/jquery-1.12.4.min.js"></script>
+    <script src="~/Content/js/bootstrap.min.js"></script>
+    <script src="~/Content/js/jquery.metisMenu.js"></script>
+    <script src="~/Content/js/custom.js"></script>
+    <script>
+        if ('@ViewBag.Msg' != "") {
+            alert('@ViewBag.Msg');
+        }
+    </script>
+    <script>
+        $('#yenile').on("click", function () {
+            var form = $('#form')[0];
+            var dataString = new FormData(form);
+            jQuery.ajax({
+                cache: false,
+                type: "POST",
+                url: '@Url.Action("SifreGuncelle", "Hesap")',
+                enctype: 'multipart/form-data',
+                data: dataString,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                     alert("Şifreniz başarıyla güncellenmiştir. Giriş ekranına yönlendiriliyorsunuz..")
+                     location.href = '@Url.Action("Index", "Hesap")';
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                   alert("İşleminiz sırasında hata oluştu. Lütfen tekrar deneyiniz.");
+                }
+            });
+        });
+    </script>
+    <script src="~/dist/vendors/jquery/jquery-3.3.1.min.js"></script>
+    <script src="~/dist/vendors/jquery-ui/jquery-ui.min.js"></script>
+    <script src="~/dist/vendors/moment/moment.js"></script>
+    <script src="~/dist/vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/dist/vendors/slimscroll/jquery.slimscroll.min.js"></script>
+    <style>
+        .container {
+            width: 300px
+        }
+    </style>
+</body>
+</html>

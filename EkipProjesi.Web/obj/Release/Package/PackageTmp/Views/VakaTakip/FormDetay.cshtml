@@ -1,0 +1,320 @@
+﻿@using Newtonsoft.Json;
+@model EkipProjesi.Core.Formlar.AnketDTO
+@{
+    ViewBag.Title = Model.Baslik + "";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int say = 0, soru = 0;
+    var hasta = ViewBag.Hastalar;
+}
+@functions{
+    public string valid(bool r)
+    {
+        if (r)
+        {
+            return "validate[required]";
+        }
+        else
+        {
+            return "";
+        }
+    }
+}
+
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+<link href="~/Content/js/validationengine/validationengine.css" type="text/css" />
+@*<link href="~/Content/global/vendor/jquery-wizard/jquery-wizard.min.css" rel="stylesheet" />*@
+
+<style>
+    .soru {
+        font-weight: 700;
+    }
+</style>
+
+<div class="row">
+    <div class="col-12  align-self-center">
+        <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+            <div class="w-sm-100 mr-auto"><h4 class="mb-0">Form Detay</h4> <p><a href="@Url.Action("Index","VakaTakip")">Vaka Takip Modulü</a></p></div>
+            <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+                <li class="breadcrumb-item"><a href="#">Form Detay</a></li>
+                <li class="breadcrumb-item active">Anasayfa</li>
+            </ol>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">@Model.Baslik</h5>
+            </div>
+            <div class="card-body">
+                <p>Geçerlilik Tarihi @string.Format("{0:dd.MM.yyyy}", Model.BaslangicTarihi) - @string.Format("{0:dd.MM.yyyy}", Model.BitisTarihi)</p>
+                <p>@Model.Aciklama</p>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<br />
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card" id="anketWizard">
+            <div class="card-header">
+                <h5 class="card-title">@Model.Baslik</h5>
+            </div>
+            <div class="card-body">
+                <div class="card-content">
+                    <div class="card-pane active" id="">
+                        <div class="text-center my-20">
+                            <h6>Formumuz @Model.AnketGruplari.Sum(x => x.Sorular.Count()) sorudan oluşmaktadır.</h6>
+                        </div>
+                    </div>
+                    @foreach (var g in Model.AnketGruplari)
+                    {
+                        soru = 0;
+                        <div class="card-content" id="" data-validator="validateCallback_@g.ID">
+                            @if (!string.IsNullOrEmpty(g.Aciklama))
+                            {
+                                <div class="alert alert-alt alert-info alert-dismissible" style="height:40px">
+                                    <p>@g.Aciklama</p>
+                                </div>
+                            }
+                            <form class="form-horizontal" id="form_@Model.ID" method="post" role="form" enctype="multipart/form-data">
+                                @foreach (var s in g.Sorular)
+                                {
+                                    soru++;
+                                    <div class="form-group">
+                                        @if (string.IsNullOrEmpty(s.SoruAciklama))
+                                        {
+                                            <label class="form-control-label soru" for="">@soru<span>.</span> @s.SoruAdi</label>
+                                        }
+                                        else
+                                        {
+                                            <label class="form-control-label soru" for="" data-content="@s.SoruAciklama" data-trigger="hover" data-toggle="popover" data-original-title="Açıklama">@soru<span>.</span> <i class="fa fa-info"></i> @s.SoruAdi</label>
+                                        }
+                                        @if (s.SoruTipleri == AnketSoruTipi.Checkbox)
+                                        {
+                                            <ul class="list-unstyled list-inline">
+                                                @foreach (var c in s.Cevaplar)
+                                                {
+                                                    <li class="list-inline-item">
+                                                        <div class="checkbox-custom checkbox-primary">
+                                                            <input type="checkbox" value="@c.ID" name="s_@s.ID" placeholder="" id="c_@c.ID" class="@valid(s.ZorunluMu) hesapla" soru="@s.ID" />
+                                                            <label for="c_@c.ID">@c.CevapAdi</label>
+                                                        </div>
+                                                    </li>
+                                                }
+                                            </ul>
+
+                                        }
+                                        else if (s.SoruTipleri == AnketSoruTipi.Input)
+                                        {
+                                            foreach (var c in s.Cevaplar)
+                                            {
+                                                <input type="text" value="" name="s_@s.ID" class="form-control hesapla @valid(s.ZorunluMu)" soru="@s.ID" />
+                                            }
+                                        }
+                                        else if (s.SoruTipleri == AnketSoruTipi.Radio)
+                                        {
+                                            <ul class="list-unstyled list-inline">
+                                                @foreach (var c in s.Cevaplar)
+                                                {
+                                                    <li class="list-inline-item">
+                                                        <div class="radio-custom radio-primary">
+                                                            <input type="radio" value="@c.ID" name="s_@s.ID" id="c_@c.ID" class="@valid(s.ZorunluMu) hesapla" soru="@s.ID" />
+                                                            <label for="c_@c.ID">@c.CevapAdi</label>
+                                                        </div>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        }
+                                        else if (s.SoruTipleri == AnketSoruTipi.TextArea)
+                                        {
+                                            foreach (var c in s.Cevaplar)
+                                            {
+                                                <textarea value="" name="s_@s.ID" class="form-control hesapla @valid(s.ZorunluMu)" soru="@s.ID"></textarea>
+                                            }
+                                        }
+                                        else
+                                        {
+
+                                        }
+                                    </div>
+                                }
+                            </form>
+                        </div>
+                    }
+
+                    <div class="card-pane" id="" role="tabpanel">
+                        <div class="text-center my-20">
+                            <i class="icon wb-check font-size-40" aria-hidden="true"></i>
+                            <h6>Formu tamamlamak Formu Bitir butonuna tıklayınız.</h6>
+                            <p>Formu tamamladığınızda cevaplarınızı değiştiremezsiniz.</p>
+                        </div>
+                        <div>
+                            <button class="btn btn-primary" onclick="anketbitir();" type="button">Formu Bitir</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Content/vendor/jquery/jquery.min.js"></script>
+<script src="~/Content/vendor/breakpoints/breakpoints.js"></script>
+<script src="~/Content/assets/jquery-loading-overlay-master/src/loadingoverlay.js"></script>
+<script src="~/Content/global/vendor/moment/moment-with-locales.js"></script>
+<script src="~/Content/js/validationengine/jquery.validationEngine-tr.js"></script>
+<script src="~/Content/js/validationengine/jquery.validationEngine.js"></script>
+
+<script src="~/Content/vendor/babel-external-helpers/babel-external-helpers.js"></script>
+<script src="~/Content/vendor/tether/tether.js"></script>
+<script src="~/Content/vendor/bootstrap/bootstrap.js"></script>
+<script src="~/Content/vendor/animsition/animsition.js"></script>
+<script src="~/Content/vendor/mousewheel/jquery.mousewheel.js"></script>
+<script src="~/Content/vendor/asscrollbar/jquery-asScrollbar.js"></script>
+<script src="~/Content/vendor/asscrollable/jquery-asScrollable.js"></script>
+
+<script src="~/Content/vendor/intro-js/intro.js"></script>
+<script src="~/Content/vendor/slidepanel/jquery-slidePanel.js"></script>
+
+<script src="~/Content/js/State.js"></script>
+<script src="~/Content/js/Component.js"></script>
+<script src="~/Content/js/Plugin.js"></script>
+<script src="~/Content/js/Base.js"></script>
+<script src="~/Content/js/Config.js"></script>
+
+<script src="~/Content/assets/js/Site.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-Validation-Engine/2.6.2/jquery-1.8.2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-Validation-Engine/2.6.2/languages/jquery.validationEngine-en.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-Validation-Engine/2.6.2/jquery.validationEngine.min.js"></script>
+
+<script src="~/Content/global/vendor/jquery-wizard-master/jquery-wizard.js"></script>
+<script src="~/Content/global/vendor/matchheight/jquery.matchHeight-min.js"></script>
+<script src="~/Content/global/js/Plugin/jquery-wizard.js"></script>
+<script src="~/Content/global/vendor/asprogress/jquery-asProgress.min.js"></script>
+<script>
+    @foreach(var g in Model.AnketGruplari)
+    {
+        foreach(var s in g.Sorular)
+        {
+            if(s.SoruTipleri == AnketSoruTipi.Radio)
+            {
+                foreach(var k in s.KullaniciCevaplari)
+                {
+                    @:$('input:radio[name=s_@k.AnketSoruID][value=@k.CevapID]').attr('checked', true);
+                }
+            }
+            else if(s.SoruTipleri == AnketSoruTipi.Checkbox)
+            {
+                foreach(var k in s.KullaniciCevaplari)
+                {
+                    @:$('input:checkbox[name=s_@k.AnketSoruID][value=@k.CevapID]').attr('checked', true);
+                }
+            }
+            else if (s.SoruTipleri == AnketSoruTipi.Input)
+            {
+                foreach(var k in s.KullaniciCevaplari)
+                {
+                    @:$('input[name=s_@k.AnketSoruID]').val('@Html.Encode(k.Cevap)');
+                }
+            }
+            else
+            {
+                foreach(var k in s.KullaniciCevaplari)
+                {
+                    @:$('textarea[name=s_@k.AnketSoruID]').val('@Html.Encode(k.Cevap)');
+                }
+            }
+        }
+    }
+    var cevaplar = [];
+    function anketbitir() {
+        debugger;
+                $.ajax({
+                    type: 'POST',
+                    url: "@Url.Action("AnketSonlandir", "VakaTakip")",
+                    data: {
+                        id:@Model.ID,
+                        HastaID: @Html.Raw(JsonConvert.SerializeObject(ViewBag.HastaID)),
+                    },
+                    success: function (result) {
+                        debugger;
+                        if (result.success) {
+                            yuzdelikhesapla();
+                            cevaplar = [];
+                            var temp = $("#form_@Model.ID").serializeArray();
+                            console.log(temp);
+                jQuery.each(temp, function (index, item) {
+                    var input = $("input[name =" + item.name + "]");
+                    if (input.length == 0) {
+                        input = $("textarea[name =" + item.name + "]");
+                    }
+                    if (input.attr('type') == "checkbox" || input.attr('type') == "radio") {
+                        cevaplar.push({ AnketSoruID: Number(input.attr('soru')), CevapID: Number(item.value), Cevap: "" });
+                    }
+                    else {
+                        cevaplar.push({ AnketSoruID: Number(input.attr('soru')), CevapID: 0, Cevap: item.value });
+                    }
+                });
+                console.log(cevaplar);
+                debugger;
+                $.ajax({
+                    type: 'POST',
+                    url: "@Url.Action("AnketCevapla", "VakaTakip")",
+                    enctype: 'multipart/form-data',
+                    data: {
+                        model: cevaplar,
+                        HastaID: @Html.Raw(JsonConvert.SerializeObject(ViewBag.HastaID)),
+                    },
+                    success: function (result) {
+                        var HastaID = @Html.Raw(JsonConvert.SerializeObject(ViewBag.HastaID));
+                        alert("Form Kayıt İşlemi Başarılı");
+                        window.location = "@Url.Action("VakaDetay", "VakaTakip")/" + HastaID;
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                    }
+                     });
+                        }
+                        else {
+                            alert("Form Kayıt İşlemi Yapılamadı. Zorunlu Alanları Kontrol Ediniz.");
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                    }
+                });
+    }
+    var toplamsoru = @Model.AnketGruplari.Sum(x => x.Sorular.Count());
+    function yuzdelikhesapla() {
+        var say = 0;
+        var name = [];
+
+        $('.hesapla').each(function () {
+            name.push(this.name);
+        });
+
+        var unique = name.filter(function (itm, i, a) {
+            return i == a.indexOf(itm);
+        });
+        jQuery.each(unique, function (index, item) {
+            var input = $("input[name =" + item + "]");
+            if (input.length == 0) {
+                input = $("textarea[name =" + item + "]");
+            }
+            if (input.attr('type') == "checkbox" || input.attr('type') == "radio") {
+                var selValue = $('input[name=' + item + ']:checked').val();
+                if (selValue != null) say++;
+            }
+            else {
+                if (input.val() != '' && input.val() != 'undefined' && input.val() != null) say++;
+            }
+
+        });
+    }
+    yuzdelikhesapla();
+    $(".hesapla").change(function () {
+        yuzdelikhesapla();
+    });
+</script>

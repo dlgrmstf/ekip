@@ -1,0 +1,91 @@
+﻿@model EkipProjesi.Core.Formlar.AnketDTO
+@{
+    ViewBag.Title = "FormEkle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-12  align-self-center">
+        <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+            <div class="w-sm-100 mr-auto"><h4 class="mb-0">Form Oluştur</h4> <a href="@Url.Action("Index", "Formlar")"><p>Formlar</p></a></div>
+            <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+                <li class="breadcrumb-item"><a href="#">Form Oluştur</a></li>
+                <li class="breadcrumb-item active">Anasayfa</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 mt-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Form Bilgileri</h5>
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            @using (Html.BeginForm("FormEkle", "Formlar", FormMethod.Post, new { @class = "popup-validation" }))
+                            {
+                                @Html.HiddenFor(x => x.ID)
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>Başlık</label>
+                                    @Html.TextBoxFor(x => x.Baslik, new { @class = "form-control", required = "required" })
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Açıklama</label>
+                                    <textarea name="Aciklama" class="form-control" required type="text" value="@Model.Aciklama" cols="3"></textarea>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="@Html.IdFor(x=>x.BaslangicTarihi)" class="col-sm-3 control-label">Başlangıç Tarihi</label>
+                                    <div class="col-md-12">
+                                        <input class="form-control" type="date" name="@Html.NameFor(x=>x.BaslangicTarihi)" id="@Html.IdFor(x=>x.BaslangicTarihi)" required />
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="@Html.IdFor(x=>x.BitisTarihi)" class="col-sm-3 control-label">Bitiş Tarihi</label>
+                                    <div class="col-md-12">
+                                        <input class="form-control" type="date" name="@Html.NameFor(x=>x.BitisTarihi)" id="@Html.IdFor(x=>x.BitisTarihi)" required/>
+                                    </div>
+                                </div>
+                                <div class="form-group required col-md-6">
+                                    <label for="@Html.IdFor(x=>x.AnketTipID)" class="col-sm-3 control-label">Form Tipi</label>
+                                    <div class="col-sm-12">
+                                        <select name="@Html.NameFor(x=>x.AnketTipID)" id="@Html.IdFor(x=>x.AnketTipID)" class="form-control" required>
+                                            <option>Seçiniz</option>
+                                            @foreach (var t in Model.AnketTipleri)
+                                            {
+                                                <option value="@t.ID">@t.TipAdi</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="Status" class="col-sm-3 control-label">Durum</label>
+                                    <div class="col-sm-12">
+                                        <select name="@Html.NameFor(x=>x.Status)" id="@Html.IdFor(x=>x.Status)" class="form-control" required>
+                                            <option value="True">Aktif</option>
+                                            <option value="False">Pasif</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                                <div class="form-group col-md-2">
+                                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    if ('@ViewBag.Msg' != "") {
+        alert("@Html.Encode(ViewBag.Msg)");
+    }
+</script>

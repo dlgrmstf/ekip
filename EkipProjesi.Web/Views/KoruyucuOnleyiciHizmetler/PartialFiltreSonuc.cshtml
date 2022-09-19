@@ -1,0 +1,91 @@
+﻿@{ 
+    List<EkipProjesi.Core.Faaliyet.IFaaliyet> faaliyetler = (List<EkipProjesi.Core.Faaliyet.IFaaliyet>)ViewBag.Faaliyetler;
+}
+
+<link rel="stylesheet" href="~/dist/vendors/c3/c3.min.css">
+<link rel="stylesheet" href="~/dist/vendors/datatable/css/dataTables.bootstrap4.min.css" />
+<link rel="stylesheet" href="~/dist/vendors/datatable/buttons/css/buttons.bootstrap4.min.css" />
+
+<div class="row">
+    <div class="col-12 mt-3">
+        <div class="card">
+            <div class="card-header">
+                <h4>
+                    FAALİYETLER SONUÇ
+                </h4>
+            </div>
+            @if (faaliyetler != null)
+            {
+                <div class="card-body">
+                    <div class="">
+                        <div class="">
+                            <div class="table-responsive">
+                                <table id="example" class="display table dataTable table-striped table-bordered" width="99%">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Faaliyet Adı</th>
+                                            <th>Faaliyet Konusu</th>
+                                            <th>Gerçekleştiren Kurum</th>
+                                            <th>Faaliyet Tarihi</th>
+                                            <th>Detay</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in faaliyetler)
+                                        {
+                                        <tr>
+                                            <td>@item.ID</td>
+                                            <td>@item.FaaliyetAdi</td>
+                                            <td>@item.FaaliyetKonusu</td>
+                                            <td>@item.GerceklestirenKurum</td>
+                                            <td>@item.FaaliyetTarihi.ToString("dd/MM/yyyy HH:mm")</td>
+                                            <td>
+                                                @if (User.IsInRole("89"))
+                                                {
+                                                    <a class="text-success edit-contact" href="@Url.Action("FaaliyetDetay","KoruyucuOnleyiciHizmetler", new { id = item.ID })" name="Detay" target="_blank"><i class="icon-plus"></i></a>
+
+                                                }
+                                            </td>
+                                        </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="card-body">
+                    <p>Aradığınız kriterlere uygun sonuç bulunamadı ya da sonuçlar için filtreleme yapınız.</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script src="~/dist/vendors/c3/d3.v5.min.js"></script>
+<script src="~/dist/vendors/c3/c3.min.js"></script>
+<script src="~/dist/js/c3.script.js"></script>
+
+<script src="~/dist/vendors/jquery/jquery-3.3.1.min.js"></script>
+<script src="~/dist/vendors/jquery-ui/jquery-ui.min.js"></script>
+<script src="~/dist/vendors/moment/moment.js"></script>
+<script src="~/dist/vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/dist/vendors/slimscroll/jquery.slimscroll.min.js"></script>
+
+<script src="~/dist/vendors/datatable/js/jquery.dataTables.min.js"></script>
+<script src="~/dist/vendors/datatable/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/dist/vendors/datatable/jszip/jszip.min.js"></script>
+<script src="~/dist/vendors/datatable/pdfmake/pdfmake.min.js"></script>
+<script src="~/dist/vendors/datatable/pdfmake/vfs_fonts.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/dataTables.buttons.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.colVis.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.flash.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.html5.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.print.min.js"></script>
+
+<script src="~/dist/js/datatable.script.js"></script>

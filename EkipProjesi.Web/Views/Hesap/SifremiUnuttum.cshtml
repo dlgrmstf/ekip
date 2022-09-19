@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "SifremiUnuttum";
+    Layout = "~/Views/Shared/_SifreLayout.cshtml";
+}
+<h2>Şifrenizi mi unuttunuz?</h2>
+<p>Yeni şifre E - Posta adresinize gönderilecektir.</p>
+<form method="post" role="form" id="sorgu">
+    <div class="form-group">
+        <input type="email" class="form-control validate[required,custom[email]]" name="email" id="email" placeholder="E - Posta Adresinizi Yazınız">
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-block">Şifremi Sıfırla</button>
+    </div>
+    <a class="float-right" href="@Url.Action("Index","Hesap")">EKİP Giriş</a>
+</form>
+<script>
+
+    jQuery(document).ready(function () {
+        jQuery("#sorgu").validationEngine({
+            ajaxFormValidation: true,
+            onBeforeAjaxFormValidation: beforeCall
+        });
+    });
+        function beforeCall(form, options) {
+        var form = $('#sorgu')[0];
+        if (console) {
+            basla();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("SifremiUnuttum", "Hesap")',
+                data: { email: $("#email").val()},
+                success: function (data) {
+                    if (data.success) {
+                        setTimeout(function () {
+                            basla();
+                            window.location = '@Url.Action("Index","Hesap")';
+                        }, 4000);
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+
+                }
+            });
+        }
+        return false;
+    }
+</script>

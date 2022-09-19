@@ -1,0 +1,254 @@
+﻿@model EkipProjesi.Core.ArindirmaModulu.IArindirmaPersonelBilgileriFiltreModel
+
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+<link rel="stylesheet" href="~/dist/vendors/datatable/css/dataTables.bootstrap4.min.css" />
+<link rel="stylesheet" href="~/dist/vendors/datatable/buttons/css/buttons.bootstrap4.min.css" />
+
+<div class="row">
+    <div class="col-12 mt-3">
+        <div class="card">
+            <div class="card-header">
+                <h4>
+                    PERSONEL BİLGİLERİ İSTATİSTİK
+                </h4>
+            </div>
+            @if (Model.PersonelBilgileri != null)
+            {
+                <div class="card-body">
+                    <div class="">
+                        <div class="">
+                            <div class="table-responsive">
+                                <table id="example1" class="display table dataTable table-striped table-bordered" width="99%">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Kayıt Tarihi</th>
+                                            <th>Tüm Uzman Hekim Sayısı</th>
+                                            <th>Tüm Asistan Hekim Sayısı</th>
+                                            <th>Tüm Pratisyen Hekim Sayısı</th>
+                                            <th>Aktif Psikiyatri Uzmanı Sayısı</th>
+                                            <th>Çocuk Psikiyatri Uzmanı Sayısı</th>
+                                            <th>Psikiyatri Asistanı Sayısı</th>
+                                            <th>Psikiyatri Asistanı Sayısı</th>
+                                            <th>Çocuk Psikiyatri Asistanı Sayısı</th>
+                                            <th>Psikolog Sayısı</th>
+                                            <th>Hemşire Sayısı</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.PersonelBilgileri)
+                                        {
+                                            <tr>
+                                                <td>@item.ID</td>
+                                                <td>@item.KayitTarihi.ToString("dd/MM/yyyy")</td>
+                                                <td>@item.TumUzmanHekimSayisi</td>
+                                                <td>@item.TumAsistanHekimSayisi</td>
+                                                <td>@item.TumPratisyenHekimSayisi</td>
+                                                <td>@item.HastaneAktifPsikiyatriUzmaniSayisi</td>
+                                                <td>@item.HastaneAktifCocukPsikiyatriUzmaniSayisi</td>
+                                                <td>@item.HastaneAktifPsikiyatriAsistaniSayisi</td>
+                                                <td>@item.HastaneAktifPsikiyatriAsistaniSayisi</td>
+                                                <td>@item.HastaneAktifCocukPsikiyatriAsistaniSayisi</td>
+                                                <td>@item.HastaneAktifPsikologSayisi</td>
+                                                <td>@item.HastaneAktifHemsireSayisi</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="card-body">
+                    <p>Aradığınız kriterlere uygun sonuç bulunamadı.</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 mt-3">
+        <div class="card">
+            <div class="card-header">
+                <h4>
+                    AMATEM İSTATİSTİK
+                </h4>
+            </div>
+            @if (Model.PersonelBilgileri != null)
+            {
+                <div class="card-body">
+                    <div class="">
+                        <div class="">
+                            <div class="table-responsive">
+                                <table class="display table dataTable table-striped table-bordered" width="99%" id="example2">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Kayıt Tarihi</th>
+                                            <th>Aktif Psikiyatri Uzmanı Sayısı</th>
+                                            <th>Aktif Psikiyatri Asistanı Sayısı</th>
+                                            <th>Aktif Psikolog Sayısı</th>
+                                            <th>Aktif Hemşire Sayısı</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.PersonelBilgileri)
+                                        {
+                                            <tr>
+                                                <td>@item.ID</td>
+                                                <td>@item.KayitTarihi.ToString("dd/MM/yyyy")</td>
+                                                <td>@item.AmatemAktifPsikiyatriUzmaniSayisi</td>
+                                                <td>@item.AmatemAktifPsikiyatriAsistaniSayisi</td>
+                                                <td>@item.AmatemAktifPsikologSayisi</td>
+                                                <td>@item.AmatemAktifHemsireSayisi</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="card-body">
+                    <p>Aradığınız kriterlere uygun sonuç bulunamadı.</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 mt-3">
+        <div class="card">
+            <div class="card-header">
+                <h4>
+                    ÇEMATEM İSTATİSTİK
+                </h4>
+            </div>
+            @if (Model.PersonelBilgileri != null)
+            {
+                <div class="card-body">
+                    <div class="">
+                        <div class="">
+                            <div class="table-responsive">
+                                <table class="display table dataTable table-striped table-bordered" width="99%" id="example3">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Kayıt Tarihi</th>
+                                            <th>Aktif Çocuk Psikiyatri Uzmanı Sayısı</th>
+                                            <th>Aktif Çocuk Psikiyatri Asistanı Sayısı</th>
+                                            <th>Aktif Psikolog Sayısı</th>
+                                            <th>Aktif Hemşire Sayısı</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.PersonelBilgileri)
+                                        {
+                                            <tr>
+                                                <td>@item.ID</td>
+                                                <td>@item.KayitTarihi.ToString("dd/MM/yyyy")</td>
+                                                <td>@item.CematemAktifCocukPsikiyatriUzmaniSayisi</td>
+                                                <td>@item.CematemAktifCocukPsikiyatriAsistaniSayisi</td>
+                                                <td>@item.CematemAktifPsikologSayisi</td>
+                                                <td>@item.CematemAktifHemsireSayisi</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="card-body">
+                    <p>Aradığınız kriterlere uygun sonuç bulunamadı.</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 mt-3">
+        <div class="card">
+            <div class="card-header">
+                <h4>
+                    MADDE BAĞIMLILIĞI EĞİTİMİ ALMIŞ PERSONELLER
+                </h4>
+            </div>
+            @if (Model.PersonelBilgileri != null)
+            {
+                <div class="card-body">
+                    <div class="">
+                        <div class="">
+                            <div class="table-responsive">
+                                <table class="display table dataTable table-striped table-bordered" width="99%" id="example4">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Kayıt Tarihi</th>
+                                            <th>Madde Bağımlılığı Eğitimi Almış Tüm Hekim Sayısı</th>
+                                            <th>Madde Bağımlılığı Eğitimi Almış Psikiyatri Uzmanı Sayısı</th>
+                                            <th>Madde Bağımlılığı Eğitimi Almış Çocuk Psikiyatri Uzmanı Sayısı</th>
+                                            <th>Madde Bağımlılığı Eğitimi Almış Psikolog Sayısı</th>
+                                            <th>Madde Bağımlılığı Eğitimi Almış Hemşire Sayısı</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.PersonelBilgileri)
+                                        {
+                                            <tr>
+                                                <td>@item.ID</td>
+                                                <td>@item.KayitTarihi.ToString("dd/MM/yyyy")</td>
+                                                <td>@item.MaddeBagimliligiEgitimiAlmisTumHekimSayisi</td>
+                                                <td>@item.MaddeBagimliligiEgitimiAlmisPsikiyatriUzmaniSayisi</td>
+                                                <td>@item.MaddeBagimliligiEgitimiAlmisCocukPsikiyatriUzmaniSayisi</td>
+                                                <td>@item.MaddeBagimliligiEgitimiAlmisPsikologSayisi</td>
+                                                <td>@item.MaddeBagimliligiEgitimiAlmisHemsireSayisi</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="card-body">
+                    <p>Aradığınız kriterlere uygun sonuç bulunamadı.</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script src="~/dist/vendors/c3/d3.v5.min.js"></script>
+<script src="~/dist/vendors/c3/c3.min.js"></script>
+<script src="~/dist/js/c3.script.js"></script>
+<script src="~/dist/vendors/jquery/jquery-3.3.1.min.js"></script>
+<script src="~/dist/vendors/jquery-ui/jquery-ui.min.js"></script>
+<script src="~/dist/vendors/moment/moment.js"></script>
+<script src="~/dist/vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/dist/vendors/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="~/dist/vendors/datatable/js/jquery.dataTables.min.js"></script>
+<script src="~/dist/vendors/datatable/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/dist/vendors/datatable/jszip/jszip.min.js"></script>
+<script src="~/dist/vendors/datatable/pdfmake/pdfmake.min.js"></script>
+<script src="~/dist/vendors/datatable/pdfmake/vfs_fonts.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/dataTables.buttons.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.colVis.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.flash.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.html5.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.print.min.js"></script>
+<script src="~/dist/js/app.js"></script>
+<script src="~/Content/DataTablesScript.js"></script>

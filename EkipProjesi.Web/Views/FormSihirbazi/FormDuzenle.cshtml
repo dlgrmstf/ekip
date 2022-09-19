@@ -1,0 +1,124 @@
+﻿
+@{
+    ViewBag.Title = "Form Düzenle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/dist/vendors/datatable/css/dataTables.bootstrap4.min.css" />
+<link rel="stylesheet" href="~/dist/vendors/datatable/buttons/css/buttons.bootstrap4.min.css" />
+
+<div class="row">
+    <div class="col-12  align-self-center">
+        <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+            <div class="w-sm-100 mr-auto"><h4 class="mb-0">Form Düzenle</h4> <p><a href="@Url.Action("Index","FormSihirbazi")">Form Sihirbazı</a></p></div>
+            <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+                <li class="breadcrumb-item"><a href="#">Form Düzenle</a></li>
+                <li class="breadcrumb-item active">Anasayfa</li>
+            </ol>
+        </div>
+    </div>
+</div>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    Soru Ekle
+</button>
+<div class="col-12 col-md-12 mt-3">
+    <div class="card  h-100">
+        <div class="card-header  justify-content-between align-items-center">
+            <h4 class="card-title">Form Başlığı</h4>
+        </div>
+        <div class="card-body">
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Ekle</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <label for="isim">İsim</label>
+                                        <input type="text" class="form-control" id="isim">
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label for="tur">Tür</label>
+                                        <select id="tur" class="form-control">
+                                            <option selected>Seçiniz</option>
+                                            <option value="1">Heading</option>
+                                            <option value="2">TextBox</option>
+                                            <option value="3">TextArea</option>
+                                            <option value="4">DatePicker</option>
+                                            <option value="5">DateTimePicker</option>
+                                            <option value="6">FileUpload</option>
+                                            <option value="7">CheckBox</option>
+                                            <option value="8">RadioButton</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                                <button type="button" class="btn btn-primary">Kaydet</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table id="example" class="display table dataTable table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Soru Adı</th>
+                            <th>Türü</th>
+                            <th>İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>11</td>
+                            <td>Soru</td>
+                            <td>Textbox</td>
+                            <td>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aksiyonlar</button>
+                                    <ul class="dropdown-menu p-0" style="">
+                                        <li class="dropdown-item" href="#">Özellikler</li>
+                                        <li class="dropdown-item" href="#">Detay</li>
+                                        <li class="dropdown-item" href="#">Düzenle</li>
+                                        <li class="dropdown-item" href="#">Sil</li>                       
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/dist/vendors/jquery/jquery-3.3.1.min.js"></script>
+<script src="~/dist/vendors/jquery-ui/jquery-ui.min.js"></script>
+<script src="~/dist/vendors/moment/moment.js"></script>
+<script src="~/dist/vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/dist/vendors/slimscroll/jquery.slimscroll.min.js"></script>
+
+<script src="~/dist/js/app.js"></script>
+
+<script src="~/dist/vendors/datatable/js/jquery.dataTables.min.js"></script>
+<script src="~/dist/vendors/datatable/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/dist/vendors/datatable/jszip/jszip.min.js"></script>
+<script src="~/dist/vendors/datatable/pdfmake/pdfmake.min.js"></script>
+<script src="~/dist/vendors/datatable/pdfmake/vfs_fonts.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/dataTables.buttons.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.colVis.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.flash.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.html5.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.print.min.js"></script>
+
+<script src="~/dist/js/datatable.script.js"></script>

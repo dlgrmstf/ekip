@@ -1,0 +1,160 @@
+﻿@model EkipProjesi.Core.Randevu.IRandevuAyarlari
+@{
+    ViewBag.Title = "RandevuAyariEkle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+
+<div class="row">
+    <div class="col-12  align-self-center">
+        <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+            <div class="w-sm-100 mr-auto"><h4 class="mb-0">Randevu Ayarı Oluştur</h4> <a href="@Url.Action("Index", "ArindirmaMerkezleri")"><p>Arındırma Merkezleri Modülü</p></a></div>
+            <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+                <li class="breadcrumb-item"><a href="#">Randevu Ayarı Oluştur</a></li>
+                <li class="breadcrumb-item active">Anasayfa</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 mt-4">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Randevu Ayarları</h3>
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="KurumBilgisi">Kurum</label>
+                                    <select class="form-control" name="@Html.NameFor(x => x.KurumID)" id="@Html.IdFor(x => x.KurumID)" required>
+                                        <option value="">Seçiniz</option>
+                                        @foreach (var kurumlar in ViewBag.KurumlarListesi)
+                                        {
+                                            <option value="@kurumlar.KurumID">@kurumlar.KurumAdi</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="PoliklinikBilgisi">Poliklinikler</label>
+                                    <select class="form-control" name="@Html.NameFor(x => x.PoliklinikTuruID)" id="@Html.IdFor(x => x.PoliklinikTuruID)" required>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="gunler">Günler</label>
+                                    <select class="form-control col-md-12 validate[required]" name="@Html.NameFor(x => x.Gun)" id="@Html.IdFor(x => x.Gun)">
+                                        <option value="">-Seçiniz-</option>
+                                        <option value="@((int)Gunler.Pazartesi)">Pazartesi</option>
+                                        <option value="@((int)Gunler.Sali)">Salı</option>
+                                        <option value="@((int)Gunler.Carsamba)">Çarşamba</option>
+                                        <option value="@((int)Gunler.Persembe)">Perşembe</option>
+                                        <option value="@((int)Gunler.Cuma)">Cuma</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label>Başlangıç Saati</label>
+                                    <input name="BaslangicSaati" id="BaslangicSaati" class="form-control" required type="time" value="@Model.BaslangicSaati" />
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label>Bitiş Saati</label>
+                                    <input name="BitisSaati" id="BitisSaati" class="form-control" required type="time" value="@Model.BitisSaati" />
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label>Slot Sayısı</label>
+                                    <input name="SlotSayisi" id="SlotSayisi" class="form-control" required type="number" value="@Model.SlotSayisi" />
+                                </div>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <button type="submit" class="btn btn-primary" id="kaydet">Kaydet</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+
+<script>
+    if ('@ViewBag.Msg' != "") {
+        alert("@Html.Encode(ViewBag.Msg)");
+    }
+
+    $("#@Html.IdFor(x => x.KurumID)").change(function () {
+
+        $("#@Html.IdFor(x => x.PoliklinikTuruID)").empty();
+
+        var kurum = $("#@Html.IdFor(x => x.KurumID)").val();
+
+        $.ajax({
+            url: '@Url.Action("PolGetir", "ArindirmaMerkezleri")',
+            type: "POST",
+            dataType: "json",
+            data: { kurumid: kurum },
+            success: function (data) {
+                $.each(data, function () {
+                    $('#@Html.IdFor(x => x.PoliklinikTuruID)').append('<option value=' + this.ID + '>' + this.PoliklinikTuru + '</option>');
+                });
+            }
+        });
+    });
+
+    function saveData() {
+
+         var kid = $("#@Html.IdFor(x => x.KurumID)").val();
+         var pol = $("#@Html.IdFor(x => x.PoliklinikTuruID)").val();
+         var gun = $("#@Html.IdFor(x => x.Gun)").val();
+         var bassaati = $('#BaslangicSaati').val();
+         var bitsaati = $('#BitisSaati').val();
+         var slot = $("#SlotSayisi").val();
+
+        $.ajax({
+            url: '@Url.Action("AyarEkle", "ArindirmaMerkezleri")',
+            type: "POST",
+            dataType: "json",
+            data: { kid: kid, pol: pol, gun: gun, bassaati: bassaati, bitsaati: bitsaati, slot: slot },
+            success: function (data) {
+                location.href = '@Url.Action("RandevuAyarlari", "ArindirmaMerkezleri")';
+            }
+        });
+    }
+
+    $("#kaydet").on("click", function () {
+
+        var kid = $("#@Html.IdFor(x => x.KurumID)").val();
+        var pol = $("#@Html.IdFor(x => x.PoliklinikTuruID)").val();
+        var gun = $("#@Html.IdFor(x => x.Gun)").val();
+
+        $.ajax({
+            url: '@Url.Action("RandevuAyariKontrol", "ArindirmaMerkezleri")',
+            type: "POST",
+            dataType: "json",
+            data: { kurum: kid, pol: pol, gun: gun },
+            success: function (status) {
+                if (status == true) {
+                    var bassaati = moment($('#BaslangicSaati').val(), "HH:mm").toDate();
+                    var bitsaati = moment($('#BitisSaati').val(), "HH:mm").toDate();
+                    if (bitsaati > bassaati) {
+                        saveData();
+                    }
+                    else {
+                        alert("Bitiş saati, başlangıç saatinden küçük olamaz. Lütfen tekrar deneyiniz.");
+                    }
+                }
+                else {
+                    alert("Seçtiğiniz gün için ilgili kurum ve poliklinik türüne ait kayıt bulunmaktadır. Lütfen tüm randevu ayarlarını kontrol edip tekrar deneyiniz.");
+                }
+            },
+            error: function () {
+                alert("İşleminiz sırasında hata oluştu. Lütfen tekrar deneyiniz.");
+            }
+        });
+    });
+</script>

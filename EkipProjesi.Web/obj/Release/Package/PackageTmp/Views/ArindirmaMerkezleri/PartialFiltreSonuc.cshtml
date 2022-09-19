@@ -1,0 +1,226 @@
+﻿@model EkipProjesi.Core.ArindirmaModulu.IArindirmaHizmetBilgileriFiltreModel
+
+<link rel="stylesheet" href="~/dist/vendors/c3/c3.min.css">
+
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+<link rel="stylesheet" href="~/dist/vendors/datatable/css/dataTables.bootstrap4.min.css" />
+<link rel="stylesheet" href="~/dist/vendors/datatable/buttons/css/buttons.bootstrap4.min.css" />
+
+<div class="row">
+    <div class="col-12 mt-3">
+        <div class="card">
+            <div class="card-header">
+                <a href="~/Views/ArindirmaMerkezleri/PartialFiltreSonuc.cshtml"></a>
+                <h4>
+                    AMATEM İSTATİSTİK
+                </h4>
+            </div>
+            @if (Model.HizmetBilgileri != null)
+            {
+                <div class="card-body">
+                    <div class="">
+                        <div class="">
+                            <div class="table-responsive">
+                                <table id="example1" class="display table dataTable table-striped table-bordered" width="99%">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Kayıt Tarihi</th>
+                                            <th>Aktif Amatem Poliklinik Sayısı</th>
+                                            <th>Amatem Yeni Başvuru Sayısı</th>
+                                            <th>Amatem Takip Başvurusu Sayısı</th>
+                                            <th>Aktif Amatem Yatak Sayısı</th>
+                                            <th>Amatem Yatak Doluluk Oranı %</th>
+                                            <th>Amatem Boş Yatak Sayısı</th>
+                                            <th>Amatem Dolu Yatak Sayısı</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.HizmetBilgileri)
+                                        {
+                                            <tr>
+                                                <td>@item.ID</td>
+                                                <td>@item.KayitTarihi.ToString("dd/MM/yyyy")</td>
+                                                <td>@item.AktifAmatemPoliklinikSayisi</td>
+                                                <td>@item.AmatemYeniBasvuruSayisi</td>
+                                                <td>@item.AmatemTakipBasvurusuSayisi</td>
+                                                <td>@item.AktifAmatemYatakSayisi</td>
+                                                <td>@item.AmatemYatakDolulukOrani </td>
+                                                <td>@item.AmatemBosYatakSayisi</td>
+                                                <td>@item.AmatemDoluYatakSayisi</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="card-body">
+                    <p>Aradığınız kriterlere uygun sonuç bulunamadı.</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 mt-3">
+        <div class="card">
+            <div class="card-header">
+                <h4>
+                    ÇEMATEM İSTATİSTİK
+                </h4>
+            </div>
+            @if (Model.HizmetBilgileri != null)
+            {
+                <div class="card-body">
+                    <div class="">
+                        <div class="">
+                            <div class="table-responsive">
+                                <table id="example2" class="display table dataTable table-striped table-bordered" width="99%">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Kayıt Tarihi</th>
+                                            <th>Aktif Çematem Poliklinik Sayısı</th>
+                                            <th>Çematem Yeni Başvuru Sayısı</th>
+                                            <th>Çematem Takip Başvurusu Sayısı</th>
+                                            <th>Aktif Çematem Yatak Sayısı</th>
+                                            <th>Çematem Yatak Doluluk Oranı %</th>
+                                            <th>Çematem Boş Yatak Sayısı</th>
+                                            <th>Çematem Dolu Yatak Sayısı</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.HizmetBilgileri)
+                                        {
+                                            <tr>
+                                                <td>@item.ID</td>
+                                                <td>@item.KayitTarihi.ToString("dd/MM/yyyy")</td>
+                                                <td>@item.AktifCematemPoliklinikSayisi</td>
+                                                <td>@item.CematemYeniBasvuruSayisi</td>
+                                                <td>@item.CematemTakipBasvurusuSayisi</td>
+                                                <td>@item.AktifCematemYatakSayisi</td>
+                                                <td>@item.CematemYatakDolulukOrani</td>
+                                                <td>@item.CematemBosYatakSayisi</td>
+                                                <td>@item.CematemDoluYatakSayisi</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="card-body">
+                    <p>Aradığınız kriterlere uygun sonuç bulunamadı.</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@*<div class="row">
+        <div class="col-12 mt-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Kişilere Göre Yatış Süresi</h4>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12 col-md-12 mt-3">
+                                    <div class="card">
+                                        <div class="card-header d-flex justify-content-between align-items-center">
+                                            <h6 class="card-title">AMATEM</h6>
+                                        </div>
+                                        <div class="card-body text-center">
+                                            <div id="c3_spline_chart" class="height-300"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-12 mt-3">
+                                    <div class="card">
+                                        <div class="card-header d-flex justify-content-between align-items-center">
+                                            <h6 class="card-title">ÇEMATEM</h6>
+                                        </div>
+                                        <div class="card-body text-center">
+                                            <div id="c3_spline_chart" class="height-300"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <div class="row">
+            <div class="col-12 mt-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Yatış Sırası Listesi</h4>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12 col-md-12 mt-3">
+                                    <div class="card">
+                                        <div class="card-header d-flex justify-content-between align-items-center">
+                                            <h6 class="card-title">AMATEM</h6>
+                                        </div>
+                                        <div class="card-body text-center">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-12 mt-3">
+                                    <div class="card">
+                                        <div class="card-header d-flex justify-content-between align-items-center">
+                                            <h6 class="card-title">ÇEMATEM</h6>
+                                        </div>
+                                        <div class="card-body text-center">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+<script src="~/dist/vendors/c3/d3.v5.min.js"></script>
+<script src="~/dist/vendors/c3/c3.min.js"></script>
+<script src="~/dist/js/c3.script.js"></script>
+
+<script src="~/dist/vendors/jquery/jquery-3.3.1.min.js"></script>
+<script src="~/dist/vendors/jquery-ui/jquery-ui.min.js"></script>
+<script src="~/dist/vendors/moment/moment.js"></script>
+<script src="~/dist/vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/dist/vendors/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="~/dist/vendors/jquery/jquery-3.3.1.min.js"></script>
+<script src="~/dist/vendors/jquery-ui/jquery-ui.min.js"></script>
+<script src="~/dist/vendors/moment/moment.js"></script>
+<script src="~/dist/vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/dist/vendors/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="~/dist/vendors/datatable/js/jquery.dataTables.min.js"></script>
+<script src="~/dist/vendors/datatable/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/dist/vendors/datatable/jszip/jszip.min.js"></script>
+<script src="~/dist/vendors/datatable/pdfmake/pdfmake.min.js"></script>
+<script src="~/dist/vendors/datatable/pdfmake/vfs_fonts.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/dataTables.buttons.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.colVis.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.flash.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.html5.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.print.min.js"></script>
+<script src="~/dist/js/app.js"></script>
+<script src="~/Content/DataTablesScript.js"></script>

@@ -1,0 +1,6 @@
+E:\EkipProjesi\EkipProjesi.Utility\bin\Release\EkipProjesi.Utility.dll
+E:\EkipProjesi\EkipProjesi.Utility\bin\Release\EkipProjesi.Utility.pdb
+E:\EkipProjesi\EkipProjesi.Utility\obj\Release\EkipProjesi.Utility.csprojAssemblyReference.cache
+E:\EkipProjesi\EkipProjesi.Utility\obj\Release\EkipProjesi.Utility.csproj.CoreCompileInputs.cache
+E:\EkipProjesi\EkipProjesi.Utility\obj\Release\EkipProjesi.Utility.dll
+E:\EkipProjesi\EkipProjesi.Utility\obj\Release\EkipProjesi.Utility.pdb

@@ -1,0 +1,159 @@
+﻿@using Newtonsoft.Json;
+@model EkipProjesi.Core.Randevu.IRandevuAyarlari
+@{
+    ViewBag.Title = "RandevuAyariDetay";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+
+<div class="row">
+    <div class="col-12  align-self-center">
+        <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+            <div class="w-sm-100 mr-auto"><h4 class="mb-0">Randevu Ayarı Detay</h4> <a href="@Url.Action("Index", "ArindirmaMerkezleri")"><p>Arındırma Merkezleri Modülü</p></a></div>
+            <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+                <li class="breadcrumb-item"><a href="#">Randevu Ayarı Detay</a></li>
+                <li class="breadcrumb-item active">Anasayfa</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 mt-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Randevu Ayarı Güncelleme</h5>
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            @using (Html.BeginForm("RandevuAyariDetay", "ArindirmaMerkezleri", FormMethod.Post, new { @class = "popup-validation" }))
+                            {
+                                @Html.HiddenFor(x => x.ID)
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="KurumBilgisi">Kurum</label>
+                                        <select class="form-control" name="@Html.NameFor(x => x.KurumID)" id="@Html.IdFor(x => x.KurumID)" required disabled>
+                                            <option value="">Seçiniz</option>
+                                            @foreach (var kurumlar in ViewBag.KurumlarListesi)
+                                            {
+                                                <option value="@kurumlar.KurumID">@kurumlar.KurumAdi</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="PoliklinikBilgisi">Poliklinik</label>
+                                        <select class="form-control" name="@Html.NameFor(x => x.PoliklinikTuruID)" id="@Html.IdFor(x => x.PoliklinikTuruID)" required disabled>
+                                            <option value="@Model.PoliklinikTuruID">@Model.PoliklinikAdi</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="gunler">Günler</label>
+                                        <select class="form-control col-md-12 validate[required]" name="@Html.NameFor(x => x.Gun)" id="@Html.IdFor(x => x.Gun)" disabled>
+                                            <option value="">-Seçiniz-</option>
+                                            <option value="@((int)Gunler.Pazartesi)">Pazartesi</option>
+                                            <option value="@((int)Gunler.Sali)">Salı</option>
+                                            <option value="@((int)Gunler.Carsamba)">Çarşamba</option>
+                                            <option value="@((int)Gunler.Persembe)">Perşembe</option>
+                                            <option value="@((int)Gunler.Cuma)">Cuma</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>Başlangıç Saati</label>
+                                        <input name="BaslangicSaati" class="form-control" required type="time" value="@Model.BaslangicSaati" />
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>Bitiş Saati</label>
+                                        <input name="BitisSaati" class="form-control" required type="time" value="@Model.BitisSaati" />
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>Slot Sayısı</label>
+                                        <input name="SlotSayisi" class="form-control" required type="number" value="@Model.SlotSayisi" />
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>Durum</label>
+                                        <select name="@Html.NameFor(x=>x.Durum)" id="@Html.IdFor(x=>x.Durum)" class="form-control" required>
+                                            <option value="True">Aktif</option>
+                                            <option value="False">Pasif</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-4" id="pasifbaslangic" style="display:none">
+                                        <label>Pasiflik Başlangıç Zamanı</label>
+                                        <input name="@Html.NameFor(x=>x.PasifBaslangicTarihi)" id="@Html.IdFor(x=>x.PasifBaslangicTarihi)" class="form-control" type="datetime-local" />
+                                    </div>
+                                    <div class="form-group col-md-4" id="pasifbitis" style="display:none">
+                                        <label>Pasiflik Bitiş Zamanı</label>
+                                        <input name="@Html.NameFor(x=>x.PasifBitisTarihi)" id="@Html.IdFor(x=>x.PasifBitisTarihi)" class="form-control" type="datetime-local" />
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <button type="submit" class="btn btn-primary" id="guncelle">Güncelle</button>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+
+<script>
+    var pasifbas = @Html.Raw(JsonConvert.SerializeObject(ViewBag.PasifBasTarihi));
+    var pasifbit = @Html.Raw(JsonConvert.SerializeObject(ViewBag.PasifBitTarihi));
+
+    $('#Durum').on('change', function () {
+            var durumval = $('#@Html.IdFor(x => x.Durum)').val();
+            if (durumval == "True") {
+                $("#pasifbaslangic").hide();
+                $("#pasifbitis").hide();
+                $("#PasifBaslangicTarihi").val(null);
+                $("#PasifBitisTarihi").val(null);
+            }
+            else if (durumval = "False") {
+                $("#pasifbaslangic").show();
+                $("#pasifbitis").show();
+            }
+    });
+
+    if(pasifbas != null && pasifbit != null) {
+        $("#pasifbaslangic").show();
+        $("#pasifbitis").show();
+
+        var dt1 = moment(pasifbas).format("YYYY-MM-DDTkk:mm");
+        var dt2 = moment(pasifbit).format("YYYY-MM-DDTkk:mm");
+
+        $("#PasifBaslangicTarihi").val(dt1);
+        $("#PasifBitisTarihi").val(dt2);
+    }
+    else {
+        $("#pasifbaslangic").hide();
+        $("#pasifbitis").hide();
+    }
+
+    if ('@ViewBag.Msg' != "") {
+      alert("@Html.Encode(ViewBag.Msg)");
+    }
+
+    $(document).ready(function () {
+
+        $('#@Html.IdFor(x => x.Gun) option[value="@Model.Gun"]').attr('selected', 'selected');
+        $('#@Html.IdFor(x => x.KurumID) option[value="@Model.KurumID"]').attr('selected', 'selected');
+        $('#Durum option[value="@Model.Durum"]').attr('selected', 'selected');
+
+        $.ajax({
+            url: '@Url.Action("RandevuAyariDetay", "ArindirmaMerkezleri")',
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                $('#@Html.IdFor(x => x.PoliklinikTuruID) option[value="@Model.PoliklinikTuruID"]').attr('selected', 'selected');
+            }
+        });
+    });
+</script>

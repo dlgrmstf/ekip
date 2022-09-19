@@ -1,0 +1,509 @@
+﻿
+@{
+    ViewBag.Title = "Koordinasyon Takip Modülü";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+<link rel="stylesheet" href="~/dist/vendors/c3/c3.min.css">
+<link rel="stylesheet" href="~/dist/vendors/datatable/css/dataTables.bootstrap4.min.css" />
+<link rel="stylesheet" href="~/dist/vendors/datatable/buttons/css/buttons.bootstrap4.min.css" />
+
+<div class="row">
+    <div class="col-12  align-self-center">
+        <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+            <div class="w-sm-100 mr-auto"><h4 class="mb-0">Koordinasyon Takip Modülü</h4><p><a href="@Url.Action("Index","KurumlarArasiSevkVeTakip")">Kurumlar Arası Sevk ve Takip Modülü</a></p></div>
+            <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+                <li class="breadcrumb-item"><a href="#">Koordinasyon Takip Modülü</a></li>
+                <li class="breadcrumb-item active">Anasayfa</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 col-sm-12 mt-3">
+                        <div class="card">
+                            <div class="card-header justify-content-between align-items-center">
+                                <h4 class="card-title">BAKIRKÖY Randevular</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="example" class="display table dataTable table-striped table-bordered" width="99%">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Ad - Soyad</th>
+                                                <th scope="col">TC Kimlik No</th>
+                                                <th scope="col">Telefon</th>
+                                                <th scope="col">Poliklinik</th>
+                                                <th scope="col">Randevu Tarihi</th>
+                                                <th scope="col">Randevu Sonucu</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var t in ViewBag.BakirkoyRandevular)
+                                            {
+                                                <tr>
+                                                    <th scope="row">@t.ID</th>
+                                                    <td>@t.HastaAdi @t.HastaSoyadi</td>
+                                                    <td>@t.HastaTCKimlikNo</td>
+                                                    <td>@t.Telefon</td>
+                                                    <td>@t.PoliklinikAdi</td>
+                                                    <td>@t.RandevuBaslangicTarihi.ToString("dd/MM/yyyy HH:mm")</td>
+                                                    <td>
+                                                        @if (t.RandevuBaslangicTarihi > DateTime.Now)
+                                                        {
+                                                            <p>Randevu oluşturuldu ancak randevu tarihi henüz gelmedi.</p>
+                                                        }
+                                                        else if (!string.IsNullOrEmpty(t.RandevuDurumu))
+                                                        {
+                                                            <span>@t.RandevuDurumu&nbsp;&nbsp;</span>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 col-sm-12 mt-3">
+                        <div class="card">
+                            <div class="card-header justify-content-between align-items-center">
+                                <h4 class="card-title">ERENKÖY Randevular</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="example1" class="display table dataTable table-striped table-bordered" width="99%">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Ad - Soyad</th>
+                                                <th scope="col">TC Kimlik No</th>
+                                                <th scope="col">Telefon</th>
+                                                <th scope="col">Poliklinik</th>
+                                                <th scope="col">Randevu Tarihi</th>
+                                                <th scope="col">Randevu Sonucu</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var t in ViewBag.ErenkoyRandevular)
+                                            {
+                                                <tr>
+                                                    <th scope="row">@t.ID</th>
+                                                    <td>@t.HastaAdi @t.HastaSoyadi</td>
+                                                    <td>@t.HastaTCKimlikNo</td>
+                                                    <td>@t.Telefon</td>
+                                                    <td>@t.PoliklinikAdi</td>
+                                                    <td>@t.RandevuBaslangicTarihi.ToString("dd/MM/yyyy HH:mm")</td>
+                                                    <td>
+                                                        @if (t.RandevuBaslangicTarihi > DateTime.Now)
+                                                        {
+                                                            <p>Randevu oluşturuldu ancak randevu tarihi henüz gelmedi.</p>
+                                                        }
+                                                        else if (!string.IsNullOrEmpty(t.RandevuDurumu))
+                                                        {
+                                                            <span>@t.RandevuDurumu&nbsp;&nbsp;</span>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 col-sm-12 mt-3">
+                        <div class="card">
+                            <div class="card-header justify-content-between align-items-center">
+                                <h4 class="card-title">İŞKUR Randevular</h4>
+                            </div>
+                            @if (ViewBag.IskurRandevular != null)
+                            {
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="example2" class="display table dataTable table-striped table-bordered" width="99%">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Ad - Soyad</th>
+                                                    <th scope="col">TC Kimlik No</th>
+                                                    <th scope="col">Telefon</th>
+                                                    <th scope="col">Hizmet Merkezi</th>
+                                                    <th scope="col">Randevu Tarihi</th>
+                                                    <th scope="col">Randevu Sonucu</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var t in ViewBag.IskurRandevular)
+                                                {
+                                                    <tr>
+                                                        <th scope="row">@t.ID</th>
+                                                        <td>@t.HastaAdi @t.HastaSoyadi</td>
+                                                        <td>@t.HastaTCKimlikNo</td>
+                                                        <td>@t.Telefon</td>
+                                                        <td>@t.HizmetMerkeziAdi</td>
+                                                        <td>
+                                                            @if (t.RandevuTarihi != null)
+                                                            {
+                                                                @t.RandevuTarihi.ToString("dd/MM/yyyy HH:mm")
+                                                            }
+                                                            else
+                                                            {
+                                                                <span>Randevu talebi</span>
+                                                            }
+                                                        </td>
+                                                        <td>
+                                                            @if (t.RandevuVerildiMi == false && string.IsNullOrEmpty(t.RandevuDurumu))
+                                                            {
+                                                                <p>Randevu bekleniyor.</p>
+                                                            }
+                                                            else if (t.RandevuVerildiMi == true && t.RandevuTarihi > DateTime.Now)
+                                                            {
+                                                                <p>Randevu oluşturuldu ancak randevu tarihi henüz gelmedi.</p>
+                                                            }
+                                                            else if (t.RandevuVerildiMi == true && !string.IsNullOrEmpty(t.RandevuDurumu))
+                                                            {
+                                                                <span>@t.RandevuDurumu&nbsp;&nbsp;</span>
+                                                            }
+
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="card-body">
+                                    <div class="alert alert-danger" role="alert">
+                                        Randevu bilgisi bulunamadı.
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 col-sm-12 mt-3">
+                        <div class="card">
+                            <div class="card-header justify-content-between align-items-center">
+                                <h4 class="card-title">YEŞİLAY Randevular</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="example3" class="display table dataTable table-striped table-bordered" width="99%">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Ad - Soyad</th>
+                                                <th scope="col">TC Kimlik No</th>
+                                                <th scope="col">Telefon</th>
+                                                <th scope="col">Hizmet Merkezi</th>
+                                                <th scope="col">Randevu Tarihi</th>
+                                                <th scope="col">Randevu Sonucu</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var t in ViewBag.YesilayRandevular)
+                                            {
+                                                <tr>
+                                                    <th scope="row">@t.ID</th>
+                                                    <td>@t.HastaAdi @t.HastaSoyadi</td>
+                                                    <td>@t.HastaTCKimlikNo</td>
+                                                    <td>@t.Telefon</td>
+                                                    <td>@t.HizmetMerkeziAdi</td>
+                                                    <td>
+                                                        @if (t.RandevuTarihi != null)
+                                                        {
+                                                            @t.RandevuTarihi.ToString("dd/MM/yyyy HH:mm")
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>Randevu talebi</span>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        @if (t.RandevuVerildiMi == false && string.IsNullOrEmpty(t.RandevuDurumu))
+                                                        {
+                                                            <p>Randevu bekleniyor.</p>
+                                                        }
+                                                        else if (t.RandevuVerildiMi == true && t.RandevuTarihi > DateTime.Now)
+                                                        {
+                                                            <p>Randevu oluşturuldu ancak randevu tarihi henüz gelmedi.</p>
+                                                        }
+                                                        else if (t.RandevuVerildiMi == true && !string.IsNullOrEmpty(t.RandevuDurumu))
+                                                        {
+                                                            <span>@t.RandevuDurumu&nbsp;&nbsp;</span>
+                                                        }
+
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 col-sm-12 mt-3">
+                        <div class="card">
+                            <div class="card-header justify-content-between align-items-center">
+                                <h4 class="card-title">SHM Randevular</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="example4" class="display table dataTable table-striped table-bordered" width="99%">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Ad - Soyad</th>
+                                                <th scope="col">TC Kimlik No</th>
+                                                <th scope="col">Telefon</th>
+                                                <th scope="col">Hizmet Merkezi</th>
+                                                <th scope="col">Randevu Tarihi</th>
+                                                <th scope="col">Randevu Sonucu</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var t in ViewBag.SHMRandevular)
+                                            {
+                                                <tr>
+                                                    <th scope="row">@t.ID</th>
+                                                    <td>@t.HastaAdi @t.HastaSoyadi</td>
+                                                    <td>@t.HastaTCKimlikNo</td>
+                                                    <td>@t.Telefon</td>
+                                                    <td>@t.HizmetMerkeziAdi</td>
+                                                    <td>
+                                                        @if (t.RandevuTarihi != null)
+                                                        {
+                                                            @t.RandevuTarihi.ToString("dd/MM/yyyy HH:mm")
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>Randevu talebi</span>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        @if (t.RandevuVerildiMi == false && string.IsNullOrEmpty(t.RandevuDurumu))
+                                                        {
+                                                            <p>Randevu bekleniyor.</p>
+                                                        }
+                                                        else if (t.RandevuVerildiMi == true && t.RandevuTarihi > DateTime.Now)
+                                                        {
+                                                            <p>Randevu oluşturuldu ancak randevu tarihi henüz gelmedi.</p>
+                                                        }
+                                                        else if (t.RandevuVerildiMi == true && !string.IsNullOrEmpty(t.RandevuDurumu))
+                                                        {
+                                                            <span>@t.RandevuDurumu&nbsp;&nbsp;</span>
+                                                        }
+
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 col-sm-12 mt-3">
+                        <div class="card">
+                            <div class="card-header justify-content-between align-items-center">
+                                <h4 class="card-title">İSM Randevular</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="example4" class="display table dataTable table-striped table-bordered" width="99%">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Ad - Soyad</th>
+                                                <th scope="col">TC Kimlik No</th>
+                                                <th scope="col">Telefon</th>
+                                                <th scope="col">Hizmet Merkezi</th>
+                                                <th scope="col">Randevu Tarihi</th>
+                                                <th scope="col">Randevu Sonucu</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var t in ViewBag.ISMRandevular)
+                                            {
+                                                <tr>
+                                                    <th scope="row">@t.ID</th>
+                                                    <td>@t.HastaAdi @t.HastaSoyadi</td>
+                                                    <td>@t.HastaTCKimlikNo</td>
+                                                    <td>@t.Telefon</td>
+                                                    <td>@t.HizmetMerkeziAdi</td>
+                                                    <td>
+                                                        @if (t.RandevuTarihi != null)
+                                                        {
+                                                            @t.RandevuTarihi.ToString("dd/MM/yyyy HH:mm")
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>Randevu talebi</span>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        @if (t.RandevuVerildiMi == false && string.IsNullOrEmpty(t.RandevuDurumu))
+                                                        {
+                                                            <p>Randevu bekleniyor.</p>
+                                                        }
+                                                        else if (t.RandevuVerildiMi == true && t.RandevuTarihi > DateTime.Now)
+                                                        {
+                                                            <p>Randevu oluşturuldu ancak randevu tarihi henüz gelmedi.</p>
+                                                        }
+                                                        else if (t.RandevuVerildiMi == true && !string.IsNullOrEmpty(t.RandevuDurumu))
+                                                        {
+                                                            <span>@t.RandevuDurumu&nbsp;&nbsp;</span>
+                                                        }
+
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 col-sm-12 mt-3">
+                        <div class="card">
+                            <div class="card-header justify-content-between align-items-center">
+                                <h4 class="card-title">ORDİNATRUM Randevular</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="example5" class="display table dataTable table-striped table-bordered" width="99%">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Ad - Soyad</th>
+                                                <th scope="col">TC Kimlik No</th>
+                                                <th scope="col">Telefon</th>
+                                                <th scope="col">Poliklinik</th>
+                                                <th scope="col">Randevu Tarihi</th>
+                                                <th scope="col">Randevu Sonucu</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var t in ViewBag.OrdRandevular)
+                                            {
+                                                <tr>
+                                                    <th scope="row">@t.ID</th>
+                                                    <td>@t.HastaAdi @t.HastaSoyadi</td>
+                                                    <td>@t.HastaTCKimlikNo</td>
+                                                    <td>@t.Telefon</td>
+                                                    <td>@t.PoliklinikAdi</td>
+                                                    <td>@t.RandevuBaslangicTarihi.ToString("dd/MM/yyyy HH:mm")</td>
+                                                    <td>
+                                                        @if (t.RandevuBaslangicTarihi > DateTime.Now)
+                                                        {
+                                                            <p>Randevu oluşturuldu ancak randevu tarihi henüz gelmedi.</p>
+                                                        }
+                                                        else if (!string.IsNullOrEmpty(t.RandevuDurumu))
+                                                        {
+                                                            <span>@t.RandevuDurumu&nbsp;&nbsp;</span>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/dist/vendors/datatable/js/jquery.dataTables.min.js"></script>
+<script src="~/dist/vendors/datatable/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/dist/vendors/datatable/jszip/jszip.min.js"></script>
+<script src="~/dist/vendors/datatable/pdfmake/pdfmake.min.js"></script>
+<script src="~/dist/vendors/datatable/pdfmake/vfs_fonts.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/dataTables.buttons.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.colVis.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.flash.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.html5.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.print.min.js"></script>
+<script src="~/Content/DataTablesScript.js"></script>

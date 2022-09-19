@@ -1,0 +1,117 @@
+﻿@model RandevuKurumGetirModel
+@{
+    ViewBag.Title = "Kurumlar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<div class="row">
+    <div class="col-12  align-self-center">
+        <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+            <div class="w-sm-100 mr-auto"><h4 class="mb-0">Kurum Seçimi</h4> <a href="@Url.Action("Index", "ArindirmaMerkezleri")"><p>Arındırma Merkezleri Modülü</p></a></div>
+            <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+                <li class="breadcrumb-item"><a href="#">Kurum Seçimi</a></li>
+                <li class="breadcrumb-item active">Anasayfa</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">
+                    Randevu Oluşturmak İçin Kurum ve Poliklinik Bilgisi Seçiniz
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="card-content">
+                    <form class="form-horizontal" id="form" role="form" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <input required type="number" class="form-control form-control-sm" id="HastaID" name="HastaID" value="@ViewBag.ID" hidden="hidden">
+                            <div class="form-group">
+                                <label for="tcno">TC Kimlik No</label>
+                                <input required type="text" class="form-control form-control-sm validate[required]" id="HastaTCKimlikNo" name="HastaTCKimlikNo" value="@ViewBag.TC" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="KurumBilgisi">Kurum</label>
+                            @Html.DropDownList("KurumID", (IEnumerable<SelectListItem>)ViewData["Kurumlar"], new { @class = "form-control form-control-sm" })
+                        </div>
+                        <div class="form-group">
+                            <label for="PoliklinikBilgisi">Poliklinikler</label>
+                            <select class="form-control" name="@Html.NameFor(x=>x.PoliklinikTuruID)" id="@Html.IdFor(x=>x.PoliklinikTuruID)" required>
+                            </select>
+                        </div>
+                        <div>
+                            <button class="btn btn-primary" id="olusturbuton" type="button"><i class="icon-note"></i>Randevu Oluştur</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#KurumID option[value="' + 5 + '"]').css('display', 'none');
+    $('#KurumID option[value="' + 6 + '"]').css('display', 'none');
+    $('#KurumID option[value="' + 7 + '"]').css('display', 'none');
+    $('#KurumID option[value="' + 8 + '"]').css('display', 'none');
+    $('#KurumID option[value="' + 9 + '"]').css('display', 'none');
+    $('#KurumID option[value="' + 10 + '"]').css('display', 'none');
+
+    $("#KurumID").change(function () {
+        $("#@Html.IdFor(x=>x.PoliklinikTuruID)").empty();
+        var kurum = $("#KurumID").val();
+        $.ajax({
+            url: '@Url.Action("PolGetir", "ArindirmaMerkezleri")',
+            type: "POST",
+            dataType: "json",
+            data: { kurumid: kurum },
+            success: function (data) {
+                $.each(data, function () {
+                    $('#@Html.IdFor(x=>x.PoliklinikTuruID)').append('<option value=' + this.ID + '>' + this.PoliklinikTuru + '</option>');
+                });
+            }
+        });
+    });
+</script>
+<script>
+    $("#olusturbuton").on("click", function () {
+        RandevuAyariEksikMiKontrolu();
+    });
+
+    function beforeCallTakvim(form, options) {
+        var kId = parseInt($("#KurumID").val());
+        var pId = parseInt($("#PoliklinikTuruID").val());
+        var hId = parseInt($("#HastaID").val());
+        var locationpage = '@Url.Action("RandevuOlusturmaEkrani", "ArindirmaMerkezleri")?KurumID=' + kId + "&PoliklinikTuruID=" + pId + "&HastaID=" + hId;
+        window.location = locationpage;
+    }
+
+    function RandevuAyariEksikMiKontrolu() {
+        var kId = parseInt($("#KurumID").val());
+        var pId = parseInt($("#PoliklinikTuruID").val());
+        $.ajax({
+             url: '@Url.Action("RandevuAyariEksikMiKontrolu", "ArindirmaMerkezleri")',
+             type: "POST",
+             dataType: "json",
+             data: { kId: kId, pId: pId },
+             success: function (status) {
+                 if (status == true) {
+                     beforeCallTakvim();
+                 }
+                 else {
+                     alert("Seçilen kurum için randevu ayarları tamamlanmamıştır. Lütfen koordinasyon merkezi ile iletişime geçin. ");
+                 }
+             },
+             error: function () {
+                alert("İşleminiz sırasında hata oluştu. Lütfen koordinasyon merkezi ile iletişime geçin. ");
+             }
+        });
+    }
+</script>

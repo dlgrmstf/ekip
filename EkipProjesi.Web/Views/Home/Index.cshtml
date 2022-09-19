@@ -1,0 +1,265 @@
+﻿<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+<div class="row">
+        <div class="col-12  align-self-center">
+            <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+                <div class="w-sm-100 mr-auto"><h4 class="mb-0">EKİP PROJE</h4> <p>Anasayfa</p></div>
+                <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Anasayfa</li>
+                </ol>
+            </div>
+        </div>
+</div>
+<div class="row">
+    @if (User.IsInRole("12"))
+    {
+        <div class="col-12 col-sm-6 col-xl-3 mt-3">
+            <a href="@Url.Action("Index", "VakaTakip")">
+                <div class="card bg-green-600 text-white h-100">
+                    <div class="card-body text-center p-3 d-flex">
+                        <div class="align-self-center text-center w-100">
+                            <span class="fas fa-id-card h1 bg-green-600 text-white shadow-circle p-3 rounded-circle"></span>
+                            <h2 class="card-title font-weight-bold mt-4">Vaka Takip Modülü</h2>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
+    @if (User.IsInRole("8"))
+    {
+        <div class="col-12 col-sm-6 col-xl-3 mt-3">
+            <a href="@Url.Action("Index", "KurumlarArasiSevkVeTakip")">
+                <div class="card bg-warning text-white h-100">
+                    <div class="card-body text-center p-3 d-flex">
+                        <div class="align-self-center text-center w-100">
+                            <span class="icon-arrow-right-circle h1 bg-warning text-white shadow-circle p-3 rounded-circle"></span>
+                            <h2 class="card-title font-weight-bold mt-4">Kurumlar Arası Sevk ve Takip Modülü</h2>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
+    @if (User.IsInRole("4"))
+    {
+        <div class="col-12 col-sm-6 col-xl-3 mt-3">
+            <a href="@Url.Action("Index", "DanismaMerkezleri")">
+                <div class="card bg-grey-600 text-white h-100">
+                    <div class="card-body text-center p-3 d-flex">
+                        <div class="align-self-center text-center w-100">
+                            <span class="icon-direction h1 bg-grey-600 text-white shadow-circle p-3 rounded-circle"></span>
+                            <h2 class="card-title font-weight-bold mt-4">Danışma Merkezleri Modülü</h2>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
+    @if (User.IsInRole("5"))
+    {
+        <div class="col-12 col-sm-6 col-xl-3 mt-3">
+            <a href="@Url.Action("Index", "GenelHastanelerAcilServis")">
+                <div class="card bg-red-600 text-white h-100">
+                    <div class="card-body text-center p-3 d-flex">
+                        <div class="align-self-center text-center w-100">
+                            <span class="fas fa-hospital-alt h1 bg-red-600 text-white shadow-circle p-3 rounded-circle"></span>
+                            <h3 class="card-title font-weight-bold mt-4">Genel Hastaneler Acil Servis Modülü</h3>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
+    @if (User.IsInRole("2"))
+    {
+        <div class="col-12 col-sm-6 col-xl-3 mt-3">
+            <a href="@Url.Action("Index", "ArindirmaMerkezleri")">
+                <div class="card bg-primary text-white h-100">
+                    <div class="card-body text-center p-3 d-flex">
+                        <div class="align-self-center text-center w-100">
+                            <span class="fas fa-clinic-medical h1 bg-primary text-white shadow-circle p-3 rounded-circle"></span>
+                            <h2 class="card-title font-weight-bold mt-4">Arındırma Merkezleri Modülü</h2>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
+    @if (User.IsInRole("10"))
+    {
+        <div class="col-12 col-sm-6 col-xl-3 mt-3">
+            <a href="@Url.Action("Index", "RehabilitasyonMerkezleri")">
+                <div class="card bg-orange-600 text-white h-100">
+                    <div class="card-body text-center p-3 d-flex">
+                        <div class="align-self-center text-center w-100">
+                            <span class="fas fa-user-nurse h1 bg-orange-600 text-white shadow-circle p-3 rounded-circle"></span>
+                            <h3 class="card-title font-weight-bold mt-4">Rehabilitasyon Merkezleri Modülü</h3>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
+    @if (User.IsInRole("11"))
+    {
+        <div class="col-12 col-sm-6 col-xl-3 mt-3">
+            <a href="@Url.Action("Index", "SosyalHizmetMerkezleri")">
+                <div class="card text-white h-100" style="background-color: #f96197 !important">
+                    <div class="card-body text-center p-3 d-flex">
+                        <div class="align-self-center text-center w-100">
+                            <span class="fas fa-user-friends h1 text-white shadow-circle p-3 rounded-circle" style="background-color: #f96197 !important"></span>
+                            <h3 class="card-title font-weight-bold mt-4">Sosyal Hizmet Merkezleri Modülü</h3>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
+    @if (User.IsInRole("6"))
+    {
+        <div class="col-12 col-sm-6 col-xl-3 mt-3">
+            <a href="@Url.Action("Index", "Istihdam")">
+                <div class="card bg-success text-white h-100">
+                    <div class="card-body text-center p-3 d-flex">
+                        <div class="align-self-center text-center w-100">
+                            <span class="icon-info h1 bg-success text-white shadow-circle p-3 rounded-circle"></span>
+                            <h2 class="card-title font-weight-bold mt-4">İstihdam Modülü</h2>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
+    @if (User.IsInRole("7"))
+    {
+        <div class="col-12 col-sm-6 col-xl-3 mt-3">
+            <a href="@Url.Action("Index", "KoruyucuOnleyiciHizmetler")">
+                <div class="card bg-purple-600 text-white h-100">
+                    <div class="card-body text-center p-3 d-flex">
+                        <div class="align-self-center text-center w-100">
+                            <span class="fas fa-user-md h1 bg-purple-600 text-white shadow-circle p-3 rounded-circle"></span>
+                            <h3 class="card-title font-weight-bold mt-4">Koruyucu Önleyici Hizmetler</h3>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
+    @if (User.IsInRole("9"))
+    {
+        <div class="col-12 col-sm-6 col-xl-3 mt-3">
+            <a href="@Url.Action("MobilEkip", "MobilEkip")">
+                <div class="card bg-indigo-600 text-white h-100">
+                    <div class="card-body text-center p-3 d-flex">
+                        <div class="align-self-center text-center w-100">
+                            <span class="fas fa-map-marked h1 bg-indigo-600 text-white shadow-circle p-3 rounded-circle"></span>
+                            <h2 class="card-title font-weight-bold mt-4">Mobil Ekip Modülü</h2>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
+    @if (User.IsInRole("1"))
+    {
+        <div class="col-12 col-sm-6 col-xl-3 mt-3">
+            <a href="@Url.Action("Index", "Aksam")">
+                <div class="card bg-info text-white h-100">
+                    <div class="card-body text-center p-3 d-flex">
+                        <div class="align-self-center text-center w-100">
+                            <span class="icon-link h1 bg-info text-white shadow-circle p-3 rounded-circle"></span>
+                            <h2 class="card-title font-weight-bold mt-4">Aksam Modülü</h2>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
+    @if (User.IsInRole("3"))
+    {
+        <div class="col-12 col-sm-6 col-xl-3 mt-3">
+            <a href="@Url.Action("Index", "BirimPersonelleri")">
+                <div class="card bg-cyan-600 text-white h-100">
+                    <div class="card-body text-center p-3 d-flex">
+                        <div class="align-self-center text-center w-100">
+                            <span class="icon-people h1 bg-cyan-600 text-white shadow-circle p-3 rounded-circle"></span>
+                            <h2 class="card-title font-weight-bold mt-4">Birim Personelleri Modülü</h2>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
+    @if (User.IsInRole("13")) 
+    { 
+        <div class="col-12 col-sm-6 col-xl-3 mt-3">
+            <a href="@Url.Action("Index", "Formlar")">
+                <div class="card text-white h-100" style="background-color:#cfdbea">
+                    <div class="card-body text-center p-3 d-flex">
+                        <div class="align-self-center text-center w-100">
+                            <span class="icon-puzzle h1 text-white shadow-circle p-3 rounded-circle" style="background-color:#cfdbea"></span>
+                            <h2 class="card-title font-weight-bold mt-4">Form Sihirbazı</h2>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+     }
+</div>
+<script>
+    $(document).ready(function () {
+        var list = [];
+        $.ajax({
+                url: '@Url.Action("PasifRandevuAyarlari", "Home")',
+                type: "POST",
+                dataType: "json",
+                success: function (data) {
+                    $.each(data, function (i, e) {
+                        var id = {
+                            ID: e.ID,
+                        };
+                        list.push(id);
+                    })
+                    for (var i = 0; i < list.length; i++) {
+                        $.ajax({
+                           url: '@Url.Action("RandevuAyariPasiflikKontrol", "Home")',
+                           type: "POST",
+                           data: { ayarId: list[i].ID },
+                           dataType: "json",
+                           success: function (data) { }
+                        });
+                    }
+                }
+        });
+        var randevuList = [];
+        $.ajax({
+                url: '@Url.Action("RandevuBilgileri", "Home")',
+                type: "POST",
+                dataType: "json",
+                success: function (data) {
+                    $.each(data, function (i, e) {
+                        var rId = {
+                            ID: e.ID,
+                        };
+                        randevuList.push(rId);
+                    })
+                    for (var i = 0; i < randevuList.length; i++) {
+                        $.ajax({
+                           url: '@Url.Action("RandevuDurumBilgisiKontrol", "Home")',
+                           type: "POST",
+                           data: { randevuId: randevuList[i].ID },
+                           dataType: "json",
+                           success: function (data) { }
+                        });
+                    }
+                }
+        });
+    });
+</script>
+<style>
+    .card-body {
+        height:235px;
+    }
+</style>

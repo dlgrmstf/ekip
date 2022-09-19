@@ -1,0 +1,2446 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EkipProjeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="AnketCevaplari">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SoruID" Type="Int64" Nullable="false" />
+    <Property Name="CevapAdi" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Puan" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AnketGruplari">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GrupAdi" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="AnketID" Type="Int64" Nullable="false" />
+    <Property Name="Aciklama" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Sira" Type="Int32" Nullable="false" />
+    <Property Name="Status" Type="Boolean" Nullable="false" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="KayitTarihi" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="AnketKullaniciCevap">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AnketSoruID" Type="Int64" Nullable="false" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="Tarih" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CevapID" Type="Int64" Nullable="false" />
+    <Property Name="Cevap" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AnketKullanicilari">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AnketID" Type="Int64" Nullable="false" />
+    <Property Name="PersonelID" Type="Int32" Nullable="false" />
+    <Property Name="Tarih" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="TamamlandiMi" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Anketler">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IsletmeID" Type="Int32" Nullable="false" />
+    <Property Name="AnketTipID" Type="Int32" Nullable="false" />
+    <Property Name="Baslik" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Aciklama" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="BaslangicTarihi" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="BitisTarihi" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="KayitTarihi" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="Status" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AnketSoruBankasi">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Soru" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Aciklama" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="KayitTarihi" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Status" Type="Boolean" Nullable="false" />
+    <Property Name="SoruKodu" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+  </EntityType>
+  <EntityType Name="AnketSorulari">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GrupID" Type="Int64" Nullable="false" />
+    <Property Name="AnketID" Type="Int64" Nullable="false" />
+    <Property Name="SoruID" Type="Int64" Nullable="false" />
+    <Property Name="ZorunluMu" Type="Boolean" Nullable="false" />
+    <Property Name="SoruTipi" Type="Int32" Nullable="false" />
+    <Property Name="Agirlik" Type="Double" Nullable="false" />
+    <Property Name="CevapSayisi" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AnketTipleri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TipAdi" Type="String" MaxLength="350" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Aciklama" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Status" Type="Boolean" Nullable="false" />
+    <Property Name="KayitTarihi" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ArindirmaBasvuruBilgileri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="KurumKodu" Type="Int32" Nullable="false" />
+    <Property Name="KayitTarihi" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="HastaProtokolNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PoliklinikMuayeneTarihSaati" Type="DateTime" Precision="3" />
+    <Property Name="MuayeneyiGerceklestirenHekim" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="MuayeneyiGerceklestirenHekimTuru" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MaddeBilgisi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="EslikEdenHastalikOykusu" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PsikiyatrikHastalikOykusuAciklama" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PsikiyatrikHastalikOykusu" Type="Boolean" />
+    <Property Name="KullanmaktaOlduguDigerIlacBilgisi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SonBasvurudanSonraAlkolMaddeKullanimiOlmusMu" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="SonBasvurudanSonraOnerilenIlaclariDuzenliKullanmisMi" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="YoksunlukBulgusu" Type="Boolean" />
+    <Property Name="IntoksikasyonBulgusu" Type="Boolean" />
+    <Property Name="IdrarToksikolojiBulgusu" Type="Boolean" />
+    <Property Name="LogTarihi" Type="DateTime" Precision="3" />
+    <Property Name="GuncellemeTarihi" Type="DateTime" Precision="3" />
+    <Property Name="HastaEkipNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PoliklinikTuruID" Type="Int32" />
+    <Property Name="BeyanAdresi" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="BeyanTelefonu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="KararID" Type="Int32" />
+    <NavigationProperty Name="ArindirmaBasvuruKararlari" Relationship="EkipProjeModel.FK_ArindirmaBasvuruBilgileri_ArindirmaBasvuruKararlari" FromRole="ArindirmaBasvuruBilgileri" ToRole="ArindirmaBasvuruKararlari" />
+    <NavigationProperty Name="HastaBeyanBilgileri" Relationship="EkipProjeModel.FK_HastaBeyanBilgileri_ArindirmaBasvuruBilgileri" FromRole="ArindirmaBasvuruBilgileri" ToRole="HastaBeyanBilgileri" />
+  </EntityType>
+  <EntityType Name="ArindirmaBasvuruKararlari">
+    <Key>
+      <PropertyRef Name="KararID" />
+    </Key>
+    <Property Name="Karar" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Aciklama" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="KararID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ArindirmaBasvuruBilgileri" Relationship="EkipProjeModel.FK_ArindirmaBasvuruBilgileri_ArindirmaBasvuruKararlari" FromRole="ArindirmaBasvuruKararlari" ToRole="ArindirmaBasvuruBilgileri" />
+    <NavigationProperty Name="Yatislar" Relationship="EkipProjeModel.FK_Yatislar_YatisSonlanmaNedenleri1" FromRole="ArindirmaBasvuruKararlari" ToRole="Yatislar" />
+  </EntityType>
+  <EntityType Name="ArindirmaHizmetBilgileri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="KurumKodu" Type="Int32" Nullable="false" />
+    <Property Name="KayitTarihi" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="AktifAmatemPoliklinikSayisi" Type="Int32" />
+    <Property Name="AktifCematemPoliklinikSayisi" Type="Int32" />
+    <Property Name="AmatemYeniBasvuruSayisi" Type="Int32" />
+    <Property Name="CematemYeniBasvuruSayisi" Type="Int32" />
+    <Property Name="AmatemTakipBasvurusuSayisi" Type="Int32" />
+    <Property Name="CematemTakipBasvurusuSayisi" Type="Int32" />
+    <Property Name="AktifAmatemYatakSayisi" Type="Int32" />
+    <Property Name="AktifCematemYatakSayisi" Type="Int32" />
+    <Property Name="AmatemBosYatakSayisi" Type="Int32" />
+    <Property Name="AmatemDoluYatakSayisi" Type="Int32" />
+    <Property Name="CematemBosYatakSayisi" Type="Int32" />
+    <Property Name="CematemDoluYatakSayisi" Type="Int32" />
+    <Property Name="LogTarihi" Type="DateTime" Precision="3" />
+    <Property Name="GuncellemeTarihi" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="ArindirmaPersonelBilgileri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="KurumKodu" Type="Int32" Nullable="false" />
+    <Property Name="KayitTarihi" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="TumUzmanHekimSayisi" Type="Int32" />
+    <Property Name="TumAsistanHekimSayisi" Type="Int32" />
+    <Property Name="TumPratisyenHekimSayisi" Type="Int32" />
+    <Property Name="HastaneAktifPsikiyatriUzmaniSayisi" Type="Int32" />
+    <Property Name="HastaneAktifCocukPsikiyatriUzmaniSayisi" Type="Int32" />
+    <Property Name="HastaneAktifPsikiyatriAsistaniSayisi" Type="Int32" />
+    <Property Name="HastaneAktifCocukPsikiyatriAsistaniSayisi" Type="Int32" />
+    <Property Name="HastaneAktifPsikologSayisi" Type="Int32" />
+    <Property Name="HastaneAktifHemsireSayisi" Type="Int32" />
+    <Property Name="AmatemAktifPsikiyatriUzmaniSayisi" Type="Int32" />
+    <Property Name="CematemAktifCocukPsikiyatriUzmaniSayisi" Type="Int32" />
+    <Property Name="AmatemAktifPsikiyatriAsistaniSayisi" Type="Int32" />
+    <Property Name="CematemAktifCocukPsikiyatriAsistaniSayisi" Type="Int32" />
+    <Property Name="AmatemAktifPsikologSayisi" Type="Int32" />
+    <Property Name="CematemAktifPsikologSayisi" Type="Int32" />
+    <Property Name="AmatemAktifHemsireSayisi" Type="Int32" />
+    <Property Name="CematemAktifHemsireSayisi" Type="Int32" />
+    <Property Name="MaddeBagimliligiEgitimiAlmisTumHekimSayisi" Type="Int32" />
+    <Property Name="MaddeBagimliligiEgitimiAlmisPsikiyatriUzmaniSayisi" Type="Int32" />
+    <Property Name="MaddeBagimliligiEgitimiAlmisCocukPsikiyatriUzmaniSayisi" Type="Int32" />
+    <Property Name="MaddeBagimliligiEgitimiAlmisPsikologSayisi" Type="Int32" />
+    <Property Name="MaddeBagimliligiEgitimiAlmisHemsireSayisi" Type="Int32" />
+    <Property Name="LogTarihi" Type="DateTime" Precision="3" />
+    <Property Name="GuncellemeTarihi" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="BasvuruBilgileriLabSonuc">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="KurumKodu" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="LabNumuneAlimTarihi" Type="DateTime" Precision="3" />
+    <Property Name="LabNumuneSonucTarihi" Type="DateTime" Precision="3" />
+    <Property Name="MaddeBulgusu" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="FizikselHastalikOykuleri">
+    <Key>
+      <PropertyRef Name="HastalikOykusuID" />
+    </Key>
+    <Property Name="HastalikOykusuID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="HastaProtokolNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Yok" Type="Boolean" />
+    <Property Name="DM" Type="Boolean" />
+    <Property Name="Hipertansiyon" Type="Boolean" />
+    <Property Name="Astim" Type="Boolean" />
+    <Property Name="Epilepsi" Type="Boolean" />
+    <Property Name="HIV" Type="Boolean" />
+    <Property Name="BobrekYetmezligi" Type="Boolean" />
+    <Property Name="Siroz" Type="Boolean" />
+    <Property Name="Hepatit" Type="Boolean" />
+    <Property Name="HepatitAciklama" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="KalpHastaligi" Type="Boolean" />
+    <Property Name="KalpHastaligiAciklama" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="IlacAlerjisi" Type="Boolean" />
+    <Property Name="IlacAlerjisiAciklama" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="Diger" Type="Boolean" />
+    <Property Name="DigerAciklama" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="KurumKodu" Type="Int32" Nullable="false" />
+    <Property Name="LogTarihi" Type="DateTime" Precision="3" />
+    <Property Name="HastaEkipNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Hastalar">
+    <Key>
+      <PropertyRef Name="HastaID" />
+    </Key>
+    <Property Name="HastaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="KurumKodu" Type="Int32" Nullable="false" />
+    <Property Name="HastaAdi" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="HastaSoyadi" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="HastaTCKimlikNo" Type="String" MaxLength="11" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Telefon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="KayitTarihi" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="GuncellemeTarihi" Type="DateTime" Precision="3" />
+    <Property Name="Cinsiyet" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="DogumTarihi" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="HastaYakinBilgileri" Relationship="EkipProjeModel.FK_HastaYakinBilgileri_Hastalar" FromRole="Hastalar" ToRole="HastaYakinBilgileri" />
+    <NavigationProperty Name="HastaNotlari" Relationship="EkipProjeModel.FK_HastaNotlari_Hastalar" FromRole="Hastalar" ToRole="HastaNotlari" />
+    <NavigationProperty Name="HastaIlkKayitBilgileri" Relationship="EkipProjeModel.FK_HastaIlkKayitBilgileri_Hastalar" FromRole="Hastalar" ToRole="HastaIlkKayitBilgileri" />
+    <NavigationProperty Name="HastaIzlemBilgileri" Relationship="EkipProjeModel.FK_HastaIzlemBilgileri_Hastalar" FromRole="Hastalar" ToRole="HastaIzlemBilgileri" />
+    <NavigationProperty Name="HastaTimeline" Relationship="EkipProjeModel.FK_HastaTimeline_Hastalar" FromRole="Hastalar" ToRole="HastaTimeline" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Adres" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="RandevuTalepleri" Relationship="EkipProjeModel.FK_IskurRandevuTalepleri_Hastalar1" FromRole="Hastalar" ToRole="RandevuTalepleri" />
+    <NavigationProperty Name="MobilEkipVakaFormlari" Relationship="EkipProjeModel.FK_MobilEkipVakaFormlari_Hastalar" FromRole="Hastalar" ToRole="MobilEkipVakaFormlari" />
+    <Property Name="HastaEkipNo" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="OnamDurumu" Type="Boolean" />
+    <NavigationProperty Name="HastaIskurGorusmeleri" Relationship="EkipProjeModel.FK_IskurIslemleriKullaniciGorusmeleri_IskurIslemleriKullanicilar1" FromRole="Hastalar" ToRole="HastaIskurGorusmeleri" />
+    <NavigationProperty Name="HastaBaharFormlari" Relationship="EkipProjeModel.FK_HastaBaharFormlari_Hastalar" FromRole="Hastalar" ToRole="HastaBaharFormlari" />
+    <NavigationProperty Name="HastaOlceklerFormu" Relationship="EkipProjeModel.FK_HastaOlceklerFormu_Hastalar" FromRole="Hastalar" ToRole="HastaOlceklerFormu" />
+    <Property Name="KaydedenKullaniciID" Type="Int32" />
+    <NavigationProperty Name="HastaBagimlilikSiddetiFormlari" Relationship="EkipProjeModel.FK_HastaBagimlilikSiddetiFormlari_Hastalar" FromRole="Hastalar" ToRole="HastaBagimlilikSiddetiFormlari" />
+  </EntityType>
+  <EntityType Name="Il">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ILAdi" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="KOD" Type="Int32" />
+    <NavigationProperty Name="IstihdamIsyeriAdresBilgisi" Relationship="EkipProjeModel.FK_IstihdamIsyeriAdresBilgisi_Il" FromRole="Il" ToRole="IstihdamIsyeriAdresBilgisi" />
+  </EntityType>
+  <EntityType Name="Ilce">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ILID" Type="Int32" />
+    <Property Name="ILCEAdi" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="ILKOD" Type="Int32" />
+    <NavigationProperty Name="IstihdamIsyeriAdresBilgisi" Relationship="EkipProjeModel.FK_IstihdamIsyeriAdresBilgisi_Ilce" FromRole="Ilce" ToRole="IstihdamIsyeriAdresBilgisi" />
+    <NavigationProperty Name="Mahalle" Relationship="EkipProjeModel.FK_Mahalle_Ilce" FromRole="Ilce" ToRole="Mahalle" />
+  </EntityType>
+  <EntityType Name="Kullanicilar">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="KullaniciAdi" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Sifre" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PersonelId" Type="Int32" />
+    <Property Name="TC" Type="String" MaxLength="11" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="KullaniciDurumu" Type="Boolean" />
+    <Property Name="SifreKontrol" Type="Boolean" />
+    <Property Name="FotoByte" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="FotoContentType" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Ad" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Soyad" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="DogumTarihi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Cinsiyet" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="KanGrubu" Type="Int32" />
+    <Property Name="MedeniDurum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Telefon" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="AdSoyad" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="KullaniciBirimBilgileri" Relationship="EkipProjeModel.FK_KullaniciBirimBilgileri_Kullanicilar" FromRole="Kullanicilar" ToRole="KullaniciBirimBilgileri" />
+    <Property Name="Meslek" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="IseBaslamaTarihi" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="KullaniciErisimBilgileri" Relationship="EkipProjeModel.FK_KullaniciErisimBilgileri_Kullanicilar" FromRole="Kullanicilar" ToRole="KullaniciErisimBilgileri" />
+    <NavigationProperty Name="HastaNotlari" Relationship="EkipProjeModel.FK_HastaNotlari_Kullanicilar" FromRole="Kullanicilar" ToRole="HastaNotlari" />
+    <NavigationProperty Name="KullaniciGorevTakip" Relationship="EkipProjeModel.FK_KullaniciGorevTakip_Kullanicilar" FromRole="Kullanicilar" ToRole="KullaniciGorevTakip" />
+    <Property Name="KurumID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Kurumlar" Relationship="EkipProjeModel.FK_Kullanicilar_Kurumlar" FromRole="Kullanicilar" ToRole="Kurumlar" />
+    <Property Name="KaydedenKullaniciID" Type="Int32" />
+    <Property Name="KurumTelefonu" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="KurumEposta" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="HizmetMerkeziID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="KurumHizmetMerkezleri" Relationship="EkipProjeModel.FK_Kullanicilar_KurumHizmetMerkezleri" FromRole="Kullanicilar" ToRole="KurumHizmetMerkezleri" />
+    <Property Name="ExcelID" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="KayitTarihi" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="KullaniciRolleri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="KullaniciId" Type="Int32" Nullable="false" />
+    <Property Name="RolId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Kurumlar">
+    <Key>
+      <PropertyRef Name="KurumID" />
+    </Key>
+    <Property Name="KurumID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="KurumKodu" Type="Int32" Nullable="false" />
+    <Property Name="KurumAdi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="KurumPoliklinikTurleri" Relationship="EkipProjeModel.FK_KurumPoliklinikTurleri_KurumPoliklinikTurleri" FromRole="Kurumlar" ToRole="KurumPoliklinikTurleri" />
+    <NavigationProperty Name="RandevuBilgileri" Relationship="EkipProjeModel.FK_RandevuBilgileri_Kurumlar" FromRole="Kurumlar" ToRole="RandevuBilgileri" />
+    <NavigationProperty Name="RandevuTalepleri" Relationship="EkipProjeModel.FK_IskurRandevuTalepleri_Kurumlar1" FromRole="Kurumlar" ToRole="RandevuTalepleri" />
+    <NavigationProperty Name="RandevuAyarlari" Relationship="EkipProjeModel.FK_RandevuAyarlari_Kurumlar" FromRole="Kurumlar" ToRole="RandevuAyarlari" />
+    <NavigationProperty Name="Kullanicilar" Relationship="EkipProjeModel.FK_Kullanicilar_Kurumlar" FromRole="Kurumlar" ToRole="Kullanicilar" />
+  </EntityType>
+  <EntityType Name="Log">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Date" Type="DateTime" Precision="3" />
+    <Property Name="Thread" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Levels" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Logger" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Exception" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="Application" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UrlRefferer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SessionID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="JsError" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Boolean" Nullable="false" />
+    <Property Name="IsletmeID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="LogCikis">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Tarih" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="SessionID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="SonIslemTarihi" Type="DateTime" Precision="3" />
+    <Property Name="SessionCount" Type="Int32" />
+    <Property Name="MachineName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="MachineIP" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="LogHataBildirimleri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Konu" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Mesaj" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="Tarih" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Url" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="HTML" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="FileFormat" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ScreenShot" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="CozumDurumu" Type="Boolean" />
+    <Property Name="CozumMesajı" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="LogLoginIslemleri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="KullaniciId" Type="Int32" Nullable="false" />
+    <Property Name="LogTipi" Type="Int32" Nullable="false" />
+    <Property Name="Tarih" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsletimSistemi" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="TarayiciAdi" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="MobilMi" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="SessionID" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="MachineName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="MachineIP" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="LogSchema">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Date" Type="DateTime" Precision="3" />
+    <Property Name="Thread" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Levels" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Logger" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Exception" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="Application" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UrlRefferer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SessionID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="JsError" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="LogSifreDegistirme">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="Tarih" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="SessionID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PersonelFotograflar">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PersonelID" Type="Int32" Nullable="false" />
+    <Property Name="FileByte" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+    <Property Name="ContentType" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Status" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PersonelGorevHareketleri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PersonelId" Type="Int32" Nullable="false" />
+    <Property Name="UnvanId" Type="Int32" Nullable="false" />
+    <Property Name="Status" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Personeller">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Ad" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Soyad" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="PersonelTuruId" Type="Int32" />
+    <Property Name="Slug" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="PoliklinikTurleri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="KurumKodu" Type="Int32" Nullable="false" />
+    <Property Name="PoliklinikAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="AktifOdaSayisi" Type="Int32" Nullable="false" />
+    <Property Name="KayitTarihi" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="LogTarihi" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="Roller">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Rol" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RolYetkileri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RolId" Type="Int32" Nullable="false" />
+    <Property Name="YetkiId" Type="Int32" Nullable="false" />
+    <Property Name="Goruntuleme" Type="Boolean" Nullable="false" />
+    <Property Name="Ekleme" Type="Boolean" Nullable="false" />
+    <Property Name="Duzenleme" Type="Boolean" Nullable="false" />
+    <Property Name="Silme" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Unvanlar">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UnvanAdi" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Status" Type="Boolean" Nullable="false" />
+    <Property Name="AktarimID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Yatislar">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="KurumKodu" Type="Int32" Nullable="false" />
+    <Property Name="YatisTarihi" Type="DateTime" Precision="3" Nullable="false" />
+    <Property Name="GunlukIzlemBilgisi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="YatisSonlanmaTarihi" Type="DateTime" Precision="3" />
+    <Property Name="YatisSonlanmaID" Type="Int32" />
+    <Property Name="YatisSonlanmaAciklama" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="LogTarihi" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="YatisSonlanmaNedenleri" Relationship="EkipProjeModel.FK_Yatislar_YatisSonlanmaNedenleri" FromRole="Yatislar" ToRole="YatisSonlanmaNedenleri" />
+    <Property Name="HastaEkipNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="KararID" Type="Int32" />
+    <NavigationProperty Name="ArindirmaBasvuruKararlari" Relationship="EkipProjeModel.FK_Yatislar_YatisSonlanmaNedenleri1" FromRole="Yatislar" ToRole="ArindirmaBasvuruKararlari" />
+  </EntityType>
+  <EntityType Name="YatisSonlanmaNedenleri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SonlanmaNedeni" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Yatislar" Relationship="EkipProjeModel.FK_Yatislar_YatisSonlanmaNedenleri" FromRole="YatisSonlanmaNedenleri" ToRole="Yatislar" />
+  </EntityType>
+  <EntityType Name="Yetkiler">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="YetkiAdi" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="EKIPEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AnketCevaplari" EntityType="Self.AnketCevaplari" />
+    <EntitySet Name="AnketGruplari" EntityType="Self.AnketGruplari" />
+    <EntitySet Name="AnketKullaniciCevap" EntityType="Self.AnketKullaniciCevap" />
+    <EntitySet Name="AnketKullanicilari" EntityType="Self.AnketKullanicilari" />
+    <EntitySet Name="Anketler" EntityType="Self.Anketler" />
+    <EntitySet Name="AnketSoruBankasi" EntityType="Self.AnketSoruBankasi" />
+    <EntitySet Name="AnketSorulari" EntityType="Self.AnketSorulari" />
+    <EntitySet Name="AnketTipleri" EntityType="Self.AnketTipleri" />
+    <EntitySet Name="ArindirmaBasvuruBilgileri" EntityType="Self.ArindirmaBasvuruBilgileri" />
+    <EntitySet Name="ArindirmaBasvuruKararlari" EntityType="Self.ArindirmaBasvuruKararlari" />
+    <EntitySet Name="ArindirmaHizmetBilgileri" EntityType="Self.ArindirmaHizmetBilgileri" />
+    <EntitySet Name="ArindirmaPersonelBilgileri" EntityType="Self.ArindirmaPersonelBilgileri" />
+    <EntitySet Name="BasvuruBilgileriLabSonuc" EntityType="Self.BasvuruBilgileriLabSonuc" />
+    <EntitySet Name="FizikselHastalikOykuleri" EntityType="Self.FizikselHastalikOykuleri" />
+    <EntitySet Name="Hastalar" EntityType="Self.Hastalar" />
+    <EntitySet Name="Il" EntityType="Self.Il" />
+    <EntitySet Name="Ilce" EntityType="Self.Ilce" />
+    <EntitySet Name="Kullanicilar" EntityType="Self.Kullanicilar" />
+    <EntitySet Name="KullaniciRolleri" EntityType="Self.KullaniciRolleri" />
+    <EntitySet Name="Kurumlar" EntityType="Self.Kurumlar" />
+    <EntitySet Name="Log" EntityType="Self.Log" />
+    <EntitySet Name="LogCikis" EntityType="Self.LogCikis" />
+    <EntitySet Name="LogHataBildirimleri" EntityType="Self.LogHataBildirimleri" />
+    <EntitySet Name="LogLoginIslemleri" EntityType="Self.LogLoginIslemleri" />
+    <EntitySet Name="LogSchema" EntityType="Self.LogSchema" />
+    <EntitySet Name="LogSifreDegistirme" EntityType="Self.LogSifreDegistirme" />
+    <EntitySet Name="PersonelFotograflar" EntityType="Self.PersonelFotograflar" />
+    <EntitySet Name="PersonelGorevHareketleri" EntityType="Self.PersonelGorevHareketleri" />
+    <EntitySet Name="Personeller" EntityType="Self.Personeller" />
+    <EntitySet Name="PoliklinikTurleri" EntityType="Self.PoliklinikTurleri" />
+    <EntitySet Name="Roller" EntityType="Self.Roller" />
+    <EntitySet Name="RolYetkileri" EntityType="Self.RolYetkileri" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="Unvanlar" EntityType="Self.Unvanlar" />
+    <EntitySet Name="Yatislar" EntityType="Self.Yatislar" />
+    <EntitySet Name="YatisSonlanmaNedenleri" EntityType="Self.YatisSonlanmaNedenleri" />
+    <EntitySet Name="Yetkiler" EntityType="Self.Yetkiler" />
+    <AssociationSet Name="FK_Yatislar_YatisSonlanmaNedenleri" Association="EkipProjeModel.FK_Yatislar_YatisSonlanmaNedenleri">
+      <End Role="YatisSonlanmaNedenleri" EntitySet="YatisSonlanmaNedenleri" />
+      <End Role="Yatislar" EntitySet="Yatislar" />
+    </AssociationSet>
+    <EntitySet Name="HastaMaddeKullanimBilgileri" EntityType="EkipProjeModel.HastaMaddeKullanimBilgileri" />
+    <EntitySet Name="Kullanici" EntityType="EkipProjeModel.Kullanici" />
+    <EntitySet Name="ResmiTatiller" EntityType="EkipProjeModel.ResmiTatiller" />
+    <EntitySet Name="Events" EntityType="EkipProjeModel.Events" />
+    <EntitySet Name="RandevuBilgileri" EntityType="EkipProjeModel.RandevuBilgileri" />
+    <EntitySet Name="KurumPoliklinikTurleri" EntityType="EkipProjeModel.KurumPoliklinikTurleri" />
+    <AssociationSet Name="FK_KurumPoliklinikTurleri_KurumPoliklinikTurleri" Association="EkipProjeModel.FK_KurumPoliklinikTurleri_KurumPoliklinikTurleri">
+      <End Role="Kurumlar" EntitySet="Kurumlar" />
+      <End Role="KurumPoliklinikTurleri" EntitySet="KurumPoliklinikTurleri" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RandevuBilgileri_Kurumlar" Association="EkipProjeModel.FK_RandevuBilgileri_Kurumlar">
+      <End Role="Kurumlar" EntitySet="Kurumlar" />
+      <End Role="RandevuBilgileri" EntitySet="RandevuBilgileri" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RandevuBilgileri_KurumPoliklinikTurleri" Association="EkipProjeModel.FK_RandevuBilgileri_KurumPoliklinikTurleri">
+      <End Role="KurumPoliklinikTurleri" EntitySet="KurumPoliklinikTurleri" />
+      <End Role="RandevuBilgileri" EntitySet="RandevuBilgileri" />
+    </AssociationSet>
+    <EntitySet Name="Mesajlar" EntityType="EkipProjeModel.Mesajlar" />
+    <EntitySet Name="MesajGidenKullanici" EntityType="EkipProjeModel.MesajGidenKullanici" />
+    <EntitySet Name="KullaniciIletisimBilgileri" EntityType="EkipProjeModel.KullaniciIletisimBilgileri" />
+    <EntitySet Name="KullaniciIzinTuru" EntityType="EkipProjeModel.KullaniciIzinTuru" />
+    <EntitySet Name="KullaniciBirimBilgileri" EntityType="EkipProjeModel.KullaniciBirimBilgileri" />
+    <EntitySet Name="KullaniciIzinBilgileri" EntityType="EkipProjeModel.KullaniciIzinBilgileri" />
+    <AssociationSet Name="FK_KullaniciBirimBilgileri_Kullanicilar" Association="EkipProjeModel.FK_KullaniciBirimBilgileri_Kullanicilar">
+      <End Role="Kullanicilar" EntitySet="Kullanicilar" />
+      <End Role="KullaniciBirimBilgileri" EntitySet="KullaniciBirimBilgileri" />
+    </AssociationSet>
+    <EntitySet Name="LogSilinenRandevular" EntityType="EkipProjeModel.LogSilinenRandevular" />
+    <EntitySet Name="KullaniciErisimBilgileri" EntityType="EkipProjeModel.KullaniciErisimBilgileri" />
+    <AssociationSet Name="FK_KullaniciErisimBilgileri_Kullanicilar" Association="EkipProjeModel.FK_KullaniciErisimBilgileri_Kullanicilar">
+      <End Role="Kullanicilar" EntitySet="Kullanicilar" />
+      <End Role="KullaniciErisimBilgileri" EntitySet="KullaniciErisimBilgileri" />
+    </AssociationSet>
+    <EntitySet Name="ErisimKodlari" EntityType="EkipProjeModel.ErisimKodlari" />
+    <AssociationSet Name="FK_KullaniciErisimBilgileri_ErisimKodlari" Association="EkipProjeModel.FK_KullaniciErisimBilgileri_ErisimKodlari">
+      <End Role="ErisimKodlari" EntitySet="ErisimKodlari" />
+      <End Role="KullaniciErisimBilgileri" EntitySet="KullaniciErisimBilgileri" />
+    </AssociationSet>
+    <EntitySet Name="HastaYakinBilgileri" EntityType="EkipProjeModel.HastaYakinBilgileri" />
+    <AssociationSet Name="FK_HastaYakinBilgileri_Hastalar" Association="EkipProjeModel.FK_HastaYakinBilgileri_Hastalar">
+      <End Role="Hastalar" EntitySet="Hastalar" />
+      <End Role="HastaYakinBilgileri" EntitySet="HastaYakinBilgileri" />
+    </AssociationSet>
+    <EntitySet Name="HastaNotlari" EntityType="EkipProjeModel.HastaNotlari" />
+    <AssociationSet Name="FK_HastaNotlari_Kullanicilar" Association="EkipProjeModel.FK_HastaNotlari_Kullanicilar">
+      <End Role="Kullanicilar" EntitySet="Kullanicilar" />
+      <End Role="HastaNotlari" EntitySet="HastaNotlari" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HastaNotlari_Hastalar" Association="EkipProjeModel.FK_HastaNotlari_Hastalar">
+      <End Role="Hastalar" EntitySet="Hastalar" />
+      <End Role="HastaNotlari" EntitySet="HastaNotlari" />
+    </AssociationSet>
+    <EntitySet Name="Faaliyetler" EntityType="EkipProjeModel.Faaliyetler" />
+    <EntitySet Name="HastaIlkKayitBilgileri" EntityType="EkipProjeModel.HastaIlkKayitBilgileri" />
+    <EntitySet Name="HastaIzlemBilgileri" EntityType="EkipProjeModel.HastaIzlemBilgileri" />
+    <EntitySet Name="HastaTimeline" EntityType="EkipProjeModel.HastaTimeline" />
+    <AssociationSet Name="FK_HastaIlkKayitBilgileri_Hastalar" Association="EkipProjeModel.FK_HastaIlkKayitBilgileri_Hastalar">
+      <End Role="Hastalar" EntitySet="Hastalar" />
+      <End Role="HastaIlkKayitBilgileri" EntitySet="HastaIlkKayitBilgileri" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HastaIzlemBilgileri_Hastalar" Association="EkipProjeModel.FK_HastaIzlemBilgileri_Hastalar">
+      <End Role="Hastalar" EntitySet="Hastalar" />
+      <End Role="HastaIzlemBilgileri" EntitySet="HastaIzlemBilgileri" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HastaTimeline_Hastalar" Association="EkipProjeModel.FK_HastaTimeline_Hastalar">
+      <End Role="Hastalar" EntitySet="Hastalar" />
+      <End Role="HastaTimeline" EntitySet="HastaTimeline" />
+    </AssociationSet>
+    <EntitySet Name="IstihdamIsyerleri" EntityType="EkipProjeModel.IstihdamIsyerleri" />
+    <EntitySet Name="IstihdamIsyeriIletisimKisileri" EntityType="EkipProjeModel.IstihdamIsyeriIletisimKisileri" />
+    <AssociationSet Name="FK_IstihdamIsyeriIletisimKisileri_IstihdamIsyerleri" Association="EkipProjeModel.FK_IstihdamIsyeriIletisimKisileri_IstihdamIsyerleri">
+      <End Role="IstihdamIsyerleri" EntitySet="IstihdamIsyerleri" />
+      <End Role="IstihdamIsyeriIletisimKisileri" EntitySet="IstihdamIsyeriIletisimKisileri" />
+    </AssociationSet>
+    <EntitySet Name="IstihdamIsyeriGorusmeleri" EntityType="EkipProjeModel.IstihdamIsyeriGorusmeleri" />
+    <AssociationSet Name="FK_IstihdamIsyeriGorusmeleri_IstihdamIsyerleri" Association="EkipProjeModel.FK_IstihdamIsyeriGorusmeleri_IstihdamIsyerleri">
+      <End Role="IstihdamIsyerleri" EntitySet="IstihdamIsyerleri" />
+      <End Role="IstihdamIsyeriGorusmeleri" EntitySet="IstihdamIsyeriGorusmeleri" />
+    </AssociationSet>
+    <EntitySet Name="KullaniciGorevTakip" EntityType="EkipProjeModel.KullaniciGorevTakip" />
+    <AssociationSet Name="FK_KullaniciGorevTakip_Kullanicilar" Association="EkipProjeModel.FK_KullaniciGorevTakip_Kullanicilar">
+      <End Role="Kullanicilar" EntitySet="Kullanicilar" />
+      <End Role="KullaniciGorevTakip" EntitySet="KullaniciGorevTakip" />
+    </AssociationSet>
+    <EntitySet Name="KurumHizmetMerkezleri" EntityType="EkipProjeModel.KurumHizmetMerkezleri" />
+    <EntitySet Name="RandevuTalepleri" EntityType="EkipProjeModel.RandevuTalepleri" />
+    <AssociationSet Name="FK_IskurRandevuTalepleri_Hastalar1" Association="EkipProjeModel.FK_IskurRandevuTalepleri_Hastalar1">
+      <End Role="Hastalar" EntitySet="Hastalar" />
+      <End Role="RandevuTalepleri" EntitySet="RandevuTalepleri" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IskurRandevuTalepleri_KurumHizmetMerkezleri1" Association="EkipProjeModel.FK_IskurRandevuTalepleri_KurumHizmetMerkezleri1">
+      <End Role="KurumHizmetMerkezleri" EntitySet="KurumHizmetMerkezleri" />
+      <End Role="RandevuTalepleri" EntitySet="RandevuTalepleri" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IskurRandevuTalepleri_Kurumlar1" Association="EkipProjeModel.FK_IskurRandevuTalepleri_Kurumlar1">
+      <End Role="Kurumlar" EntitySet="Kurumlar" />
+      <End Role="RandevuTalepleri" EntitySet="RandevuTalepleri" />
+    </AssociationSet>
+    <EntitySet Name="RandevuAyarlari" EntityType="EkipProjeModel.RandevuAyarlari" />
+    <AssociationSet Name="FK_RandevuAyarlari_Kurumlar" Association="EkipProjeModel.FK_RandevuAyarlari_Kurumlar">
+      <End Role="Kurumlar" EntitySet="Kurumlar" />
+      <End Role="RandevuAyarlari" EntitySet="RandevuAyarlari" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RandevuAyarlari_KurumPoliklinikTurleri" Association="EkipProjeModel.FK_RandevuAyarlari_KurumPoliklinikTurleri">
+      <End Role="KurumPoliklinikTurleri" EntitySet="KurumPoliklinikTurleri" />
+      <End Role="RandevuAyarlari" EntitySet="RandevuAyarlari" />
+    </AssociationSet>
+    <EntitySet Name="IstihdamIsyeriAdresBilgisi" EntityType="EkipProjeModel.IstihdamIsyeriAdresBilgisi" />
+    <AssociationSet Name="FK_IstihdamIsyeriAdresBilgisi_Il" Association="EkipProjeModel.FK_IstihdamIsyeriAdresBilgisi_Il">
+      <End Role="Il" EntitySet="Il" />
+      <End Role="IstihdamIsyeriAdresBilgisi" EntitySet="IstihdamIsyeriAdresBilgisi" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IstihdamIsyeriAdresBilgisi_Ilce" Association="EkipProjeModel.FK_IstihdamIsyeriAdresBilgisi_Ilce">
+      <End Role="Ilce" EntitySet="Ilce" />
+      <End Role="IstihdamIsyeriAdresBilgisi" EntitySet="IstihdamIsyeriAdresBilgisi" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IstihdamIsyeriAdresBilgisi_IstihdamIsyerleri" Association="EkipProjeModel.FK_IstihdamIsyeriAdresBilgisi_IstihdamIsyerleri">
+      <End Role="IstihdamIsyerleri" EntitySet="IstihdamIsyerleri" />
+      <End Role="IstihdamIsyeriAdresBilgisi" EntitySet="IstihdamIsyeriAdresBilgisi" />
+    </AssociationSet>
+    <EntitySet Name="MobilEkipVakaFormlari" EntityType="EkipProjeModel.MobilEkipVakaFormlari" />
+    <AssociationSet Name="FK_MobilEkipVakaFormlari_Hastalar" Association="EkipProjeModel.FK_MobilEkipVakaFormlari_Hastalar">
+      <End Role="Hastalar" EntitySet="Hastalar" />
+      <End Role="MobilEkipVakaFormlari" EntitySet="MobilEkipVakaFormlari" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Kullanicilar_Kurumlar" Association="EkipProjeModel.FK_Kullanicilar_Kurumlar">
+      <End Role="Kurumlar" EntitySet="Kurumlar" />
+      <End Role="Kullanicilar" EntitySet="Kullanicilar" />
+    </AssociationSet>
+    <EntitySet Name="AcilServisVakaBilgileri" EntityType="EkipProjeModel.AcilServisVakaBilgileri" />
+    <EntitySet Name="TaniKodlari" EntityType="EkipProjeModel.TaniKodlari" />
+    <EntitySet Name="YEDAMHastaBilgileri" EntityType="EkipProjeModel.YEDAMHastaBilgileri" />
+    <EntitySet Name="VakaBilgileri112" EntityType="EkipProjeModel.VakaBilgileri112" />
+    <EntitySet Name="HastaBeyanBilgileri" EntityType="EkipProjeModel.HastaBeyanBilgileri" />
+    <AssociationSet Name="FK_ArindirmaBasvuruBilgileri_ArindirmaBasvuruKararlari" Association="EkipProjeModel.FK_ArindirmaBasvuruBilgileri_ArindirmaBasvuruKararlari">
+      <End Role="ArindirmaBasvuruKararlari" EntitySet="ArindirmaBasvuruKararlari" />
+      <End Role="ArindirmaBasvuruBilgileri" EntitySet="ArindirmaBasvuruBilgileri" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HastaBeyanBilgileri_ArindirmaBasvuruBilgileri" Association="EkipProjeModel.FK_HastaBeyanBilgileri_ArindirmaBasvuruBilgileri">
+      <End Role="ArindirmaBasvuruBilgileri" EntitySet="ArindirmaBasvuruBilgileri" />
+      <End Role="HastaBeyanBilgileri" EntitySet="HastaBeyanBilgileri" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Yatislar_YatisSonlanmaNedenleri1" Association="EkipProjeModel.FK_Yatislar_YatisSonlanmaNedenleri1">
+      <End Role="ArindirmaBasvuruKararlari" EntitySet="ArindirmaBasvuruKararlari" />
+      <End Role="Yatislar" EntitySet="Yatislar" />
+    </AssociationSet>
+    <EntitySet Name="HastaEgitimBilgileri" EntityType="EkipProjeModel.HastaEgitimBilgileri" />
+    <EntitySet Name="HastaIskurGorusmeleri" EntityType="EkipProjeModel.HastaIskurGorusmeleri" />
+    <AssociationSet Name="FK_IskurIslemleriKullaniciGorusmeleri_IskurIslemleriKullanicilar1" Association="EkipProjeModel.FK_IskurIslemleriKullaniciGorusmeleri_IskurIslemleriKullanicilar1">
+      <End Role="Hastalar" EntitySet="Hastalar" />
+      <End Role="HastaIskurGorusmeleri" EntitySet="HastaIskurGorusmeleri" />
+    </AssociationSet>
+    <EntitySet Name="HastaBaharFormlari" EntityType="EkipProjeModel.HastaBaharFormlari" />
+    <EntitySet Name="HastaBaharFormuSonuc" EntityType="EkipProjeModel.HastaBaharFormuSonuc" />
+    <EntitySet Name="HastaBaharFormuSonucKodlari" EntityType="EkipProjeModel.HastaBaharFormuSonucKodlari" />
+    <AssociationSet Name="FK_HastaBaharFormuSonuc_HastaBaharFormlari" Association="EkipProjeModel.FK_HastaBaharFormuSonuc_HastaBaharFormlari">
+      <End Role="HastaBaharFormlari" EntitySet="HastaBaharFormlari" />
+      <End Role="HastaBaharFormuSonuc" EntitySet="HastaBaharFormuSonuc" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HastaBaharFormuSonuc_HastaBaharFormuSonucKodlari" Association="EkipProjeModel.FK_HastaBaharFormuSonuc_HastaBaharFormuSonucKodlari">
+      <End Role="HastaBaharFormuSonucKodlari" EntitySet="HastaBaharFormuSonucKodlari" />
+      <End Role="HastaBaharFormuSonuc" EntitySet="HastaBaharFormuSonuc" />
+    </AssociationSet>
+    <EntitySet Name="HastaOlceklerFormu" EntityType="EkipProjeModel.HastaOlceklerFormu" />
+    <AssociationSet Name="FK_HastaBaharFormlari_Hastalar" Association="EkipProjeModel.FK_HastaBaharFormlari_Hastalar">
+      <End Role="Hastalar" EntitySet="Hastalar" />
+      <End Role="HastaBaharFormlari" EntitySet="HastaBaharFormlari" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HastaOlceklerFormu_Hastalar" Association="EkipProjeModel.FK_HastaOlceklerFormu_Hastalar">
+      <End Role="Hastalar" EntitySet="Hastalar" />
+      <End Role="HastaOlceklerFormu" EntitySet="HastaOlceklerFormu" />
+    </AssociationSet>
+    <EntitySet Name="AcilServisVakaTanilari" EntityType="EkipProjeModel.AcilServisVakaTanilari" />
+    <AssociationSet Name="FK_AcilServisVakaTanilari_AcilServisVakaBilgileri" Association="EkipProjeModel.FK_AcilServisVakaTanilari_AcilServisVakaBilgileri">
+      <End Role="AcilServisVakaBilgileri" EntitySet="AcilServisVakaBilgileri" />
+      <End Role="AcilServisVakaTanilari" EntitySet="AcilServisVakaTanilari" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AcilServisVakaTanilari_TaniKodlari" Association="EkipProjeModel.FK_AcilServisVakaTanilari_TaniKodlari">
+      <End Role="TaniKodlari" EntitySet="TaniKodlari" />
+      <End Role="AcilServisVakaTanilari" EntitySet="AcilServisVakaTanilari" />
+    </AssociationSet>
+    <EntitySet Name="VakaTanilari112" EntityType="EkipProjeModel.VakaTanilari112" />
+    <AssociationSet Name="FK_VakaTanilari112_TaniKodlari" Association="EkipProjeModel.FK_VakaTanilari112_TaniKodlari">
+      <End Role="TaniKodlari" EntitySet="TaniKodlari" />
+      <End Role="VakaTanilari112" EntitySet="VakaTanilari112" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VakaTanilari112_VakaBilgileri112" Association="EkipProjeModel.FK_VakaTanilari112_VakaBilgileri112">
+      <End Role="VakaBilgileri112" EntitySet="VakaBilgileri112" />
+      <End Role="VakaTanilari112" EntitySet="VakaTanilari112" />
+    </AssociationSet>
+    <EntitySet Name="Mahalle" EntityType="EkipProjeModel.Mahalle" />
+    <AssociationSet Name="FK_Mahalle_Ilce" Association="EkipProjeModel.FK_Mahalle_Ilce">
+      <End Role="Ilce" EntitySet="Ilce" />
+      <End Role="Mahalle" EntitySet="Mahalle" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Kullanicilar_KurumHizmetMerkezleri" Association="EkipProjeModel.FK_Kullanicilar_KurumHizmetMerkezleri">
+      <End Role="KurumHizmetMerkezleri" EntitySet="KurumHizmetMerkezleri" />
+      <End Role="Kullanicilar" EntitySet="Kullanicilar" />
+    </AssociationSet>
+    <EntitySet Name="IstihdamIsyeriSektorler" EntityType="EkipProjeModel.IstihdamIsyeriSektorler" />
+    <AssociationSet Name="FK_IstihdamIsyerleri_IstihdamIsyeriSektorler" Association="EkipProjeModel.FK_IstihdamIsyerleri_IstihdamIsyeriSektorler">
+      <End Role="IstihdamIsyeriSektorler" EntitySet="IstihdamIsyeriSektorler" />
+      <End Role="IstihdamIsyerleri" EntitySet="IstihdamIsyerleri" />
+    </AssociationSet>
+    <EntitySet Name="ExcelYuklemeleri" EntityType="EkipProjeModel.ExcelYuklemeleri" />
+    <EntitySet Name="KurumRandevulari" EntityType="EkipProjeModel.KurumRandevulari" />
+    <EntitySet Name="HastaBagimlilikSiddetiFormlari" EntityType="EkipProjeModel.HastaBagimlilikSiddetiFormlari" />
+    <AssociationSet Name="FK_HastaBagimlilikSiddetiFormlari_Hastalar" Association="EkipProjeModel.FK_HastaBagimlilikSiddetiFormlari_Hastalar">
+      <End Role="Hastalar" EntitySet="Hastalar" />
+      <End Role="HastaBagimlilikSiddetiFormlari" EntitySet="HastaBagimlilikSiddetiFormlari" />
+    </AssociationSet>
+  </EntityContainer>
+  <Association Name="FK_Yatislar_YatisSonlanmaNedenleri">
+    <End Type="EkipProjeModel.YatisSonlanmaNedenleri" Role="YatisSonlanmaNedenleri" Multiplicity="0..1" />
+    <End Type="EkipProjeModel.Yatislar" Role="Yatislar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="YatisSonlanmaNedenleri">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Yatislar">
+        <PropertyRef Name="YatisSonlanmaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="HastaMaddeKullanimBilgileri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="KurumKodu" Type="Int32" Nullable="false" />
+    <Property Name="HastaProtokolNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MaddeTuru" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Sure" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="KullanimSuresiAy" Type="Boolean" />
+    <Property Name="KullanimSuresiYil" Type="Boolean" />
+    <Property Name="Miktar" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Yontem" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Siklik" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="EnSonKullanmaZamani" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="EnSonKullanmaZamaniGun" Type="Boolean" />
+    <Property Name="EnSonKullanmaZamaniAy" Type="Boolean" />
+    <Property Name="EnSonKullanmaZamaniYil" Type="Boolean" />
+    <Property Name="HastaEkipNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Kullanici">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="yas" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="ad" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+  </EntityType>
+  <EntityType Name="ResmiTatiller">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Yil" Type="Int32" />
+    <Property Name="Tarih" Type="DateTime" Precision="3" />
+    <Property Name="TatilMi" Type="Boolean" />
+    <Property Name="TatilAdi" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Events">
+    <Key>
+      <PropertyRef Name="EventID" />
+    </Key>
+    <Property Name="EventID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Subject" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Start" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="End" Type="DateTime" Precision="3" />
+    <Property Name="ThemeColor" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="IsFullDay" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RandevuBilgileri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Aciklama" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Renk" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Name="TumGun" Type="Boolean" />
+    <Property Name="HastaTCKimlikNo" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="true" />
+    <Property Name="HastaAdi" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="HastaSoyadi" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Telefon" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="RandevuBaslangicTarihi" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="RandevuBitisTarihi" Type="DateTime" Precision="3" Nullable="false" />
+    <Property Name="KurumID" Type="Int32" Nullable="false" />
+    <Property Name="PoliklinikTuruID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Kurumlar" Relationship="EkipProjeModel.FK_RandevuBilgileri_Kurumlar" FromRole="RandevuBilgileri" ToRole="Kurumlar" />
+    <NavigationProperty Name="KurumPoliklinikTurleri" Relationship="EkipProjeModel.FK_RandevuBilgileri_KurumPoliklinikTurleri" FromRole="RandevuBilgileri" ToRole="KurumPoliklinikTurleri" />
+    <Property Name="YakinTelefonu" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="RandevuDurumu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="RandevuBaslangicSaati" Type="Time" Nullable="false" Precision="0" />
+    <Property Name="RandevuBitisSaati" Type="Time" Nullable="false" Precision="0" />
+    <Property Name="KaydedenKullaniciID" Type="Int32" />
+    <Property Name="GuncelleyenKullaniciID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="KurumPoliklinikTurleri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="KurumID" Type="Int32" Nullable="false" />
+    <Property Name="PoliklinikTuru" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="Kurumlar" Relationship="EkipProjeModel.FK_KurumPoliklinikTurleri_KurumPoliklinikTurleri" FromRole="KurumPoliklinikTurleri" ToRole="Kurumlar" />
+    <NavigationProperty Name="RandevuBilgileri" Relationship="EkipProjeModel.FK_RandevuBilgileri_KurumPoliklinikTurleri" FromRole="KurumPoliklinikTurleri" ToRole="RandevuBilgileri" />
+    <NavigationProperty Name="RandevuAyarlari" Relationship="EkipProjeModel.FK_RandevuAyarlari_KurumPoliklinikTurleri" FromRole="KurumPoliklinikTurleri" ToRole="RandevuAyarlari" />
+  </EntityType>
+  <Association Name="FK_KurumPoliklinikTurleri_KurumPoliklinikTurleri">
+    <End Type="EkipProjeModel.Kurumlar" Role="Kurumlar" Multiplicity="1" />
+    <End Type="EkipProjeModel.KurumPoliklinikTurleri" Role="KurumPoliklinikTurleri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kurumlar">
+        <PropertyRef Name="KurumID" />
+      </Principal>
+      <Dependent Role="KurumPoliklinikTurleri">
+        <PropertyRef Name="KurumID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RandevuBilgileri_Kurumlar">
+    <End Type="EkipProjeModel.Kurumlar" Role="Kurumlar" Multiplicity="1" />
+    <End Type="EkipProjeModel.RandevuBilgileri" Role="RandevuBilgileri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kurumlar">
+        <PropertyRef Name="KurumID" />
+      </Principal>
+      <Dependent Role="RandevuBilgileri">
+        <PropertyRef Name="KurumID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RandevuBilgileri_KurumPoliklinikTurleri">
+    <End Type="EkipProjeModel.KurumPoliklinikTurleri" Role="KurumPoliklinikTurleri" Multiplicity="1" />
+    <End Type="EkipProjeModel.RandevuBilgileri" Role="RandevuBilgileri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KurumPoliklinikTurleri">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RandevuBilgileri">
+        <PropertyRef Name="PoliklinikTuruID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Mesajlar">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Baslik" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Icerik" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="BaslangicTarihi" Type="DateTime" Precision="3" />
+    <Property Name="BitisTarihi" Type="DateTime" Precision="3" />
+    <Property Name="IliskiliTabloId" Type="Int64" />
+    <Property Name="IliskiliModulId" Type="Int32" />
+    <Property Name="MesajDurum" Type="Int32" />
+    <Property Name="KayitTarihi" Type="DateTime" Precision="3" />
+    <Property Name="KaydedenKullaniciId" Type="Int32" />
+  </EntityType>
+  <EntityType Name="MesajGidenKullanici">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MesajId" Type="Int32" />
+    <Property Name="KullaniciId" Type="Int32" />
+    <Property Name="Durum" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="KullaniciIletisimBilgileri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="KullaniciID" Type="Int32" Nullable="false" />
+    <Property Name="Telefon" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Mahalle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Sokak" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Cadde" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Bina_No" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="Daire_No" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="IlID" Type="Int32" />
+    <Property Name="IlceID" Type="Int32" />
+    <Property Name="KurumTelefonu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="KullaniciIzinTuru">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="TurAdi" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsletmeId" Type="Int32" Nullable="false" />
+    <Property Name="Status" Type="Boolean" Nullable="false" />
+    <Property Name="Enum" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="KullaniciBirimBilgileri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Kurum" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Bina" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Bolge" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="KullaniciID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Kullanicilar" Relationship="EkipProjeModel.FK_KullaniciBirimBilgileri_Kullanicilar" FromRole="KullaniciBirimBilgileri" ToRole="Kullanicilar" />
+  </EntityType>
+  <EntityType Name="KullaniciIzinBilgileri">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="KullaniciID" />
+      <PropertyRef Name="IzinTuruId" />
+      <PropertyRef Name="BaslamaTarihi" />
+      <PropertyRef Name="BitisTarihi" />
+      <PropertyRef Name="IzinAdresi" />
+      <PropertyRef Name="YerineBakacakKisiId" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="KullaniciID" Type="Int32" Nullable="false" />
+    <Property Name="IzinTuruId" Type="Int32" Nullable="false" />
+    <Property Name="BaslamaTarihi" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="BitisTarihi" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ToplamIzinSuresi" Type="Int32" />
+    <Property Name="IzinAdresi" Type="String" Nullable="false" MaxLength="350" FixedLength="false" Unicode="true" />
+    <Property Name="Aciklama" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="YerineBakacakKisiId" Type="Int32" Nullable="false" />
+    <Property Name="IzinDurumu" Type="Boolean" />
+    <Property Name="KayitTarihi" Type="DateTime" Precision="3" />
+    <Property Name="KaydedenKullaniciId" Type="Int32" />
+    <Property Name="AktarimID" Type="Int32" />
+    <Property Name="AktarimPersonelID" Type="Int32" />
+    <Property Name="YerineBakacakKisiAd" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK_KullaniciBirimBilgileri_Kullanicilar">
+    <End Type="EkipProjeModel.Kullanicilar" Role="Kullanicilar" Multiplicity="1" />
+    <End Type="EkipProjeModel.KullaniciBirimBilgileri" Role="KullaniciBirimBilgileri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kullanicilar">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="KullaniciBirimBilgileri">
+        <PropertyRef Name="KullaniciID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="LogSilinenRandevular">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RandevuID" Type="Int32" />
+    <Property Name="KurumID" Type="Int32" Nullable="false" />
+    <Property Name="PoliklinikTuruID" Type="Int32" Nullable="false" />
+    <Property Name="Aciklama" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Renk" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Name="TumGun" Type="Boolean" />
+    <Property Name="HastaTCKimlikNo" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="true" />
+    <Property Name="HastaAdi" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="HastaSoyadi" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Telefon" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="YakinTelefonu" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="RandevuBaslangicTarihi" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="RandevuBitisTarihi" Type="DateTime" Precision="3" />
+    <Property Name="LogRandevuIptalNedeni" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="RandevuDurumu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="RandevuBaslangicSaati" Type="Time" Precision="0" />
+    <Property Name="RandevuBitisSaati" Type="Time" Precision="0" />
+  </EntityType>
+  <EntityType Name="KullaniciErisimBilgileri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="KullaniciID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Kullanicilar" Relationship="EkipProjeModel.FK_KullaniciErisimBilgileri_Kullanicilar" FromRole="KullaniciErisimBilgileri" ToRole="Kullanicilar" />
+    <Property Name="ErisimKoduID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ErisimKodlari" Relationship="EkipProjeModel.FK_KullaniciErisimBilgileri_ErisimKodlari" FromRole="KullaniciErisimBilgileri" ToRole="ErisimKodlari" />
+  </EntityType>
+  <Association Name="FK_KullaniciErisimBilgileri_Kullanicilar">
+    <End Type="EkipProjeModel.Kullanicilar" Role="Kullanicilar" Multiplicity="1" />
+    <End Type="EkipProjeModel.KullaniciErisimBilgileri" Role="KullaniciErisimBilgileri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kullanicilar">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="KullaniciErisimBilgileri">
+        <PropertyRef Name="KullaniciID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="ErisimKodlari">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ErisimKodu" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="KullaniciErisimBilgileri" Relationship="EkipProjeModel.FK_KullaniciErisimBilgileri_ErisimKodlari" FromRole="ErisimKodlari" ToRole="KullaniciErisimBilgileri" />
+  </EntityType>
+  <Association Name="FK_KullaniciErisimBilgileri_ErisimKodlari">
+    <End Type="EkipProjeModel.ErisimKodlari" Role="ErisimKodlari" Multiplicity="1" />
+    <End Type="EkipProjeModel.KullaniciErisimBilgileri" Role="KullaniciErisimBilgileri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ErisimKodlari">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="KullaniciErisimBilgileri">
+        <PropertyRef Name="ErisimKoduID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="HastaYakinBilgileri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="HastaID" Type="Int32" Nullable="false" />
+    <Property Name="YakinAdi" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="YakinSoyadi" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Telefon" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Adres" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Hastalar" Relationship="EkipProjeModel.FK_HastaYakinBilgileri_Hastalar" FromRole="HastaYakinBilgileri" ToRole="Hastalar" />
+    <Property Name="YakinlikDerecesi" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK_HastaYakinBilgileri_Hastalar">
+    <End Type="EkipProjeModel.Hastalar" Role="Hastalar" Multiplicity="1" />
+    <End Type="EkipProjeModel.HastaYakinBilgileri" Role="HastaYakinBilgileri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hastalar">
+        <PropertyRef Name="HastaID" />
+      </Principal>
+      <Dependent Role="HastaYakinBilgileri">
+        <PropertyRef Name="HastaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="HastaNotlari">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NotBilgisi" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="KayitTarihi" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="KaydedenKullaniciID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Kullanicilar" Relationship="EkipProjeModel.FK_HastaNotlari_Kullanicilar" FromRole="HastaNotlari" ToRole="Kullanicilar" />
+    <Property Name="HastaID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Hastalar" Relationship="EkipProjeModel.FK_HastaNotlari_Hastalar" FromRole="HastaNotlari" ToRole="Hastalar" />
+  </EntityType>
+  <Association Name="FK_HastaNotlari_Kullanicilar">
+    <End Type="EkipProjeModel.Kullanicilar" Role="Kullanicilar" Multiplicity="1" />
+    <End Type="EkipProjeModel.HastaNotlari" Role="HastaNotlari" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kullanicilar">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="HastaNotlari">
+        <PropertyRef Name="KaydedenKullaniciID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HastaNotlari_Hastalar">
+    <End Type="EkipProjeModel.Hastalar" Role="Hastalar" Multiplicity="1" />
+    <End Type="EkipProjeModel.HastaNotlari" Role="HastaNotlari" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hastalar">
+        <PropertyRef Name="HastaID" />
+      </Principal>
+      <Dependent Role="HastaNotlari">
+        <PropertyRef Name="HastaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Faaliyetler">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FaaliyetAdi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="FaaliyetKonusu" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="FaaliyetTuru" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FaaliyetTarihi" Type="DateTime" Precision="3" />
+    <Property Name="GerceklestigiYer" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="GerceklestirenKurum" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="GerceklestirenKisi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="UlasilanKisiSayisi" Type="Int32" />
+    <Property Name="FaaliyetRaporu" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="KayitTarihi" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="HastaIlkKayitBilgileri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="HastaID" Type="Int32" Nullable="false" />
+    <Property Name="KayitTarihi" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="KurumTuru" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="KaydedenKurum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="VakaBilgiKaynagi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="EldeEdilenBilgiler" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Hastalar" Relationship="EkipProjeModel.FK_HastaIlkKayitBilgileri_Hastalar" FromRole="HastaIlkKayitBilgileri" ToRole="Hastalar" />
+  </EntityType>
+  <EntityType Name="HastaIzlemBilgileri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="HastaID" Type="Int32" Nullable="false" />
+    <Property Name="IzlemTarihi" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IzlemYapanKurumTuru" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IzlemYapanKurum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IzlemVakaKaynagi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="EldeEdilenBilgiler" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IzlemSonucu" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Hastalar" Relationship="EkipProjeModel.FK_HastaIzlemBilgileri_Hastalar" FromRole="HastaIzlemBilgileri" ToRole="Hastalar" />
+    <Property Name="IzlemBasligi" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="IzlemAciklama" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="HastaTimeline">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="HastaID" Type="Int32" Nullable="false" />
+    <Property Name="Baslik" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Aciklama" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Tarih" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="Hastalar" Relationship="EkipProjeModel.FK_HastaTimeline_Hastalar" FromRole="HastaTimeline" ToRole="Hastalar" />
+  </EntityType>
+  <Association Name="FK_HastaIlkKayitBilgileri_Hastalar">
+    <End Type="EkipProjeModel.Hastalar" Role="Hastalar" Multiplicity="1" />
+    <End Type="EkipProjeModel.HastaIlkKayitBilgileri" Role="HastaIlkKayitBilgileri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hastalar">
+        <PropertyRef Name="HastaID" />
+      </Principal>
+      <Dependent Role="HastaIlkKayitBilgileri">
+        <PropertyRef Name="HastaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HastaIzlemBilgileri_Hastalar">
+    <End Type="EkipProjeModel.Hastalar" Role="Hastalar" Multiplicity="1" />
+    <End Type="EkipProjeModel.HastaIzlemBilgileri" Role="HastaIzlemBilgileri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hastalar">
+        <PropertyRef Name="HastaID" />
+      </Principal>
+      <Dependent Role="HastaIzlemBilgileri">
+        <PropertyRef Name="HastaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HastaTimeline_Hastalar">
+    <End Type="EkipProjeModel.Hastalar" Role="Hastalar" Multiplicity="1" />
+    <End Type="EkipProjeModel.HastaTimeline" Role="HastaTimeline" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hastalar">
+        <PropertyRef Name="HastaID" />
+      </Principal>
+      <Dependent Role="HastaTimeline">
+        <PropertyRef Name="HastaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="IstihdamIsyerleri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IsyeriAdi" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="ToplamCalisanSayisi" Type="Int32" />
+    <Property Name="Notlar" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="KayitTarihi" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="GuncellemeTarihi" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="IstihdamIsyeriIletisimKisileri" Relationship="EkipProjeModel.FK_IstihdamIsyeriIletisimKisileri_IstihdamIsyerleri" FromRole="IstihdamIsyerleri" ToRole="IstihdamIsyeriIletisimKisileri" />
+    <NavigationProperty Name="IstihdamIsyeriGorusmeleri" Relationship="EkipProjeModel.FK_IstihdamIsyeriGorusmeleri_IstihdamIsyerleri" FromRole="IstihdamIsyerleri" ToRole="IstihdamIsyeriGorusmeleri" />
+    <NavigationProperty Name="IstihdamIsyeriAdresBilgisi" Relationship="EkipProjeModel.FK_IstihdamIsyeriAdresBilgisi_IstihdamIsyerleri" FromRole="IstihdamIsyerleri" ToRole="IstihdamIsyeriAdresBilgisi" />
+    <Property Name="KaydedenKullaniciID" Type="Int32" />
+    <Property Name="SektorID" Type="Int32" />
+    <NavigationProperty Name="IstihdamIsyeriSektorler" Relationship="EkipProjeModel.FK_IstihdamIsyerleri_IstihdamIsyeriSektorler" FromRole="IstihdamIsyerleri" ToRole="IstihdamIsyeriSektorler" />
+  </EntityType>
+  <EntityType Name="IstihdamIsyeriIletisimKisileri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="IsyeriID" Type="Int32" Nullable="false" />
+    <Property Name="Ad" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Soyad" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Unvan" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Telefon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="EPosta" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Adres" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="IstihdamIsyerleri" Relationship="EkipProjeModel.FK_IstihdamIsyeriIletisimKisileri_IstihdamIsyerleri" FromRole="IstihdamIsyeriIletisimKisileri" ToRole="IstihdamIsyerleri" />
+    <Property Name="KaydedenKullaniciID" Type="Int32" />
+  </EntityType>
+  <Association Name="FK_IstihdamIsyeriIletisimKisileri_IstihdamIsyerleri">
+    <End Type="EkipProjeModel.IstihdamIsyerleri" Role="IstihdamIsyerleri" Multiplicity="1" />
+    <End Type="EkipProjeModel.IstihdamIsyeriIletisimKisileri" Role="IstihdamIsyeriIletisimKisileri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="IstihdamIsyerleri">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="IstihdamIsyeriIletisimKisileri">
+        <PropertyRef Name="IsyeriID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="IstihdamIsyeriGorusmeleri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IsyeriID" Type="Int32" Nullable="false" />
+    <Property Name="GorusmeyiYapanKisi" Type="String" Nullable="false" MaxLength="70" FixedLength="false" Unicode="true" />
+    <Property Name="GorusulenKisi" Type="String" Nullable="false" MaxLength="70" FixedLength="false" Unicode="true" />
+    <Property Name="GorusmedeEleAlinanKonular" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="GorusmeTarihi" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="IstihdamIsyerleri" Relationship="EkipProjeModel.FK_IstihdamIsyeriGorusmeleri_IstihdamIsyerleri" FromRole="IstihdamIsyeriGorusmeleri" ToRole="IstihdamIsyerleri" />
+    <Property Name="KaydedenKullaniciID" Type="Int32" />
+  </EntityType>
+  <Association Name="FK_IstihdamIsyeriGorusmeleri_IstihdamIsyerleri">
+    <End Type="EkipProjeModel.IstihdamIsyerleri" Role="IstihdamIsyerleri" Multiplicity="1" />
+    <End Type="EkipProjeModel.IstihdamIsyeriGorusmeleri" Role="IstihdamIsyeriGorusmeleri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="IstihdamIsyerleri">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="IstihdamIsyeriGorusmeleri">
+        <PropertyRef Name="IsyeriID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="KullaniciGorevTakip">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="KullaniciID" Type="Int32" Nullable="false" />
+    <Property Name="Baslik" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Aciklama" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Tarih" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="Kullanicilar" Relationship="EkipProjeModel.FK_KullaniciGorevTakip_Kullanicilar" FromRole="KullaniciGorevTakip" ToRole="Kullanicilar" />
+    <Property Name="Durum" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+  </EntityType>
+  <Association Name="FK_KullaniciGorevTakip_Kullanicilar">
+    <End Type="EkipProjeModel.Kullanicilar" Role="Kullanicilar" Multiplicity="1" />
+    <End Type="EkipProjeModel.KullaniciGorevTakip" Role="KullaniciGorevTakip" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kullanicilar">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="KullaniciGorevTakip">
+        <PropertyRef Name="KullaniciID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="KurumHizmetMerkezleri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="KurumID" Type="Int32" Nullable="false" />
+    <Property Name="Ad" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Adres" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Telefon" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="RandevuTalepleri" Relationship="EkipProjeModel.FK_IskurRandevuTalepleri_KurumHizmetMerkezleri1" FromRole="KurumHizmetMerkezleri" ToRole="RandevuTalepleri" />
+    <NavigationProperty Name="Kullanicilar" Relationship="EkipProjeModel.FK_Kullanicilar_KurumHizmetMerkezleri" FromRole="KurumHizmetMerkezleri" ToRole="Kullanicilar" />
+  </EntityType>
+  <EntityType Name="RandevuTalepleri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="KurumID" Type="Int32" Nullable="false" />
+    <Property Name="HizmetMerkeziID" Type="Int32" Nullable="false" />
+    <Property Name="HastaID" Type="Int32" Nullable="false" />
+    <Property Name="HastaAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="HastaSoyadi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="HastaTCKimlikNo" Type="String" MaxLength="11" FixedLength="false" Unicode="true" />
+    <Property Name="Telefon" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="RandevuTarihi" Type="DateTime" Precision="3" />
+    <Property Name="RandevuVerildiMi" Type="Boolean" />
+    <Property Name="TalepOlusturanKullaniciID" Type="Int32" Nullable="false" />
+    <Property Name="RandevuVerenKullaniciID" Type="Int32" />
+    <Property Name="RandevuDurumu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="KayitTarihi" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Hastalar" Relationship="EkipProjeModel.FK_IskurRandevuTalepleri_Hastalar1" FromRole="RandevuTalepleri" ToRole="Hastalar" />
+    <NavigationProperty Name="KurumHizmetMerkezleri" Relationship="EkipProjeModel.FK_IskurRandevuTalepleri_KurumHizmetMerkezleri1" FromRole="RandevuTalepleri" ToRole="KurumHizmetMerkezleri" />
+    <NavigationProperty Name="Kurumlar" Relationship="EkipProjeModel.FK_IskurRandevuTalepleri_Kurumlar1" FromRole="RandevuTalepleri" ToRole="Kurumlar" />
+    <Property Name="RandevuTalebiNotu" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK_IskurRandevuTalepleri_Hastalar1">
+    <End Type="EkipProjeModel.Hastalar" Role="Hastalar" Multiplicity="1" />
+    <End Type="EkipProjeModel.RandevuTalepleri" Role="RandevuTalepleri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hastalar">
+        <PropertyRef Name="HastaID" />
+      </Principal>
+      <Dependent Role="RandevuTalepleri">
+        <PropertyRef Name="HastaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IskurRandevuTalepleri_KurumHizmetMerkezleri1">
+    <End Type="EkipProjeModel.KurumHizmetMerkezleri" Role="KurumHizmetMerkezleri" Multiplicity="1" />
+    <End Type="EkipProjeModel.RandevuTalepleri" Role="RandevuTalepleri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KurumHizmetMerkezleri">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RandevuTalepleri">
+        <PropertyRef Name="HizmetMerkeziID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IskurRandevuTalepleri_Kurumlar1">
+    <End Type="EkipProjeModel.Kurumlar" Role="Kurumlar" Multiplicity="1" />
+    <End Type="EkipProjeModel.RandevuTalepleri" Role="RandevuTalepleri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kurumlar">
+        <PropertyRef Name="KurumID" />
+      </Principal>
+      <Dependent Role="RandevuTalepleri">
+        <PropertyRef Name="KurumID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="RandevuAyarlari">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="KurumID" Type="Int32" Nullable="false" />
+    <Property Name="PoliklinikTuruID" Type="Int32" Nullable="false" />
+    <Property Name="Gun" Type="Int32" Nullable="false" />
+    <Property Name="BaslangicSaati" Type="Time" Nullable="false" Precision="4" />
+    <Property Name="BitisSaati" Type="Time" Nullable="false" Precision="4" />
+    <Property Name="SlotSayisi" Type="Int32" Nullable="false" />
+    <Property Name="LogTarihi" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="GuncellemeTarihi" Type="DateTime" Precision="3" />
+    <Property Name="Durum" Type="Boolean" Nullable="false" />
+    <Property Name="PasifBaslangicTarihi" Type="DateTime" Precision="3" />
+    <Property Name="PasifBitisTarihi" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Kurumlar" Relationship="EkipProjeModel.FK_RandevuAyarlari_Kurumlar" FromRole="RandevuAyarlari" ToRole="Kurumlar" />
+    <NavigationProperty Name="KurumPoliklinikTurleri" Relationship="EkipProjeModel.FK_RandevuAyarlari_KurumPoliklinikTurleri" FromRole="RandevuAyarlari" ToRole="KurumPoliklinikTurleri" />
+    <Property Name="KaydedenKullaniciID" Type="Int32" />
+  </EntityType>
+  <Association Name="FK_RandevuAyarlari_Kurumlar">
+    <End Type="EkipProjeModel.Kurumlar" Role="Kurumlar" Multiplicity="1" />
+    <End Type="EkipProjeModel.RandevuAyarlari" Role="RandevuAyarlari" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kurumlar">
+        <PropertyRef Name="KurumID" />
+      </Principal>
+      <Dependent Role="RandevuAyarlari">
+        <PropertyRef Name="KurumID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RandevuAyarlari_KurumPoliklinikTurleri">
+    <End Type="EkipProjeModel.KurumPoliklinikTurleri" Role="KurumPoliklinikTurleri" Multiplicity="1" />
+    <End Type="EkipProjeModel.RandevuAyarlari" Role="RandevuAyarlari" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KurumPoliklinikTurleri">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RandevuAyarlari">
+        <PropertyRef Name="PoliklinikTuruID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="IstihdamIsyeriAdresBilgisi">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IsyeriID" Type="Int32" Nullable="false" />
+    <Property Name="Sokak" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Cadde" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Bina_No" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="Daire_No" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="IlID" Type="Int32" />
+    <Property Name="IlceID" Type="Int32" />
+    <NavigationProperty Name="Il" Relationship="EkipProjeModel.FK_IstihdamIsyeriAdresBilgisi_Il" FromRole="IstihdamIsyeriAdresBilgisi" ToRole="Il" />
+    <NavigationProperty Name="Ilce" Relationship="EkipProjeModel.FK_IstihdamIsyeriAdresBilgisi_Ilce" FromRole="IstihdamIsyeriAdresBilgisi" ToRole="Ilce" />
+    <NavigationProperty Name="IstihdamIsyerleri" Relationship="EkipProjeModel.FK_IstihdamIsyeriAdresBilgisi_IstihdamIsyerleri" FromRole="IstihdamIsyeriAdresBilgisi" ToRole="IstihdamIsyerleri" />
+    <Property Name="MahalleID" Type="Int32" />
+  </EntityType>
+  <Association Name="FK_IstihdamIsyeriAdresBilgisi_Il">
+    <End Type="EkipProjeModel.Il" Role="Il" Multiplicity="0..1" />
+    <End Type="EkipProjeModel.IstihdamIsyeriAdresBilgisi" Role="IstihdamIsyeriAdresBilgisi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Il">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="IstihdamIsyeriAdresBilgisi">
+        <PropertyRef Name="IlID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IstihdamIsyeriAdresBilgisi_Ilce">
+    <End Type="EkipProjeModel.Ilce" Role="Ilce" Multiplicity="0..1" />
+    <End Type="EkipProjeModel.IstihdamIsyeriAdresBilgisi" Role="IstihdamIsyeriAdresBilgisi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ilce">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="IstihdamIsyeriAdresBilgisi">
+        <PropertyRef Name="IlceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IstihdamIsyeriAdresBilgisi_IstihdamIsyerleri">
+    <End Type="EkipProjeModel.IstihdamIsyerleri" Role="IstihdamIsyerleri" Multiplicity="1" />
+    <End Type="EkipProjeModel.IstihdamIsyeriAdresBilgisi" Role="IstihdamIsyeriAdresBilgisi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="IstihdamIsyerleri">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="IstihdamIsyeriAdresBilgisi">
+        <PropertyRef Name="IsyeriID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="MobilEkipVakaFormlari">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="HastaID" Type="Int32" Nullable="false" />
+    <Property Name="Adres" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="Nitelik" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="BilgiKaynagiKendisi" Type="Boolean" />
+    <Property Name="BilgiKaynagiAnne" Type="Boolean" />
+    <Property Name="BilgiKaynagiBaba" Type="Boolean" />
+    <Property Name="BilgiKaynagiEs" Type="Boolean" />
+    <Property Name="BilgiKaynagiCocuk" Type="Boolean" />
+    <Property Name="BilgiKaynagiKardes" Type="Boolean" />
+    <Property Name="BilgiKaynagiArkadas" Type="Boolean" />
+    <Property Name="BilgiKaynagiAkraba" Type="Boolean" />
+    <Property Name="BilgiKaynagiDiger" Type="Boolean" />
+    <Property Name="BilgiKaynagiAkrabaAciklama" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="BilgiKaynagiDigerAciklama" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="GenelTanitim" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="MaddeyeBaslamaYasi" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="IlkKullandigiMadde" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SuAndaKullandigiMaddeler" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="MaddeKullanimSikligi" Type="Int32" />
+    <Property Name="MaddeyeBaslamaNedeni" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="EnSonMaddeKullanimZamani" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="KurumBilgisiVarMi" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="MotivasyonKaynagiAile" Type="Boolean" />
+    <Property Name="MotivasyonKaynagiEkonomi" Type="Boolean" />
+    <Property Name="MotivasyonKaynagiSaglik" Type="Boolean" />
+    <Property Name="MotivasyonKaynagiDiger" Type="Boolean" />
+    <Property Name="MotivasyonKaynagiDigerAciklama" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="BagimlilikEvresi" Type="Int32" />
+    <Property Name="TedaviyeYaklasimi" Type="Int32" />
+    <Property Name="MotivasyonDuzeyi" Type="Int32" />
+    <Property Name="MaddeDigerTespitler" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="OgrenimDurumu" Type="Int32" />
+    <Property Name="LiseTuru" Type="Int32" />
+    <Property Name="Fakulte" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Bolum" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="EgitimDigerTespitler" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="GecimKaynagi" Type="Int32" />
+    <Property Name="YaptigiIs" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CalistigiYer" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="CalismaSuresi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Maas" Type="Int32" />
+    <Property Name="CalismaSahasi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AylikOrtCalistigiGunSayisi" Type="Int32" />
+    <Property Name="CalismaBilgisiDiger" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="AylikOrtGelir" Type="Int32" />
+    <Property Name="AylikOrtGelirDuzeyi" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+    <Property Name="AileAylikOrtGelirDuzeyi" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+    <Property Name="IkametDurumu" Type="Int32" />
+    <Property Name="TopluIkametDetay" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="IkametDiger" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="EnUzunCalismaSuresi" Type="Int32" />
+    <Property Name="EkonomikDurumDiger" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="EslikEdenBedenselHastaliklar" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="EslikEdenRuhsalHastaliklar" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="PlanliTedaviPlani" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="DigerBagimlilikTuru" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="SaglikDigerTespitler" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="AdliDurumu" Type="Int32" />
+    <Property Name="AdliDurumDiger" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="AileSosyalYasantisi" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="DegerlendirmeVeSonuc" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="DevamEtmemeNedeni" Type="Int32" />
+    <Property Name="DevamEtmemeNedeniAciklama" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Karar" Type="Int32" />
+    <Property Name="KayitTarihi" Type="DateTime" Precision="3" />
+    <Property Name="KaydedenKullaniciID" Type="Int32" />
+    <NavigationProperty Name="Hastalar" Relationship="EkipProjeModel.FK_MobilEkipVakaFormlari_Hastalar" FromRole="MobilEkipVakaFormlari" ToRole="Hastalar" />
+  </EntityType>
+  <Association Name="FK_MobilEkipVakaFormlari_Hastalar">
+    <End Type="EkipProjeModel.Hastalar" Role="Hastalar" Multiplicity="1" />
+    <End Type="EkipProjeModel.MobilEkipVakaFormlari" Role="MobilEkipVakaFormlari" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hastalar">
+        <PropertyRef Name="HastaID" />
+      </Principal>
+      <Dependent Role="MobilEkipVakaFormlari">
+        <PropertyRef Name="HastaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Kullanicilar_Kurumlar">
+    <End Type="EkipProjeModel.Kurumlar" Role="Kurumlar" Multiplicity="1" />
+    <End Type="EkipProjeModel.Kullanicilar" Role="Kullanicilar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kurumlar">
+        <PropertyRef Name="KurumID" />
+      </Principal>
+      <Dependent Role="Kullanicilar">
+        <PropertyRef Name="KurumID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="AcilServisVakaBilgileri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="KurumKodu" Type="Int32" Nullable="false" />
+    <Property Name="HastaTCKimlikNo" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="true" />
+    <Property Name="HastaEkipNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="HastaAdi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="HastaSoyadi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="BasvuruTarihi" Type="DateTime" Precision="3" />
+    <Property Name="HekimAdi" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="TaburculukTarihi" Type="DateTime" Precision="3" />
+    <Property Name="GerceklestirilenIslemler" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="TaburculukNotlari" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AcilServisVakaTanilari" Relationship="EkipProjeModel.FK_AcilServisVakaTanilari_AcilServisVakaBilgileri" FromRole="AcilServisVakaBilgileri" ToRole="AcilServisVakaTanilari" />
+  </EntityType>
+  <EntityType Name="TaniKodlari">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ICDKodu" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Tani" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AcilServisVakaTanilari" Relationship="EkipProjeModel.FK_AcilServisVakaTanilari_TaniKodlari" FromRole="TaniKodlari" ToRole="AcilServisVakaTanilari" />
+    <NavigationProperty Name="VakaTanilari112" Relationship="EkipProjeModel.FK_VakaTanilari112_TaniKodlari" FromRole="TaniKodlari" ToRole="VakaTanilari112" />
+  </EntityType>
+  <EntityType Name="YEDAMHastaBilgileri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="HastaTCKimlikNo" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="true" />
+    <Property Name="HastaEkipNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="HastaAdi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="HastaSoyadi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="BasvuruTarihi" Type="DateTime" Precision="0" />
+    <Property Name="BasvuruTuru" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="BasvurudaYapilanIslemler" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="BasvuruDegerlendirmeNotlari" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="VakaBilgileri112">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="KurumKodu" Type="Int32" Nullable="false" />
+    <Property Name="HastaTCKimlikNo" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="true" />
+    <Property Name="HastaEkipNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="HastaAdi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="HastaSoyadi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="CagriTarihSaati" Type="DateTime" Precision="3" />
+    <Property Name="OnTani" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="YapilanIslem" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="BirakildigiKurum" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="AlindigiYer" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="VakaTanilari112" Relationship="EkipProjeModel.FK_VakaTanilari112_VakaBilgileri112" FromRole="VakaBilgileri112" ToRole="VakaTanilari112" />
+  </EntityType>
+  <EntityType Name="HastaBeyanBilgileri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BasvuruID" Type="Int32" Nullable="false" />
+    <Property Name="BeyanAdresi" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="BeyanTelefonu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="BeyanAldigiKurum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="BeyanTarihi" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="ArindirmaBasvuruBilgileri" Relationship="EkipProjeModel.FK_HastaBeyanBilgileri_ArindirmaBasvuruBilgileri" FromRole="HastaBeyanBilgileri" ToRole="ArindirmaBasvuruBilgileri" />
+    <Property Name="GuncellemeTarihi" Type="DateTime" Precision="3" />
+  </EntityType>
+  <Association Name="FK_ArindirmaBasvuruBilgileri_ArindirmaBasvuruKararlari">
+    <End Type="EkipProjeModel.ArindirmaBasvuruKararlari" Role="ArindirmaBasvuruKararlari" Multiplicity="0..1" />
+    <End Type="EkipProjeModel.ArindirmaBasvuruBilgileri" Role="ArindirmaBasvuruBilgileri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ArindirmaBasvuruKararlari">
+        <PropertyRef Name="KararID" />
+      </Principal>
+      <Dependent Role="ArindirmaBasvuruBilgileri">
+        <PropertyRef Name="KararID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HastaBeyanBilgileri_ArindirmaBasvuruBilgileri">
+    <End Type="EkipProjeModel.ArindirmaBasvuruBilgileri" Role="ArindirmaBasvuruBilgileri" Multiplicity="1" />
+    <End Type="EkipProjeModel.HastaBeyanBilgileri" Role="HastaBeyanBilgileri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ArindirmaBasvuruBilgileri">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="HastaBeyanBilgileri">
+        <PropertyRef Name="BasvuruID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Yatislar_YatisSonlanmaNedenleri1">
+    <End Type="EkipProjeModel.ArindirmaBasvuruKararlari" Role="ArindirmaBasvuruKararlari" Multiplicity="0..1" />
+    <End Type="EkipProjeModel.Yatislar" Role="Yatislar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ArindirmaBasvuruKararlari">
+        <PropertyRef Name="KararID" />
+      </Principal>
+      <Dependent Role="Yatislar">
+        <PropertyRef Name="KararID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="HastaEgitimBilgileri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="HastaID" Type="Int32" Nullable="false" />
+    <Property Name="OgrenimDurumu" Type="Int32" />
+    <Property Name="LiseTuru" Type="Int32" />
+    <Property Name="Ilkokul" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Ortaokul" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Lise" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Universite" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Fakulte" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Bolum" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="IsGecmisi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SertifikaVeYeterlilikler" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="KayitTarihi" Type="DateTime" Precision="3" />
+    <Property Name="KaydedenKullaniciID" Type="Int32" />
+    <Property Name="GuncelleyenKullaniciID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="HastaIskurGorusmeleri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="HastaID" Type="Int32" Nullable="false" />
+    <Property Name="GorusmeyiYapanDanisman" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="GorusmeTarihi" Type="DateTime" Precision="0" />
+    <Property Name="GorusmeSonucu" Type="Int32" />
+    <Property Name="YonlendirilenIsyeri" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="YonlendirmeBasvuruTarihi" Type="DateTime" Precision="0" />
+    <Property Name="IsyeriYonlendirmeSonuc" Type="Int32" />
+    <Property Name="IseBasladigiYer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IseBaslamaTarihi" Type="DateTime" Precision="0" />
+    <Property Name="IseBaslamaNedeni" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="IsKulubuYonlendirmeSonuc" Type="Int32" />
+    <Property Name="PlanlananBaslangicTarihi" Type="DateTime" Precision="0" />
+    <Property Name="PlanlananSurecBaslangicTarihi" Type="DateTime" Precision="0" />
+    <Property Name="SurecBaslamaTarihi" Type="DateTime" Precision="0" />
+    <Property Name="SurecTamamlanmaTarihi" Type="DateTime" Precision="0" />
+    <Property Name="IsKulubuYonlendirmeDurum" Type="Int32" />
+    <Property Name="SertifikaDosyaYolu" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Tur" Type="Int32" />
+    <Property Name="ProgramDurum" Type="Int32" />
+    <Property Name="PlanlananProgramTuru" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PlanlananProgramBaslangicTarihi" Type="DateTime" Precision="0" />
+    <Property Name="PlanlananProgramBaslangici" Type="DateTime" Precision="0" />
+    <Property Name="ProgramTuru" Type="Int32" />
+    <Property Name="ProgramTuruTamamlanmaTarihi" Type="DateTime" Precision="0" />
+    <Property Name="YonlendirilenKursTuru" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="YonlendirilenKursBilgisiTuru" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="GorusmeSonucuDiger" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="GorusmeKayitTarihi" Type="DateTime" Precision="3" />
+    <Property Name="KaydedenKullaniciID" Type="Int32" />
+    <NavigationProperty Name="Hastalar" Relationship="EkipProjeModel.FK_IskurIslemleriKullaniciGorusmeleri_IskurIslemleriKullanicilar1" FromRole="HastaIskurGorusmeleri" ToRole="Hastalar" />
+  </EntityType>
+  <Association Name="FK_IskurIslemleriKullaniciGorusmeleri_IskurIslemleriKullanicilar1">
+    <End Type="EkipProjeModel.Hastalar" Role="Hastalar" Multiplicity="1" />
+    <End Type="EkipProjeModel.HastaIskurGorusmeleri" Role="HastaIskurGorusmeleri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hastalar">
+        <PropertyRef Name="HastaID" />
+      </Principal>
+      <Dependent Role="HastaIskurGorusmeleri">
+        <PropertyRef Name="HastaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="HastaBaharFormlari">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="HastaID" Type="Int32" Nullable="false" />
+    <Property Name="CalismaDurumu" Type="Int32" />
+    <Property Name="EkonomikDurumu" Type="Int32" />
+    <Property Name="YasadigiIl" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="YasadigiIlce" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="GorusmeninYapildigiMerkez" Type="Int32" />
+    <Property Name="Adres" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="Telefon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="YakinAdiSoyadi" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="YakinTelefonu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="GelisSekli" Type="Int32" />
+    <Property Name="TedaviBasvuruNedeni" Type="Int32" />
+    <Property Name="SonTedaviBasvuruNedeni" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="S1TutunUrunleri" Type="Int32" />
+    <Property Name="S1AlkolluIcecekler" Type="Int32" />
+    <Property Name="S1Esrar" Type="Int32" />
+    <Property Name="S1Kokain" Type="Int32" />
+    <Property Name="S1AmfctaminTipiUyaricilar" Type="Int32" />
+    <Property Name="S1Inhalanlar" Type="Int32" />
+    <Property Name="S1Sakinlestiriciler" Type="Int32" />
+    <Property Name="S1Halüsinojenler" Type="Int32" />
+    <Property Name="S1Opioidler" Type="Int32" />
+    <Property Name="S1Diger" Type="Int32" />
+    <Property Name="S1DigerAciklama" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="S2TutunUrunleri" Type="Int32" />
+    <Property Name="S2AlkolluIcecekler" Type="Int32" />
+    <Property Name="S2Esrar" Type="Int32" />
+    <Property Name="S2Kokain" Type="Int32" />
+    <Property Name="S2AmfctaminTipiUyaricilar" Type="Int32" />
+    <Property Name="S2Inhalanlar" Type="Int32" />
+    <Property Name="S2Sakinlestiriciler" Type="Int32" />
+    <Property Name="S2Halüsinojenler" Type="Int32" />
+    <Property Name="S2Opioidler" Type="Int32" />
+    <Property Name="S2Diger" Type="Int32" />
+    <Property Name="S2DigerAciklama" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="S3TutunUrunleri" Type="Int32" />
+    <Property Name="S3AlkolluIcecekler" Type="Int32" />
+    <Property Name="S3Esrar" Type="Int32" />
+    <Property Name="S3Kokain" Type="Int32" />
+    <Property Name="S3AmfctaminTipiUyaricilar" Type="Int32" />
+    <Property Name="S3Inhalanlar" Type="Int32" />
+    <Property Name="S3Sakinlestiriciler" Type="Int32" />
+    <Property Name="S3Halüsinojenler" Type="Int32" />
+    <Property Name="S3Opioidler" Type="Int32" />
+    <Property Name="S3Diger" Type="Int32" />
+    <Property Name="S3DigerAciklama" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="S4TutunUrunleri" Type="Int32" />
+    <Property Name="S4AlkolluIcecekler" Type="Int32" />
+    <Property Name="S4Esrar" Type="Int32" />
+    <Property Name="S4Kokain" Type="Int32" />
+    <Property Name="S4AmfctaminTipiUyaricilar" Type="Int32" />
+    <Property Name="S4Inhalanlar" Type="Int32" />
+    <Property Name="S4Sakinlestiriciler" Type="Int32" />
+    <Property Name="S4Halüsinojenler" Type="Int32" />
+    <Property Name="S4Opioidler" Type="Int32" />
+    <Property Name="S4Diger" Type="Int32" />
+    <Property Name="S4DigerAciklama" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="S5TutunUrunleri" Type="Int32" />
+    <Property Name="S5AlkolluIcecekler" Type="Int32" />
+    <Property Name="S5Esrar" Type="Int32" />
+    <Property Name="S5Kokain" Type="Int32" />
+    <Property Name="S5AmfctaminTipiUyaricilar" Type="Int32" />
+    <Property Name="S5Inhalanlar" Type="Int32" />
+    <Property Name="S5Sakinlestiriciler" Type="Int32" />
+    <Property Name="S5Halüsinojenler" Type="Int32" />
+    <Property Name="S5Opioidler" Type="Int32" />
+    <Property Name="S5Diger" Type="Int32" />
+    <Property Name="S5DigerAciklama" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="S6TutunUrunleri" Type="Int32" />
+    <Property Name="S6AlkolluIcecekler" Type="Int32" />
+    <Property Name="S6Esrar" Type="Int32" />
+    <Property Name="S6Kokain" Type="Int32" />
+    <Property Name="S6AmfctaminTipiUyaricilar" Type="Int32" />
+    <Property Name="S6Inhalanlar" Type="Int32" />
+    <Property Name="S6Sakinlestiriciler" Type="Int32" />
+    <Property Name="S6Halüsinojenler" Type="Int32" />
+    <Property Name="S6Opioidler" Type="Int32" />
+    <Property Name="S6Diger" Type="Int32" />
+    <Property Name="S6DigerAciklama" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="TamAyiklikBaslamaZamani" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Suboxone" Type="Boolean" />
+    <Property Name="SuboxoneAciklama" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="NaltreksonImplant" Type="Boolean" />
+    <Property Name="NaltreksonImplantAciklama" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Ethylex" Type="Boolean" />
+    <Property Name="EthylexAciklama" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Campral" Type="Boolean" />
+    <Property Name="CampralAciklama" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Antabus" Type="Boolean" />
+    <Property Name="AntabusAciklama" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TedaviAciklama" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="PlanlananRehabilitasyonProgrami" Type="Int32" />
+    <Property Name="PlanlananProgramSuresi" Type="Int32" />
+    <Property Name="ProgramGunleri" Type="Int32" />
+    <Property Name="BelirlenenTerapist" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Hedefler" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="HastaBaharFormuSonuc" Relationship="EkipProjeModel.FK_HastaBaharFormuSonuc_HastaBaharFormlari" FromRole="HastaBaharFormlari" ToRole="HastaBaharFormuSonuc" />
+    <Property Name="KaydedenKullaniciID" Type="Int32" />
+    <Property Name="KayitTarihi" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Hastalar" Relationship="EkipProjeModel.FK_HastaBaharFormlari_Hastalar" FromRole="HastaBaharFormlari" ToRole="Hastalar" />
+  </EntityType>
+  <EntityType Name="HastaBaharFormuSonuc">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FormID" Type="Int32" Nullable="false" />
+    <Property Name="KodID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="HastaBaharFormlari" Relationship="EkipProjeModel.FK_HastaBaharFormuSonuc_HastaBaharFormlari" FromRole="HastaBaharFormuSonuc" ToRole="HastaBaharFormlari" />
+    <NavigationProperty Name="HastaBaharFormuSonucKodlari" Relationship="EkipProjeModel.FK_HastaBaharFormuSonuc_HastaBaharFormuSonucKodlari" FromRole="HastaBaharFormuSonuc" ToRole="HastaBaharFormuSonucKodlari" />
+  </EntityType>
+  <EntityType Name="HastaBaharFormuSonucKodlari">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Kod" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="Aciklama" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="HastaBaharFormuSonuc" Relationship="EkipProjeModel.FK_HastaBaharFormuSonuc_HastaBaharFormuSonucKodlari" FromRole="HastaBaharFormuSonucKodlari" ToRole="HastaBaharFormuSonuc" />
+  </EntityType>
+  <Association Name="FK_HastaBaharFormuSonuc_HastaBaharFormlari">
+    <End Type="EkipProjeModel.HastaBaharFormlari" Role="HastaBaharFormlari" Multiplicity="1" />
+    <End Type="EkipProjeModel.HastaBaharFormuSonuc" Role="HastaBaharFormuSonuc" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HastaBaharFormlari">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="HastaBaharFormuSonuc">
+        <PropertyRef Name="FormID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HastaBaharFormuSonuc_HastaBaharFormuSonucKodlari">
+    <End Type="EkipProjeModel.HastaBaharFormuSonucKodlari" Role="HastaBaharFormuSonucKodlari" Multiplicity="1" />
+    <End Type="EkipProjeModel.HastaBaharFormuSonuc" Role="HastaBaharFormuSonuc" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HastaBaharFormuSonucKodlari">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="HastaBaharFormuSonuc">
+        <PropertyRef Name="KodID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="HastaOlceklerFormu">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="HastaID" Type="Int32" Nullable="false" />
+    <Property Name="DikkatEksikligi" Type="Int32" />
+    <Property Name="AsiriHareketlilik" Type="Int32" />
+    <Property Name="UykuSoru1" Type="Int32" />
+    <Property Name="UykuSoru2" Type="Int32" />
+    <Property Name="UykuSoru3" Type="Int32" />
+    <Property Name="UykuSoru4" Type="Int32" />
+    <Property Name="UykuSoru5" Type="Int32" />
+    <Property Name="UykuSoru6" Type="Int32" />
+    <Property Name="UykuSoru7" Type="Int32" />
+    <Property Name="UykuSoru8" Type="Int32" />
+    <Property Name="UykuSoru9" Type="Int32" />
+    <Property Name="UykuSoru10" Type="Int32" />
+    <Property Name="UykuBozukluguTanisi" Type="Int32" />
+    <Property Name="KadinFormu1" Type="Int32" />
+    <Property Name="KadinFormu2" Type="Int32" />
+    <Property Name="KadinFormu3" Type="Int32" />
+    <Property Name="KadinFormu4" Type="Int32" />
+    <Property Name="KadinFormu5" Type="Int32" />
+    <Property Name="ErkekFormu1" Type="Int32" />
+    <Property Name="ErkekFormu2" Type="Int32" />
+    <Property Name="ErkekFormu3" Type="Int32" />
+    <Property Name="ErkekFormu4" Type="Int32" />
+    <Property Name="ErkekFormu5" Type="Int32" />
+    <Property Name="TravmatikYasam1" Type="Int32" />
+    <Property Name="TravmatikYasam2" Type="Int32" />
+    <Property Name="TravmatikYasam3" Type="Int32" />
+    <Property Name="TravmatikYasam4" Type="Int32" />
+    <Property Name="TravmatikYasam5" Type="Int32" />
+    <Property Name="TravmatikYasam6" Type="Int32" />
+    <Property Name="TravmatikYasam7" Type="Int32" />
+    <Property Name="TravmatikYasam8" Type="Int32" />
+    <Property Name="TravmatikYasam9" Type="Int32" />
+    <Property Name="TravmatikYasam10" Type="Int32" />
+    <Property Name="TravmatikYasam11" Type="Int32" />
+    <Property Name="TravmatikYasam12" Type="Int32" />
+    <Property Name="TravmatikYasam13" Type="Int32" />
+    <Property Name="TravmatikYasam14" Type="Int32" />
+    <Property Name="TravmatikYasam14Aciklama" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Appendix1" Type="Int32" />
+    <Property Name="Appendix2" Type="Int32" />
+    <Property Name="Appendix3" Type="Int32" />
+    <Property Name="Appendix4" Type="Int32" />
+    <Property Name="Appendix5" Type="Int32" />
+    <Property Name="Appendix6" Type="Int32" />
+    <Property Name="Appendix7" Type="Int32" />
+    <Property Name="Appendix8" Type="Int32" />
+    <Property Name="Appendix9" Type="Int32" />
+    <Property Name="Appendix10" Type="Int32" />
+    <Property Name="Appendix11" Type="Int32" />
+    <Property Name="Appendix12" Type="Int32" />
+    <Property Name="Appendix13" Type="Int32" />
+    <Property Name="Appendix14" Type="Int32" />
+    <Property Name="Appendix15" Type="Int32" />
+    <Property Name="Appendix16" Type="Int32" />
+    <Property Name="Appendix17" Type="Int32" />
+    <Property Name="Appendix18" Type="Int32" />
+    <Property Name="Appendix19" Type="Int32" />
+    <Property Name="Appendix20" Type="Int32" />
+    <Property Name="KaydedenKullaniciID" Type="Int32" />
+    <Property Name="KayitTarihi" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Hastalar" Relationship="EkipProjeModel.FK_HastaOlceklerFormu_Hastalar" FromRole="HastaOlceklerFormu" ToRole="Hastalar" />
+  </EntityType>
+  <Association Name="FK_HastaBaharFormlari_Hastalar">
+    <End Type="EkipProjeModel.Hastalar" Role="Hastalar" Multiplicity="1" />
+    <End Type="EkipProjeModel.HastaBaharFormlari" Role="HastaBaharFormlari" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hastalar">
+        <PropertyRef Name="HastaID" />
+      </Principal>
+      <Dependent Role="HastaBaharFormlari">
+        <PropertyRef Name="HastaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HastaOlceklerFormu_Hastalar">
+    <End Type="EkipProjeModel.Hastalar" Role="Hastalar" Multiplicity="1" />
+    <End Type="EkipProjeModel.HastaOlceklerFormu" Role="HastaOlceklerFormu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hastalar">
+        <PropertyRef Name="HastaID" />
+      </Principal>
+      <Dependent Role="HastaOlceklerFormu">
+        <PropertyRef Name="HastaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="AcilServisVakaTanilari">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AcilServisVakaID" Type="Int32" Nullable="false" />
+    <Property Name="TaniKoduID" Type="Int32" />
+    <NavigationProperty Name="AcilServisVakaBilgileri" Relationship="EkipProjeModel.FK_AcilServisVakaTanilari_AcilServisVakaBilgileri" FromRole="AcilServisVakaTanilari" ToRole="AcilServisVakaBilgileri" />
+    <NavigationProperty Name="TaniKodlari" Relationship="EkipProjeModel.FK_AcilServisVakaTanilari_TaniKodlari" FromRole="AcilServisVakaTanilari" ToRole="TaniKodlari" />
+  </EntityType>
+  <Association Name="FK_AcilServisVakaTanilari_AcilServisVakaBilgileri">
+    <End Type="EkipProjeModel.AcilServisVakaBilgileri" Role="AcilServisVakaBilgileri" Multiplicity="1" />
+    <End Type="EkipProjeModel.AcilServisVakaTanilari" Role="AcilServisVakaTanilari" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AcilServisVakaBilgileri">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="AcilServisVakaTanilari">
+        <PropertyRef Name="AcilServisVakaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AcilServisVakaTanilari_TaniKodlari">
+    <End Type="EkipProjeModel.TaniKodlari" Role="TaniKodlari" Multiplicity="0..1" />
+    <End Type="EkipProjeModel.AcilServisVakaTanilari" Role="AcilServisVakaTanilari" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TaniKodlari">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="AcilServisVakaTanilari">
+        <PropertyRef Name="TaniKoduID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="VakaTanilari112">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Vaka112ID" Type="Int32" Nullable="false" />
+    <Property Name="TaniKoduID" Type="Int32" />
+    <NavigationProperty Name="TaniKodlari" Relationship="EkipProjeModel.FK_VakaTanilari112_TaniKodlari" FromRole="VakaTanilari112" ToRole="TaniKodlari" />
+    <NavigationProperty Name="VakaBilgileri112" Relationship="EkipProjeModel.FK_VakaTanilari112_VakaBilgileri112" FromRole="VakaTanilari112" ToRole="VakaBilgileri112" />
+  </EntityType>
+  <Association Name="FK_VakaTanilari112_TaniKodlari">
+    <End Type="EkipProjeModel.TaniKodlari" Role="TaniKodlari" Multiplicity="0..1" />
+    <End Type="EkipProjeModel.VakaTanilari112" Role="VakaTanilari112" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TaniKodlari">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="VakaTanilari112">
+        <PropertyRef Name="TaniKoduID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VakaTanilari112_VakaBilgileri112">
+    <End Type="EkipProjeModel.VakaBilgileri112" Role="VakaBilgileri112" Multiplicity="1" />
+    <End Type="EkipProjeModel.VakaTanilari112" Role="VakaTanilari112" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="VakaBilgileri112">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="VakaTanilari112">
+        <PropertyRef Name="Vaka112ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Mahalle">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IlceID" Type="Int32" />
+    <Property Name="MahalleAdi" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Ilce" Relationship="EkipProjeModel.FK_Mahalle_Ilce" FromRole="Mahalle" ToRole="Ilce" />
+  </EntityType>
+  <Association Name="FK_Mahalle_Ilce">
+    <End Type="EkipProjeModel.Ilce" Role="Ilce" Multiplicity="0..1" />
+    <End Type="EkipProjeModel.Mahalle" Role="Mahalle" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ilce">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Mahalle">
+        <PropertyRef Name="IlceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Kullanicilar_KurumHizmetMerkezleri">
+    <End Type="EkipProjeModel.KurumHizmetMerkezleri" Role="KurumHizmetMerkezleri" Multiplicity="1" />
+    <End Type="EkipProjeModel.Kullanicilar" Role="Kullanicilar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KurumHizmetMerkezleri">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Kullanicilar">
+        <PropertyRef Name="HizmetMerkeziID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="IstihdamIsyeriSektorler">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SektorAdi" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="IstihdamIsyerleri" Relationship="EkipProjeModel.FK_IstihdamIsyerleri_IstihdamIsyeriSektorler" FromRole="IstihdamIsyeriSektorler" ToRole="IstihdamIsyerleri" />
+  </EntityType>
+  <Association Name="FK_IstihdamIsyerleri_IstihdamIsyeriSektorler">
+    <End Type="EkipProjeModel.IstihdamIsyeriSektorler" Role="IstihdamIsyeriSektorler" Multiplicity="0..1" />
+    <End Type="EkipProjeModel.IstihdamIsyerleri" Role="IstihdamIsyerleri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="IstihdamIsyeriSektorler">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="IstihdamIsyerleri">
+        <PropertyRef Name="SektorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="ExcelYuklemeleri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int32" />
+    <Property Name="Tarih" Type="DateTime" Precision="3" />
+    <Property Name="ExcelTuru" Type="Int32" />
+    <Property Name="SatirSayisi" Type="Int32" />
+    <Property Name="Durum" Type="Int32" />
+    <Property Name="SessionID" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="HataliSatirSayisi" Type="Int32" />
+    <Property Name="ExcelID" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="KurumRandevulari">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="HastaEkipNo" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="KurumKodu" Type="Int32" Nullable="false" />
+    <Property Name="RandevuTipi" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="RandevuTarihSaati" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="GeldiGelmedi" Type="Boolean" />
+    <Property Name="KayitTarihi" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="HastaBagimlilikSiddetiFormlari">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="HastaID" Type="Int32" Nullable="false" />
+    <Property Name="HastaNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Ulke" Type="Int32" />
+    <Property Name="Merkez" Type="Int32" />
+    <Property Name="Program" Type="Int32" />
+    <Property Name="Modalite" Type="Int32" />
+    <Property Name="ModaliteAciklama" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="G3Soru" Type="Int32" />
+    <Property Name="BasvuruTarihi" Type="DateTime" Precision="0" />
+    <Property Name="GorusmeTarihi" Type="DateTime" Precision="0" />
+    <Property Name="BaslamaSaati" Type="Time" Precision="7" />
+    <Property Name="BitisSaati" Type="Time" Precision="7" />
+    <Property Name="Sinif" Type="Int32" />
+    <Property Name="IletisimSekli" Type="Int32" />
+    <Property Name="Cinsiyet" Type="Int32" />
+    <Property Name="G11Soru" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="G14Yil" Type="Int32" />
+    <Property Name="G14Ay" Type="Int32" />
+    <Property Name="DogumTarihi" Type="DateTime" Precision="0" />
+    <Property Name="Yas" Type="Int32" />
+    <Property Name="G19Soru" Type="Int32" />
+    <Property Name="G19Aciklama" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="G20Soru" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="SevkKaynagi" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="GenelBilgiKaynagi" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="GenelBilgiKaynagiDiger" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="M1Soru" Type="Int32" />
+    <Property Name="M3Soru" Type="Int32" />
+    <Property Name="M3SoruAciklama" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="M4Soru" Type="Int32" />
+    <Property Name="M5Soru" Type="Int32" />
+    <Property Name="M5SoruAciklama" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="M6Soru" Type="Int32" />
+    <Property Name="M7Soru" Type="Int32" />
+    <Property Name="M8Soru" Type="Int32" />
+    <Property Name="M8SoruAciklama" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="M10Soru" Type="Int32" />
+    <Property Name="M11Soru" Type="Int32" />
+    <Property Name="M12Soru" Type="Int32" />
+    <Property Name="M12aSoru" Type="Int32" />
+    <Property Name="M12bSoru" Type="Int32" />
+    <Property Name="M13Soru" Type="Int32" />
+    <Property Name="M13aSoru" Type="Int32" />
+    <Property Name="M13bSoru" Type="Int32" />
+    <Property Name="M14Soru" Type="Int32" />
+    <Property Name="M14aSoru" Type="Int32" />
+    <Property Name="M14bSoru" Type="Int32" />
+    <Property Name="TibbiDurumNotlar" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="E1Yil" Type="Int32" />
+    <Property Name="E1Ay" Type="Int32" />
+    <Property Name="TamamlanmisEgitimSuresiDuzey" Type="Int32" />
+    <Property Name="E1aSoruAciklama" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="E2Soru" Type="Int32" />
+    <Property Name="E4aSoru" Type="Int32" />
+    <Property Name="E6SoruYil" Type="Int32" />
+    <Property Name="E6SoruAy" Type="Int32" />
+    <Property Name="E7Soru" Type="Int32" />
+    <Property Name="E9Soru" Type="Int32" />
+    <Property Name="E10Soru" Type="Int32" />
+    <Property Name="E11Soru" Type="Int32" />
+    <Property Name="IsIstihdamNotlar" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="E12Soru" Type="Int32" />
+    <Property Name="E13Soru" Type="Int32" />
+    <Property Name="E14Soru" Type="Int32" />
+    <Property Name="E15Soru" Type="Int32" />
+    <Property Name="E16Soru" Type="Int32" />
+    <Property Name="E17Soru" Type="Int32" />
+    <Property Name="E18Soru" Type="Int32" />
+    <Property Name="E19Soru" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="E20Soru" Type="Int32" />
+    <Property Name="E21Soru" Type="Int32" />
+    <Property Name="E23Soru" Type="Int32" />
+    <Property Name="E24Soru" Type="Int32" />
+    <Property Name="KonuEdilenParaBirimi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IstihdamNotlari" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="D1Soru" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="D1Yil" Type="Int32" />
+    <Property Name="D1Yol" Type="Int32" />
+    <Property Name="D2Soru" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="D2Yil" Type="Int32" />
+    <Property Name="D2Yol" Type="Int32" />
+    <Property Name="D3Soru" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="D3Yil" Type="Int32" />
+    <Property Name="D3Yol" Type="Int32" />
+    <Property Name="D4Soru" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="D4Yil" Type="Int32" />
+    <Property Name="D4Yol" Type="Int32" />
+    <Property Name="D5Soru" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="D5Yil" Type="Int32" />
+    <Property Name="D5Yol" Type="Int32" />
+    <Property Name="D6Soru" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="D6Yil" Type="Int32" />
+    <Property Name="D6Yol" Type="Int32" />
+    <Property Name="D7Soru" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="D7Yil" Type="Int32" />
+    <Property Name="D7Yol" Type="Int32" />
+    <Property Name="D8Soru" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="D8Yil" Type="Int32" />
+    <Property Name="D8Yol" Type="Int32" />
+    <Property Name="D9Soru" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="D9Yil" Type="Int32" />
+    <Property Name="D9Yol" Type="Int32" />
+    <Property Name="D10Soru" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="D10Yil" Type="Int32" />
+    <Property Name="D10Yol" Type="Int32" />
+    <Property Name="D11Soru" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="D11Yil" Type="Int32" />
+    <Property Name="D11Yol" Type="Int32" />
+    <Property Name="D12Soru" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="D12Yil" Type="Int32" />
+    <Property Name="D12Yol" Type="Int32" />
+    <Property Name="D13Soru" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="D13Yil" Type="Int32" />
+    <Property Name="D13Yol" Type="Int32" />
+    <Property Name="D14aSoru" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="D14bSoru" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="D15Soru" Type="Int32" />
+    <Property Name="D16Soru" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="D17Soru" Type="Int32" />
+    <Property Name="AlkolMaddeNotu" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="AlkolMaddeNotuD5" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="D38Soru" Type="Int32" />
+    <Property Name="D38aSoru" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="D19aSoru" Type="Int32" />
+    <Property Name="D21aSoru" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="D23Soru" Type="Int32" />
+    <Property Name="D24Soru" Type="Int32" />
+    <Property Name="D25Soru" Type="Int32" />
+    <Property Name="D26Soru" Type="Int32" />
+    <Property Name="D26SoruAciklama" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="D28Soru" Type="Int32" />
+    <Property Name="D30Soru" Type="Int32" />
+    <Property Name="D27Soru" Type="Int32" />
+    <Property Name="D27SoruAciklama" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="D29Soru" Type="Int32" />
+    <Property Name="D31Soru" Type="Int32" />
+    <Property Name="D34Soru" Type="Int32" />
+    <Property Name="D35Soru" Type="Int32" />
+    <Property Name="D36Soru" Type="Int32" />
+    <Property Name="D37Soru" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="D37SoruYil" Type="Int32" />
+    <Property Name="D37SoruYol" Type="Int32" />
+    <Property Name="D39Soru" Type="Int32" />
+    <Property Name="D39a" Type="Int32" />
+    <Property Name="D39b" Type="Int32" />
+    <Property Name="D39c" Type="Int32" />
+    <Property Name="D39d" Type="Int32" />
+    <Property Name="D39e" Type="Int32" />
+    <Property Name="AlkolMaddeNotlari" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="L1Soru" Type="Int32" />
+    <Property Name="L2Soru" Type="Int32" />
+    <Property Name="L3Soru" Type="Int32" />
+    <Property Name="L4Soru" Type="Int32" />
+    <Property Name="L5Soru" Type="Int32" />
+    <Property Name="L6Soru" Type="Int32" />
+    <Property Name="L7Soru" Type="Int32" />
+    <Property Name="L8Soru" Type="Int32" />
+    <Property Name="L9Soru" Type="Int32" />
+    <Property Name="L10Soru" Type="Int32" />
+    <Property Name="L11Soru" Type="Int32" />
+    <Property Name="L12Soru" Type="Int32" />
+    <Property Name="L13Soru" Type="Int32" />
+    <Property Name="L14Soru" Type="Int32" />
+    <Property Name="L15Soru" Type="Int32" />
+    <Property Name="L16Soru" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="L17Soru" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="L18Soru" Type="Int32" />
+    <Property Name="L19Soru" Type="Int32" />
+    <Property Name="L20Soru" Type="Int32" />
+    <Property Name="L21Soru" Type="Int32" />
+    <Property Name="L24Soru" Type="Int32" />
+    <Property Name="L25Soru" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="L26Soru" Type="Int32" />
+    <Property Name="L27Soru" Type="Int32" />
+    <Property Name="L28Soru" Type="Int32" />
+    <Property Name="L29Soru" Type="Int32" />
+    <Property Name="L31Soru" Type="Int32" />
+    <Property Name="L32Soru" Type="Int32" />
+    <Property Name="HukikiNotlar" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="HukikiNotlarDevami" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="F1Soru" Type="Int32" />
+    <Property Name="F1SoruAciklama" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="F3Soru" Type="Int32" />
+    <Property Name="F4Soru" Type="Int32" />
+    <Property Name="F6Soru" Type="Int32" />
+    <Property Name="F4aSoru" Type="Int32" />
+    <Property Name="F7Soru" Type="Int32" />
+    <Property Name="F8Soru" Type="Int32" />
+    <Property Name="F9Soru" Type="Int32" />
+    <Property Name="F10Soru" Type="Int32" />
+    <Property Name="F11aSoru" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="F18Soru" Type="Int32" />
+    <Property Name="F18SoruYasam" Type="Int32" />
+    <Property Name="F19Soru" Type="Int32" />
+    <Property Name="F19SoruYasam" Type="Int32" />
+    <Property Name="F20Soru" Type="Int32" />
+    <Property Name="F20SoruYasam" Type="Int32" />
+    <Property Name="F21Soru" Type="Int32" />
+    <Property Name="F21SoruYasam" Type="Int32" />
+    <Property Name="F22Soru" Type="Int32" />
+    <Property Name="F22SoruYasam" Type="Int32" />
+    <Property Name="F23Soru" Type="Int32" />
+    <Property Name="F23SoruYasam" Type="Int32" />
+    <Property Name="F23SoruAciklama" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="F24Soru" Type="Int32" />
+    <Property Name="F24SoruYasam" Type="Int32" />
+    <Property Name="F25Soru" Type="Int32" />
+    <Property Name="F25SoruYasam" Type="Int32" />
+    <Property Name="F26Soru" Type="Int32" />
+    <Property Name="F26SoruYasam" Type="Int32" />
+    <Property Name="AileSosyalDurumNotlar" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="F28Soru" Type="Int32" />
+    <Property Name="F28SoruYasam" Type="Int32" />
+    <Property Name="F29Soru" Type="Int32" />
+    <Property Name="F29SoruYasam" Type="Int32" />
+    <Property Name="F30Soru" Type="Int32" />
+    <Property Name="F32Soru" Type="Int32" />
+    <Property Name="F34Soru" Type="Int32" />
+    <Property Name="F31Soru" Type="Int32" />
+    <Property Name="F33Soru" Type="Int32" />
+    <Property Name="F35Soru" Type="Int32" />
+    <Property Name="F37Soru" Type="Int32" />
+    <Property Name="F38Soru" Type="Int32" />
+    <Property Name="F39Soru1" Type="Int32" />
+    <Property Name="F39Soru2" Type="Int32" />
+    <Property Name="F39aSoru1" Type="Int32" />
+    <Property Name="F39aSoru2" Type="Int32" />
+    <Property Name="AileSosyalDurumNotlarDevami" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="P1Soru" Type="Int32" />
+    <Property Name="P2Soru" Type="Int32" />
+    <Property Name="P3Soru" Type="Int32" />
+    <Property Name="P4Soru" Type="Int32" />
+    <Property Name="P4SoruYasam" Type="Int32" />
+    <Property Name="P5Soru" Type="Int32" />
+    <Property Name="P5SoruYasam" Type="Int32" />
+    <Property Name="P6Soru" Type="Int32" />
+    <Property Name="P6SoruYasam" Type="Int32" />
+    <Property Name="P7Soru" Type="Int32" />
+    <Property Name="P7SoruYasam" Type="Int32" />
+    <Property Name="P8Soru" Type="Int32" />
+    <Property Name="P8SoruYasam" Type="Int32" />
+    <Property Name="P9Soru" Type="Int32" />
+    <Property Name="P9SoruYasam" Type="Int32" />
+    <Property Name="P10Soru" Type="Int32" />
+    <Property Name="P10SoruYasam" Type="Int32" />
+    <Property Name="P11Soru" Type="Int32" />
+    <Property Name="P11SoruYasam" Type="Int32" />
+    <Property Name="P12Soru" Type="Int32" />
+    <Property Name="P13Soru" Type="Int32" />
+    <Property Name="P14Soru" Type="Int32" />
+    <Property Name="P22Soru" Type="Int32" />
+    <Property Name="P23Soru" Type="Int32" />
+    <Property Name="PsikiyatrikNotlar" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="G12SonNokta" Type="Int32" />
+    <Property Name="G50TedaviKodu" Type="Int32" />
+    <Property Name="G50TedaviAciklama" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="GenelYorumlar" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="KaydedenKullaniciID" Type="Int32" />
+    <Property Name="KayitTarihi" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Hastalar" Relationship="EkipProjeModel.FK_HastaBagimlilikSiddetiFormlari_Hastalar" FromRole="HastaBagimlilikSiddetiFormlari" ToRole="Hastalar" />
+  </EntityType>
+  <Association Name="FK_HastaBagimlilikSiddetiFormlari_Hastalar">
+    <End Type="EkipProjeModel.Hastalar" Role="Hastalar" Multiplicity="1" />
+    <End Type="EkipProjeModel.HastaBagimlilikSiddetiFormlari" Role="HastaBagimlilikSiddetiFormlari" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hastalar">
+        <PropertyRef Name="HastaID" />
+      </Principal>
+      <Dependent Role="HastaBagimlilikSiddetiFormlari">
+        <PropertyRef Name="HastaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

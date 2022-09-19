@@ -1,0 +1,131 @@
+﻿@using Newtonsoft.Json;
+@model EkipProjesi.Core.KurumlarArasiSevkVeTakip.IRandevuTalepleri
+@{
+    ViewBag.Title = "IskurRandevuTalebiOlustur";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+<div class="row">
+    <div class="col-12  align-self-center">
+        <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+            <div class="w-sm-100 mr-auto"><h4 class="mb-0">SHM Randevu Talebi Oluştur</h4><p><a href="@Url.Action("Index","KurumlarArasiSevkVeTakip")">Kurumlar Arası Sevk ve Takip Modülü</a></p></div>
+            <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+                <li class="breadcrumb-item"><a href="#">SHM Randevu Talebi Oluştur</a></li>
+                <li class="breadcrumb-item active">Anasayfa</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<div id="smsOnayModal" class="modal fade" role="dialog">
+    <div class="modal-dialog" style="width:300px; height:170px;">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="row">
+                        <div class="form-group col-12">
+                            <label>Hasta telefonuna gönderilen SMS onay kodunu giriniz:</label>
+                            <input type="text" id="smsKod" class="form-control" required />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="btnSave" class="btn btn-success btn-md pull-right">Kaydet</button>
+                        <button type="button" class="btn btn-default btn-md pull-right" data-dismiss="modal" id="btnClose">Kapat</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 mt-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Randevu Talebi Bilgileri</h5>
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <form class="form-horizontal" id="form" role="form" enctype="multipart/form-data">
+                                <div>
+                                    <div class="form-row">
+                                        <input required type="number" class="form-control form-control-sm" id="@Html.IdFor(x=>x.HastaID)" name="@Html.NameFor(x => x.HastaID)" value="@ViewBag.ID" hidden="hidden">
+                                        <div class="form-group col-md-4">
+                                            <label for="ad">Ad</label>
+                                            <input required type="text" class="form-control form-control-sm validate[required]" id="@Html.IdFor(x=>x.HastaAdi)" name="@Html.NameFor(x => x.HastaAdi)" value="@ViewBag.Ad">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="soyad">Soyad</label>
+                                            <input required type="text" class="form-control form-control-sm validate[required]" id="@Html.IdFor(x=>x.HastaSoyadi)" name="@Html.NameFor(x => x.HastaSoyadi)" value="@ViewBag.Soyad">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="tcno">TC Kimlik No</label>
+                                            <input required type="text" class="form-control form-control-sm validate[required]" id="@Html.IdFor(x=>x.HastaTCKimlikNo)" name="@Html.NameFor(x => x.HastaTCKimlikNo)" value="@ViewBag.TC">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="telefon">Güncel Telefon Giriniz</label>
+                                            <input required type="text" class="form-control form-control-sm validate[required]" id="@Html.IdFor(x=>x.Telefon)" name="@Html.NameFor(x => x.Telefon)">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="HizmetMerkezi">Hizmet Merkezi</label>
+                                            @Html.DropDownList("HizmetMerkeziID", (IEnumerable<SelectListItem>)ViewData["HizmetMerkezleri"], new { @class = "form-control form-control-sm required" })
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="not">Randevu Talebi Notu</label>
+                                            <textarea required type="text" class="form-control form-control-sm validate[required]" id="@Html.IdFor(x=>x.RandevuTalebiNotu)" name="@Html.NameFor(x => x.RandevuTalebiNotu)" maxlength="300" rows="1" cols="15"></textarea>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="form-group col-md-3">
+                                        <button type="button" class="btn btn-primary" id="kaydet">Kaydet</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#@Html.IdFor(x=>x.HastaAdi)').val(@Html.Raw(JsonConvert.SerializeObject(ViewBag.Ad)));
+        $('#@Html.IdFor(x=>x.HastaSoyadi)').val(@Html.Raw(JsonConvert.SerializeObject(ViewBag.Soyad)));
+        $('#@Html.IdFor(x=>x.HastaTCKimlikNo)').val(@Html.Raw(JsonConvert.SerializeObject(ViewBag.TC)));
+    });
+    $("#kaydet").on("click", function () {
+        $('#smsOnayModal').modal('show');
+    });
+    $("#btnSave").on("click", function () {
+        beforeCallHasta();
+        $('#smsOnayModal').modal('hide');
+    });
+    function beforeCallHasta(form, options) {
+          var form = $('#form')[0];
+          var dataString = new FormData(form);
+          jQuery.ajax({
+                cache: false,
+                type: "POST",
+                url: '@Url.Action("SHMRandevuTalebiOlustur", "KurumlarArasiSevkVeTakip")',
+                enctype: 'multipart/form-data',
+                data: dataString,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if (data.success) {
+                        alert("Randevu talebiniz başarılı bir şekilde oluşturulmuştur.");
+                        location.href = '@Url.Action("SosyalHizmetBirimleri", "KurumlarArasiSevkVeTakip")';
+                    }
+                    else {
+                        alert("İşleminiz sırasında hata oluştu. Lütfen tekrar deneyiniz.");
+                    }
+                }
+          });
+    }
+</script>

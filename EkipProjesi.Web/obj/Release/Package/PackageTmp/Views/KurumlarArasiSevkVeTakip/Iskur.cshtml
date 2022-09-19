@@ -1,0 +1,91 @@
+﻿@model EkipProjesi.Core.Hastalar.IHastaAramaModel
+@{
+    ViewBag.Title = "İŞKUR";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<div class="row">
+    <div class="col-12  align-self-center">
+        <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+            <div class="w-sm-100 mr-auto"><h4 class="mb-0">İŞKUR</h4><p><a href="@Url.Action("Index","KurumlarArasiSevkVeTakip")">Kurumlar Arası Sevk ve Takip Modülü</a></p></div>
+            <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+                <li class="breadcrumb-item"><a href="#">İŞKUR</a></li>
+                <li class="breadcrumb-item active">Anasayfa</li>
+            </ol>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 mt-3">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">HASTA SORGULAMA</h4>
+            </div>
+            <div class="card-content">
+                <div class="card-body py-5">
+                    <form class="form-row" id="filtreform" role="form">
+                        <div class="form-group col-sm-2">
+                            <label for="tc">Hasta TC Kimlik No:</label>
+                            <input type="text" class="form-control" id="@Html.IdFor(x => x.HastaTC)" name="@Html.NameFor(x => x.HastaTC)">
+                        </div>
+                        <div class="form-group col-sm-2">
+                            <label for="tc">Hasta Ekip No:</label>
+                            <input type="text" class="form-control" id="@Html.IdFor(x => x.HastaEkipNo)" name="@Html.NameFor(x => x.HastaEkipNo)">
+                        </div>
+                        <div class="form-group col-sm-3" id="sorgulama">
+                            <button class="btn btn-outline-primary rounded-btn mb-2" id="sorgula" type="submit"><i class="fa fa-search"></i> Sorgula</button>
+                            <button class="btn btn-outline-primary rounded-btn mb-2" onclick="butontemizle();"><i class="fa fa-recycle"></i> Temizle</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function butontemizle() {
+        $('[data-plugin="selectpicker"]').selectpicker('deselectAll');
+    }
+    $("#sorgula").on("click", function () {
+        var theContact = {
+            hastaTC: (@Html.IdFor(x => x.HastaTC)).value,
+            hastaEkipNo: (@Html.IdFor(x => x.HastaEkipNo)).value,
+        };
+        var theData = JSON.stringify(theContact);
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("PartialFiltreSonucIskur", "KurumlarArasiSevkVeTakip")',
+            //contentType: "application/json; charset=utf-8",
+            data: theData,
+            //dataType: 'html',
+            success: function (theData) {
+                $('#sonucdiv').html('').html(theData);
+                table = $('table.display').DataTable(config);
+                Site.run();
+                $(".loader-overlay").css("display", "none");
+                durdur();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+            }
+        });
+    });
+</script>
+<div id="sonucdiv">
+    @{ Html.RenderAction("PartialFiltreSonucIskur", "KurumlarArasiSevkVeTakip"); }
+</div>
+<style>
+    #second-card .card-body {
+        height: 90px;
+    }
+
+    #second-card .card {
+        margin-top: 20px;
+    }
+
+    #sorgulama {
+        margin-top: 20px;
+        padding-left: 20px;
+    }
+</style>

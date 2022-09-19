@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewBag.Title = "Error";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-12  mt-3">
+        <div class="lockscreen  mt-5 mb-5">
+            <div class="jumbotron mb-0 text-center theme-background rounded">
+                <h1 class="display-3 font-weight-bold"> Hata!</h1>
+                <h5><i class="ion ion-alert pr-2"></i>İşleminiz gerçekleştirilirken hata oluştu.</h5>
+                <p>Aradığınız sayfa bulunamadı. Lütfen daha sonra tekrar deneyin veya sistem yöneticinize bildirin.</p>
+                <a href="@Url.Action("Index","Home")" class="btn btn-primary">Anasayfa</a>
+            </div>
+        </div>
+    </div>
+</div>

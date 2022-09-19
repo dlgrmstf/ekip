@@ -1,0 +1,760 @@
+﻿@using Newtonsoft.Json;
+@model EkipProjesi.Core.MobilEkip.IMobilEkipVakaFormlari
+@{
+    ViewBag.Title = "Form Detay";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+<div class="row">
+    <div class="col-12  align-self-center">
+        <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+            <div class="w-sm-100 mr-auto"><h4 class="mb-0">Form Detay</h4> <a href="@Url.Action("Index", "MobilEkip")"><p>Anasayfa</p></a></div>
+            <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+                <li class="breadcrumb-item"><a href="#">Form Detay</a></li>
+                <li class="breadcrumb-item active">Anasayfa</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 mt-1">
+        <div class="position-relative">
+            <div class="position-relative px-1 py-3" style="background-color: #1e3d73">
+                <div class="media d-md-flex d-block">
+                    <a href="#"><img src="~/images/user.png" width="100" height="100" alt="" class="img-fluid rounded-circle" style="margin-left:10px"></a>
+                    <div class="media-body z-index-1">
+                        <div class="pl-4">
+                            <h3 class="display-4 text text-white mb-0">@ViewBag.HastaAdi @ViewBag.HastaSoyadi</h3>
+                            <h6 class="text text-white mb-0">TC Kimlik No: @ViewBag.HastaTC</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 mt-4">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-7">
+                        <h3 class="card-title">Sosyal İnceleme Rapor Formu</h3>
+                    </div>
+                    <div class="col-md-5">
+                        <p>
+                            Raporu Kaydeden Kişi: @ViewBag.KaydedenKisiAd @ViewBag.KaydedenKisiSoyad &nbsp;
+                            Rapor Tarihi: @Model.KayitTarihi.ToString("dd/MM/yyyy")
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <form class="form-horizontal" id="form" role="form" enctype="multipart/form-data">
+                                <h6>Sosyal İncelemenin Yapıldığı Yer</h6>
+                                <div class="form-group">
+                                    <label for="adres">Adres</label>
+                                    <input type="text" class="form-control" id="@Html.IdFor(x=>x.Adres)" name="@Html.NameFor(x=>x.Adres)" maxlength="300" value="@Model.Adres">
+                                </div>
+                                <div class="form-group">
+                                    <label for="nitelik">Nitelik</label>
+                                    <input type="text" class="form-control" id="@Html.IdFor(x=>x.Nitelik)" name="@Html.NameFor(x=>x.Nitelik)" maxlength="300" value="@Model.Nitelik">
+                                </div>
+
+                                <h6>Bilgi Kaynakları</h6>
+                                <div class="form-row" style="margin-left:10px">
+                                    <div class="custom-control custom-checkbox custom-control-inline">
+                                        @if (Model.BilgiKaynagiKendisi == true)
+                                        {
+                                            <input type="checkbox" class="custom-control-input" id="@Html.IdFor(x=>x.BilgiKaynagiKendisi)" name="@Html.NameFor(x=>x.BilgiKaynagiKendisi)" value="@Model.BilgiKaynagiKendisi" checked>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" class="custom-control-input" id="@Html.IdFor(x=>x.BilgiKaynagiKendisi)" name="@Html.NameFor(x=>x.BilgiKaynagiKendisi)" value="@Model.BilgiKaynagiKendisi">
+                                        }
+                                        <label class="custom-control-label" for="@Html.IdFor(x=>x.BilgiKaynagiKendisi)">Kendisi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox custom-control-inline">
+                                        @if (Model.BilgiKaynagiAnne == true)
+                                        {
+                                            <input type="checkbox" class="custom-control-input" id="@Html.IdFor(x=>x.BilgiKaynagiAnne)" name="@Html.NameFor(x=>x.BilgiKaynagiAnne)" value="@Model.BilgiKaynagiAnne" checked>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" class="custom-control-input" id="@Html.IdFor(x=>x.BilgiKaynagiAnne)" name="@Html.NameFor(x=>x.BilgiKaynagiAnne)" value="@Model.BilgiKaynagiAnne">
+                                        }
+                                        <label class="custom-control-label" for="@Html.IdFor(x=>x.BilgiKaynagiAnne)">Anne</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox custom-control-inline">
+                                        @if (Model.BilgiKaynagiBaba == true)
+                                        {
+                                            <input type="checkbox" class="custom-control-input" id="@Html.IdFor(x=>x.BilgiKaynagiBaba)" name="@Html.NameFor(x=>x.BilgiKaynagiBaba)" value="@Model.BilgiKaynagiBaba" checked>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" class="custom-control-input" id="@Html.IdFor(x=>x.BilgiKaynagiBaba)" name="@Html.NameFor(x=>x.BilgiKaynagiBaba)" value="@Model.BilgiKaynagiBaba">
+                                        }
+                                        <label class="custom-control-label" for="@Html.IdFor(x=>x.BilgiKaynagiBaba)">Baba</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox custom-control-inline">
+                                        @if (Model.BilgiKaynagiEs == true)
+                                        {
+                                            <input type="checkbox" class="custom-control-input" id="@Html.IdFor(x=>x.BilgiKaynagiEs)" name="@Html.NameFor(x=>x.BilgiKaynagiEs)" value="@Model.BilgiKaynagiEs" checked>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" class="custom-control-input" id="@Html.IdFor(x=>x.BilgiKaynagiEs)" name="@Html.NameFor(x=>x.BilgiKaynagiEs)" value="@Model.BilgiKaynagiEs">
+                                        }
+                                        <label class="custom-control-label" for="@Html.IdFor(x=>x.BilgiKaynagiEs)">Eş / Partner</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox custom-control-inline">
+                                        @if (Model.BilgiKaynagiCocuk == true)
+                                        {
+                                            <input type="checkbox" class="custom-control-input" id="@Html.IdFor(x=>x.BilgiKaynagiCocuk)" name="@Html.NameFor(x=>x.BilgiKaynagiCocuk)" value="@Model.BilgiKaynagiCocuk" checked>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" class="custom-control-input" id="@Html.IdFor(x=>x.BilgiKaynagiCocuk)" name="@Html.NameFor(x=>x.BilgiKaynagiCocuk)" value="@Model.BilgiKaynagiCocuk">
+                                        }
+                                        <label class="custom-control-label" for="@Html.IdFor(x=>x.BilgiKaynagiCocuk)">Çocuk</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox custom-control-inline">
+                                        @if (Model.BilgiKaynagiKardes == true)
+                                        {
+                                            <input type="checkbox" class="custom-control-input" id="@Html.IdFor(x=>x.BilgiKaynagiKardes)" name="@Html.NameFor(x=>x.BilgiKaynagiKardes)" value="@Model.BilgiKaynagiKardes" checked>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" class="custom-control-input" id="@Html.IdFor(x=>x.BilgiKaynagiKardes)" name="@Html.NameFor(x=>x.BilgiKaynagiKardes)" value="@Model.BilgiKaynagiKardes">
+                                        }
+                                        <label class="custom-control-label" for="@Html.IdFor(x=>x.BilgiKaynagiKardes)">Kardeş</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox custom-control-inline">
+                                        @if (Model.BilgiKaynagiArkadas == true)
+                                        {
+                                            <input type="checkbox" class="custom-control-input" id="@Html.IdFor(x=>x.BilgiKaynagiArkadas)" name="@Html.NameFor(x=>x.BilgiKaynagiArkadas)" value="@Model.BilgiKaynagiArkadas" checked>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" class="custom-control-input" id="@Html.IdFor(x=>x.BilgiKaynagiArkadas)" name="@Html.NameFor(x=>x.BilgiKaynagiArkadas)" value="@Model.BilgiKaynagiArkadas">
+                                        }
+                                        <label class="custom-control-label" for="@Html.IdFor(x=>x.BilgiKaynagiArkadas)">Arkadaş</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox custom-control-inline">
+                                        @if (Model.BilgiKaynagiAkraba == true)
+                                        {
+                                            <input type="checkbox" class="custom-control-input" id="@Html.IdFor(x=>x.BilgiKaynagiAkraba)" name="@Html.NameFor(x=>x.BilgiKaynagiAkraba)" value="@Model.BilgiKaynagiAkraba" checked>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" class="custom-control-input" id="@Html.IdFor(x=>x.BilgiKaynagiAkraba)" name="@Html.NameFor(x=>x.BilgiKaynagiAkraba)" value="@Model.BilgiKaynagiAkraba">
+                                        }
+                                        <label class="custom-control-label" for="@Html.IdFor(x=>x.BilgiKaynagiAkraba)">Diğer Akraba</label>
+                                        @if(Model.BilgiKaynagiAkrabaAciklama != null) 
+                                        {
+                                            <div id="digerakraba"  >
+                                                @Html.TextAreaFor(x => x.BilgiKaynagiAkrabaAciklama, new { @class = "form-control form-control-sm validate[required]" })
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="custom-control custom-checkbox custom-control-inline">
+                                        @if (Model.BilgiKaynagiDiger == true)
+                                        {
+                                            <input type="checkbox" class="custom-control-input" id="@Html.IdFor(x=>x.BilgiKaynagiDiger)" name="@Html.NameFor(x=>x.BilgiKaynagiDiger)" value="@Model.BilgiKaynagiDiger" checked>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" class="custom-control-input" id="@Html.IdFor(x=>x.BilgiKaynagiDiger)" name="@Html.NameFor(x=>x.BilgiKaynagiDiger)" value="@Model.BilgiKaynagiDiger">
+                                        }
+                                        <label class="custom-control-label" for="@Html.IdFor(x=>x.BilgiKaynagiDiger)">Diğer</label>
+                                        @if (Model.BilgiKaynagiDigerAciklama != null)
+                                        {
+                                             <div id="diger">
+                                                @Html.TextAreaFor(x => x.BilgiKaynagiDigerAciklama, new { @class = "form-control form-control-sm validate[required]" })
+                                             </div>
+                                        }
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="form-row">
+                                    <div class="col-12 col-sm-12 mt-3">
+                                        <h6 for="geneltanitim">Genel Tanıtım</h6>
+                                        @Html.TextAreaFor(x => x.GenelTanitim, new { @class = "form-control form-control-sm validate[required]", maxlength = 500 })
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="form-group">
+                                    <h6 for="kisilikozellikleri">Kişilik Özellikleri</h6>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-2">
+                                            <label for="maddebaslamayasi">Maddeye Başlama Yaşı</label>
+                                            <input type="text" class="form-control rounded" id="@Html.IdFor(x=>x.MaddeyeBaslamaYasi)" name="@Html.NameFor(x=>x.MaddeyeBaslamaYasi)" maxlength="10" value="@Model.MaddeyeBaslamaYasi">
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="ilkkullandigimadde">İlk Kullandığı Madde</label>
+                                            <input type="text" class="form-control rounded" id="@Html.IdFor(x=>x.IlkKullandigiMadde)" name="@Html.NameFor(x=>x.IlkKullandigiMadde)" maxlength="50" value="@Model.IlkKullandigiMadde">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="ilkkullandigimadde">Şu Anda Kullandığı Madde / Maddeler</label>
+                                            <input type="text" class="form-control rounded" id="@Html.IdFor(x=>x.SuAndaKullandigiMaddeler)" name="@Html.NameFor(x=>x.SuAndaKullandigiMaddeler)" maxlength="300" value="@Model.SuAndaKullandigiMaddeler">
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="ilkkullandigimadde">Sıklık</label>
+                                            <select id="@Html.IdFor(x=>x.MaddeKullanimSikligi)" name="@Html.NameFor(x=>x.MaddeKullanimSikligi)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)MaddeKullanimSikligi.GunAsiri)">Gün Aşırı</option>
+                                                <option value="@((int)MaddeKullanimSikligi.GundeBir)">Günde 1</option>
+                                                <option value="@((int)MaddeKullanimSikligi.HaftadaBir)">Haftada 1</option>
+                                                <option value="@((int)MaddeKullanimSikligi.AydaBir)">Ayda 1</option>
+                                                <option value="@((int)MaddeKullanimSikligi.YildaBir)">Yılda 1</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-8">
+                                        <label for="baslamanedeni">Maddeye Başlama Nedeni</label>
+                                        @Html.TextAreaFor(x => x.MaddeyeBaslamaNedeni, new { @class = "form-control form-control-sm validate[required]", maxlength = 500 })
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="ensonmadde">En Son Ne Zaman Madde Kullanıldı?</label>
+                                        <input type="text" class="form-control rounded" id="@Html.IdFor(x=>x.EnSonMaddeKullanimZamani)" name="@Html.NameFor(x=>x.EnSonMaddeKullanimZamani)" maxlength="50" value="@Model.EnSonMaddeKullanimZamani">
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-7">
+                                        <label for="kurumbilgisivarmi">Bağımlılıkla ilgili tedavi veren kurumlar hakkında bilgisi var mı?</label>
+                                        @Html.TextAreaFor(x => x.KurumBilgisiVarMi, new { @class = "form-control form-control-sm validate[required]", maxlength = 300 })
+                                    </div>
+                                    <div class="form-group col-md-5">
+                                        <label for="motivasyonkaynagi">Tedavi Sürecinde Motivasyon Kaynağı</label><br />
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                       @if (Model.MotivasyonKaynagiAile == true)
+                                        {
+                                            <input type="checkbox" class="custom-control-input" id="@Html.IdFor(x=>x.MotivasyonKaynagiAile)" name="@Html.NameFor(x=>x.MotivasyonKaynagiAile)" value="@Model.MotivasyonKaynagiAile" checked>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" class="custom-control-input" id="@Html.IdFor(x=>x.MotivasyonKaynagiAile)" name="@Html.NameFor(x=>x.MotivasyonKaynagiAile)" value="@Model.MotivasyonKaynagiAile">
+                                        }
+                                            <label class="custom-control-label checkbox-primary" for="@Html.IdFor(x=>x.MotivasyonKaynagiAile)">Aile</label>
+                                        </div>
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            @if (Model.MotivasyonKaynagiEkonomi == true)
+                                            {
+                                                <input type="checkbox" class="custom-control-input" id="@Html.IdFor(x=>x.MotivasyonKaynagiEkonomi)" name="@Html.NameFor(x=>x.MotivasyonKaynagiEkonomi)" value="@Model.MotivasyonKaynagiEkonomi" checked>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" class="custom-control-input" id="@Html.IdFor(x=>x.MotivasyonKaynagiEkonomi)" name="@Html.NameFor(x=>x.MotivasyonKaynagiEkonomi)" value="@Model.MotivasyonKaynagiEkonomi">
+                                            }
+                                            <label class="custom-control-label checkbox-info" for="@Html.IdFor(x=>x.MotivasyonKaynagiEkonomi)">Ekonomi</label>
+                                        </div>
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            @if (Model.MotivasyonKaynagiSaglik == true)
+                                            {
+                                                <input type="checkbox" class="custom-control-input" id="@Html.IdFor(x=>x.MotivasyonKaynagiSaglik)" name="@Html.NameFor(x=>x.MotivasyonKaynagiSaglik)" value="@Model.MotivasyonKaynagiSaglik" checked>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" class="custom-control-input" id="@Html.IdFor(x=>x.MotivasyonKaynagiSaglik)" name="@Html.NameFor(x=>x.MotivasyonKaynagiSaglik)" value="@Model.MotivasyonKaynagiSaglik">
+                                            }
+                                            <label class="custom-control-label checkbox-warning" for="@Html.IdFor(x=>x.MotivasyonKaynagiSaglik)">Sağlık</label>
+                                        </div>
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            @if (Model.MotivasyonKaynagiDiger == true)
+                                            {
+                                                <input type="checkbox" class="custom-control-input" id="@Html.IdFor(x=>x.MotivasyonKaynagiDiger)" name="@Html.NameFor(x=>x.MotivasyonKaynagiDiger)" value="@Model.MotivasyonKaynagiDiger" checked>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" class="custom-control-input" id="@Html.IdFor(x=>x.MotivasyonKaynagiDiger)" name="@Html.NameFor(x=>x.MotivasyonKaynagiDiger)" value="@Model.MotivasyonKaynagiDiger">
+                                            }
+                                            @if (Model.MotivasyonKaynagiDigerAciklama != null)
+                                            {
+                                                <label class="custom-control-label checkbox-danger" for="@Html.IdFor(x=>x.MotivasyonKaynagiDiger)">Diğer</label>
+                                                <div id="rdigeraciklama">
+                                                    @Html.TextAreaFor(x => x.MotivasyonKaynagiDigerAciklama, new { @class = "form-control form-control-sm validate[required]", maxlength = 100 })
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-2">
+                                        <label for="bagimlilikevresi">Bağımlılık Evresi</label>
+                                        <select id="@Html.IdFor(x=>x.BagimlilikEvresi)" name="@Html.NameFor(x=>x.BagimlilikEvresi)" class="form-control">
+                                            <option selected>Seçiniz</option>
+                                            <option value="@((int)BagimlilikEvresi.FOncesi)">Farkındalık öncesi</option>
+                                            <option value="@((int)BagimlilikEvresi.Farkindalik)">Farkındalık</option>
+                                            <option value="@((int)BagimlilikEvresi.Karar)">Karar verme</option>
+                                            <option value="@((int)BagimlilikEvresi.Hazirlik)">Hazırlık</option>
+                                            <option value="@((int)BagimlilikEvresi.Birakma)">Bırakma</option>
+                                            <option value="@((int)BagimlilikEvresi.Surdurme)">Sürdürme</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="suankiyaklasim">Tedaviye Şu Anki Yaklaşımı</label>
+                                        <select id="@Html.IdFor(x=>x.TedaviyeYaklasimi)" name="@Html.NameFor(x=>x.TedaviyeYaklasimi)" class="form-control">
+                                            <option selected>Seçiniz</option>
+                                            <option value="@((int)TedaviyeYaklasim.Istekli1)">İstekli – Tedaviye inanıyor</option>
+                                            <option value="@((int)TedaviyeYaklasim.Istekli2)">İstekli – Tedaviye inanmıyor</option>
+                                            <option value="@((int)TedaviyeYaklasim.Kararsiz)">Kararsız</option>
+                                            <option value="@((int)TedaviyeYaklasim.Isteksiz)">İsteksiz</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="motivasyonduzeyi">Motivasyon Düzeyi</label>
+                                        <select id="@Html.IdFor(x=>x.MotivasyonDuzeyi)" name="@Html.NameFor(x=>x.MotivasyonDuzeyi)" class="form-control">
+                                            <option selected>Seçiniz</option>
+                                            <option value="@((int)MotivasyonDuzeyi.Yuksek)">Yüksek</option>
+                                            <option value="@((int)MotivasyonDuzeyi.Orta)">Orta</option>
+                                            <option value="@((int)MotivasyonDuzeyi.Dusuk)">Düşük</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="digertespitler">Diğer Tespitler</label>
+                                        @Html.TextAreaFor(x => x.MaddeDigerTespitler, new { @class = "form-control form-control-sm validate[required]", maxlength = 500 })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <h6>Eğitim Bilgisi</h6>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-2">
+                                            <label for="ogrenim">Öğrenim Durumu</label>
+                                            <select id="@Html.IdFor(x=>x.OgrenimDurumu)" name="@Html.NameFor(x=>x.OgrenimDurumu)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)OgrenimDurumu.OkuryazarDegil)">Okuryazar değil</option>
+                                                <option value="@((int)OgrenimDurumu.IlkOkul)">İlkokul</option>
+                                                <option value="@((int)OgrenimDurumu.Ortaokul)">Ortaokul</option>
+                                                <option value="@((int)OgrenimDurumu.Lise)">Lise</option>
+                                                <option value="@((int)OgrenimDurumu.Onlisans)">Önlisans</option>
+                                                <option value="@((int)OgrenimDurumu.Lisans)">Lisans</option>
+                                                <option value="@((int)OgrenimDurumu.Lisansustu)">Lisansüstü</option>
+                                            </select>
+                                        </div>
+                                        @if (Model.LiseTuru != 0)
+                                        {
+                                            <div class="form-group col-md-2" id="showliseturu">
+                                                <label for="liseturu">Lise Türü</label>
+                                                <select id="@Html.IdFor(x=>x.LiseTuru)" name="@Html.NameFor(x=>x.LiseTuru)" class="form-control">
+                                                    <option value="0" selected>Seçiniz</option>
+                                                    <option value="@((int)MLiseDuzeyi.Genel)">Genel Lise</option>
+                                                    <option value="@((int)MLiseDuzeyi.Meslek)">Meslek Lisesi</option>
+                                                </select>
+                                            </div>
+                                        }
+                                        @if (Model.Fakulte != null)
+                                        {
+                                            <div class="form-group col-md-2" id="showfakulte">
+                                                <label for="fakulte">Fakülte</label>
+                                                <input id="@Html.IdFor(x=>x.Fakulte)" name="@Html.NameFor(x=>x.Fakulte)" type="text" class="form-control" maxlength="100" value="@Model.Fakulte" />
+                                            </div>
+                                        }
+                                        @if (Model.Bolum != null)
+                                        {
+                                            <div class="form-group col-md-2" id="showbolum">
+                                                <label for="bolum">Bölüm</label>
+                                                <input id="@Html.IdFor(x=>x.Bolum)" name="@Html.NameFor(x=>x.Bolum)" type="text" class="form-control" maxlength="100" value="@Model.Bolum" />
+                                            </div>
+                                        }
+                                        <div class="form-group col-md-4">
+                                            <label for="egitimdigertespitler">Diğer Tespitler</label>
+                                            @Html.TextAreaFor(x => x.EgitimDigerTespitler, new { @class = "form-control form-control-sm validate[required]", maxlength = 500 })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <h6>İş ve Ekonomik Durumu</h6>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-2">
+                                            <label for="gecim">Geçim Kaynağı</label>
+                                            <select id="@Html.IdFor(x=>x.GecimKaynagi)" name="@Html.NameFor(x=>x.GecimKaynagi)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)GecimKaynagi.Duzenli)">Düzenli Çalışıyor</option>
+                                                <option value="@((int)GecimKaynagi.Duzensiz)">Düzensiz Çalışıyor</option>
+                                                <option value="@((int)GecimKaynagi.Aile)">Aile</option>
+                                                <option value="@((int)GecimKaynagi.Yakin)">Yakın</option>
+                                                <option value="@((int)GecimKaynagi.SosyalYardim)">Sosyal Yardım vb.</option>
+                                                <option value="@((int)GecimKaynagi.Yok)">Geçim Kaynağı Yok</option>
+                                                <option value="@((int)GecimKaynagi.Diger)">Diğer</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-row" id="duzenlicalismabilgisi">
+                                            @if (Model.YaptigiIs != null)
+                                            {
+                                                <div class="form-group col-md-3">
+                                                    <label for="neisyapiyor">Ne İş Yapıyor?</label>
+                                                    <input id="@Html.IdFor(x=>x.YaptigiIs)" name="@Html.NameFor(x=>x.YaptigiIs)" type="text" class="form-control" maxlength="50" value="@Model.YaptigiIs" />
+                                                </div>
+                                            }
+                                            @if (Model.CalistigiYer != null)
+                                            {
+                                                <div class="form-group col-md-3">
+                                                    <label for="neredecalisiyor">Nerede Çalışıyor?</label>
+                                                    <input id="@Html.IdFor(x=>x.CalistigiYer)" name="@Html.NameFor(x=>x.CalistigiYer)" type="text" class="form-control" maxlength="100" value="@Model.CalistigiYer" />
+                                                </div>
+                                            }
+                                            @if (Model.CalismaSuresi != null)
+                                            {
+                                                <div class="form-group col-md-4">
+                                                    <label for="nezamandircalisiyor">Ne Kadar Zamandır Çalışıyor?</label>
+                                                    <input id="@Html.IdFor(x=>x.CalismaSuresi)" name="@Html.NameFor(x=>x.CalismaSuresi)" type="text" class="form-control" maxlength="50" value="@Model.CalismaSuresi" />
+                                                </div>
+                                            }
+                                            @if (Model.Maas != 0)
+                                            {
+                                                <div class="form-group col-md-2">
+                                                    <label for="aylikmaas">Aylık Maaş</label>
+                                                    <input id="@Html.IdFor(x=>x.Maas)" name="@Html.NameFor(x=>x.Maas)" type="number" class="form-control" value="@Model.Maas" />
+                                                </div>
+                                            }
+                                        </div>
+                                        <div class="form-row" id="duzensizcalismabilgisi">
+                                            @if (Model.CalismaSahasi != null)
+                                            {
+                                                <div class="form-group col-md-4">
+                                                    <label for="calismasahasi">Çalışma Sahası</label>
+                                                    <input id="@Html.IdFor(x=>x.CalismaSahasi)" name="@Html.NameFor(x=>x.CalismaSahasi)" type="text" class="form-control" maxlength="50" value="@Model.CalismaSahasi" />
+                                                </div>
+                                            }
+                                            @if (Model.AylikOrtCalistigiGunSayisi != 0)
+                                            {
+                                                <div class="form-group col-md-5">
+                                                    <label for="aylikortalamacalistigigun">Aylık Ortalama Çalıştığı Gün Sayısı</label>
+                                                    <input id="@Html.IdFor(x=>x.AylikOrtCalistigiGunSayisi)" name="@Html.NameFor(x=>x.AylikOrtCalistigiGunSayisi)" type="number" class="form-control" value="@Model.AylikOrtCalistigiGunSayisi" />
+                                                </div>
+                                            }
+                                            @if (Model.AylikOrtGelir != 0)
+                                            {
+                                                <div class="form-group col-md-3">
+                                                    <label for="aylikortalamagelir">Aylık Ortalama Geliri</label>
+                                                    <input id="@Html.IdFor(x=>x.AylikOrtGelir)" name="@Html.NameFor(x=>x.AylikOrtGelir)" type="number" class="form-control" value="@Model.AylikOrtGelir" />
+                                                </div>
+                                            }
+                                        </div>
+                                        <div class="form-row col-md-8" id="digercalisma" style="display:none; margin-left:10px">
+                                            <label for="editdigercalisma">Diğer</label>
+                                            @Html.TextAreaFor(x => x.CalismaBilgisiDiger, new { @class = "form-control form-control-sm validate[required]", maxlength = 500 })
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-3">
+                                            <label for="ortaylikgelir">Kendisinin Ortalama Aylık Gelir Düzeyi</label>
+                                            <input id="@Html.IdFor(x=>x.AylikOrtGelirDuzeyi)" name="@Html.NameFor(x=>x.AylikOrtGelirDuzeyi)" type="text" class="form-control" maxlength="30" value="@Model.AylikOrtGelirDuzeyi"/>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="aileortaylikgelir">Ailesinin Ortalama Aylık Gelir Düzeyi</label>
+                                            <input id="@Html.IdFor(x=>x.AileAylikOrtGelirDuzeyi)" name="@Html.NameFor(x=>x.AileAylikOrtGelirDuzeyi)" type="text" class="form-control" maxlength="30" value="@Model.AileAylikOrtGelirDuzeyi"/>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="ikamet">İkamet Durumu</label>
+                                            <select id="@Html.IdFor(x=>x.IkametDurumu)" name="@Html.NameFor(x=>x.IkametDurumu)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)IkametDurumu.Kendi)">Kendi evi</option>
+                                                <option value="@((int)IkametDurumu.Kira)">Kira</option>
+                                                <option value="@((int)IkametDurumu.Aile)">Ailesi ile yaşıyor</option>
+                                                <option value="@((int)IkametDurumu.Toplu)">Toplu ortamda yaşıyor</option>
+                                                <option value="@((int)IkametDurumu.Yok)">Düzenli ikameti yok</option>
+                                                <option value="@((int)IkametDurumu.Diger)">Diğer</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-row col-md-2" id="topluortamdetay" style="display:none; margin-left:10px">
+                                            <label for="edittopluortamdetay">Detay</label>
+                                            @Html.TextAreaFor(x => x.TopluIkametDetay, new { @class = "form-control form-control-sm validate[required]", maxlength = 500 })
+                                        </div>
+                                        <div class="form-row col-md-2" id="ikametdigerdetay" style="display:none; margin-left:10px">
+                                            <label for="editikametdigerdetay">Diğer</label>
+                                            @Html.TextAreaFor(x => x.IkametDiger, new { @class = "form-control form-control-sm validate[required]", maxlength = 500 })
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-3">
+                                            <label for="enuzuncalisma">En Uzun Çalışma Süresi</label>
+                                            <select id="@Html.IdFor(x=>x.EnUzunCalismaSuresi)" name="@Html.NameFor(x=>x.EnUzunCalismaSuresi)" class="form-control">
+                                                <option selected>Seçiniz</option>
+                                                <option value="@((int)CalismaSuresi.Bir)">0 - 3</option>
+                                                <option value="@((int)CalismaSuresi.Iki)">3 - 9</option>
+                                                <option value="@((int)CalismaSuresi.Uc)">9 +</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-row col-md-9">
+                                            <label for="genelcalismadiger">Diğer</label>
+                                            @Html.TextAreaFor(x => x.EkonomikDurumDiger, new { @class = "form-control form-control-sm validate[required]", maxlength = 500 })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <h6>Sağlık Durumu</h6>
+                                    <div class="form-row">
+                                        <div class="form-row col-md-6">
+                                            <label for="bedenselhastaliklar">Eşlik eden bedensel hastalıklar </label>
+                                            @Html.TextAreaFor(x => x.EslikEdenBedenselHastaliklar, new { @class = "form-control form-control-sm validate[required]", maxlength = 500 })
+                                        </div>
+                                        <div class="form-row col-md-6" style="margin-left:10px">
+                                            <label for="ruhsalhastaliklar">Eşlik eden ruhsal hastalıklar </label>
+                                            @Html.TextAreaFor(x => x.EslikEdenRuhsalHastaliklar, new { @class = "form-control form-control-sm validate[required]", maxlength = 500 })
+                                        </div>
+                                        <div class="form-row col-md-6" style="margin-top:10px">
+                                            <label for="planlitedaviprogrami">Planlı bir tedavi programı hazırlanıldı mı? </label>
+                                            @Html.TextAreaFor(x => x.PlanliTedaviPlani, new { @class = "form-control form-control-sm validate[required]", maxlength = 500 })
+                                        </div>
+                                        <div class="form-row col-md-6" style="margin-top:10px; margin-left:10px">
+                                            <label for="baskabagimlilikvarmi">Başka bir bağımlılık türü var mı? </label>
+                                            @Html.TextAreaFor(x => x.DigerBagimlilikTuru, new { @class = "form-control form-control-sm validate[required]", maxlength = 500 })
+                                        </div>
+                                        <div class="form-row col-md-12" style="margin-top:10px">
+                                            <label for="saglikdigertespitler">Diğer Tespitler </label>
+                                            @Html.TextAreaFor(x => x.SaglikDigerTespitler, new { @class = "form-control form-control-sm validate[required]", maxlength = 500 })
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="form-group">
+                                        <h6>Adli Durumu</h6>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="adlidurum">Adli Durumu</label>
+                                                <select id="@Html.IdFor(x=>x.AdliDurumu)" name="@Html.NameFor(x=>x.AdliDurumu)" class="form-control">
+                                                    <option selected>Seçiniz</option>
+                                                    <option value="@((int)AdliDurum.Yok)">Adli geçmişi yok</option>
+                                                    <option value="@((int)AdliDurum.SabikaYok)">Adli geçmişi var sabıkası yok</option>
+                                                    <option value="@((int)AdliDurum.Var)">Sabıkası var</option>
+                                                    <option value="@((int)AdliDurum.Denetimli)">Şu an denetimli serbestlikte</option>
+                                                    <option value="@((int)AdliDurum.Diger)">Diğer</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-row col-md-6" style="display: none" id="adlidurumdiger">
+                                                <label for="adlidurumdigertespitler">Diğer</label>
+                                                @Html.TextAreaFor(x => x.AdliDurumDiger, new { @class = "form-control form-control-sm validate[required]", maxlength = 500 })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <h6>Aile ve Sosyal Yaşantısı</h6>
+                                        <div class="form-row">
+                                            <div class="form-row col-md-12" id="ailesosyalyasanti">
+                                                @Html.TextAreaFor(x => x.AileSosyalYasantisi, new { @class = "form-control form-control-sm validate[required]", maxlength = 500 })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <h6>Değerlendirme ve Sonuç</h6>
+                                        <div class="form-row">
+                                            <div class="form-row col-md-12" id="geneldegerlendirme">
+                                                @Html.TextAreaFor(x => x.DegerlendirmeVeSonuc, new { @class = "form-control form-control-sm validate[required]", maxlength = 500 })
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="margin-top:10px">
+                                            <div class="form-row">
+                                                <div class="col-md-6" id="devametmemenedeni">
+                                                    <label>Devam Etmeme Nedeni</label>
+                                                    <select id="@Html.IdFor(x=>x.DevamEtmemeNedeni)" name="@Html.NameFor(x=>x.DevamEtmemeNedeni)" class="form-control">
+                                                        <option selected>Seçiniz</option>
+                                                        <option value="@((int)DevamEtmemeNedeni.Degisiklik)">İkamet değişikliği</option>
+                                                        <option value="@((int)DevamEtmemeNedeni.Ulasim)">Ulaşım sorunları</option>
+                                                        <option value="@((int)DevamEtmemeNedeni.Erisim)">Erişim sorunları</option>
+                                                        <option value="@((int)DevamEtmemeNedeni.Ekonomik)">Ekonomik nedenler</option>
+                                                        <option value="@((int)DevamEtmemeNedeni.Is)">İş / Çalışma</option>
+                                                        <option value="@((int)DevamEtmemeNedeni.Egitim)">Eğitim</option>
+                                                        <option value="@((int)DevamEtmemeNedeni.Ailevi)">Ailevi nedenler</option>
+                                                        <option value="@((int)DevamEtmemeNedeni.Saglik)">Eşlik eden sağlık sorunları</option>
+                                                        <option value="@((int)DevamEtmemeNedeni.Sosyal)">Sosyal yaşam</option>
+                                                        <option value="@((int)DevamEtmemeNedeni.Adli)">Adli durum</option>
+                                                        <option value="@((int)DevamEtmemeNedeni.Barinma)">Barınma sorunları</option>
+                                                        <option value="@((int)DevamEtmemeNedeni.Kurum)">Tedavi kurumuna ilişkin olumsuz görüş </option>
+                                                        <option value="@((int)DevamEtmemeNedeni.Olumsuz)">Tedaviye ilişkin olumsuz görüş</option>
+                                                        <option value="@((int)DevamEtmemeNedeni.Sigorta)">Sigorta vb. nedenler</option>
+                                                        <option value="@((int)DevamEtmemeNedeni.Diger)">Diğer</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-6" id="devametmemenedeniaciklama">
+                                                    <label>Açıklama</label>
+                                                    @Html.TextAreaFor(x => x.DevamEtmemeNedeniAciklama, new { @class = "form-control form-control-sm validate[required]", maxlength = 500 })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <h5>Karar</h5>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-8">
+                                                <select id="@Html.IdFor(x=>x.Karar)" name="@Html.NameFor(x=>x.Karar)" class="form-control">
+                                                    <option selected>Seçiniz</option>
+                                                    <option value="@((int)MKarar.Danisma)">Danışma birimine yönlendirme</option>
+                                                    <option value="@((int)MKarar.Tedavi)">Tedavi kurumuna yönlendirme</option>
+                                                    <option value="@((int)MKarar.Rehabilitasyon)">Rehabilitasyona yönlendirme</option>
+                                                    <option value="@((int)MKarar.Sosyal)">Sosyal hizmetlere yönlendirme</option>
+                                                    <option value="@((int)MKarar.Tekrar)">Tekrar değerlendirme</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-1"></div>
+                                            @*<div class="form-group col-md-3">
+                                                <button type="submit" class="btn btn-primary" id="guncelle">Güncelle</button>
+                                            </div>*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#@Html.IdFor(x=>x.MaddeKullanimSikligi) option[value="@Model.MaddeKullanimSikligi"]').attr('selected', 'selected');
+    $('#@Html.IdFor(x=>x.BagimlilikEvresi) option[value="@Model.BagimlilikEvresi"]').attr('selected', 'selected');
+    $('#@Html.IdFor(x=>x.TedaviyeYaklasimi) option[value="@Model.TedaviyeYaklasimi"]').attr('selected', 'selected');
+    $('#@Html.IdFor(x=>x.MotivasyonDuzeyi) option[value="@Model.MotivasyonDuzeyi"]').attr('selected', 'selected');
+    $('#@Html.IdFor(x=>x.OgrenimDurumu) option[value="@Model.OgrenimDurumu"]').attr('selected', 'selected');
+    $('#@Html.IdFor(x=>x.LiseTuru) option[value="@Model.LiseTuru"]').attr('selected', 'selected');
+    $('#@Html.IdFor(x=>x.GecimKaynagi) option[value="@Model.GecimKaynagi"]').attr('selected', 'selected');
+    $('#@Html.IdFor(x=>x.IkametDurumu) option[value="@Model.IkametDurumu"]').attr('selected', 'selected');
+    $('#@Html.IdFor(x=>x.EnUzunCalismaSuresi) option[value="@Model.EnUzunCalismaSuresi"]').attr('selected', 'selected');
+    $('#@Html.IdFor(x=>x.AdliDurumu) option[value="@Model.AdliDurumu"]').attr('selected', 'selected');
+    $('#@Html.IdFor(x=>x.DevamEtmemeNedeni) option[value="@Model.DevamEtmemeNedeni"]').attr('selected', 'selected');
+    $('#@Html.IdFor(x=>x.Karar) option[value="@Model.Karar"]').attr('selected', 'selected');
+</script>
+<script>
+    $(document).ready(function () {
+        //$('#@Html.IdFor(x=>x.BilgiKaynagiAkraba)').attr('checked', false);
+        $('#@Html.IdFor(x=>x.BilgiKaynagiAkraba)').on('click', function () {
+            if ($(this).is(":checked")) {
+                $("#digerakraba").show();
+            } else {
+                $("#digerakraba").hide();
+            }
+        });
+        //$('#@Html.IdFor(x=>x.BilgiKaynagiDiger)').attr('checked', false);
+        $('#@Html.IdFor(x=>x.BilgiKaynagiDiger)').on('click', function () {
+            if ($(this).is(":checked")) {
+                $("#diger").show();
+            } else {
+                $("#diger").hide();
+            }
+        });
+        $('#@Html.IdFor(x=>x.MotivasyonKaynagiDiger)').on('click', function () {
+            if ($(this).is(":checked")) {
+                $("#rdigeraciklama").show();
+            } else {
+                $("#rdigeraciklama").hide();
+            }
+        });
+        $('#@Html.IdFor(x=>x.OgrenimDurumu)').on('change', function () {
+            if (this.value == "4")
+            {
+                $("#showliseturu").show();
+            }
+            else
+            {
+                $("#showliseturu").hide();
+            }
+        });
+        $('#@Html.IdFor(x=>x.OgrenimDurumu)').on('change', function () {
+            if (this.value == "5") {
+                $("#showbolum").show();
+                $("#showfakulte").hide();
+            }
+            else if (this.value == "6") {
+                $("#showbolum").show();
+                $("#showfakulte").show();
+            }
+            else if (this.value == "7") {
+                $("#showbolum").show();
+                $("#showfakulte").show();
+            }
+            else {
+                $("#showbolum").hide();
+                $("#showfakulte").hide();
+            }
+        });
+        $('#@Html.IdFor(x=>x.GecimKaynagi)').on('change', function () {
+            if (this.value == "1") {
+                $("#duzenlicalismabilgisi").show();
+                $("#duzensizcalismabilgisi").hide();
+                $("#digercalisma").hide();
+            }
+            else if (this.value == "2") {
+                $("#duzensizcalismabilgisi").show();
+                $("#duzenlicalismabilgisi").hide();
+                $("#digercalisma").hide();
+            }
+            else if (this.value == "7") {
+                $("#digercalisma").show();
+                $("#duzensizcalismabilgisi").hide();
+                $("#duzenlicalismabilgisi").hide();
+            }
+            else {
+                $("#digercalisma").hide();
+                $("#duzensizcalismabilgisi").hide();
+                $("#duzenlicalismabilgisi").hide();
+            }
+        });
+        $('#@Html.IdFor(x=>x.IkametDurumu)').on('change', function () {
+            if (this.value == "4") {
+                $("#topluortamdetay").show();
+                $("#ikametdigerdetay").hide();
+            }
+            else if (this.value == "6") {
+                $("#topluortamdetay").hide();
+                $("#ikametdigerdetay").show();
+            }
+            else {
+                $("#topluortamdetay").hide();
+                $("#ikametdigerdetay").hide();
+            }
+        });
+        $('#@Html.IdFor(x=>x.AdliDurumu)').on('change', function () {
+            if (this.value == "5") {
+                $("#adlidurumdiger").show();
+            }
+            else {
+                $("#adlidurumdiger").hide();
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $("#form input[type='checkbox']").on("click", function () {
+            if ($(this).prop('checked')) {
+                $(this).attr('value', true);
+            } else {
+                $(this).attr('value', false);
+            }
+        });
+        $("#guncelle").on("click", function () {
+            beforeCallHasta();
+        });
+        function beforeCallHasta(form, options) {
+          var form = $('#form')[0];
+          var dataString = new FormData(form);
+            jQuery.ajax({
+                cache: false,
+                type: "POST",
+                url: '@Url.Action("VakaFormGuncelle", "MobilEkip")',
+                enctype: 'multipart/form-data',
+                data: dataString,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    location.reload();
+                }
+          });
+        }
+    });
+</script>

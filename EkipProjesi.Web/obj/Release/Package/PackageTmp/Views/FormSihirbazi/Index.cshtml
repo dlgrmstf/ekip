@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-12  align-self-center">
+        <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+            <div class="w-sm-100 mr-auto"><h4 class="mb-0">Form Sihirbazı</h4> <p><a href="@Url.Action("Index","Home")"></a>Anasayfa</p></div>
+            <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+                <li class="breadcrumb-item"><a href="#">Form Sihirbazı</a></li>
+                <li class="breadcrumb-item active">Anasayfa</li>
+            </ol>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 col-sm-6 col-xl-3 mt-3">
+        <a href="@Url.Action("FormOlustur", "FormSihirbazi")">
+            <div class="card bg-indigo-600 text-white h-100">
+                <div class="card-body text-center p-3 d-flex">
+                    <div class="align-self-center text-center w-100">
+                        <span class="icon-note h1 bg-indigo-600 text-white shadow-circle p-3 rounded-circle"></span>
+                        <h2 class="card-title font-weight-bold mt-4">Form Oluştur</h2>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-12 col-sm-6 col-xl-3 mt-3">
+        <a href="@Url.Action("Formlar", "FormSihirbazi")">
+            <div class="card bg-orange-600 text-white h-100">
+                <div class="card-body text-center p-3 d-flex">
+                    <div class="align-self-center text-center w-100">
+                        <span class="icon-docs h1 bg-orange-600 text-white shadow-circle p-3 rounded-circle"></span>
+                        <h2 class="card-title font-weight-bold mt-4">Formlar</h2>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+<style>
+    .card-body {
+        height: 235px;
+    }
+</style>

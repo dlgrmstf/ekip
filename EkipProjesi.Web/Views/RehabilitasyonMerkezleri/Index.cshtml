@@ -1,0 +1,350 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+<link rel="stylesheet" href="~/dist/vendors/c3/c3.min.css">
+<link rel="stylesheet" href="~/dist/vendors/datatable/css/dataTables.bootstrap4.min.css" />
+<link rel="stylesheet" href="~/dist/vendors/datatable/buttons/css/buttons.bootstrap4.min.css" />
+
+<div class="row">
+    <div class="col-12  align-self-center">
+        <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+            <div class="w-sm-100 mr-auto"><h4 class="mb-0">Rehabilitasyon Merkezleri Modülü</h4> <p><a href="@Url.Action("Index","Home")">Anasayfa</a></p></div>
+            <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+                <li class="breadcrumb-item"><a href="#">Rehabilitasyon Merkezleri Modülü</a></li>
+                <li class="breadcrumb-item active">Anasayfa</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12 col-sm-12 mt-3">
+                <div class="card">
+                    <div class="card-header justify-content-between align-items-center">
+                        <h4 class="card-title">Aktif Randevular</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="example" class="display table dataTable table-striped table-bordered" width="99%">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Ad - Soyad</th>
+                                        <th scope="col">TC Kimlik No</th>
+                                        <th scope="col">Telefon</th>
+                                        <th scope="col">Poliklinik</th>
+                                        <th scope="col">Randevu Tarihi</th>
+                                    </tr>
+                                </thead>
+                                @if (User.IsInRole("90"))
+                                {
+                                    <tbody>
+                                        @foreach (var t in ViewBag.AktifRandevuTalepleriKendi)
+                                        {
+                                            <tr>
+                                                <th scope="row">@t.ID</th>
+                                                <td>@t.HastaAdi @t.HastaSoyadi</td>
+                                                <td>@t.HastaTCKimlikNo</td>
+                                                <td>@t.Telefon</td>
+                                                <td>@t.PoliklinikAdi</td>
+                                                <td>@t.RandevuBaslangicTarihi.ToString("dd/MM/yyyy HH:mm")</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                }
+                                @if (User.IsInRole("92"))
+                                {
+                                    <tbody>
+                                        @foreach (var t in ViewBag.AktifRandevuTalepleri)
+                                        {
+                                            <tr>
+                                                <th scope="row">@t.ID</th>
+                                                <td>@t.HastaAdi @t.HastaSoyadi</td>
+                                                <td>@t.HastaTCKimlikNo</td>
+                                                <td>@t.Telefon</td>
+                                                <td>@t.PoliklinikAdi</td>
+                                                <td>@t.RandevuBaslangicTarihi.ToString("dd/MM/yyyy HH:mm")</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<br />
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12 col-sm-12 mt-3">
+                <div class="card">
+                    <div class="card-header justify-content-between align-items-center">
+                        <h4 class="card-title">Geçmiş Randevular</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="example2" class="display table dataTable table-striped table-bordered" width="99%">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Ad - Soyad</th>
+                                        <th scope="col">TC Kimlik No</th>
+                                        <th scope="col">Telefon</th>
+                                        <th scope="col">Poliklinik</th>
+                                        <th scope="col">Randevu Tarihi</th>
+                                        <th scope="col">Randevu Sonucu</th>
+                                    </tr>
+                                </thead>
+                                @if (User.IsInRole("90"))
+                                {
+                                    <tbody>
+                                        @foreach (var t in ViewBag.VerilenRandevularKendi)
+                                        {
+                                            <tr>
+                                                <th scope="row">@t.ID</th>
+                                                <td>@t.HastaAdi @t.HastaSoyadi</td>
+                                                <td>@t.HastaTCKimlikNo</td>
+                                                <td>@t.Telefon</td>
+                                                <td>@t.PoliklinikAdi</td>
+                                                <td>@t.RandevuBaslangicTarihi.ToString("dd/MM/yyyy HH:mm")</td>
+                                                <td>
+                                                    @if (string.IsNullOrEmpty(t.RandevuDurumu))
+                                                    {
+                                                        <p>Durum bilgisi bulunamadı.</p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span>@t.RandevuDurumu&nbsp;&nbsp;</span>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                }
+                                @if (User.IsInRole("92"))
+                                {
+                                    <tbody>
+                                        @foreach (var t in ViewBag.VerilenRandevular)
+                                        {
+                                            <tr>
+                                                <th scope="row">@t.ID</th>
+                                                <td>@t.HastaAdi @t.HastaSoyadi</td>
+                                                <td>@t.HastaTCKimlikNo</td>
+                                                <td>@t.Telefon</td>
+                                                <td>@t.PoliklinikAdi</td>
+                                                <td>@t.RandevuBaslangicTarihi.ToString("dd/MM/yyyy HH:mm")</td>
+                                                <td>
+                                                    @if (string.IsNullOrEmpty(t.RandevuDurumu))
+                                                    {
+                                                        <p>Durum bilgisi bulunamadı.</p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span>@t.RandevuDurumu&nbsp;&nbsp;</span>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<br />
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-md-10">
+                <span class="card-title h4">Hastalar</span>
+            </div>
+            @if (User.IsInRole("100"))
+            {
+                <div class="col-md-2">
+                    <a class="btn bg-green-600 rounded-btn mb-2 ont-w-300 my-auto text-nowrap text-light" href="@Url.Action("HastaEkle", "RehabilitasyonMerkezleri")" style="vertical-align:central"><i class="icon-note"></i> Hasta Ekle</a>
+                </div>
+            }
+        </div>
+        <div class="row row-eq-height">
+            <div class="col-12 col-lg-2 mt-3 todo-menu-bar flip-menu pr-lg-0">
+                <a href="#" class="d-inline-block d-lg-none mt-1 flip-menu-close"><i class="icon-close"></i></a>
+                <div class="card border h-100 contact-menu-section">
+                    <ul class="nav flex-column contact-menu">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#" data-contacttype="contact">
+                                <i class="icon-list"></i> Tümü
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-12 col-lg-10 mt-3 pl-lg-0">
+                <div class="card border h-100 contact-list-section">
+                    <div class="card-header border-bottom p-1 d-flex">
+                        <a href="#" class="d-inline-block d-lg-none flip-menu-toggle"><i class="icon-menu"></i></a>
+                        <input type="text" class="form-control border-0 p-2 w-100 h-100 contact-search" placeholder="Arayın ...">
+                        <a href="#" class="list-style search-bar-menu border-0 active"><i class="icon-list"></i></a>
+                        <a href="#" class="grid-style search-bar-menu"><i class="icon-grid"></i></a>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="contacts list">
+                            @if (User.IsInRole("101"))
+                            {
+                                if (User.IsInRole("90"))
+                                {
+                                    foreach (var v in ViewBag.KendiHastalari)
+                                    {
+                                        <div class="contact kategori1">
+                                            <div class="contact-content">
+                                                <div class="contact-profile">
+                                                    <img src="~/images/user.png" alt="avatar" class="user-image img-fluid">
+                                                    <div class="contact-info">
+                                                        <p class="contact-name mb-0">@v.HastaAdi @v.HastaSoyadi</p>
+                                                    </div>
+                                                </div>
+                                                <div class="contact-email">
+                                                    <p class="mb-0 small">TC Kimlik No: </p>
+                                                    <p class="user-email">@v.HastaTCKimlikNo</p>
+                                                </div>
+                                                <div class="contact-email">
+                                                    <p class="mb-0 small">Hasta Ekip No: </p>
+                                                    <p class="user-email">@v.HastaEkipNo</p>
+                                                </div>
+                                                <div class="contact-phone">
+                                                    <p class="mb-0 small">Telefon: </p>
+                                                    <p class="user-phone">@v.Telefon</p>
+                                                </div>
+                                                @if (User.IsInRole("101"))
+                                                {
+                                                    <div class="line-h-1 h5">
+                                                        <a class="text-success edit-contact" href="@Url.Action("VakaDetay","RehabilitasyonMerkezleri", new { id = v.HastaID })" name="Detay" target="_blank"><i class="icon-plus"></i></a>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                else if (User.IsInRole("91"))
+                                {
+                                    foreach (var v in ViewBag.KurumdakiHastalar)
+                                    {
+                                        <div class="contact kategori1">
+                                            <div class="contact-content">
+                                                <div class="contact-profile">
+                                                    <img src="~/images/user.png" alt="avatar" class="user-image img-fluid">
+                                                    <div class="contact-info">
+                                                        <p class="contact-name mb-0">@v.HastaAdi @v.HastaSoyadi</p>
+                                                    </div>
+                                                </div>
+                                                <div class="contact-email">
+                                                    <p class="mb-0 small">TC Kimlik No: </p>
+                                                    <p class="user-email">@v.HastaTCKimlikNo</p>
+                                                </div>
+                                                <div class="contact-email">
+                                                    <p class="mb-0 small">Hasta Ekip No: </p>
+                                                    <p class="user-email">@v.HastaEkipNo</p>
+                                                </div>
+                                                <div class="contact-phone">
+                                                    <p class="mb-0 small">Telefon: </p>
+                                                    <p class="user-phone">@v.Telefon</p>
+                                                </div>
+                                                @if (User.IsInRole("101"))
+                                                {
+                                                    <div class="line-h-1 h5">
+                                                        <a class="text-success edit-contact" href="@Url.Action("VakaDetay","RehabilitasyonMerkezleri", new { id = v.HastaID })" name="Detay" target="_blank"><i class="icon-plus"></i></a>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                else if (User.IsInRole("92"))
+                                {
+                                    foreach (var v in ViewBag.TumHastalar)
+                                    {
+                                        <div class="contact kategori1">
+                                            <div class="contact-content">
+                                                <div class="contact-profile">
+                                                    <img src="~/images/user.png" alt="avatar" class="user-image img-fluid">
+                                                    <div class="contact-info">
+                                                        <p class="contact-name mb-0">@v.HastaAdi @v.HastaSoyadi</p>
+                                                    </div>
+                                                </div>
+                                                <div class="contact-email">
+                                                    <p class="mb-0 small">TC Kimlik No: </p>
+                                                    <p class="user-email">@v.HastaTCKimlikNo</p>
+                                                </div>
+                                                <div class="contact-email">
+                                                    <p class="mb-0 small">Hasta Ekip No: </p>
+                                                    <p class="user-email">@v.HastaEkipNo</p>
+                                                </div>
+                                                <div class="contact-phone">
+                                                    <p class="mb-0 small">Telefon: </p>
+                                                    <p class="user-phone">@v.Telefon</p>
+                                                </div>
+                                                @if (User.IsInRole("101"))
+                                                {
+                                                    <div class="line-h-1 h5">
+                                                        <a class="text-success edit-contact" href="@Url.Action("VakaDetay","RehabilitasyonMerkezleri", new { id = v.HastaID })" name="Detay" target="_blank"><i class="icon-plus"></i></a>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/dist/vendors/jquery/jquery-3.3.1.min.js"></script>
+<script src="~/dist/vendors/jquery-ui/jquery-ui.min.js"></script>
+<script src="~/dist/vendors/moment/moment.js"></script>
+<script src="~/dist/vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/dist/vendors/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="~/dist/js/app.js"></script>
+<script src="~/dist/js/app.contactlist.js"></script>
+
+<script src="~/dist/vendors/c3/d3.v5.min.js"></script>
+<script src="~/dist/vendors/c3/c3.min.js"></script>
+<script src="~/dist/js/c3.script.js"></script>
+
+<script src="~/dist/vendors/jquery/jquery-3.3.1.min.js"></script>
+<script src="~/dist/vendors/jquery-ui/jquery-ui.min.js"></script>
+<script src="~/dist/vendors/moment/moment.js"></script>
+<script src="~/dist/vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/dist/vendors/slimscroll/jquery.slimscroll.min.js"></script>
+
+<script src="~/dist/vendors/datatable/js/jquery.dataTables.min.js"></script>
+<script src="~/dist/vendors/datatable/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/dist/vendors/datatable/jszip/jszip.min.js"></script>
+<script src="~/dist/vendors/datatable/pdfmake/pdfmake.min.js"></script>
+<script src="~/dist/vendors/datatable/pdfmake/vfs_fonts.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/dataTables.buttons.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.colVis.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.flash.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.html5.min.js"></script>
+<script src="~/dist/vendors/datatable/buttons/js/buttons.print.min.js"></script>
+<script src="~/Content/DataTablesScript.js"></script>

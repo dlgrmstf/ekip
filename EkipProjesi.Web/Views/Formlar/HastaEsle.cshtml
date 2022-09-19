@@ -1,0 +1,289 @@
+﻿@model EkipProjesi.Core.Formlar.AnketDTO
+@{
+    ViewBag.Title = "Form Hasta Eşleme";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+<div class="row">
+    <div class="col-12  align-self-center">
+        <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+            <div class="w-sm-100 mr-auto"><h4 class="mb-0">Form Hasta Eşle</h4> <p><a href="@Url.Action("Index","Formlar")">Formlar</a></p></div>
+            <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+                <li class="breadcrumb-item"><a href="#">Form Hasta Eşle</a></li>
+                <li class="breadcrumb-item active">Anasayfa</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Form Hasta Eşleme</h3>
+            </div>
+            <div class="card-body">
+                <table class="table table-hover">
+                    <tr>
+                        <th>Form Türü</th>
+                        <td>@Model.AnketTipAdi</td>
+                        <th>Başlık</th>
+                        <td>@Model.Baslik</td>
+                        <th>Açıklama</th>
+                        <td>@Model.Aciklama</td>
+                    </tr>
+                    <tr>
+                        <th>Başlangıç Tarihi</th>
+                        <td>@string.Format("{0:dd.MM.yyyy}", Model.BaslangicTarihi)</td>
+                        <th>Bitiş Tarihi</th>
+                        <td>@string.Format("{0:dd.MM.yyyy}", Model.BitisTarihi)</td>
+                        <th>Durum</th>
+                        <td>
+                            @if (Model.Status)
+                            {
+                                <span class="badge badge-success">Aktif</span>
+                            }
+                            else
+                            {
+                                <span class="badge badge-danger">Pasif</span>
+                            }
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <br />
+    </div>
+    <div class="col-lg-12" style="min-height:300px;">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Hastalar</h3>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <div class="">
+                        <span class="h6">Hasta Seçiniz <small>Listede <span id="psayi">@Model.Personeller.Count()</span> adet hasta vardır.</small></span>
+                        @*<button class="btn btn-sm btn-success" onclick="hepsi()">Hepsini Seç</button>
+                            <button class="btn btn-sm btn-warning" onclick="temizle()">Temizle</button>*@
+                        <br /><br />
+                        <select class="form-control" id="personel" multiple>
+                            <option value="0">Hasta Seçiniz</option>
+                            @foreach (var p in Model.Personeller)
+                            {
+                                <option value="@p.HastaID">@p.HastaTCKimlikNo @p.HastaAdi @p.HastaSoyadi</option>
+                            }
+                        </select>
+                        <br />
+                        <button class="btn btn-primary" onclick="listeEkle();">Hasta Listesine Ekle</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12" style="min-height:300px;">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="panel-title">Form İçin Seçilmiş Hastalar <small>Kayıtlı <span id="ksayi">@Model.AnketKullanicilari.Count()</span> adet hasta bulunmaktadır.</small></h3>
+            </div>
+            <div class="card-body">
+                <table class="table table-hover" id="tablo">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="checkbox-custom checkbox-primary">
+                                    <input type="checkbox" name="hepsi" id="hepsi" title="Tümü" />
+                                    <label for="hepsi" title="Tümü"></label>
+                                </div>
+                            </th>
+                            <th>Hasta Adı</th>
+                            <th>Bilgi</th>
+                            <th>Form Tamamlandı Mı?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var p in Model.AnketKullanicilari)
+                        {
+                            <tr>
+                                <td>
+                                    @if (!Model.Status)
+                                    {
+                                        <div class="checkbox-custom checkbox-primary">
+                                            <input type="checkbox" name='check' class='secim' value="@p.HastaID" checked />
+                                            <label for=""></label>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <button class="btn btn-sm btn-danger" onclick="kullanicisil(@p.HastaID)">Kullanıcıyı Sil</button>
+                                    }
+                                </td>
+                                <td>@p.HastaAdi @p.HastaSoyadi</td>
+                                <td>@p.HastaTCKimlikNo</td>
+                                @if (p.TamamlandiMi)
+                                {
+                                    <td>Evet</td>
+                                }
+                                else
+                                {
+                                    <td>Hayır</td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <button class="btn btn-success" onclick="kaydet();">Kaydet</button>
+            </div>
+        </div>
+    </div>
+</div>
+<link href="~/Content/global/vendor/bootstrap-select/bootstrap-select.css" rel="stylesheet" />
+<script src="~/Content/global/vendor/bootstrap-select/bootstrap-select.js"></script>
+<script src="~/Content/global/js/Plugin/bootstrap-select.js"></script>
+<link href="~/Content/global/vendor/multi-select/multi-select.min.css" rel="stylesheet" />
+<script src="~/Content/global/vendor/multi-select/jquery.multi-select.js"></script>
+<script src="~/Content/global/vendor/multi-select/jquery.quicksearch.js"></script>
+<link href="~/Content/global/vendor/multi-select/multi-select.css" rel="stylesheet" />
+<link href="~/Content/global/vendor/multi-select/multi-select.min.css" rel="stylesheet" />
+<script>
+        var personeller = @Html.Raw(Html.Raw(Json.Encode(Model.Personeller)));
+        //console.log(personeller);
+        var secilmisler = [];
+        var anketstatus = @Model.Status.ToString().ToLower();
+        secilmisler = @Html.Raw(Html.Raw(Json.Encode(Model.AnketKullanicilari.Select(x=>x.HastaID).ToList())));
+        function kullanicisil(id) {
+            var url = '@Url.Action("KullaniciSil", "Formlar")';
+            var post = { anket : @Model.ID, user : id };
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: post,
+                success: function (result) {
+                    if (result.success) {
+                        alert("Silme İşlemi Başarılı");
+                        window.location.reload(true);
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                }
+            });
+            window.location.reload();
+        }
+        function kaydet() {
+            if ($('.secim:checked').length > 0) {
+                var searchIDs = [];
+
+                $(".secim:checked").map(function () {
+                    searchIDs.push($(this).val());
+                });
+                var post = {
+                    anket : @Model.ID,
+                    personeller: searchIDs
+                };
+                console.log(post);
+                 var url = '@Url.Action("KullaniciKaydet", "Formlar")';
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: post,
+                    success: function (result) {
+                        if (result.success) {
+                            alert("Kayıt İşlemi Başarılı");
+                            window.location.reload(true);
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                    }
+                });
+            }
+            else {
+                alert("En az 1 hasta seçiniz.");
+            }
+        }
+        $('.select').selectpicker({
+            style: 'btn-select',
+            iconBase: 'icon',
+            tickIcon: 'wb-check',
+        });
+        $('#personel').multiSelect({
+            selectableHeader: "<input type='text' class='search-input form-control' autocomplete='off' placeholder='Arayın'>",
+            selectionHeader: "<input type='text' class='search-input form-control' autocomplete='off' placeholder='Arayın'>",
+            afterInit: function (ms) {
+                var that = this,
+                    $selectableSearch = that.$selectableUl.prev(),
+                    $selectionSearch = that.$selectionUl.prev(),
+                    selectableSearchString = '#' + that.$container.attr('id') + ' .ms-elem-selectable:not(.ms-selected)',
+                    selectionSearchString = '#' + that.$container.attr('id') + ' .ms-elem-selection.ms-selected';
+
+                that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
+                    .on('keydown', function (e) {
+                        if (e.which === 40) {
+                            that.$selectableUl.focus();
+                            return false;
+                        }
+                    });
+
+                that.qs2 = $selectionSearch.quicksearch(selectionSearchString)
+                    .on('keydown', function (e) {
+                        if (e.which == 40) {
+                            that.$selectionUl.focus();
+                            return false;
+                        }
+                    });
+            },
+            afterSelect: function () {
+                this.qs1.cache();
+                this.qs2.cache();
+            },
+            afterDeselect: function () {
+                this.qs1.cache();
+                this.qs2.cache();
+            }
+        });
+        function hepsi() {
+            $('#personel').multiSelect('select_all');
+        }
+        function temizle() {
+            $('#personel').multiSelect('deselect_all');
+        }
+        function personeldoldur() {
+           var select = '';
+            var pers = personeller;
+            console.log(pers);
+            $.each(pers, function (k, v) {
+                select += '<option value="' + v.HastaID + v.HastaAdi + v.HastaSoyadi + v.HastaTCKimlikNo;
+            });
+            $("#psayi").text(pers.length);
+            $("#personel").html(select);
+            $('.select').selectpicker('refresh');
+        }
+
+        function listeEkle() {
+            var value = $("#personel").val();
+            var values = [];
+            for (var i = 0; i < value.length; i++) {
+                values.push(Number(value[i]));
+            }
+
+            var pers = personeller.filter((u) => values.includes(u.HastaID));
+            $.each(pers, function (k, v) {
+                var arr = $.grep(secilmisler, function (n, i) {
+                    return n == v.HastaID;
+                });
+                if (arr.length == 0) {
+                    secilmisler.push(v.HastaID);
+                    $("#tablo tbody").append("<tr id='tr_" + v.HastaID + "'><td><div class='checkbox-custom checkbox-primary'><input type='checkbox' name='check' class='secim' value='" + v.HastaID + "'/><label></label></div></td><td>" + v.HastaAdi + "</td><td>" + v.HastaSoyadi + "</td><td>" + v.HastaTCKimlikNo + "</td><td>");
+                }
+            });
+        }
+
+        $("#hepsi").change(function () {
+            if ($("#hepsi").is(':checked')) {
+                $(".secim").prop('checked', true);
+            }
+            else {
+                $(".secim").prop('checked', false);
+            }
+        });
+</script>
